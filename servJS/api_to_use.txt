@@ -1,0 +1,4 @@
+Use OpenStreetMap Nominatim API for address autocomplete.
+Once the user selects an address, extract its coordinates.
+Use the coordinates to query nearby POIs or amenities from OpenStreetMap
+using Overpass API service.
