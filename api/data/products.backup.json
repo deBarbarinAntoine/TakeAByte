@@ -1,0 +1,938 @@
+[
+  {
+    "id": 1,
+    "name": "Samsung Galaxy S23 Ultra",
+    "type": "Phone Device",
+    "description": "A powerful phone with a long-lasting battery, quad-lens camera system, and a large, vivid display.",
+    "price": 1188,
+    "image": "/static/img/phone/device/samsung-galaxy-s23-ultra.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Sony WH-1000XM5",
+    "type": "Audio",
+    "description": "Industry-leading noise cancellation, exceptional sound quality, and comfortable design.",
+    "price": 400,
+    "image": "/static/img/audio/sony-wh-1000xm5.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Apple MacBook Air M2",
+    "type": "Computer Laptop",
+    "description": "Thin and lightweight laptop with Apple's powerful M2 chip, offering excellent performance for everyday tasks, productivity applications, and content creation.",
+    "price": 1299,
+    "image": "/static/img/computer/laptop/macbook-air-m2.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Fitbit Sense 2",
+    "type": "Smartwatch",
+    "description": "Tracks health metrics, offers advanced sleep tracking, and features a sleek design.",
+    "price": 329,
+    "image": "/static/img/smartwatch/fitbit-sense-2.jpg"
+  },
+  {
+    "id": 5,
+    "name": "Sony A7 IV",
+    "type": "Camera",
+    "description": "Full-frame mirrorless camera with a high-resolution sensor, fast autofocus, and excellent video capabilities.",
+    "price": 2498,
+    "image": "/static/img/camera/sony-a7-iv.jpg"
+  },
+  {
+    "id": 6,
+    "name": "Samsung Galaxy Watch 5",
+    "type": "Smartwatch",
+    "description": "Stylish smartwatch with advanced fitness tracking features and seamless integration with Samsung devices.",
+    "price": 309,
+    "image": "/static/img/smartwatch/samsung-galaxy-watch-5-pro.jpg"
+  },
+  {
+    "id": 7,
+    "name": "Google Nest Hub (2nd Gen)",
+    "type": "Audio",
+    "description": "Smart speaker with a vibrant display for controlling smart home devices and viewing information.",
+    "price": 99,
+    "image": "/static/img/audio/google-nest-hub.jpg"
+  },
+  {
+    "id": 8,
+    "name": "DJI Osmo Action 3",
+    "type": "Camera",
+    "description": "Rugged action camera with excellent image stabilization and a wide range of shooting modes.",
+    "price": 329,
+    "image": "/static/img/camera/dji-osmo-action-3.jpg"
+  },
+  {
+    "id": 9,
+    "name": "Sony PlayStation 5",
+    "type": "Gaming",
+    "description": "Next-generation gaming console with powerful graphics, fast loading times, and immersive gameplay.",
+    "price": 499,
+    "image": "/static/img/gaming/sony-playstation-5.jpg"
+  },
+  {
+    "id": 10,
+    "name": "Apple AirPods Pro",
+    "type": "Audio",
+    "description": "Active noise cancellation, transparency mode, and a snug fit for superior sound quality.",
+    "price": 249,
+    "image": "/static/img/audio/apple-airpods-pro.jpg"
+  },
+  {
+    "id": 11,
+    "name": "Samsung Galaxy Tab S8 Ultra",
+    "type": "Computer Tablet",
+    "description": "Large-screen Android tablet with a powerful processor, S Pen support, and a long-lasting battery.",
+    "price": 1188,
+    "image": "/static/img/computer/tablet/samsung-galaxy-tab-s8-ultra.jpg"
+  },
+  {
+    "id": 12,
+    "name": "GoPro HERO10 Black",
+    "type": "Camera",
+    "description": "Compact action camera with high-resolution video recording, excellent stabilization, and a durable design.",
+    "price": 429,
+    "image": "/static/img/camera/gopro-hero10-black.jpg"
+  },
+  {
+    "id": 13,
+    "name": "Nintendo Switch OLED",
+    "type": "Gaming",
+    "description": "Handheld gaming console with a vibrant OLED display, detachable Joy-Con controllers, and a vast library of games.",
+    "price": 349,
+    "image": "/static/img/gaming/nintendo-switch-oled.jpg"
+  },
+  {
+    "id": 14,
+    "name": "Nest Wifi Pro",
+    "type": "Computer Network",
+    "description": "Mesh Wi-Fi router system for whole-home coverage, fast speeds, and easy setup.",
+    "price": 399,
+    "image": "/static/img/computer/network/nest-wifi-pro.jpg"
+  },
+  {
+    "id": 15,
+    "name": "Meta Quest 2",
+    "type": "Gaming",
+    "description": "Virtual reality headset for gaming, fitness, and exploring virtual worlds.",
+    "price": 399,
+    "image": "/static/img/gaming/meta-quest-2.jpg"
+  },
+  {
+    "id": 16,
+    "name": "Garmin Forerunner 255 Music",
+    "type": "Smartwatch",
+    "description": "GPS running watch with built-in music storage, advanced training metrics, and long battery life.",
+    "price": 399,
+    "image": "/static/img/smartwatch/garmin-forerunner-255-music.jpg"
+  },
+  {
+    "id": 17,
+    "name": "Apple iPad mini (6th Gen)",
+    "type": "Computer Tablet",
+    "description": "Compact and powerful tablet with a beautiful display, A15 Bionic chip, and Apple Pencil support.",
+    "price": 499,
+    "image": "/static/img/computer/tablet/apple-ipad-mini.jpg"
+  },
+  {
+    "id": 18,
+    "name": "Google Pixelbook Go",
+    "type": "Computer Laptop",
+    "description": "Lightweight and affordable Chromebook with a long battery life and Chrome OS for a fast and secure experience.",
+    "price": 349,
+    "image": "/static/img/computer/laptop/google-pixelbook-go.jpg"
+  },
+  {
+    "id": 19,
+    "name": "Belkin BoostCharge Pro 3-in-1 Wireless Charging Pad",
+    "type": "Phone Chargers",
+    "description": "Wireless charging pad for iPhone, Apple Watch, and AirPods for convenient simultaneous charging.",
+    "price": 99,
+    "image": "/static/img/phone/chargers/belkin-boostcharge-pro-3-in-1-wireless-charging-pad.jpg"
+  },
+  {
+    "id": 20,
+    "name": "JBL Flip 6 Portable Bluetooth Speaker",
+    "type": "Audio",
+    "description": "Waterproof and portable Bluetooth speaker with powerful sound, long battery life, and a stylish design.",
+    "price": 129,
+    "image": "/static/img/audio/jbl-flip-6-portable-bluetooth-speaker.jpg"
+  },
+  {
+    "id": 21,
+    "name": "Samsung Galaxy Book 2 Pro 360",
+    "type": "Computer Laptop",
+    "description": "Convertible laptop with a 360-degree hinge, S Pen support, and powerful performance for work or creativity.",
+    "price": 1099,
+    "image": "/static/img/computer/laptop/samsung-galaxy-book-2-pro-360.jpg"
+  },
+  {
+    "id": 22,
+    "name": "Netgear Orbi Wi-Fi 6 Mesh System",
+    "type": "Computer Network",
+    "description": "Mesh Wi-Fi 6 system for whole-home coverage, faster speeds, and improved capacity for multiple devices.",
+    "price": 349,
+    "image": "/static/img/computer/network/netgear-orbi-wi-fi-6-mesh-system.jpg"
+  },
+  {
+    "id": 23,
+    "name": "DJI Osmo Mobile 6 Gimbal",
+    "type": "Phone Accessories",
+    "description": "Smartphone gimbal for stabilized video recording with your phone, perfect for vlogging or filmmaking.",
+    "price": 199,
+    "image": "/static/img/phone/accessories/dji-osmo-mobile-6-gimbal.jpg"
+  },
+  {
+    "id": 24,
+    "name": "GoPro MAX",
+    "type": "Camera",
+    "description": "360-degree action camera with dual lenses for capturing immersive experiences, perfect for extreme sports or vlogging.",
+    "price": 499,
+    "image": "/static/img/camera/gopro-max.jpg"
+  },
+  {
+    "id": 25,
+    "name": "Bose QuietComfort 45 Headphones",
+    "type": "Audio",
+    "description": "Industry-leading noise cancellation, comfortable design, and clear audio quality for a premium listening experience.",
+    "price": 329,
+    "image": "/static/img/audio/bose-quietcomfort-45-headphones.jpg"
+  },
+  {
+    "id": 26,
+    "name": "Lenovo ThinkPad X1 Carbon",
+    "type": "Computer Laptop",
+    "description": "Thin and light business laptop with a durable design, long battery life, and excellent keyboard for productivity.",
+    "price": 1499,
+    "image": "/static/img/computer/laptop/lenovo-thinkpad-x1-carbon.jpg"
+  },
+  {
+    "id": 27,
+    "name": "Samsung Galaxy Watch 5 Pro",
+    "type": "Smartwatch",
+    "description": "Rugged smartwatch with advanced fitness tracking features, built-in GPS, and a durable design for outdoor activities.",
+    "price": 429,
+    "image": "/static/img/smartwatch/samsung-galaxy-watch-5-pro.jpg"
+  },
+  {
+    "id": 28,
+    "name": "Apple Watch SE (2nd Gen)",
+    "type": "Smartwatch",
+    "description": "Affordable smartwatch with essential health tracking features, cellular connectivity option, and seamless integration with iPhones.",
+    "price": 279,
+    "image": "/static/img/smartwatch/apple-watch-se.jpg"
+  },
+  {
+    "id": 29,
+    "name": "Fujifilm Instax Mini 11",
+    "type": "Camera",
+    "description": "Fun and easy-to-use instant camera for capturing photos that instantly print on credit card-sized film.",
+    "price": 79,
+    "image": "/static/img/camera/fujifilm-instax-mini-11.jpg"
+  },
+  {
+    "id": 30,
+    "name": "Samsung Galaxy Buds Pro 2",
+    "type": "Audio",
+    "description": "Active noise cancellation, improved sound quality, and a comfortable fit for superior audio on the go.",
+    "price": 229,
+    "image": "/static/img/audio/samsung-galaxy-buds-pro-2.jpg"
+  },
+  {
+    "id": 31,
+    "name": "Xbox Series S",
+    "type": "Gaming",
+    "description": "All-digital next-generation gaming console with a sleek design, fast loading times, and access to a vast library of games.",
+    "price": 299,
+    "image": "/static/img/gaming/xbox-series-s.jpg"
+  },
+  {
+    "id": 32,
+    "name": "Anker 577 PowerCore 23000 Portable Charger",
+    "type": "Phone Chargers",
+    "description": "High-capacity portable charger for keeping your devices powered up on the go, with multiple ports for charging multiple devices simultaneously.",
+    "price": 59,
+    "image": "/static/img/phone/chargers/anker-577-powercore-23000-portable-charger.jpg"
+  },
+  {
+    "id": 33,
+    "name": "Sony WF-1000XM4 Wireless Earbuds",
+    "type": "Audio",
+    "description": "Industry-leading noise cancellation, excellent sound quality, and a comfortable fit for immersive audio experiences.",
+    "price": 279,
+    "image": "/static/img/audio/sony-wf-1000xm4-wireless-earbuds.jpg"
+  },
+  {
+    "id": 34,
+    "name": "Blue Yeti Nano Microphone",
+    "type": "Audio",
+    "description": "Compact and high-quality USB microphone for recording podcasts, streaming, or video conferencing with excellent sound clarity.",
+    "price": 99,
+    "image": "/static/img/audio/blue-yeti-nano-microphone.jpg"
+  },
+  {
+    "id": 35,
+    "name": "Samsung Galaxy Tab S7 FE",
+    "type": "Computer Tablet",
+    "description": "Android tablet with a large display, powerful processor, and S Pen support for productivity and entertainment.",
+    "price": 529,
+    "image": "/static/img/computer/tablet/samsung-galaxy-tab-s7-fe.jpg"
+  },
+  {
+    "id": 36,
+    "name": "Belkin BOOSTCHARGE Pro USB-C Power Delivery Wall Charger",
+    "type": "Phone Chargers",
+    "description": "Fast USB-C wall charger with Power Delivery technology for quickly charging laptops, smartphones, and other compatible devices.",
+    "price": 39,
+    "image": "/static/img/phone/chargers/belkin-boostcharge-pro-usb-c-power-delivery-wall-charger.jpg"
+  },
+  {
+    "id": 37,
+    "name": "AMD Ryzen 5 5600X Processor",
+    "type": "Computer Components",
+    "description": "Powerful 6-core processor for desktops, offering excellent performance for gaming, content creation, and multitasking.",
+    "price": 299,
+    "image": "/static/img/computer/components/amd-ryzen-5-5600x-processor.jpg"
+  },
+  {
+    "id": 38,
+    "name": "NVIDIA GeForce RTX 3060 Ti Graphics Card",
+    "type": "Computer Components",
+    "description": "High-performance graphics card for desktops, enabling smooth gameplay at high resolutions and settings.",
+    "price": 499,
+    "image": "/static/img/computer/components/nvidia-geforce-rtx-3060-ti-graphics-card.jpg"
+  },
+  {
+    "id": 39,
+    "name": "Samsung 980 Pro 1TB NVMe PCIe Gen4 Solid State Drive",
+    "type": "Computer Components",
+    "description": "Ultra-fast internal storage drive for desktops and laptops, offering significant speed improvements for booting, loading applications, and transferring files.",
+    "price": 149,
+    "image": "/static/img/computer/components/samsung-980-pro-nvme-pcie-gen4-ssd.jpg"
+  },
+  {
+    "id": 40,
+    "name": "ASUS ROG Strix B550-F Gaming WiFi Motherboard",
+    "type": "Computer Components",
+    "description": "ATX motherboard with support for AMD Ryzen processors, featuring high-performance features for gamers and enthusiasts.",
+    "price": 229,
+    "image": "/static/img/computer/components/asus-rog-strix-b550-f-gaming-wifi-motherboard.jpg"
+  },
+  {
+    "id": 41,
+    "name": "Corsair Vengeance RGB Pro 16GB (2x8GB) DDR4 3200MHz RAM",
+    "type": "Computer Components",
+    "description": "High-performance memory kit for desktops, featuring 16GB of DDR4 RAM with 3200MHz speed for smooth multitasking and demanding applications.",
+    "price": 89,
+    "image": "/static/img/computer/components/corsair-vengeance-rgb-pro-ddr4-ram.jpg"
+  },
+  {
+    "id": 42,
+    "name": "MSI Alpha 15 Advantage Edition Gaming Laptop",
+    "type": "Computer Laptop",
+    "description": "Powerful gaming laptop with a Ryzen processor, RTX graphics card, and a high refresh rate display for immersive and smooth gameplay.",
+    "price": 1299,
+    "image": "/static/img/computer/laptop/msi-alpha-15-advantage-edition-gaming-laptop.jpg"
+  },
+  {
+    "id": 43,
+    "name": "TP-Link Archer AX55 Wi-Fi 6 Router",
+    "type": "Computer Network",
+    "description": "Dual-band Wi-Fi 6 router for improved wireless network performance, faster speeds, and better handling of multiple devices.",
+    "price": 99,
+    "image": "/static/img/computer/network/tp-link-archer-ax55-wi-fi-6-router.jpg"
+  },
+  {
+    "id": 44,
+    "name": "Gigabyte Aorus GC PH-GVN20D GeForce GTX 1650 Low Profile Graphics Card",
+    "type": "Computer Components",
+    "description": "Low-profile graphics card for desktops with limited space, offering improved performance for gaming and multimedia tasks compared to integrated graphics.",
+    "price": 279,
+    "image": "/static/img/computer/components/gigabyte-aorus-gc-ph-gvn20d-geforce-gtx-1650-low-profile-graphics-card.jpg"
+  },
+  {
+    "id": 45,
+    "name": "Noctua NH-D15 CPU Cooler",
+    "type": "Computer Components",
+    "description": "High-performance air cooler for desktops, ideal for overclocking or keeping your CPU cool under heavy workloads.",
+    "price": 139,
+    "image": "/static/img/computer/components/noctua-nh-d15-cpu-cooler.jpg"
+  },
+  {
+    "id": 46,
+    "name": "Seagate Barracuda 2TB 3.5\" Internal Hard Drive",
+    "type": "Computer Components",
+    "description": "Large-capacity internal storage drive for desktops, offering reliable and affordable storage for data, games, and applications.",
+    "price": 59,
+    "image": "/static/img/computer/components/seagate-barracuda-hdd.jpg"
+  },
+  {
+    "id": 47,
+    "name": "ASUS TUF Gaming VG27AQ1A Gaming Monitor",
+    "type": "Computer Peripherals",
+    "description": "27-inch gaming monitor with a high refresh rate, fast response time, and vivid colors for an immersive and smooth gaming experience.",
+    "price": 279,
+    "image": "/static/img/computer/peripherals/asus-tuf-gaming-vg27aq1a-gaming-monitor.jpg"
+  },
+  {
+    "id": 48,
+    "name": "Microsoft Surface Laptop Studio",
+    "type": "Computer Laptop",
+    "description": "Convertible laptop with a unique hinge design, powerful performance, and a high-resolution touchscreen display for work, creativity, and entertainment.",
+    "price": 1599,
+    "image": "/static/img/computer/laptop/microsoft-surface-laptop-studio.jpg"
+  },
+  {
+    "id": 49,
+    "name": "Western Digital WD Black SN770 NVMe PCIe Gen4 SSD 2TB",
+    "type": "Computer Components",
+    "description": "High-performance internal storage drive with top-tier speeds for desktops and laptops, enabling ultra-fast boot times, application loading, and file transfers.",
+    "price": 179,
+    "image": "/static/img/computer/components/western-digital-wd-black-sn770-ssd.jpg"
+  },
+  {
+    "id": 50,
+    "name": "Thermaltake H500 ATX Mid Tower Case",
+    "type": "Computer Components",
+    "description": "ATX mid-tower case with ample space for building a desktop PC, featuring good airflow and tempered glass panels for showcasing your components.",
+    "price": 129,
+    "image": "/static/img/computer/components/thermaltake-h500-case.jpg"
+  },
+  {
+    "id": 51,
+    "name": "SteelSeries Apex Pro TKL Mechanical Keyboard",
+    "type": "Computer Peripherals",
+    "description": "Tenkeyless mechanical keyboard with customizable per-key RGB lighting, adjustable actuation switches for a personalized typing experience, and a compact design for saving desk space.",
+    "price": 179,
+    "image": "/static/img/computer/peripherals/steelseries-apex-pro-tkl-keyboard.jpg"
+  },
+  {
+    "id": 52,
+    "name": "EVGA Supernova GT 650W 80+ Gold Certified Power Supply Unit",
+    "type": "Computer Components",
+    "description": "Reliable and efficient power supply unit for desktops, providing enough wattage to power most mid-range gaming or productivity builds.",
+    "price": 89,
+    "image": "/static/img/computer/components/evga-supernova-gt-psu.jpg"
+  },
+  {
+    "id": 53,
+    "name": "Gigabyte B560M DS3H V2 Micro ATX Motherboard",
+    "type": "Computer Components",
+    "description": "Micro ATX motherboard with support for Intel processors, offering a compact design for smaller form factor PCs while still featuring essential features.",
+    "price": 119,
+    "image": "/static/img/computer/components/gigabyte-b560m-ds3h-motherboard.jpg"
+  },
+  {
+    "id": 54,
+    "name": "Samsung Odyssey G5 Curved Gaming Monitor",
+    "type": "Computer Peripherals",
+    "description": "Curved gaming monitor with a high refresh rate, immersive viewing experience, and sleek design for enhanced gaming enjoyment.",
+    "price": 389,
+    "image": "/static/img/computer/peripherals/samsung-odyssey-g5-curved-monitor.jpg"
+  },
+  {
+    "id": 55,
+    "name": "Razer Viper Ultimate Wireless Gaming Mouse",
+    "type": "Computer Peripherals",
+    "description": "Wireless gaming mouse with a lightweight design, high precision sensor, and customizable RGB lighting for improved control and aesthetics during gameplay.",
+    "price": 159,
+    "image": "/static/img/computer/peripherals/razer-viper-ultimate-mouse.jpg"
+  },
+  {
+    "id": 56,
+    "name": "Audio-Technica AT2020 Cardioid Condenser Microphone",
+    "type": "Audio",
+    "description": "Studio-quality condenser microphone with a cardioid pickup pattern, ideal for recording vocals, instruments, and podcasts with clear and focused audio.",
+    "price": 129,
+    "image": "/static/img/audio/audio-technica-at2020-microphone.jpg"
+  },
+  {
+    "id": 57,
+    "name": "WD Blue SN570 NVMe PCIe Gen3 SSD 1TB",
+    "type": "Computer Components",
+    "description": "Cost-effective internal storage drive with good performance for desktops and laptops, offering faster boot times and application loading compared to traditional HDDs.",
+    "price": 79,
+    "image": "/static/img/computer/components/wd-blue-sn570-ssd.jpg"
+  },
+  {
+    "id": 58,
+    "name": "NZXT Kraken X53 RGB AIO Liquid CPU Cooler",
+    "type": "Computer Components",
+    "description": "All-in-one liquid CPU cooler with RGB lighting effects, offering efficient cooling performance and a stylish look for your desktop PC build.",
+    "price": 229,
+    "image": "/static/img/computer/components/nzxt-kraken-x53-rgb-aio-cooler.jpg"
+  },
+  {
+    "id": 59,
+    "name": "Be quiet! Pure Rock 2 Black CPU Cooler",
+    "type": "Computer Components",
+    "description": "Quiet and efficient air cooler for desktops, providing good thermal performance at a low noise level.",
+    "price": 49,
+    "image": "/static/img/computer/components/be-quiet-pure-rock-2-black-cpu-cooler.jpg"
+  },
+  {
+    "id": 60,
+    "name": "ASUS ROG Strix Scope TKL Wireless Mechanical Keyboard",
+    "type": "Computer Peripherals",
+    "description": "Tenkeyless wireless mechanical keyboard with customizable RGB lighting, Cherry MX switches for a satisfying typing experience, and dedicated media controls for multitasking.",
+    "price": 189,
+    "image": "/static/img/computer/peripherals/asus-rog-strix-scope-tkl-wireless-keyboard.jpg"
+  },
+  {
+    "id": 61,
+    "name": "Logitech G PRO X Superlight Wireless Gaming Mouse",
+    "type": "Computer Peripherals",
+    "description": "Ultra-lightweight wireless gaming mouse with a customizable design, high-performance sensor, and long battery life for competitive gaming.",
+    "price": 149,
+    "image": "/static/img/computer/peripherals/logitech-g-pro-x-superlight-mouse.jpg"
+  },
+  {
+    "id": 62,
+    "name": "Seagate Backup Plus Slim Portable Hard Drive 1TB",
+    "type": "Computer Peripherals",
+    "description": "Portable hard drive with large capacity (1TB) for backing up data, photos, videos, and other files on the go.",
+    "price": 79,
+    "image": "/static/img/computer/peripherals/seagate-backup-plus-slim-portable-drive.jpg"
+  },
+  {
+    "id": 63,
+    "name": "Samsung Galaxy Z Fold 4",
+    "type": "Phone Device",
+    "description": "Foldable smartphone with a large main display, powerful processor, and innovative design for multitasking and productivity.",
+    "price": 1799,
+    "image": "/static/img/phone/device/samsung-galaxy-z-fold-4.jpg"
+  },
+  {
+    "id": 64,
+    "name": "Sony a6400 Mirrorless Camera",
+    "type": "Camera",
+    "description": "Compact and versatile mirrorless camera with a large APS-C sensor, excellent image quality, and interchangeable lenses for photography enthusiasts.",
+    "price": 899,
+    "image": "/static/img/camera/sony-a6400-mirrorless-camera.jpg"
+  },
+  {
+    "id": 65,
+    "name": "DJI Osmo Mobile SE",
+    "type": "Phone Accessories",
+    "description": "Affordable and portable smartphone gimbal for stabilizing video footage captured on your phone, perfect for vlogging and social media content creation.",
+    "price": 109,
+    "image": "/static/img/phone/accessories/dji-osmo-mobile-se.jpg"
+  },
+  {
+    "id": 66,
+    "name": "AOC 24G2 Monitor",
+    "type": "Computer Peripherals",
+    "description": "Budget-friendly 24\" gaming monitor with a high refresh rate and fast response time, offering a smooth gaming experience without breaking the bank.",
+    "price": 209,
+    "image": "/static/img/computer/peripherals/aoc-24g2-monitor.jpg"
+  },
+  {
+    "id": 67,
+    "name": "ASUS Strix Soar Sound Card",
+    "type": "Computer Components",
+    "description": "Internal sound card for desktops, improving sound quality for headphones, speakers, and gaming headsets compared to basic onboard audio.",
+    "price": 119,
+    "image": "/static/img/computer/components/asus-strix-soar.jpg"
+  },
+  {
+    "id": 68,
+    "name": "Thermaltake Toughpower Grand RGB 750W 80+ Gold Certified Power Supply Unit",
+    "type": "Computer Components",
+    "description": "High-wattage and efficient power supply unit for desktops, providing ample power for even the most demanding gaming or creative workstations.",
+    "price": 99,
+    "image": "/static/img/computer/components/thermaltake-toughpower-grand-rgb-psu.jpg"
+  },
+  {
+    "id": 69,
+    "name": "Logitech G920 Driving Force Racing Wheel",
+    "type": "Computer Peripherals",
+    "description": "Force feedback racing wheel and pedals for a realistic racing simulation experience on PC or gaming consoles.",
+    "price": 359,
+    "image": "/static/img/computer/peripherals/logitech-g920-racing-wheel.jpg"
+  },
+  {
+    "id": 70,
+    "name": "MSI B460M Mortar Micro ATX Motherboard",
+    "type": "Computer Components",
+    "description": "Micro ATX motherboard with support for Intel processors, featuring essential features for budget-oriented desktop builds.",
+    "price": 139,
+    "image": "/static/img/computer/components/msi-b460m-mortar-motherboard.jpg"
+  },
+  {
+    "id": 71,
+    "name": "Phanteks Enthoo Pro ATX Full Tower Case",
+    "type": "Computer Components",
+    "description": "Spacious ATX full tower case with excellent airflow, tempered glass panels, and good cable management options for building a well-cooled and organized PC.",
+    "price": 149,
+    "image": "/static/img/computer/components/phanteks-enthoo-pro-case.jpg"
+  },
+  {
+    "id": 72,
+    "name": "ADATA XPG Gammix D10 DDR4 RAM 16GB",
+    "type": "Computer Components",
+    "description": "High-performance memory kit with RGB lighting for desktops, offering various capacity and speed options to suit different needs and budgets.",
+    "price": 78,
+    "image": "/static/img/computer/components/adata-xpg-gammix-d10-ram-16gb.jpg"
+  },
+  {
+    "id": 73,
+    "name": "NETGEAR AC2000 Router",
+    "type": "Computer Network",
+    "description": "Dual-band Wi-Fi router with good performance for homes and small offices, offering reliable wireless connectivity for multiple devices.",
+    "price": 139,
+    "image": "/static/img/computer/network/netgear-ac2000-router.jpg"
+  },
+  {
+    "id": 74,
+    "name": "Intel Core i5-12400 Processor",
+    "type": "Computer Components",
+    "description": "Mid-range 6-core processor for desktops, offering excellent performance for multitasking, gaming, and productivity applications.",
+    "price": 189,
+    "image": "/static/img/computer/components/intel-core-i5-12400-processor.jpg"
+  },
+  {
+    "id": 75,
+    "name": "Samsung 870 QVO 1TB SATA III SSD",
+    "type": "Computer Components",
+    "description": "SATA III interface SSD for desktops and laptops, offering a balance of affordability and performance for everyday tasks.",
+    "price": 109,
+    "image": "/static/img/computer/components/samsung-870-qvo-ssd.jpg"
+  },
+  {
+    "id": 76,
+    "name": "WD Blue HDD 6TB",
+    "type": "Computer Components",
+    "description": "Large-capacity and cost-effective internal hard drive for desktops, ideal for storing large files, games, and media collections.",
+    "price": 235,
+    "image": "/static/img/computer/components/wd-blue-6tb-hdd.jpg"
+  },
+  {
+    "id": 77,
+    "name": "Sony WH-1000XM4 Wireless Noise-Cancelling Headphones",
+    "type": "Audio",
+    "description": "Industry-leading noise cancellation, excellent sound quality, and comfortable design for immersive audio experiences on the go.",
+    "price": 299,
+    "image": "/static/img/audio/sony-wh-1000xm4-wireless-headphones.jpg"
+  },
+  {
+    "id": 78,
+    "name": "AOC G2590PX Monitor",
+    "type": "Computer Peripherals",
+    "description": "Curved gaming monitor with a high refresh rate, 1440p resolution for sharper visuals, and FreeSync compatibility for smooth gameplay.",
+    "price": 259,
+    "image": "/static/img/computer/peripherals/aoc-g2590px-monitor.jpg"
+  },
+  {
+    "id": 79,
+    "name": "Be quiet! Pure Base 500 FX ATX Case",
+    "type": "Computer Components",
+    "description": "Mid-tower RGB ATX case with good airflow, sound dampening materials for quiet operation, and a tempered glass side panel for showcasing your components.",
+    "price": 179,
+    "image": "/static/img/computer/components/be-quiet-pure-base-500-fx-case.jpg"
+  },
+  {
+    "id": 80,
+    "name": "Gigabyte Aorus Gen4 NVMe PCIe M.2 SSD",
+    "type": "Computer Components",
+    "description": "High-performance M.2 form factor SSD with PCIe Gen4 technology for desktops with compatible slots, offering ultra-fast boot times and application loading.",
+    "price": 299,
+    "image": "/static/img/computer/components/gigabyte-aorus-gen4-nvme-ssd.jpg"
+  },
+  {
+    "id": 81,
+    "name": "MSI Clutch GM41 Lightweight Wireless Mouse",
+    "type": "Computer Peripherals",
+    "description": "Lightweight and ergonomic wireless mouse with a comfortable design for long gaming sessions, customizable RGB lighting, and a high-performance sensor.",
+    "price": 79,
+    "image": "/static/img/computer/peripherals/msi-clutch-gm41-mouse.jpg"
+  },
+  {
+    "id": 82,
+    "name": "XPG SX8200 Pro NVMe PCIe Gen3 SSD",
+    "type": "Computer Components",
+    "description": "Cost-effective NVMe PCIe Gen3 SSD for desktops and laptops, offering a good balance of performance and affordability for everyday use and moderate gaming.",
+    "price": 129,
+    "image": "/static/img/computer/components/xpg-sx8200-pro-ssd.jpg"
+  },
+  {
+    "id": 83,
+    "name": "CORSAIR iCUE H100i Elite AIO Liquid CPU Cooler",
+    "type": "Computer Components",
+    "description": "All-in-one liquid CPU cooler with RGB lighting effects and powerful radiator for efficient cooling performance in desktops with compatible cases.",
+    "price": 199,
+    "image": "/static/img/computer/components/corsair-icue-h100i-elite-cooler.jpg"
+  },
+  {
+    "id": 84,
+    "name": "SteelSeries Arctis 7 Wireless Gaming Headset",
+    "type": "Audio",
+    "description": "Wireless gaming headset with comfortable design, clear audio quality, and a built-in microphone for immersive gaming communication.",
+    "price": 209,
+    "image": "/static/img/audio/steelseries-arctis-7-headset.jpg"
+  },
+  {
+    "id": 85,
+    "name": "EVGA GeForce GTX 1650 SC Ultra Graphics Card",
+    "type": "Computer Components",
+    "description": "Ultra graphics card offering a significant performance boost over integrated graphics for casual gaming and multimedia tasks.",
+    "price": 289,
+    "image": "/static/img/computer/components/evga-geforce-gtx-1650-sc-ultra.jpg"
+  },
+  {
+    "id": 86,
+    "name": "Google Pixel 7 Pro",
+    "type": "Phone Device",
+    "description": "High-end smartphone with a powerful processor, advanced camera system with excellent low-light performance, and a sleek design.",
+    "price": 899,
+    "image": "/static/img/phone/device/google-pixel-7-pro.jpg"
+  },
+  {
+    "id": 87,
+    "name": "Samsung Galaxy Z Flip 4",
+    "type": "Phone Device",
+    "description": "Foldable smartphone with a compact design that unfolds to a larger screen, ideal for multitasking and portability.",
+    "price": 999,
+    "image": "/static/img/phone/device/samsung-galaxy-z-flip-4.jpg"
+  },
+  {
+    "id": 88,
+    "name": "Insta360 GO 2",
+    "type": "Camera",
+    "description": "Ultra-compact and lightweight action camera with 360-degree recording capabilities, perfect for capturing immersive videos for vlogging, action sports, and creative projects.",
+    "price": 349,
+    "image": "/static/img/camera/insta360-go-2.jpg"
+  },
+  {
+    "id": 89,
+    "name": "ASUS ROG Zephyrus G14 Gaming Laptop",
+    "type": "Computer Laptop",
+    "description": "Powerful gaming laptop with a portable design, high-performance graphics card, and a fast refresh rate display for smooth and immersive gameplay.",
+    "price": 2399,
+    "image": "/static/img/computer/laptop/asus-rog-zephyrus-g14-gaming-laptop.jpg"
+  },
+  {
+    "id": 90,
+    "name": "Acer Chromebook Spin 713",
+    "type": "Computer Laptop",
+    "description": "Affordable Chromebook with a convertible design, long battery life, and access to cloud-based applications for everyday tasks and students on a budget.",
+    "price": 849,
+    "image": "/static/img/computer/laptop/acer-chromebook-spin-713.jpg"
+  },
+  {
+    "id": 91,
+    "name": "iPhone SE (2022)",
+    "type": "Phone Device",
+    "description": "Budget-friendly iPhone with the latest A15 Bionic chip, offering powerful performance and iOS features at a more accessible price point.",
+    "price": 499,
+    "image": "/static/img/phone/device/iphone-se-2022.jpg"
+  },
+  {
+    "id": 92,
+    "name": "Canon EOS R7 Mirrorless Camera",
+    "type": "Camera",
+    "description": "APS-C mirrorless camera with excellent image quality, fast autofocus system, and compact design, ideal for enthusiasts and aspiring photographers.",
+    "price": 1599,
+    "image": "/static/img/camera/canon-eos-r7-mirrorless-camera.jpg"
+  },
+  {
+    "id": 93,
+    "name": "Lenovo ThinkPad X1 Carbon Gen 10",
+    "type": "Computer Laptop",
+    "description": "Thin and light business laptop with a durable design, long battery life, and excellent keyboard for productivity tasks and professionals on the go.",
+    "price": 1899,
+    "image": "/static/img/computer/laptop/lenovo-thinkpad-x1-carbon-gen-10.jpg"
+  },
+  {
+    "id": 94,
+    "name": "Ubiquiti UniFi Security Gateway",
+    "type": "Computer Network",
+    "description": "Security appliance for homes and small businesses, offering firewall protection, intrusion detection, and advanced network management features.",
+    "price": 149,
+    "image": "/static/img/computer/network/ubiquiti-unifi-security-gateway.jpg"
+  },
+  {
+    "id": 95,
+    "name": "Sony RX100 VII Compact Camera",
+    "type": "Camera",
+    "description": "High-zoom compact camera with a large sensor, excellent image quality, and fast autofocus in a pocket-friendly size for travel and everyday photography.",
+    "price": 799,
+    "image": "/static/img/camera/sony-rx100-vii-camera.jpg"
+  },
+  {
+    "id": 96,
+    "name": "Google Pixel Buds Pro",
+    "type": "Audio",
+    "description": "Wireless earbuds with active noise cancellation, comfortable design, and integration with Google Assistant for convenient voice control and music listening on smartphones.",
+    "price": 199,
+    "image": "/static/img/audio/google-pixel-buds-pro.jpg"
+  },
+  {
+    "id": 97,
+    "name": "TP-Link Deco Mesh Wi-Fi System",
+    "type": "Computer Network",
+    "description": "Whole-home mesh Wi-Fi system for eliminating dead zones and providing seamless wireless network coverage throughout your house.",
+    "price": 389,
+    "image": "/static/img/computer/network/tp-link-deco-mesh-wi-fi-system.jpg"
+  },
+  {
+    "id": 98,
+    "name": "Insta360 One X2",
+    "type": "Camera",
+    "description": "360-degree action camera with 5.7K capture resolution, flow state stabilization for smooth footage, and a variety of creative shooting modes for immersive video experiences.",
+    "price": 309,
+    "image": "/static/img/camera/insta360-one-x2.jpg"
+  },
+  {
+    "id": 99,
+    "name": "Synology DiskStation DS220+ NAS",
+    "type": "Computer Network",
+    "description": "Network-attached storage (NAS) device for storing and sharing files across your home network, offering backup solutions and media streaming capabilities.",
+    "price": 369,
+    "image": "/static/img/computer/network/synology-diskstation-ds220+.jpg"
+  },
+  {
+    "id": 100,
+    "name": "Netgear Nighthawk Pro Gaming XR500 Router",
+    "type": "Computer Network",
+    "description": "High-performance router designed for gamers, offering prioritization of gaming traffic, advanced Quality of Service (QoS) features, and low latency for smooth online gaming experiences.",
+    "price": 349,
+    "image": "/static/img/computer/network/netgear-nighthawk-pro-gaming-xr500-router.jpg"
+  },
+  {
+    "id": 101,
+    "name": "Nikon Z fc Mirrorless Camera",
+    "type": "Camera",
+    "description": "Retro-styled mirrorless camera with a large APS-C sensor, excellent image quality, and compatibility with Nikon Z-mount lenses for enthusiasts and photographers who value aesthetics.",
+    "price": 1499,
+    "image": "/static/img/camera/nikon-z-fc-mirrorless-camera.jpg"
+  },
+  {
+    "id": 102,
+    "name": "Apple AirPods (3rd generation)",
+    "type": "Audio",
+    "description": "Wireless earbuds with improved design, spatial audio for immersive listening experiences, and longer battery life compared to previous generations.",
+    "price": 189,
+    "image": "/static/img/audio/apple-airpods-3rd-generation.jpg"
+  },
+  {
+    "id": 103,
+    "name": "Eero Pro 6E Mesh Wi-Fi System",
+    "type": "Computer Network",
+    "description": "Mesh Wi-Fi system supporting the latest Wi-Fi 6E standard, offering faster speeds, wider coverage, and reduced network congestion for demanding users and smart home setups.",
+    "price": 399,
+    "image": "/static/img/computer/network/eero-pro-6e-mesh-wi-fi.jpg"
+  },
+  {
+    "id": 104,
+    "name": "Fujifilm X-T4 Mirrorless Camera",
+    "type": "Camera",
+    "description": "APS-C mirrorless camera with a high-resolution sensor, fast autofocus system, weather-sealed body, and excellent image quality for photography enthusiasts and professionals.",
+    "price": 1699,
+    "image": "/static/img/camera/fujifilm-x-t4-mirrorless-camera.jpg"
+  },
+  {
+    "id": 105,
+    "name": "Google Pixel 6a",
+    "type": "Phone Device",
+    "description": "Mid-range smartphone with Google's Tensor chip, excellent camera performance, and a clean Android experience at an attractive price point.",
+    "price": 299,
+    "image": "/static/img/phone/device/google-pixel-6a.jpg"
+  },
+  {
+    "id": 106,
+    "name": "Raspberry Pi 4 Model B",
+    "type": "Computer Mini-PC/SBC",
+    "description": "Popular and versatile single-board computer with a quad-core processor, ideal for learning programming, building DIY projects, and running media playback systems.",
+    "price": 85,
+    "image": "/static/img/computer/mini-pc_sbc/raspberry-pi-4-model-b.jpg"
+  },
+  {
+    "id": 107,
+    "name": "Intel NUC 12 Pro Mini PC",
+    "type": "Computer Mini-PC/SBC",
+    "description": "Compact and powerful Mini PC with a 12th Gen Intel processor, offering desktop-like performance for productivity tasks, home entertainment, and light gaming in a small form factor.",
+    "price": 429,
+    "image": "/static/img/computer/mini-pc_sbc/intel-nuc-12-pro-mini-pc.jpg"
+  },
+  {
+    "id": 108,
+    "name": "ASUS ROG Strix XG27UQ Monitor",
+    "type": "Computer Peripherals",
+    "description": "High-performance gaming monitor with a fast refresh rate, 1440p resolution, and G-SYNC compatibility for smooth and tear-free visuals during gameplay.",
+    "price": 499,
+    "image": "/static/img/computer/peripherals/asus-rog-strix-xg27uq-monitor.jpg"
+  },
+  {
+    "id": 109,
+    "name": "Odyssey G9 by Samsung",
+    "type": "Computer Peripherals",
+    "description": "Super ultrawide curved monitor with a massive screen size, high resolution, and high refresh rate for an immersive viewing experience for gaming, design work, and multitasking.",
+    "price": 1399,
+    "image": "/static/img/computer/peripherals/odyssey-g9-by-samsung.jpg"
+  },
+  {
+    "id": 110,
+    "name": "Orange Pi 5 Single-Board Computer",
+    "type": "Computer Mini-PC/SBC",
+    "description": "Cost-effective single-board computer with a Rockchip RK3566 processor, suitable for basic computing tasks, educational purposes, and hobbyist projects.",
+    "price": 55,
+    "image": "/static/img/computer/mini-pc_sbc/orange-pi-5-sbc.jpg"
+  },
+  {
+    "id": 111,
+    "name": "Geekworm Onion Omega 2",
+    "type": "Computer Mini-PC/SBC",
+    "description": "Ultra-compact and low-power single-board computer with Wi-Fi connectivity, ideal for basic development tasks, creating smart home devices, and Internet of Things (IoT) applications.",
+    "price": 15,
+    "image": "/static/img/computer/mini-pc_sbc/geekworm-onion-omega-2.jpg"
+  },
+  {
+    "id": 112,
+    "name": "LG 27GN800-B Monitor",
+    "type": "Computer Peripherals",
+    "description": "27-inch WQHD (2560x1440) monitor with a high refresh rate and IPS panel technology for excellent color accuracy and viewing angles, suitable for creative professionals and gamers.",
+    "price": 319,
+    "image": "/static/img/computer/peripherals/lg-27gn800-b-monitor.jpg"
+  },
+  {
+    "id": 113,
+    "name": "Rock Pi 4 Model B Plus",
+    "type": "Computer Mini-PC/SBC",
+    "description": "Single-board computer with a powerful RK3399 processor, offering improved performance over Raspberry Pi for running media servers, emulation, and light desktop applications.",
+    "price": 169,
+    "image": "/static/img/computer/mini-pc_sbc/rock-pi-4-model-b-plus.jpg"
+  },
+  {
+    "id": 114,
+    "name": "Apple Mac Mini (M2)",
+    "type": "Computer Mini-PC/SBC",
+    "description": "Compact and powerful Mac desktop computer with Apple's M2 chip, offering excellent performance for demanding tasks like video editing, music production, and professional workflows in a small footprint.",
+    "price": 899,
+    "image": "/static/img/computer/mini-pc_sbc/apple-mac-mini-m2.jpg"
+  },
+  {
+    "id": 115,
+    "name": "MSI Modern AM271 2K Monitor",
+    "type": "Computer Peripherals",
+    "description": "Stylish and thin-bezel monitor with a 27-inch QHD (2560x1440) resolution, built-in speakers, and a variety of connectivity options for work and entertainment.",
+    "price": 279,
+    "image": "/static/img/computer/peripherals/msi-modern-am271-2k-monitor.jpg"
+  },
+  {
+    "id": 116,
+    "name": "Sceptre Curved Gaming Monitor",
+    "type": "Computer Peripherals",
+    "description": "Curved gaming monitor with a variety of panel sizes, resolutions, and refresh rates to choose from, offering an immersive viewing experience for gamers at different budgets.",
+    "price": 319,
+    "image": "/static/img/computer/peripherals/sceptre-curved-gaming-monitor.jpg"
+  },
+  {
+    "id": 117,
+    "name": "Khadas Vim3L",
+    "type": "Computer Mini-PC/SBC",
+    "description": "Compact and low-power single-board computer with Android or Linux operating system options, suitable for media playback, retro gaming, and DIY projects with a focus on portability.",
+    "price": 45,
+    "image": "/static/img/computer/mini-pc_sbc/khadas-vim3l.jpg"
+  }
+]
