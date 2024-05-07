@@ -2,3 +2,5 @@
 api/node_modules/
 
 .idea/
+
+servJS/node_modules/
