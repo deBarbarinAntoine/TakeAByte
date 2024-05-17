@@ -41,6 +41,44 @@ try{
 }
 })
 
+app.get('/getCloseDeliveryPoint/:longitude/:latitude', async (req, res) => {
+    const { longitude, latitude } = req.params;
+    const yelpApiUrl = 'https://api.yelp.com/v3/businesses/search';
+    const yelpApiKey = 'oKVpja6MbYoVopKZDk81RsC4QMerf_ZTuYE1VIcKD9P1Im91oDAZPOs8fiuE5WIEsbRkreeSxkac7UqHaEjzvXOlYGP5qBI-IgjJfuZGtao3xPkp3jROETpgSiFHZnYx';
+    try {
+        const response = await axios.get(yelpApiUrl, {
+            headers: {
+                'Authorization': `Bearer ${yelpApiKey}`
+            },
+            params: {
+                longitude: longitude,
+                latitude: latitude,
+                radius: 1000, // Search within 1000 meters
+                categories: 'food,delivery', // Categories for food and delivery
+                limit: 10 // Limit results to 10 places
+            }
+        });
+
+        const places = response.data.businesses.map(business => ({
+            name: business.name,
+            address: business.location.address1,
+            city: business.location.city,
+            latitude: business.coordinates.latitude,
+            longitude: business.coordinates.longitude,
+            phone: business.phone,
+            rating: business.rating,
+            review_count: business.review_count,
+            url: business.url
+        }));
+
+        res.json({ places });
+
+    } catch (err) {
+        console.error('Error:', err.message);
+        res.status(500).send({ error: 'Internal Server Error' });
+    }
+});
+
 // Define the port number
 const port = 4000;
 
