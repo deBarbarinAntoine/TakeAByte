@@ -5,7 +5,7 @@ CREATE TABLE users
     mail                VARCHAR(50) NOT NULL,
     password            VARCHAR(50) NOT NULL,
     creation_date       DATETIME    NOT NULL,
-    last_connextion     DATETIME    NOT NULL,
+    last_connection     DATETIME    NOT NULL,
     country             CHAR(3),
     city                VARCHAR(50),
     Zip_Code            INT,
