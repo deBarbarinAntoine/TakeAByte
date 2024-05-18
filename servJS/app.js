@@ -2,16 +2,23 @@
 const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
+const ejs = require('ejs');
+const path = require('path');
 
 // Create an instance of Express.js
 const app = express();
 app.use(cors());
 
+// Set EJS as the view engine
+app.set('view engine', 'ejs');
 
-// Define a route
-app.get('/', (req, res) => {
-    res.send('Hello, World!');
+// Specify the directory where your EJS templates are located (optional)
+app.set('views', path.join(__dirname, 'frontEnd', 'HTML'));
+
+app.get('*', (req, res) => {
+    res.render('404', { title: 'Error not found 404 i\'m a teapot 418' });
 });
+
 
 app.get('/getAddress/:address', async (req, res) => {
 const address = req.params.address;
