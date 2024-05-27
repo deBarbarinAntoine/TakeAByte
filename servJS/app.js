@@ -17,6 +17,10 @@ app.set('view engine', 'ejs');
 // Specify the directory where your EJS templates are located
 app.set('views', path.join(__dirname, 'frontEnd', 'HTML'));
 
+// In-memory storage for favorite items and cart items
+let favoriteItems = [];
+let cartItems = [];
+
 // Define a route to get address suggestions
 app.get('/getAddress/:address', async (req, res) => {
     const address = req.params.address;
@@ -45,8 +49,8 @@ app.get('/getAddress/:address', async (req, res) => {
 });
 
 // Define a route to get close delivery points
-app.get('/getCloseDeliveryPoint/:latitude/:longitude', async (req, res) => {
-    const {latitude,longitude } = req.params;
+app.get('/getCloseDeliveryPoint/:rayon/:latitude/:longitude', async (req, res) => {
+    const {rayon,latitude,longitude } = req.params;
     const overpassApiUrl = 'https://overpass-api.de/api/interpreter';
 
     try {
@@ -54,20 +58,18 @@ app.get('/getCloseDeliveryPoint/:latitude/:longitude', async (req, res) => {
         const query = `
         [out:json][timeout:25];
         (
-          node["amenity"="post_office"](around:1000,${latitude},${longitude});
+          node["amenity"="post_office"](around:${rayon},${latitude},${longitude});
         );
         out body;
         >;
         out skel qt;
         `;
-
         // Sending the request to the Overpass API
         const response = await axios.get(overpassApiUrl, {
             params: {
                 data: query
             }
         });
-
         // Parsing the response
         const deliveryPoints = response.data.elements.map(element => ({
             name: element.tags.name || 'Unnamed',
@@ -81,6 +83,55 @@ app.get('/getCloseDeliveryPoint/:latitude/:longitude', async (req, res) => {
     } catch (err) {
         console.error('Error:', err.message);
         res.status(500).send({ error: 'Internal Server Error' });
+    }
+});
+
+// Define a route for the home page
+app.get('/address', (req, res) => {
+    res.render('index', { title: "Address and Delivery Point Finder" });
+});
+
+app.get('/fav', (req, res) => {
+    res.render('fav&cart', { title: "shop app" });
+});
+
+// Route to set/unset a favorite item
+app.get('/setFav/:id', (req, res) => {
+    const itemId = req.params.id;
+
+    if (!itemId) {
+        return res.status(400).send('Item ID is required');
+    }
+
+    const itemIndex = favoriteItems.indexOf(itemId);
+    if (itemIndex > -1) {
+        // Item is already in favorites, remove it
+        favoriteItems.splice(itemIndex, 1);
+        res.send(`Toggle favorite item ${req.params.id}`,`Item ${itemId} removed from favorites`);
+    } else {
+        // Item is not in favorites, add it
+        favoriteItems.push(itemId);
+        res.send(`Toggle favorite item ${req.params.id}`,`Item ${itemId} added to favorites`);
+    }
+});
+
+// Route to add/remove an item to/from the cart
+app.get('/addToCart/:id', (req, res) => {
+    const itemId = req.params.id;
+
+    if (!itemId) {
+        return res.status(400).send('Item ID is required');
+    }
+
+    const itemIndex = cartItems.indexOf(itemId);
+    if (itemIndex > -1) {
+        // Item is already in cart, remove it
+        cartItems.splice(itemIndex, 1);
+        res.send(`Toggle cart item ${req.params.id}`,`Item ${itemId} removed from cart`,);
+    } else {
+        // Item is not in cart, add it
+        cartItems.push(itemId);
+        res.send(`Toggle cart item ${req.params.id}`,`Item ${itemId} added to cart`);
     }
 });
 
