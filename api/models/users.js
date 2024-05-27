@@ -1,5 +1,7 @@
 const connection = require("./db-connect");
-const {getAllUsersQuery, getUserByIQuery, checkUserByCredentialsQuery, getUserByEmailQuery} = require("./db-queries");
+const mysql = require('mysql2');
+const responses = require("../helpers/responses");
+const {getAllUsersQuery, getUserByIQuery, getUserByEmailQuery, createUserQuery} = require("./db-queries");
 const {matchPwd} = require("../helpers/authentication");
 
 
@@ -36,6 +38,11 @@ class User {
         this.status = Status;
     };
 
+    constructor(Email, Hash) {
+        this.email = email;
+        this.hash = Hash;
+    }
+
     static newUsers(users) {
         const allUsers = [];
         for (let user of users) {
@@ -56,6 +63,19 @@ class User {
         }
         return {null, false};
     }
+
+    async create() {
+        try {
+            await connection.execute(createUserQuery, [this.email, this.hash]);
+        } catch (err) {
+            if (err instanceof Error) {
+                if (err.code === 1062) {
+                    throw new Error("duplicate entry");
+                }
+                throw err;
+            }
+        }
+    }
 }
 
 async function getUsers() {
@@ -74,7 +94,6 @@ async function getUserById(id) {
         return new User(rows)[0];
     } catch (err) {
         console.error('Error fetching users:', err);
-
     }
 }
 
@@ -88,4 +107,4 @@ async function getUserByEmail(email) {
 }
 
 
-module.exports = {User, getUsers, getUserById};
+module.exports = {User, getUsers, getUserById, getUserByEmail};
