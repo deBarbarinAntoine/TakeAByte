@@ -2,78 +2,118 @@ CREATE TABLE users
 (
     user_id             INT AUTO_INCREMENT,
     username            VARCHAR(25) NOT NULL,
-    mail                VARCHAR(50) NOT NULL,
+    email               VARCHAR(50) NOT NULL,
     password            CHAR(60) NOT NULL,
-    creation_date       DATETIME    NOT NULL,
-    last_connection     DATETIME    NOT NULL,
+    creation_date       DATETIME    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    last_connection     DATETIME    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     country             CHAR(3),
     city                VARCHAR(50),
-    Zip_Code            INT,
+    zip_code            VARCHAR(10),
     street_name         VARCHAR(100),
     street_number       SMALLINT,
     address_complements VARCHAR(300),
     PRIMARY KEY (user_id),
     UNIQUE (username),
-    UNIQUE (mail)
+    UNIQUE (email)
+);
+
+CREATE TABLE brands
+(
+    brand_id INT AUTO_INCREMENT,
+    name     VARCHAR(50) NOT NULL,
+    PRIMARY KEY (brand_id),
+    UNIQUE (name)
+);
+
+CREATE TABLE colors
+(
+    color_id INT AUTO_INCREMENT,
+    name     VARCHAR(50) NOT NULL,
+    PRIMARY KEY (color_id),
+    UNIQUE (name)
+);
+
+CREATE TABLE types
+(
+    type_id INT AUTO_INCREMENT,
+    name    VARCHAR(100) NOT NULL,
+    PRIMARY KEY (type_id),
+    UNIQUE (name)
 );
 
 CREATE TABLE products
 (
-    Id_products        INT AUTO_INCREMENT,
-    name               VARCHAR(100)  NOT NULL,
-    description        VARCHAR(500)  NOT NULL,
-    quantity_stocked   SMALLINT      NOT NULL,
-    price              DECIMAL(9, 2) NOT NULL,
-    processor          VARCHAR(200),
-    RAM                VARCHAR(50),
-    size               VARCHAR(50),
-    captor             VARCHAR(50),
-    weight             VARCHAR(100),
-    socket_cpu         VARCHAR(50),
-    dimension          VARCHAR(100),
-    others             VARCHAR(300),
-    connectivity         VARCHAR(500),
-    resolution         VARCHAR(100),
-    screen_type        VARCHAR(50),
-    vram               VARCHAR(100),
-    battery_power_time VARCHAR(100),
-    Type               VARCHAR(100)  NOT NULL,
-    storage            VARCHAR(20),
-    color           VARCHAR(50),
-    created_at         DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at         DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    PRIMARY KEY (Id_products)
+    product_id          INT AUTO_INCREMENT,
+    name                VARCHAR(100)  NOT NULL,
+    description         VARCHAR(500)  NOT NULL,
+    quantity_stocked    SMALLINT      NOT NULL,
+    price               DECIMAL(9, 2) NOT NULL,
+    processor           VARCHAR(200),
+    ram                 VARCHAR(50),
+    size                VARCHAR(50),
+    captor              VARCHAR(50),
+    weight              VARCHAR(100),
+    socket_cpu          VARCHAR(50),
+    dimension           VARCHAR(100),
+    others              VARCHAR(300),
+    connectivity        VARCHAR(500),
+    resolution          VARCHAR(100),
+    screen_type         VARCHAR(50),
+    vram                VARCHAR(100),
+    battery_power_time  VARCHAR(100),
+    type_id             INT,
+    storage             VARCHAR(20),
+    brand_id            INT,
+    created_at          DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at          DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (product_id),
+    FOREIGN KEY (type_id) REFERENCES types (type_id),
+    FOREIGN KEY (brand_id) REFERENCES brands (brand_id)
 );
 
-CREATE TABLE Images
+CREATE TABLE product_colors
 (
-    Id_Images   INT AUTO_INCREMENT,
+    product_id INT,
+    color_id   INT,
+    PRIMARY KEY (product_id, color_id),
+    FOREIGN KEY (product_id) REFERENCES products (product_id) ON DELETE CASCADE,
+    FOREIGN KEY (color_id) REFERENCES colors (color_id) ON DELETE CASCADE
+);
+
+CREATE TABLE images
+(
+    image_id    INT AUTO_INCREMENT,
     image_path  VARCHAR(200) NOT NULL,
     ind         INT          NOT NULL,
     upload_date DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    Id_products INT          NOT NULL,
-    PRIMARY KEY (Id_Images),
+    product_id  INT          NOT NULL,
+    PRIMARY KEY (image_id),
     UNIQUE (image_path),
-    FOREIGN KEY (Id_products) REFERENCES products (Id_products)
+    FOREIGN KEY (product_id) REFERENCES products (product_id) ON DELETE CASCADE
 );
 
 CREATE TABLE orders
 (
+    order_id        INT AUTO_INCREMENT,
     user_id         INT,
-    Id_products     INT,
+    product_id      INT,
     date_ordered_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     quantity        SMALLINT NOT NULL,
-    PRIMARY KEY (user_id, Id_products),
-    FOREIGN KEY (user_id) REFERENCES users (user_id),
-    FOREIGN KEY (Id_products) REFERENCES products (Id_products)
+    PRIMARY KEY (order_id),
+    FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES products (product_id) ON DELETE CASCADE,
+    INDEX (user_id),
+    INDEX (product_id)
 );
 
 CREATE TABLE likes
 (
-    user_id     INT,
-    Id_products INT,
+    user_id    INT,
+    product_id INT,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (user_id, Id_products),
-    FOREIGN KEY (user_id) REFERENCES users (user_id),
-    FOREIGN KEY (Id_products) REFERENCES products (Id_products)
+    PRIMARY KEY (user_id, product_id),
+    FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES products (product_id) ON DELETE CASCADE,
+    INDEX (user_id),
+    INDEX (product_id)
 );
