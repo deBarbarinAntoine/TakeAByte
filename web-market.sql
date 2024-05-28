@@ -117,3 +117,17 @@ CREATE TABLE likes
     INDEX (user_id),
     INDEX (product_id)
 );
+
+CREATE TABLE sales
+(
+    sale_id      INT AUTO_INCREMENT,
+    product_id   INT,
+    sale_price   DECIMAL(9, 2) NOT NULL,
+    start_date   DATETIME      NOT NULL,
+    end_date     DATETIME      NOT NULL,
+    created_at   DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at   DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (sale_id),
+    FOREIGN KEY (product_id) REFERENCES products (product_id) ON DELETE CASCADE,
+    INDEX (product_id)
+);
