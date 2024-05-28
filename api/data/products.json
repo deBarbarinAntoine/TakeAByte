@@ -13,8 +13,9 @@
     "screen_type": "AMOLED",
     "resolution": "1440 x 3088",
     "camera": "Quad-lens camera system",
-    "connectivity": "USB-C, Wi-Fi 6E, Bluetooth 5.2",
-    "operating_system": "Android"
+    "connectivity": "USB-C,Wi-Fi 6E,Bluetooth 5.2",
+    "operating_system": "Android",
+    "brand": "Samsung"
   },
   {
     "id": 2,
@@ -24,7 +25,8 @@
     "price": 400,
     "image": "/static/img/audio/sony-wh-1000xm5.jpg",
     "battery_power_time": "Up to 40 hours (with noise cancellation)",
-    "connectivity": "Bluetooth 5.2"
+    "connectivity": "Bluetooth 5.2",
+    "brand": "Sony"
   },
   {
     "id": 3,
@@ -38,8 +40,9 @@
     "storage": "256GB",
     "screen_type": "Retina",
     "resolution": "13.6\" (2534 x 1664)",
-    "connectivity": "2x Thunderbolt 4 ports, USB-A port, MagSafe 3 port",
-    "operating_system": "macOS"
+    "connectivity": "2x Thunderbolt 4 ports,USB-A port,MagSafe 3 port",
+    "operating_system": "macOS",
+    "brand": "Apple"
   },
   {
     "id": 4,
@@ -49,7 +52,8 @@
     "price": 329,
     "image": "/static/img/smartwatch/fitbit-sense-2.jpg",
     "battery_power_time": "Up to 6 days",
-    "connectivity": "Bluetooth"
+    "connectivity": "Bluetooth",
+    "brand": "Fitbit"
   },
   {
     "id": 5,
@@ -59,7 +63,8 @@
     "price": 2498,
     "image": "/static/img/camera/sony-a7-iv.jpg",
     "sensor": "Full-frame",
-    "megapixels": "33MP"
+    "megapixels": "33MP",
+    "brand": "Sony"
   },
   {
     "id": 6,
@@ -69,7 +74,8 @@
     "price": 309,
     "image": "/static/img/smartwatch/samsung-galaxy-watch-5-pro.jpg",
     "battery_power_time": "Up to 5 days",
-    "connectivity": "Bluetooth"
+    "connectivity": "Bluetooth",
+    "brand": "Samsung"
   },
   {
     "id": 7,
@@ -79,7 +85,8 @@
     "price": 99,
     "image": "/static/img/audio/google-nest-hub.jpg",
     "display_size": "7 inches",
-    "connectivity": "Wi-Fi"
+    "connectivity": "Wi-Fi",
+    "brand": "Google"
   },
   {
     "id": 8,
@@ -90,7 +97,8 @@
     "image": "/static/img/camera/dji-osmo-action-3.jpg",
     "battery_power_time": "Up to 145 minutes (4K/30fps)",
     "resolution": "4K",
-    "connectivity": "USB-C"
+    "connectivity": "USB-C",
+    "brand": "DJI"
   },
   {
     "id": 9,
@@ -100,17 +108,20 @@
     "price": 499,
     "image": "/static/img/gaming/sony-playstation-5.jpg",
     "storage": "825GB",
-    "connectivity": "HDMI, USB-A, USB-C"
-  },{
-  "id": 10,
-  "name": "Apple AirPods Pro",
-  "type": "Audio",
-  "description": "Active noise cancellation, transparency mode, and a snug fit for superior sound quality.",
-  "price": 249,
-  "image": "/static/img/audio/apple-airpods-pro.jpg",
-  "battery_power_time": "Up to 4.5 hours",
-  "connectivity": "Bluetooth"
-},
+    "connectivity": "HDMI,USB-A,USB-C",
+    "brand": "Sony"
+  },
+  {
+    "id": 10,
+    "name": "Apple AirPods Pro",
+    "type": "Audio",
+    "description": "Active noise cancellation, transparency mode, and a snug fit for superior sound quality.",
+    "price": 249,
+    "image": "/static/img/audio/apple-airpods-pro.jpg",
+    "battery_power_time": "Up to 4.5 hours",
+    "connectivity": "Bluetooth",
+    "brand": "Apple"
+  },
   {
     "id": 11,
     "name": "Samsung Galaxy Tab S8 Ultra",
@@ -123,7 +134,8 @@
     "storage": "256GB",
     "battery_power_time": "Up to 14 hours (video playback)",
     "resolution": "14.6\" (2960 x 1848)",
-    "connectivity": "USB-C"
+    "connectivity": "USB-C",
+    "brand": "Samsung"
   },
   {
     "id": 12,
@@ -134,7 +146,8 @@
     "image": "/static/img/camera/gopro-hero10-black.jpg",
     "resolution": "5.3K",
     "battery_power_time": "Up to 70 minutes (5.3K/30fps)",
-    "connectivity": "USB-C"
+    "connectivity": "USB-C",
+    "brand": "GoPro"
   },
   {
     "id": 13,
@@ -144,7 +157,8 @@
     "price": 349,
     "image": "/static/img/gaming/nintendo-switch-oled.jpg",
     "storage": "64GB",
-    "connectivity": "HDMI, USB-C"
+    "connectivity": "HDMI,USB-C",
+    "brand": "Nintendo"
   },
   {
     "id": 14,
@@ -152,16 +166,18 @@
     "type": "Computer Network",
     "description": "Mesh Wi-Fi router system for whole-home coverage, fast speeds, and easy setup.",
     "price": 399,
-    "image": "/static/img/computer/network/nest-wifi-pro.jpg"
+    "image": "/static/img/computer/network/nest-wifi-pro.jpg",
+    "brand": "Nest"
   },
   {
-  "id": 15,
-  "name": "Meta Quest 2",
-  "type": "Gaming",
-  "description": "Virtual reality headset for gaming, fitness, and exploring virtual worlds.",
-  "price": 399,
-  "image": "/static/img/gaming/meta-quest-2.jpg",
-  "connectivity": "Wi-Fi"
+    "id": 15,
+    "name": "Meta Quest 2",
+    "type": "Gaming",
+    "description": "Virtual reality headset for gaming, fitness, and exploring virtual worlds.",
+    "price": 399,
+    "image": "/static/img/gaming/meta-quest-2.jpg",
+    "connectivity": "Wi-Fi",
+    "brand": "Meta"
   },
   {
     "id": 16,
@@ -172,7 +188,8 @@
     "image": "/static/img/smartwatch/garmin-forerunner-255-music.jpg",
     "battery_power_time": "Up to 14 days",
     "storage": "16GB",
-    "connectivity": "Bluetooth"
+    "connectivity": "Bluetooth",
+    "brand": "Garmin"
   },
   {
     "id": 17,
@@ -186,7 +203,8 @@
     "storage": "64GB",
     "battery_power_time": "Up to 10 hours (Wi-Fi browsing)",
     "resolution": "8.3\" (1488 x 2532)",
-    "connectivity": "USB-C"
+    "connectivity": "USB-C",
+    "brand": "Apple"
   },
   {
     "id": 18,
@@ -199,7 +217,8 @@
     "storage": "128GB",
     "battery_power_time": "Up to 12 hours",
     "connectivity": "USB-C",
-    "operating_system": "Chrome OS"
+    "operating_system": "Chrome OS",
+    "brand": "Google"
   },
   {
     "id": 19,
@@ -207,7 +226,8 @@
     "type": "Phone Chargers",
     "description": "Wireless charging pad for iPhone, Apple Watch, and AirPods for convenient simultaneous charging.",
     "price": 99,
-    "image": "/static/img/phone/chargers/belkin-boostcharge-pro-3-in-1-wireless-charging-pad.jpg"
+    "image": "/static/img/phone/chargers/belkin-boostcharge-pro-3-in-1-wireless-charging-pad.jpg",
+    "brand": "Belkin"
   },
   {
     "id": 20,
