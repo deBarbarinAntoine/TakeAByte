@@ -1,18 +1,13 @@
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 
 const saltRounds = 12;
 
-function newHash(pwd) {
-    bcrypt.hash(pwd, saltRounds, function (err, hash) {
-        if (err) {
-            throw err;
-        }
-        return hash;
-    });
+async function newHash(pwd) {
+    return await bcrypt.hash(pwd, saltRounds);
 }
 
-function matchPwd(user, pwd) {
-    bcrypt.compare(pwd, user.hash, function (err, result) {
+async function matchPwd(user, pwd) {
+    return await bcrypt.compare(pwd, user.hash, function (err, result) {
         if (err) {
             console.error(err);
             return false;

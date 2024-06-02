@@ -4,13 +4,13 @@ const ajv = new Ajv();
 const userModel = require('../schemas/new_user');
 const credentials = require('../schemas/credentials');
 
-export const validateNewUser = ajv.compile(userModel);
-export const validateCredentials = ajv.compile(credentials);
+const validateNewUser = ajv.compile(userModel);
+const validateCredentials = ajv.compile(credentials);
 
-export const emailRX = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-export const passwordRX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+const emailRX = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+const passwordRX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
 
-export class Validator {
+class Validator {
     errors
 
     constructor(errors) {
@@ -33,18 +33,24 @@ export class Validator {
     }
 
     valid() {
-        return this.errors.length === 0;
+        return this.errors.size === 0;
+    }
+
+    output() {
+        return Object.fromEntries(this.errors);
     }
 }
 
-export function checkLength(data, min, max) {
+function checkLength (data, min, max) {
     return (data.length <= max && data.length >= min);
 }
 
-export function matches(data, regex) {
+function matches (data, regex) {
     return regex.test(data);
 }
 
-export function notEmpty(data) {
+function notEmpty (data) {
     return data.length !== 0;
 }
+
+module.exports = {Validator, validateNewUser, validateCredentials, checkLength, matches, notEmpty, emailRX, passwordRX};

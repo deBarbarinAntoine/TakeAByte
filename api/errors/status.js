@@ -1,76 +1,150 @@
 
-export const StatusOK = 200;
-export const StatusCreated = 201;
-export const StatusAccepted = 202;
-export const StatusNonAuthoritativeInformation = 203;
-export const StatusNoContent = 204;
-export const StatusResetContent = 205;
-export const StatusPartialContent = 206;
-export const StatusMultiStatus = 207;
-export const StatusAlreadyReported = 208;
-export const StatusThisIsFine = 218;
-export const StatusIMUsed = 226;
+const StatusOK = 200;
+const StatusCreated = 201;
+const StatusAccepted = 202;
+const StatusNonAuthoritativeInformation = 203;
+const StatusNoContent = 204;
+const StatusResetContent = 205;
+const StatusPartialContent = 206;
+const StatusMultiStatus = 207;
+const StatusAlreadyReported = 208;
+const StatusThisIsFine = 218;
+const StatusIMUsed = 226;
 
-export const StatusBadRequest = 400;
-export const StatusUnauthorized = 401;
-export const StatusPaymentRequired = 402;
-export const StatusForbidden = 403;
-export const StatusNotFound = 404;
-export const StatusMethodNotAllowed = 405;
-export const StatusNotAcceptable = 406;
-export const StatusProxyAuthenticationRequired = 407;
-export const StatusRequestTimeout = 408;
-export const StatusConflict = 409;
-export const StatusGone = 410;
-export const StatusLengthRequired = 411;
-export const StatusPreconditionFailed = 412;
-export const StatusRequestEntityTooLarge = 413;
-export const StatusRequestURITooLong = 414;
-export const StatusUnsupportedMediaType = 415;
-export const StatusRequestedRangeNotSatisfiable = 416;
-export const StatusExpectationFailed = 417;
-export const StatusIMATeapot = 418;
-export const StatusPageExpired = 419;
-export const StatusMethodFailure = 420;
-export const StatusMisdirectedRequest = 421;
-export const StatusUnprocessableEntity = 422;
-export const StatusLocked = 423;
-export const StatusFailedDependency = 424;
-export const StatusUpgradeRequired = 426;
-export const StatusPreconditionRequired = 428;
-export const StatusTooManyRequests = 429;
-export const StatusRequestHeaderFieldsTooLarge = 431;
-export const StatusLoginTimeout = 440;
-export const StatusConnectionClosedWithoutResponse = 444;
-export const StatusRetryWith = 449;
-export const StatusBlockedByWindowsParentalControls = 450;
-export const StatusUnavailableForLegalReasons = 451;
-export const StatusRequestHeaderTooLarge = 494;
-export const StatusSSLCertificateError = 495;
-export const StatusSSLCertificateRequired = 496;
-export const StatusHTTPRequestSentToHTTPSPort = 497;
-export const StatusInvalidToken = 498;
-export const StatusClientClosedRequest = 499;
+const StatusBadRequest = 400;
+const StatusUnauthorized = 401;
+const StatusPaymentRequired = 402;
+const StatusForbidden = 403;
+const StatusNotFound = 404;
+const StatusMethodNotAllowed = 405;
+const StatusNotAcceptable = 406;
+const StatusProxyAuthenticationRequired = 407;
+const StatusRequestTimeout = 408;
+const StatusConflict = 409;
+const StatusGone = 410;
+const StatusLengthRequired = 411;
+const StatusPreconditionFailed = 412;
+const StatusRequestEntityTooLarge = 413;
+const StatusRequestURITooLong = 414;
+const StatusUnsupportedMediaType = 415;
+const StatusRequestedRangeNotSatisfiable = 416;
+const StatusExpectationFailed = 417;
+const StatusIMATeapot = 418;
+const StatusPageExpired = 419;
+const StatusMethodFailure = 420;
+const StatusMisdirectedRequest = 421;
+const StatusUnprocessableEntity = 422;
+const StatusLocked = 423;
+const StatusFailedDependency = 424;
+const StatusUpgradeRequired = 426;
+const StatusPreconditionRequired = 428;
+const StatusTooManyRequests = 429;
+const StatusRequestHeaderFieldsTooLarge = 431;
+const StatusLoginTimeout = 440;
+const StatusConnectionClosedWithoutResponse = 444;
+const StatusRetryWith = 449;
+const StatusBlockedByWindowsParentalControls = 450;
+const StatusUnavailableForLegalReasons = 451;
+const StatusRequestHeaderTooLarge = 494;
+const StatusSSLCertificateError = 495;
+const StatusSSLCertificateRequired = 496;
+const StatusHTTPRequestSentToHTTPSPort = 497;
+const StatusInvalidToken = 498;
+const StatusClientClosedRequest = 499;
 
-export const StatusInternalServerError = 500;
-export const StatusNotImplemented = 501;
-export const StatusBadGateway = 502;
-export const StatusServiceUnavailable = 503;
-export const StatusGatewayTimeout = 504;
-export const StatusHTTPVersionNotSupported = 505;
-export const StatusVariantAlsoNegotiates = 506;
-export const StatusInsufficientStorage = 507;
-export const StatusLoopDetected = 508;
-export const StatusBandwidthLimitExceeded = 509;
-export const StatusNotExtended = 510;
-export const StatusNetworkAuthenticationRequired = 511;
-export const StatusUnknownError = 520;
-export const StatusWebServerIsDown = 521;
-export const StatusConnectionTimedOut = 522;
-export const StatusOriginIsUnreachable = 523;
-export const StatusATimeoutOccurred = 524;
-export const StatusSSLHandshakeFailed = 525;
-export const StatusInvalidSSLCertificate = 526;
-export const StatusRailgunListenertoOriginError = 527;
-export const StatusOriginDNSError = 530;
-export const StatusNetworkReadTimeoutError = 598;
+const StatusInternalServerError = 500;
+const StatusNotImplemented = 501;
+const StatusBadGateway = 502;
+const StatusServiceUnavailable = 503;
+const StatusGatewayTimeout = 504;
+const StatusHTTPVersionNotSupported = 505;
+const StatusVariantAlsoNegotiates = 506;
+const StatusInsufficientStorage = 507;
+const StatusLoopDetected = 508;
+const StatusBandwidthLimitExceeded = 509;
+const StatusNotExtended = 510;
+const StatusNetworkAuthenticationRequired = 511;
+const StatusUnknownError = 520;
+const StatusWebServerIsDown = 521;
+const StatusConnectionTimedOut = 522;
+const StatusOriginIsUnreachable = 523;
+const StatusATimeoutOccurred = 524;
+const StatusSSLHandshakeFailed = 525;
+const StatusInvalidSSLCertificate = 526;
+const StatusRailgunListenertoOriginError = 527;
+const StatusOriginDNSError = 530;
+const StatusNetworkReadTimeoutError = 598;
+
+module.exports = {StatusOK,
+    StatusCreated,
+    StatusAccepted,
+    StatusNonAuthoritativeInformation,
+    StatusNoContent,
+    StatusResetContent,
+    StatusPartialContent,
+    StatusMultiStatus,
+    StatusAlreadyReported,
+    StatusThisIsFine,
+    StatusIMUsed,
+    StatusBadRequest,
+    StatusUnauthorized,
+    StatusPaymentRequired,
+    StatusForbidden,
+    StatusNotFound,
+    StatusMethodNotAllowed,
+    StatusNotAcceptable,
+    StatusProxyAuthenticationRequired,
+    StatusRequestTimeout,
+    StatusConflict,
+    StatusGone,
+    StatusLengthRequired,
+    StatusPreconditionFailed,
+    StatusRequestEntityTooLarge,
+    StatusRequestURITooLong,
+    StatusUnsupportedMediaType,
+    StatusRequestedRangeNotSatisfiable,
+    StatusExpectationFailed,
+    StatusIMATeapot,
+    StatusPageExpired,
+    StatusMethodFailure,
+    StatusMisdirectedRequest,
+    StatusUnprocessableEntity,
+    StatusLocked,
+    StatusFailedDependency,
+    StatusUpgradeRequired,
+    StatusPreconditionRequired,
+    StatusTooManyRequests,
+    StatusRequestHeaderFieldsTooLarge,
+    StatusLoginTimeout,
+    StatusConnectionClosedWithoutResponse,
+    StatusRetryWith,
+    StatusBlockedByWindowsParentalControls,
+    StatusUnavailableForLegalReasons,
+    StatusRequestHeaderTooLarge,
+    StatusSSLCertificateError,
+    StatusSSLCertificateRequired,
+    StatusHTTPRequestSentToHTTPSPort,
+    StatusInvalidToken,
+    StatusClientClosedRequest,
+    StatusInternalServerError,
+    StatusNotImplemented,
+    StatusBadGateway,
+    StatusServiceUnavailable,
+    StatusGatewayTimeout,
+    StatusHTTPVersionNotSupported,
+    StatusVariantAlsoNegotiates,
+    StatusInsufficientStorage,
+    StatusLoopDetected,
+    StatusBandwidthLimitExceeded,
+    StatusNotExtended,
+    StatusNetworkAuthenticationRequired,
+    StatusUnknownError,
+    StatusWebServerIsDown,
+    StatusConnectionTimedOut,
+    StatusOriginIsUnreachable,
+    StatusATimeoutOccurred,
+    StatusSSLHandshakeFailed,
+    StatusInvalidSSLCertificate,
+    StatusRailgunListenertoOriginError,
+    StatusOriginDNSError,
+    StatusNetworkReadTimeoutError};

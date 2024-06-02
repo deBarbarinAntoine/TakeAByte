@@ -1,11 +1,11 @@
 const connection = require("./db-connect");
 const mysql = require('mysql2');
 const responses = require("../helpers/responses");
-const {getAllUsersQuery, getUserByIQuery, getUserByEmailQuery, createUserQuery} = require("./db-queries");
+const {getAllUsersQuery, getUserByIdQuery, getUserByEmailQuery, createUserQuery} = require("./db-queries");
 const {matchPwd} = require("../helpers/authentication");
 
-export const errDuplicateEmail = new Error('duplicate email address');
-export const errDuplicateUsername = new Error('duplicate username');
+exports.errDuplicateEmail = new Error('duplicate email address');
+exports.errDuplicateUsername = new Error('duplicate username');
 
 class User {
     id;
@@ -24,6 +24,7 @@ class User {
     status;
 
     constructor(Id_users, Username, Email, Hash, Created_at, Updated_at, Visited_at, Country, City, ZipCode, StreetName, StreetNb, AddressComplement, Status) {
+        console.log(`args: ${Id_users}, ${Username}, ${Email}, ${Hash}, ${Created_at}, ${Updated_at}, ${Visited_at}, ${Country}, ${City}, ${ZipCode}, ${StreetName}, ${StreetNb}, ${AddressComplement}, ${Status}`);
         this.id = Id_users;
         this.username = Username;
         this.email = Email;
@@ -40,11 +41,6 @@ class User {
         this.status = Status;
     };
 
-    constructor(Email, Hash) {
-        this.email = email;
-        this.hash = Hash;
-    }
-
     static newUsers(users) {
         const allUsers = [];
         for (let user of users) {
@@ -53,21 +49,13 @@ class User {
         return allUsers;
     }
 
-
-    async static checkCredentials(Email, Password) {
-        try {
-            const user = await getUserByEmail(Email);
-        } catch (err) {
-            console.error('Error checking credentials:', err);
-        }
-        if (matchPwd(user, Password)) {
-            return {user, true};
-        }
-        return {null, false};
+    static New(Username, Email, Hash) {
+        return new User(undefined, Username, Email, Hash, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined);
     }
 
     async create() {
-        let res = await connection.execute(createUserQuery, [this.email, this.hash], (err, result) => {
+        console.log (`email: ${this.email}; hash: ${this.hash}`);
+        return connection.execute(createUserQuery, [this.username, this.email, this.hash], (err, result) => {
             if (err) {
                 if (err.code === "1062") {
                     if (err.message.includes('email')) {
@@ -78,7 +66,6 @@ class User {
                 }
                 throw err;
             }
-            this.id = result.insertId;
         });
     }
 
@@ -93,6 +80,23 @@ class User {
     }
 }
 
+
+async function checkCredentials(Email, Password) {
+    let user = {};
+    try {
+        user = await getUserByEmail(Email);
+    } catch (err) {
+        console.error('Error checking credentials:', err);
+    }
+    console.log(`user: ${JSON.stringify(user)}`);
+    const isValid = matchPwd(user, Password);
+    console.log(`isValid: ${isValid}`);
+    if (isValid) {
+        return [user, true];
+    }
+    return [null, false];
+}
+
 async function getUsers() {
     try {
         const [rows] = await connection.query(getAllUsersQuery);
@@ -105,7 +109,7 @@ async function getUsers() {
 
 async function getUserById(id) {
     try {
-        const [rows] = await connection.query(getUserByIQuery, [id]);
+        const [rows] = await connection.query(getUserByIdQuery, [id]);
         return new User(rows)[0];
     } catch (err) {
         console.error('Error fetching users:', err);
@@ -114,12 +118,13 @@ async function getUserById(id) {
 
 async function getUserByEmail(email) {
     try {
-        const [rows] = await connection.query(getUserByEmailQuery, [email]);
-        return new User(rows)[0];
+        const [row] = await connection.query(getUserByEmailQuery, [email]);
+        console.log(`row: ${JSON.stringify(row[0])}`);
+        console.log(`id: ${row[0].user_id}`);
+        return new User(row[0].user_id, row[0].username, row[0].email, row[0].password, row[0].creation_date, undefined, row[0].last_connection, row[0].country, row[0].city, row[0].zip_code, row[0].street_name, row[0].street_number, row[0].address_complements, undefined);
     } catch (err) {
         console.error('Error fetching users:', err);
     }
 }
 
-
-module.exports = {User, getUsers, getUserById, getUserByEmail};
+module.exports = {User, getUsers, getUserById, getUserByEmail, checkCredentials};

@@ -1,5 +1,7 @@
 const crypto = require('crypto');
 
-export function generateToken() {
+function generateToken() {
     return crypto.randomBytes(64).toString('base64url')
 }
+
+module.exports = {generateToken};
