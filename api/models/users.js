@@ -4,6 +4,8 @@ const responses = require("../helpers/responses");
 const {getAllUsersQuery, getUserByIQuery, getUserByEmailQuery, createUserQuery} = require("./db-queries");
 const {matchPwd} = require("../helpers/authentication");
 
+export const errDuplicateEmail = new Error('duplicate email address');
+export const errDuplicateUsername = new Error('duplicate username');
 
 class User {
     id;
@@ -65,16 +67,29 @@ class User {
     }
 
     async create() {
-        try {
-            await connection.execute(createUserQuery, [this.email, this.hash]);
-        } catch (err) {
-            if (err instanceof Error) {
-                if (err.code === 1062) {
-                    throw new Error("duplicate entry");
+        let res = await connection.execute(createUserQuery, [this.email, this.hash], (err, result) => {
+            if (err) {
+                if (err.code === "1062") {
+                    if (err.message.includes('email')) {
+                        throw errDuplicateEmail;
+                    } else if (err.message.includes('username')) {
+                        throw errDuplicateUsername;
+                    }
                 }
                 throw err;
             }
-        }
+            this.id = result.insertId;
+        });
+    }
+
+    toJson() {
+        return Object.fromEntries(
+            Object.entries(this).
+            filter(([k]) => {
+                    return k !== 'hash';
+                }
+            )
+        );
     }
 }
 

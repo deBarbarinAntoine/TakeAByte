@@ -1,8 +1,8 @@
 const response = require('../errors/status');
 
-export function serverErrorResponse(res, status, error) {
+export function serverErrorResponse(res, error) {
     console.log(`error: ${error}`);
-    res.status(status).json({error: "internal server error"});
+    res.status(response.StatusInternalServerError).json({error: "internal server error"});
 }
 
 export function notFoundErrorResponse(res, error) {
@@ -10,9 +10,12 @@ export function notFoundErrorResponse(res, error) {
     res.status(response.StatusNotFound).json({error: "resource not found"});
 }
 
-export function badRequestErrorResponse(res, error) {
+export function badRequestErrorResponse(res, error, message) {
     console.log(`error: ${error}`);
-    res.status(response.StatusBadRequest).json({error: "bad request"});
+    res.status(response.StatusBadRequest).json({
+        status: "bad request",
+        message: message
+    });
 }
 
 export function methodNotAllowedErrorResponse(res, error) {
@@ -22,7 +25,7 @@ export function methodNotAllowedErrorResponse(res, error) {
 
 export function unauthorizedErrorResponse(res, error) {
     console.log(`error: ${error}`);
-    res.status(response.StatusUnauthorized).json({error: "unauthorized"});
+    res.status(response.StatusUnauthorized).json({error: "unauthorized or invalid credentials"});
 }
 
 export function forbiddenErrorResponse(res, error) {
@@ -30,7 +33,10 @@ export function forbiddenErrorResponse(res, error) {
     res.status(response.StatusForbidden).json({error: "forbidden"});
 }
 
-export function conflictErrorResponse(res, error) {
+export function conflictErrorResponse(res, error, message) {
     console.log(`error: ${error}`);
-    res.status(response.StatusConflict).json({error: "conflict"});
+    res.status(response.StatusConflict).json({
+        status: "conflict",
+        message: message
+    });
 }
