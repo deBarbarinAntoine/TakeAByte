@@ -6,14 +6,27 @@ const {serverErrorResponse,
     forbiddenErrorResponse,
     conflictErrorResponse} = require('../helpers/responses');
 const response = require('../errors/status');
+const {getToken} = require("../models/tokens");
 
-async function authenticate(req, res) {
+async function authenticate(req, res, next) {
     const bearer = req.headers['Authorization'].split(' ')[1];
     if (!bearer) {
-        return res.status(response.StatusUnauthorized).send('No token provided');
+        unauthorizedErrorResponse(res, new Error('no token provided'));
+        return;
     }
     if (bearer.length !== 86) {
-        return res.status(response.StatusUnauthorized).send('Invalid token');
+        unauthorizedErrorResponse(res, new Error('invalid token format'));
+        return;
+    }
+    const [expiry, ok] = await getToken(bearer);
+    if (!ok) {
+        unauthorizedErrorResponse(res, new Error('invalid token'));
+        return;
+    }
+    if (expiry < date.now()) {
+        unauthorizedErrorResponse(res, new Error('token has expired'));
+        return;
     }
 
+    next();
 }

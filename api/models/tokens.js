@@ -38,13 +38,13 @@ class Token {
     }
 }
 
-async function get(token) {
+async function getToken(token) {
     const hash = hash(this.token);
     const [rows] = await connection.query(getTokenQuery, [token]);
-    if (rows[0] === 0) {
+    if (rows[0].affectedRows === 0) {
         return [null, false];
     }
-
+    return [rows[0].end_date, true];
 }
 
 function hash(token) {
@@ -56,4 +56,4 @@ function getExpiryTime() {
 }
 
 
-module.exports = {token: Token};
+module.exports = {token: Token, getToken};
