@@ -10,3 +10,5 @@ router.get('/api/orders/:order_id', getOrderData);
 router.get('/api/users/:user_id/orders', getUserOrdersData);
 // GET /api/products/{product_id}/orders: Retrieve orders for a specific product.
 router.get('/api/products/:product_id/orders', getOrdersOfProduct);
+
+module.exports = router;
