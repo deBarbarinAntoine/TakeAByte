@@ -4,7 +4,7 @@ CREATE TABLE users
     username            VARCHAR(25)  NOT NULL,
     email               VARCHAR(100) NOT NULL,
     password_hash       CHAR(60)     NOT NULL,
-    creation_date       DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_at          DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at          DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     country             CHAR(3),
     city                VARCHAR(50),
@@ -125,12 +125,13 @@ CREATE TABLE sales
     product_id INT,
     sale_price DECIMAL(9, 2) NOT NULL,
     start_date DATETIME      NOT NULL,
-    end_date   DATETIME      NOT NULL CHECK (end_date > start_date),
+    end_date   DATETIME      NOT NULL,
     created_at DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (sale_id),
     FOREIGN KEY (product_id) REFERENCES products (product_id) ON DELETE CASCADE,
-    INDEX (product_id)
+    INDEX (product_id),
+    CHECK ( end_date > start_date )
 ) ENGINE = INNODB;
 
 CREATE TABLE token

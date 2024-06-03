@@ -14,31 +14,26 @@ class User {
     hash;
     createdAt;
     updatedAt;
-    visitedAt;
     country;
     city;
     zipCode;
     streetName;
     streetNb;
     addressComplements;
-    status;
 
-    constructor(Id_users, Username, Email, Hash, Created_at, Updated_at, Visited_at, Country, City, ZipCode, StreetName, StreetNb, AddressComplement, Status) {
-        console.log(`args: ${Id_users}, ${Username}, ${Email}, ${Hash}, ${Created_at}, ${Updated_at}, ${Visited_at}, ${Country}, ${City}, ${ZipCode}, ${StreetName}, ${StreetNb}, ${AddressComplement}, ${Status}`);
+    constructor(Id_users, Username, Email, Hash, Created_at, Updated_at, Country, City, ZipCode, StreetName, StreetNb, AddressComplement) {
         this.id = Id_users;
         this.username = Username;
         this.email = Email;
         this.hash = Hash;
         this.createdAt = Created_at;
         this.updatedAt = Updated_at;
-        this.visitedAt = Visited_at;
         this.country = Country;
         this.city = City;
         this.zipCode = ZipCode;
         this.streetName = StreetName;
         this.streetNb = StreetNb;
         this.addressComplements = AddressComplement;
-        this.status = Status;
     };
 
     static newUsers(users) {
@@ -50,7 +45,7 @@ class User {
     }
 
     static New(Username, Email, Hash) {
-        return new User(undefined, Username, Email, Hash, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined);
+        return new User(undefined, Username, Email, Hash, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined);
     }
 
     async create() {
@@ -89,7 +84,7 @@ async function checkCredentials(Email, Password) {
         console.error('Error checking credentials:', err);
     }
     console.log(`user: ${JSON.stringify(user)}`);
-    const isValid = matchPwd(user, Password);
+    const isValid = await matchPwd(user, Password);
     console.log(`isValid: ${isValid}`);
     if (isValid) {
         return [user, true];
@@ -100,6 +95,7 @@ async function checkCredentials(Email, Password) {
 async function getUsers() {
     try {
         const [rows] = await connection.query(getAllUsersQuery);
+
         return User.newUsers(rows);
     } catch (err) {
         console.error('Error fetching users:', err);
@@ -110,7 +106,8 @@ async function getUsers() {
 async function getUserById(id) {
     try {
         const [rows] = await connection.query(getUserByIdQuery, [id]);
-        return new User(rows)[0];
+
+        return new User(rows[0]);
     } catch (err) {
         console.error('Error fetching users:', err);
     }
@@ -119,9 +116,8 @@ async function getUserById(id) {
 async function getUserByEmail(email) {
     try {
         const [row] = await connection.query(getUserByEmailQuery, [email]);
-        console.log(`row: ${JSON.stringify(row[0])}`);
-        console.log(`id: ${row[0].user_id}`);
-        return new User(row[0].user_id, row[0].username, row[0].email, row[0].password, row[0].creation_date, undefined, row[0].last_connection, row[0].country, row[0].city, row[0].zip_code, row[0].street_name, row[0].street_number, row[0].address_complements, undefined);
+
+        return new User(row[0].user_id, row[0].username, row[0].email, row[0].password, row[0].creation_date, row[0].updatedAt, row[0].country, row[0].city, row[0].zip_code, row[0].street_name, row[0].street_number, row[0].address_complements);
     } catch (err) {
         console.error('Error fetching users:', err);
     }
