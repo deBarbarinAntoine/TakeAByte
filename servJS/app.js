@@ -11,6 +11,9 @@ require('ejs');
 const app = express();
 app.use(cors());
 
+// Serve static files
+app.use('/static', express.static('./frontEnd/static'));
+
 // Set EJS as the view engine
 app.set('view engine', 'ejs');
 

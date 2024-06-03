@@ -100,6 +100,7 @@ CREATE TABLE orders
     product_id      INT,
     date_ordered_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     quantity        SMALLINT NOT NULL CHECK (quantity > 0) DEFAULT 1,
+    status          ENUM('ordered', 'on_the_way', 'delivered') NOT NULL DEFAULT 'ordered',
     PRIMARY KEY (order_id),
     FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES products (product_id) ON DELETE CASCADE,

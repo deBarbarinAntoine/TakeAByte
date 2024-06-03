@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title><%= title %></title>
+</head>
+<body>
+    <header class="header">
+        <div class="header-ctn">
+            <div class="logo">
+                <img src="/static/img/logo/logo_transparent.png" alt="TakeAByte logo" class="logo-img" />
+            </div>
+            <nav class="header-nav">
+                <div class="header-link">
+                    <a href="/discovery">Discovery</a>
+                    <div class="discovery-expandable">
+                        <img src="/static/img/icon/simple-arrow.png" alt="arrow-expand icon" class="expand-icon" />
+                    </div>
+                </div>
+                <div class="header-link">
+                    <a href="/offers">Offers</a>
+                </div>
+                <div class="header-link">
+                    <a href="/contact-us">Contact us</a>
+                </div>
+            </nav>
+            <div class="header-btns">
+                <% if (isAuthenticated) { %>
+                    <div class="account-btn"><img src="/static/img/icon/login.png" alt="login icon" /></div>
+                <% } else { %>
+                    <div class="account-btn"><img src="/static/img/icon/logout.png" alt="logout icon" /></div>
+                <% } %>
+                    <div class="cart-btn"><img src="/static/img/icon/cart.png" alt="cart icon" /></div>
+            </div>
+        </div>
+    </header>
+
+    <section class="template-page">
+        <!--        include page template       -->
+    </section>
+
+    <footer class="footer">
+        <div class="footer-line"></div>
+        <div class="footer-ctn">
+            <div class="footer-left">
+                <div class="footer-logo"><img src="/static/img/logo/logo_transparent_inverted.png" alt="TakeAByte logo" /></div>
+                <div class="footer-slogan"><% slogan %></div>
+            </div>
+            <div class="footer-links">
+                <div class="link-group">
+                    <span class="title">Discovery</span>
+                    <a href="/offers">Offers</a>
+                    <a href="/popular">Popular</a>
+                    <a href="/latest">New</a>
+                </div>
+                <div class="link-group">
+                    <span class="title">Info</span>
+                    <a href="/contact-us">Contact Us</a>
+                    <a href="/privacy-policy">Privacy Policy</a>
+                    <a href="/terms-conditions">Terms & Conditions</a>
+                </div>
+                <div class="link-group">
+                    <span class="title">About</span>
+                    <a href="/about">About Us</a>
+                    <a href="/shipping">Shipping</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
