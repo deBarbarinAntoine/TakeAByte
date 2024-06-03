@@ -134,7 +134,7 @@ CREATE TABLE sales
     CHECK ( end_date > start_date )
 ) ENGINE = INNODB;
 
-CREATE TABLE token
+CREATE TABLE tokens
 (
     token_id INT AUTO_INCREMENT,
     user_id  INT,

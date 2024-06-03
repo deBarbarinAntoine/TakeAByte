@@ -7,12 +7,11 @@ async function newHash(pwd) {
 }
 
 async function matchPwd(user, pwd) {
-    return await bcrypt.compare(pwd, user.hash, function (err, result) {
-        if (err) {
-            console.error(err);
-            return false;
-        }
+    return bcrypt.compare(pwd, user.hash).then((result) => {
         return result;
+    }).catch((err) => {
+        console.error(`Error comparing password: ${err}`);
+        return false;
     });
 }
 

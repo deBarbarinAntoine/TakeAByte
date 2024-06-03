@@ -13,6 +13,7 @@ const {generateToken} = require("../models/tokens");
 
 async function register(req, res) {
     const data = req.body;
+
     if (!validateNewUser(data)) {
         badRequestErrorResponse(res, new Error('users/register bad request'), validateNewUser.errors);
         return;
@@ -24,11 +25,14 @@ async function register(req, res) {
     userValidator.check(notEmpty(data.email), 'email', 'must be provided');
     userValidator.check(matches(data.email, emailRX), 'email', 'invalid email');
     userValidator.check(notEmpty(data.password), 'password', 'must be provided');
-    userValidator.check(data.password, passwordRX, "password", "must contain 1 lowercase and 1 uppercase letter, a digit and be at least 8 characters long");
+    userValidator.check(matches(data.password, passwordRX), "password", "must contain 1 lowercase and 1 uppercase letter, a digit and be at least 8 characters long");
     userValidator.check(data.password === data.confirm_password, 'password', 'passwords must be equals');
 
+    console.log(`validation errors: ${JSON.stringify(userValidator.output())}`);
+    console.log(`errors: ${userValidator.errors.size}`);
+
     if (!userValidator.valid()) {
-        conflictErrorResponse(res, new Error('conflict error'), userValidator.errors);
+        conflictErrorResponse(res, new Error('conflict error'), userValidator.output());
         return;
     }
 
@@ -46,9 +50,14 @@ async function register(req, res) {
         const userJSON = user.toJson();
         res.status(response.StatusCreated).json({"response": response.StatusCreated, user: userJSON});
     } catch (err) {
-        if (err === errDuplicateEmail || err === errDuplicateUsername) {
-            conflictErrorResponse(res, err, err);
-            return;
+        if (err.errno === 1062) {
+            if (err.message.includes('email')) {
+                conflictErrorResponse(res, err, errDuplicateEmail.message);
+                return;
+            } else if (err.message.includes('username')) {
+                conflictErrorResponse(res, err, errDuplicateUsername.message);
+                return;
+            }
         }
         serverErrorResponse(res, err);
     }

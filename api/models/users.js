@@ -4,8 +4,8 @@ const responses = require("../helpers/responses");
 const {getAllUsersQuery, getUserByIdQuery, getUserByEmailQuery, createUserQuery} = require("./db-queries");
 const {matchPwd} = require("../helpers/authentication");
 
-exports.errDuplicateEmail = new Error('duplicate email address');
-exports.errDuplicateUsername = new Error('duplicate username');
+const errDuplicateEmail = new Error('duplicate email address');
+const errDuplicateUsername = new Error('duplicate username');
 
 class User {
     id;
@@ -50,18 +50,7 @@ class User {
 
     async create() {
         console.log (`email: ${this.email}; hash: ${this.hash}`);
-        return connection.execute(createUserQuery, [this.username, this.email, this.hash], (err, result) => {
-            if (err) {
-                if (err.code === "1062") {
-                    if (err.message.includes('email')) {
-                        throw errDuplicateEmail;
-                    } else if (err.message.includes('username')) {
-                        throw errDuplicateUsername;
-                    }
-                }
-                throw err;
-            }
-        });
+        return connection.execute(createUserQuery, [this.username, this.email, this.hash]);
     }
 
     toJson() {
@@ -75,7 +64,6 @@ class User {
     }
 }
 
-
 async function checkCredentials(Email, Password) {
     let user = {};
     try {
@@ -83,9 +71,7 @@ async function checkCredentials(Email, Password) {
     } catch (err) {
         console.error('Error checking credentials:', err);
     }
-    console.log(`user: ${JSON.stringify(user)}`);
     const isValid = await matchPwd(user, Password);
-    console.log(`isValid: ${isValid}`);
     if (isValid) {
         return [user, true];
     }
@@ -117,10 +103,10 @@ async function getUserByEmail(email) {
     try {
         const [row] = await connection.query(getUserByEmailQuery, [email]);
 
-        return new User(row[0].user_id, row[0].username, row[0].email, row[0].password, row[0].creation_date, row[0].updatedAt, row[0].country, row[0].city, row[0].zip_code, row[0].street_name, row[0].street_number, row[0].address_complements);
+        return new User(row[0].user_id, row[0].username, row[0].email, row[0].password_hash, row[0].created_at, row[0].updated_at, row[0].country, row[0].city, row[0].zip_code, row[0].street_name, row[0].street_number, row[0].address_complements);
     } catch (err) {
         console.error('Error fetching users:', err);
     }
 }
 
-module.exports = {User, getUsers, getUserById, getUserByEmail, checkCredentials};
+module.exports = {User, getUsers, getUserById, getUserByEmail, checkCredentials, errDuplicateEmail, errDuplicateUsername};

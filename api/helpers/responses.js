@@ -33,11 +33,10 @@ function forbiddenErrorResponse (res, error) {
     res.status(response.StatusForbidden).json({error: "forbidden"});
 }
 
-function conflictErrorResponse (res, error, message) {
-    console.log(`error: ${error}`);
+function conflictErrorResponse (res, err, message) {
     res.status(response.StatusConflict).json({
         status: "conflict",
-        message: message
+        error: message
     });
 }
 
