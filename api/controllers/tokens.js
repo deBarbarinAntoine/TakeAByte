@@ -1,11 +1,4 @@
-const {serverErrorResponse,
-    notFoundErrorResponse,
-    badRequestErrorResponse,
-    methodNotAllowedErrorResponse,
-    unauthorizedErrorResponse,
-    forbiddenErrorResponse,
-    conflictErrorResponse} = require('../helpers/responses');
-const response = require('../errors/status');
+const {unauthorizedErrorResponse} = require('../helpers/responses');
 const {getToken} = require("../models/tokens");
 
 async function authenticate(req, res, next) {
@@ -23,10 +16,9 @@ async function authenticate(req, res, next) {
         unauthorizedErrorResponse(res, new Error('invalid token'));
         return;
     }
-    if (expiry < date.now()) {
+    if (expiry < Date.now()) {
         unauthorizedErrorResponse(res, new Error('token has expired'));
         return;
     }
-
     next();
 }
