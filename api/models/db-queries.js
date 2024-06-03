@@ -11,10 +11,7 @@ const getUserByEmailQuery = 'SELECT * FROM users WHERE email = ?;';
 const createUserQuery = 'INSERT INTO users (username, email, password_hash) VALUES (?, ?, ?);';
 
 // get all products of the store.
-const getAllproductsQuery = 'SELECT * FROM products ORDER BY Id_products;';
-
-// get all products matching a type from the store.
-const getAllproductsByTypeQuery = 'SELECT * FROM products WHERE Type RLIKE ? ORDER BY Id_products;';
+const getAllproductsQuery = 'SELECT * FROM products ORDER BY product_id;';
 
 // create a new token
 const createTokenQuery = 'INSERT INTO tokens (user_id, token, end_date) VALUES (?, ?, ?);';
@@ -25,12 +22,16 @@ const getTokenByUserIdQuery = 'SELECT * FROM tokens WHERE user_id = ?;';
 // get token by token
 const getTokenQuery = 'SELECT * FROM tokens WHERE token = ?;';
 
+// POST /api/products/{product_id}/like: Like a product.
+const likeProductQuery = 'INSERT INTO likes (user_id, product_id, created_at) VALUES (?,?,?)'
+
 module.exports = {getAllUsersQuery,
     getUserByIdQuery,
     getUserByEmailQuery,
     createUserQuery,
     getAllproductsQuery,
-    getAllproductsByTypeQuery,
     createTokenQuery,
     getTokenByUserIdQuery,
-    getTokenQuery};
+    getTokenQuery,
+    likeProductQuery};
+
