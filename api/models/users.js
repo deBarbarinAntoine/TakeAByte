@@ -1,7 +1,5 @@
 const connection = require("./db-connect");
-const mysql = require('mysql2');
-const responses = require("../helpers/responses");
-const {getAllUsersQuery, getUserByIdQuery, getUserByEmailQuery, createUserQuery} = require("./db-queries");
+const {getAllUsersQuery, getUserByIdQuery, getUserByEmailQuery, createUserQuery, newPasswordQuery} = require("./db-queries");
 const {matchPwd} = require("../helpers/authentication");
 
 const errDuplicateEmail = new Error('duplicate email address');
@@ -85,7 +83,6 @@ async function getUsers() {
         return User.newUsers(rows);
     } catch (err) {
         console.error('Error fetching users:', err);
-        // Handle errors appropriately, e.g., return an error response
     }
 }
 
@@ -109,4 +106,13 @@ async function getUserByEmail(email) {
     }
 }
 
-module.exports = {User, getUsers, getUserById, getUserByEmail, checkCredentials, errDuplicateEmail, errDuplicateUsername};
+async function updatePassword(user_id,hash){
+    try {
+        await connection.query(newPasswordQuery, [user_id, hash]);
+    } catch (err){
+        console.error('Error updating password:', err);
+
+    }
+}
+
+module.exports = {User, getUsers, getUserById, getUserByEmail, checkCredentials, errDuplicateEmail, errDuplicateUsername,updatePassword};

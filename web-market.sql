@@ -64,8 +64,8 @@ CREATE TABLE products
     type_id            INT,
     storage            VARCHAR(20),
     brand_id           INT,
-    created_at         DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at         DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    created_at         DATETIME      NOT NULL                               DEFAULT CURRENT_TIMESTAMP,
+    updated_at         DATETIME      NOT NULL                               DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (product_id),
     FOREIGN KEY (type_id) REFERENCES types (type_id),
     FOREIGN KEY (brand_id) REFERENCES brands (brand_id)
@@ -98,9 +98,9 @@ CREATE TABLE orders
     order_id        INT AUTO_INCREMENT,
     user_id         INT,
     product_id      INT,
-    date_ordered_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    date_ordered_at DATETIME NOT NULL                      DEFAULT CURRENT_TIMESTAMP,
     quantity        SMALLINT NOT NULL CHECK (quantity > 0) DEFAULT 1,
-    status          ENUM('ordered', 'on_the_way', 'delivered') NOT NULL DEFAULT 'ordered',
+    status          ENUM('waiting','ordered', 'on_the_way', 'delivered') NOT NULL DEFAULT 'waiting',
     PRIMARY KEY (order_id),
     FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES products (product_id) ON DELETE CASCADE,
@@ -144,3 +144,13 @@ CREATE TABLE tokens
     PRIMARY KEY (token_id),
     FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE
 ) ENGINE = INNODB;
+
+CREATE TABLE password_reset_tokens
+(
+    token_id INT AUTO_INCREMENT,
+    user_id  INT,
+    end_date DATETIME NOT NULL,
+    token    VARCHAR(500) UNIQUE,
+    PRIMARY KEY (token_id),
+    FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE
+);
