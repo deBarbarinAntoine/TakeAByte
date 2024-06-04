@@ -6,7 +6,9 @@ const {serverErrorResponse,
 const {User, errDuplicateEmail, errDuplicateUsername, checkCredentials, getUserByEmail, updatePassword} = require("../models/users");
 const {newHash} = require("../helpers/authentication");
 const response = require('../errors/status');
-const {validateCredentials, validateNewUser, Validator, notEmpty, checkLength, matches, emailRX, passwordRX} = require("../helpers/validator");
+const {validateCredentials, validateNewUser, Validator, notEmpty, checkLength, matches, emailRX, passwordRX,
+    matchesMail, matchesPassword
+} = require("../helpers/validator");
 const {Token} = require("../models/tokens");
 const nodemailer = require('nodemailer');
 
@@ -22,9 +24,9 @@ async function register(req, res) {
     userValidator.check(notEmpty(data.username), 'username', 'must be provided');
     userValidator.check(checkLength(data.username, 3, 25), 'username', 'must be between 3 and 25 bytes long');
     userValidator.check(notEmpty(data.email), 'email', 'must be provided');
-    userValidator.check(matches(data.email, emailRX), 'email', 'invalid email');
+    userValidator.check(matchesMail(data.email, emailRX), 'email', 'invalid email');
     userValidator.check(notEmpty(data.password), 'password', 'must be provided');
-    userValidator.check(matches(data.password, passwordRX), "password", "must contain 1 lowercase and 1 uppercase letter, a digit and be at least 8 characters long");
+    userValidator.check(matchesPassword(data.password, passwordRX), "password", "must contain 1 lowercase and 1 uppercase letter, a digit and be at least 8 characters long");
     userValidator.check(data.password === data.confirm_password, 'password', 'passwords must be equals');
 
 
@@ -32,6 +34,7 @@ async function register(req, res) {
         conflictErrorResponse(res, new Error('conflict error'), userValidator.output());
         return;
     }
+    userValidator.clear();
 
     let hash = '';
     try {
@@ -190,44 +193,131 @@ async function sendResetEmail(email, resetToken) {
     }
 }
 
-module.exports = {register, login,logout,requestPasswordReset,resetPassword};
 
 
-const {query} = require("../models/db-connect");
+const connection = require("../models/db-connect");
 const {getUserDataQuery, changeUserDataQuery, deleteUserQuery} = require("../models/db-queries");
 
-
-exports.getUserData = (req, res) => {
+async function getUserData(req, res) {
     const { user_id } = req.params;
-    query(getUserDataQuery, [user_id], (error, results) => {
-        if (error) {
-            return serverErrorResponse(res, "failed to get user data with given id");
-        }
+
+    try {
+        const results = await connection.query(getUserDataQuery, [user_id]);
         if (results.length === 0) {
-            return  notFoundErrorResponse(res, "empty answer");
+            return notFoundErrorResponse(res, "empty answer");
         }
         res.status(200).json(results[0]);
-    });
-};
+    } catch (error) {
+        return serverErrorResponse(res, "failed to get user data with given id");
+    }
+}
 
-exports.changeUserData = (req, res) => {
+async function getExistingUserData(req) {
     const { user_id } = req.params;
-    const { username, email, country, city, zip_code, street_name, street_number, address_complements } = req.body;
-    const values = [username, email, country, city, zip_code, street_name, street_number, address_complements, user_id];
-   query(changeUserDataQuery, values, (error) => {
-        if (error) {
-            return serverErrorResponse(res, "failed to update user data");
+
+    try {
+        const results = await connection.query(getUserDataQuery, [user_id]);
+        if (results.length === 0) {
+            return null
         }
+        return results
+    } catch (error) {
+        return null
+    }
+}
+
+async function changeUserData(req, res) {
+    const { user_id } = req.params;
+
+    const data = { username, email, country, city, zip_code, street_name, street_number, address_complements } = req.body;
+
+    const changeUserValidator = Validator.New();
+    if (data.username){
+        changeUserValidator.check(checkLength(data.username, 3, 25), 'username', 'must be between 3 and 25 bytes long');
+    }
+    if (data.email){
+        changeUserValidator.check(matchesMail(data.email, emailRX), 'email', 'invalid email');
+    }
+    if (!changeUserValidator.valid()) {
+        conflictErrorResponse(res, new Error('conflict error'), changeUserValidator.output());
+        return;
+    }
+    changeUserValidator.clear();
+
+    // Fetch existing user data
+    let existingUserData;
+    try {
+        [existingUserData] = await getExistingUserData(req);
+        if (!existingUserData) {
+            return notFoundErrorResponse(res, "User with ID " + user_id + " not found");
+        }
+        // Fill in null values in request data with existing user data
+        for (const field in data) {
+            if (field === "username"){
+                existingUserData[0].username = data[field]
+            }
+            if (field === "email"){
+                existingUserData[0].email = data[field]
+            }
+            if (field === "country"){
+                existingUserData[0].country = data[field]
+            }
+            if (field === "city"){
+                existingUserData[0].city = data[field]
+            }
+            if (field === "zip_code"){
+                existingUserData[0].zip_code = data[field]
+            }
+            if (field === "street_name"){
+                existingUserData[0].street_name = data[field]
+            }
+            if (field === "street_number"){
+                existingUserData[0].street_number = data[field]
+            }
+            if (field === "address_complements"){
+                existingUserData[0].address_complements = data[field]
+            }
+        }
+    } catch (error) {
+        console.error("Error fetching existing user data:", error);
+        return serverErrorResponse(res, "Failed to retrieve user data for update");
+    }
+
+    const values = [existingUserData[0].username, existingUserData[0].email, existingUserData[0].country, existingUserData[0].city, existingUserData[0].zip_code, existingUserData[0].street_name, existingUserData[0].street_number, existingUserData[0].address_complements, user_id];
+
+    try {
+        await connection.query(changeUserDataQuery, values, (error) => {
+            // Handle potential errors during query execution
+            if (error) {
+                console.error("Error updating user data:", error);
+                if (error.errno === 1062) { // Handle duplicate key errors
+                    conflictErrorResponse(res, error, "User or email already in use.");
+                } else {
+                    serverErrorResponse(res, "Failed to update user data");
+                }
+            }
+        });
         res.status(200).json({ message: 'User details updated successfully' });
-    });
-};
+    } catch (error) {
+        console.error("Unexpected error during update:", error);
+        serverErrorResponse(res, "An unexpected error occurred during update.");
+    }
+}
 
-exports.deleteUser = (req, res) => {
+async function deleteUser(req, res) {
     const { user_id } = req.params;
-    query(deleteUserQuery, [user_id], (error) => {
-        if (error) {
-            return serverErrorResponse(res, "failed to delete user data with given id");
+    try {
+        const [result] = await connection.query(deleteUserQuery, [user_id]);
+
+        if (result.affectedRows === 0) {
+            return notFoundErrorResponse(res,"User not found")
         }
+
         res.status(200).json({ message: 'User deleted successfully' });
-    });
-};
+    } catch (error) {
+        console.error("Unexpected error during deletion:", error);
+        serverErrorResponse(res, "An unexpected error occurred during deletion.");
+    }
+}
+
+module.exports = {register, login,logout,requestPasswordReset,resetPassword,getUserData,changeUserData,deleteUser};

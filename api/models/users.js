@@ -66,6 +66,9 @@ async function checkCredentials(Email, Password) {
     let user = {};
     try {
         user = await getUserByEmail(Email);
+        if (!user) {
+            return [null, false];
+        }
     } catch (err) {
         console.error('Error checking credentials:', err);
     }
@@ -79,7 +82,9 @@ async function checkCredentials(Email, Password) {
 async function getUsers() {
     try {
         const [rows] = await connection.query(getAllUsersQuery);
-
+        if (!rows.length) {
+            return [];
+        }
         return User.newUsers(rows);
     } catch (err) {
         console.error('Error fetching users:', err);
@@ -99,7 +104,9 @@ async function getUserById(id) {
 async function getUserByEmail(email) {
     try {
         const [row] = await connection.query(getUserByEmailQuery, [email]);
-
+        if (!row) {
+            return null;
+        }
         return new User(row[0].user_id, row[0].username, row[0].email, row[0].password_hash, row[0].created_at, row[0].updated_at, row[0].country, row[0].city, row[0].zip_code, row[0].street_name, row[0].street_number, row[0].address_complements);
     } catch (err) {
         console.error('Error fetching users:', err);

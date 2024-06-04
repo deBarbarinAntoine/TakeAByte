@@ -8,7 +8,7 @@ const validateNewUser = ajv.compile(userModel);
 const validateCredentials = ajv.compile(credentials);
 
 const emailRX = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-const passwordRX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/gm;
+const passwordRX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
 
 class Validator {
     errors
@@ -49,7 +49,11 @@ function checkLength (data, min, max) {
     return (data.length <= max && data.length >= min);
 }
 
-function matches (data, regex) {
+function matchesMail (data, regex) {
+    return regex.test(data);
+}
+
+function matchesPassword (data, regex) {
     return regex.test(data);
 }
 
@@ -57,4 +61,4 @@ function notEmpty (data) {
     return data.length !== 0;
 }
 
-module.exports = {Validator, validateNewUser, validateCredentials, checkLength, matches, notEmpty, emailRX, passwordRX};
+module.exports = {Validator, validateNewUser, validateCredentials, checkLength, matchesMail,matchesPassword, notEmpty, emailRX, passwordRX};

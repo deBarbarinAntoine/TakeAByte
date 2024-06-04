@@ -1,11 +1,11 @@
 const { createNewOrderQuery, getOrderDataQuery,getUserOrdersDataQuery, getOrdersOfProductQuery, getOrderByStatusQuery} = require("../models/db-queries");
-const {query} = require("../models/db-connect");
+const connection = require("../models/db-connect");
 const {serverErrorResponse, notFoundErrorResponse} = require("../helpers/responses");
 
 exports.createNewOrder = (req, res) => {
     const { user_id, product_id, quantity } = req.body;
     const date_ordered_at = new Date(); // Current timestamp
-   query(createNewOrderQuery, [user_id, product_id, date_ordered_at, quantity], (error, results) => {
+    connection.query(createNewOrderQuery, [user_id, product_id, date_ordered_at, quantity], (error, results) => {
         if (error) {
             return serverErrorResponse (res, "Failed to create new order");
         }
@@ -15,7 +15,7 @@ exports.createNewOrder = (req, res) => {
 
 exports.getOrderData = (req, res) => {
     const { order_id } = req.params;
-    query(getOrderDataQuery, [order_id], (error, results) => {
+    connection.query(getOrderDataQuery, [order_id], (error, results) => {
         if (error) {
             return serverErrorResponse (res, "Failed to get order data");
         }
@@ -28,7 +28,7 @@ exports.getOrderData = (req, res) => {
 
 exports.getUserOrdersData = (req, res) => {
     const { user_id } = req.params;
-    query(getUserOrdersDataQuery, [user_id], (error, results) => {
+    connection.query(getUserOrdersDataQuery, [user_id], (error, results) => {
         if (error) {
             return serverErrorResponse (res, "Failed to get user order");
         }
@@ -38,7 +38,7 @@ exports.getUserOrdersData = (req, res) => {
 
 exports.getOrdersOfProduct = (req, res) => {
     const { product_id } = req.params;
-    query(getOrdersOfProductQuery, [product_id], (error, results) => {
+    connection.query(getOrdersOfProductQuery, [product_id], (error, results) => {
         if (error) {
             return serverErrorResponse (res, "Failed to get orders with specified product");
         }
@@ -49,7 +49,7 @@ exports.getOrdersOfProduct = (req, res) => {
 exports.getOrderByStatus = (req, res) => {
     const { user_id } = req.params;
     const { status } = req.query;
-    query(getOrderByStatusQuery, [user_id, status], (error, results) => {
+    connection.query(getOrderByStatusQuery, [user_id, status], (error, results) => {
         if (error) {
             return serverErrorResponse (res, "Failed get user order by selected status");
         }
