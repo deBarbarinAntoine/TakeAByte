@@ -1,0 +1,85 @@
+@import "base";
+
+.shipping {
+
+  .title-nav {
+
+    .title-text {
+
+    }
+    .title-separator {
+
+    }
+  }
+  form.shipping-form {
+
+    .contact {
+
+      .contact-header {
+
+        span.title {
+
+        }
+        a.login {
+
+        }
+      }
+      input#contact-email {
+
+      }
+    }
+    .address {
+
+      .address-header {
+        span.title {
+
+        }
+      }
+      .address-name {
+        input#address-name {
+
+        }
+        input#address-lastname {
+
+        }
+      }
+      .address-street {
+        input#address-street {
+
+        }
+      }
+      .address-optional {
+        input#address-optional {
+
+        }
+      }
+      .address-city-region {
+
+        input#address-city {
+
+        }
+        input#address-zip {
+
+        }
+        input#address-region {
+
+        }
+      }
+      .address-country {
+
+        input#address-country {
+
+        }
+      }
+    }
+    .btns {
+
+      a.back-link {
+
+      }
+      button {
+
+      }
+    }
+  }
+}

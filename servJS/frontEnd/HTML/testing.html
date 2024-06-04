@@ -13,6 +13,12 @@
         <div class="logo">
             <img src="http://localhost:4000/static/img/logo/takeabyte_logo_transparent.png" alt="TakeAByte logo" class="logo-img" />
         </div>
+        <form action="/search" method="get" class="search-bar">
+            <button type="submit" class="search-logo">
+                <img src="http://localhost:4000/static/img/icon/search.png" alt="search logo" />
+            </button>
+            <input type="text" name="search" id="search" placeholder="Search..." />
+        </form>
         <nav class="header-nav">
             <div class="header-link">
                 <a href="/discovery">Discovery</a>
@@ -36,6 +42,54 @@
 
 <section class="template-page">
     <!--        include page template       -->
+    <div class="shipping">
+        <div class="title-nav">
+            <div class="title-text">Cart</div>
+            <div class="title-separator">></div>
+            <div class="title-text">Details</div>
+            <div class="title-separator">></div>
+            <div class="title-text">Shipping</div>
+            <div class="title-separator">></div>
+            <div class="title-text">Payment</div>
+        </div>
+        <form action="/shipping" class="shipping-form" method="post">
+            <div class="contact">
+                <div class="contact-header">
+                    <span class="title">Contact</span>
+                    <a href="/login" class="login">Login</a>
+                </div>
+                <input type="email" placeholder="example@email.com" id="contact-email" />
+            </div>
+            <div class="address">
+                <div class="address-header">
+                    <span class="title">Shipping Address</span>
+                </div>
+                <div class="address-name">
+                    <input type="text" name="name" id="address-name" placeholder="Name" />
+                    <input type="text" name="lastname" id="address-lastname" placeholder="Last Name" />
+                </div>
+                <div class="address-street">
+                    <input type="text" name="street" id="address-street" placeholder="Address" />
+                </div>
+                <div class="address-optional">
+                    <input type="text" name="optional" id="address-optional" placeholder="Address Complement (optional)" />
+                </div>
+                <div class="address-city-region">
+                    <input type="text" name="city" id="address-city" placeholder="City" />
+                    <input type="text" name="zip" id="address-zip" placeholder="ZIP Code" />
+                    <input type="text" name="region" id="address-region" placeholder="Region or Province" />
+                </div>
+                <div class="address-country">
+                    <input type="text" name="country" id="address-country" placeholder="Country" />
+                </div>
+            </div>
+            <div class="btns">
+                <a href="/cart" class="back-link">Back to cart</a>
+                <button type="submit">Go to shipping</button>
+            </div>
+        </form>
+    </div>
+    <!--        end page template           -->
 </section>
 
 <footer class="footer">
