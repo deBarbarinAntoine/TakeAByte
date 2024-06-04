@@ -34,7 +34,7 @@ class Token {
     }
 
     getExpiryTime() {
-        return Date.now() + expiry_ms;
+        return new Date(Date.now() + expiry_ms);
     }
 
     static async delete(token) {

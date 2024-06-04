@@ -1,5 +1,5 @@
 const {createNewProductQuery,getProductByIdQuery,updateProductDataQuery,deleteProductQuery, getPopularProducts} = require("../models/db-queries");
-const {query} = require("../models/db-connect");
+const connection = require("../models/db-connect");
 const {serverErrorResponse, notFoundErrorResponse} = require("../helpers/responses");
 
 exports.createNewProduct = (req, res) => {
@@ -11,7 +11,7 @@ exports.createNewProduct = (req, res) => {
         name, description, quantity_stocked, price, processor, ram, size, captor, weight, socket_cpu, dimension,
         others, connectivity, resolution, screen_type, vram, battery_power_time, type_id, storage, brand_id
     ];
-    query(createNewProductQuery, values, (error, results) => {
+    connection.query(createNewProductQuery, values, (error, results) => {
         if (error) {
             return serverErrorResponse (res, "Failed to create new product");
         }
@@ -21,7 +21,7 @@ exports.createNewProduct = (req, res) => {
 
 exports.getProductById = (req, res) => {
     const { product_id } = req.params;
-    query(getProductByIdQuery, [product_id], (error, results) => {
+    connection.query(getProductByIdQuery, [product_id], (error, results) => {
         if (error) {
             return  serverErrorResponse (res, "Failed to get Product with given id")
         }
@@ -42,7 +42,7 @@ exports.updateProductData = (req, res) => {
         name, description, quantity_stocked, price, processor, ram, size, captor, weight, socket_cpu, dimension,
         others, connectivity, resolution, screen_type, vram, battery_power_time, type_id, storage, brand_id, product_id
     ];
-    query(updateProductDataQuery, values, (error, results) => {
+    connection.query(updateProductDataQuery, values, (error) => {
         if (error) {
             return serverErrorResponse (res, "Failed to update Product with given id and values")
         }
@@ -52,7 +52,7 @@ exports.updateProductData = (req, res) => {
 
 exports.deleteProduct = (req, res) => {
     const { product_id } = req.params;
-    query(deleteProductQuery, [product_id], (error, results) => {
+    connection.query(deleteProductQuery, [product_id], (error) => {
         if (error) {
             return serverErrorResponse (res, "Failed to delete Product with given id")
         }
@@ -89,7 +89,7 @@ exports.getProducts = (req, res) => {
     getProductsQuery += ' LIMIT ? OFFSET ?';
     queryParams.push(limit, offset);
 
-    query(getProductsQuery, queryParams, (error, results) => {
+    connection.query(getProductsQuery, queryParams, (error, results) => {
         if (error) {
             return serverErrorResponse (res, "Failed to get Product with given id and filter ? and offset ?")
         }
@@ -99,7 +99,7 @@ exports.getProducts = (req, res) => {
 
 exports.getTopProduct = async (req, res) => {
     const { limit } = req.params
-    query(getPopularProducts, [limit], (error, results) => {
+    connection.query(getPopularProducts, [limit], (error, results) => {
         if (error) {
             return serverErrorResponse (res, "Failed to get Top Product with given limit")
         }
