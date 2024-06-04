@@ -86,7 +86,7 @@ async function login(req, res) {
         return;
     }
     // Send response with user email and generated token
-    res.status(response.StatusOK).json({"response": response.StatusOK, "user": {email: user.email, token: tokenInstance.token}});
+    res.status(response.StatusOK).json({"response": response.StatusOK, "user": {token: tokenInstance.token, ExpirationDate: tokenInstance.expiry}});
 }
 
 async function logout(req,res){

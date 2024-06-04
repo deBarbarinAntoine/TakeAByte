@@ -9,6 +9,9 @@ const authRoutes = require('./routes/authentication')
 const likeRoutes = require('./routes/like')
 const ordersRoutes = require('./routes/orders')
 const salesRoutes = require('./routes/sales')
+const brandsRoutes = require('./routes/brand');
+const colorsRoutes = require('./routes/color');
+const typesRoutes = require('./routes/type');
 
 app.use(cors());
 app.use(express.json());
@@ -20,6 +23,9 @@ app.use(authRoutes)
 app.use(likeRoutes)
 app.use(ordersRoutes)
 app.use(salesRoutes)
+app.use(brandsRoutes)
+app.use(colorsRoutes)
+app.use(typesRoutes)
 
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`);
