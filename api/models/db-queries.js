@@ -100,7 +100,55 @@ const getOrderByStatusQuery ='SELECT * FROM orders WHERE user_id = ? AND status 
 
 const newPasswordQuery ='UPDATE users SET password_hash = ? WHERE user_id = ?;'
 
+// POST /api/brands: Create a new brand.
+const creatBrandQuery = "INSERT INTO brands (name) VALUES (?)";
+
+// GET /api/brands/:id: Get brand by ID.
+const getBrandQuery = "SELECT * FROM brands WHERE brand_id = ?";
+
+// PUT /api/brands/:id: Update brand by ID.
+const updateBrandQuery = "UPDATE brands SET name = ? WHERE brand_id = ?";
+
+// PUT /api/brands/:id: Update brand by ID.
+const deleteBrandQuery = "DELETE FROM brands WHERE brand_id = ?";
+
+// POST /api/colors: Create a new color.
+const creatColorQuery = "INSERT INTO colors (name) VALUES (?)";
+
+// GET /api/colors/:id: Get color by ID.
+const getColorQuery = "SELECT * FROM colors WHERE color_id = ?";
+
+// PUT /api/colors/:id: Update color by ID.
+const updateColorQuery = "UPDATE colors SET name = ? WHERE color_id = ?";
+
+// PUT /api/colors/:id: Update color by ID.
+const deleteColorQuery = "DELETE FROM colors WHERE color_id = ?";
+
+// POST /api/types: Create a new type.types
+const creatTypeQuery = "INSERT INTO types (name) VALUES (?)";
+
+// GET /api/types/:id: Get type by ID.
+const getTypeQuery = "SELECT * FROM types WHERE type_id = ?";
+
+// PUT /api/types/:id: Update type by ID.
+const updateTypeQuery = "UPDATE types SET name = ? WHERE type_id = ?";
+
+// PUT /api/types/:id: Update type by ID.
+const deleteTypeQuery = "DELETE FROM types WHERE type_id = ?";
+
 module.exports = {getAllUsersQuery,
+    creatTypeQuery,
+    getTypeQuery,
+    updateTypeQuery,
+    deleteTypeQuery,
+    creatColorQuery,
+    getColorQuery,
+    updateColorQuery,
+    deleteColorQuery,
+    creatBrandQuery,
+    updateBrandQuery,
+    getBrandQuery,
+    deleteBrandQuery,
     getUserByIdQuery,
     getUserByEmailQuery,
     createUserQuery,
