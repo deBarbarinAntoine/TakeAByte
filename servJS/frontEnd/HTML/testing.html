@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="stylesheet" href="http://localhost:4000/static/css/base.css">
+    <link rel="stylesheet" href="http://localhost:4000/static/css/style.css">
     <title>TakeAByte Shop</title>
 </head>
 <body>
@@ -42,53 +42,61 @@
 
 <section class="template-page">
     <!--        include page template       -->
-    <div class="shipping">
-        <div class="title-nav">
-            <div class="title-text">Cart</div>
-            <div class="title-separator">></div>
-            <div class="title-text">Details</div>
-            <div class="title-separator">></div>
-            <div class="title-text">Shipping</div>
-            <div class="title-separator">></div>
-            <div class="title-text">Payment</div>
+    <div class="main">
+        <div class="shipping-ctn">
+            <div class="shipping">
+                <div class="title-nav">
+                    <div class="title-text previous">Cart</div>
+                    <div class="title-separator">></div>
+                    <div class="title-text current">Details</div>
+                    <div class="title-separator">></div>
+                    <div class="title-text">Shipping</div>
+                    <div class="title-separator">></div>
+                    <div class="title-text">Payment</div>
+                </div>
+                <form action="/shipping" class="shipping-form" method="post">
+                    <div class="contact">
+                        <div class="contact-header">
+                            <span class="title">Contact</span>
+                            <div class="login"><span class="msg">Do you have an account?</span><a href="/login" class="login-link">Login</a></div>
+                        </div>
+                        <input type="email" placeholder="example@email.com" id="contact-email" />
+                    </div>
+                    <div class="address">
+                        <div class="address-header">
+                            <span class="title">Shipping Address</span>
+                        </div>
+                        <div class="address-name">
+                            <input type="text" name="name" id="address-name" placeholder="Name" />
+                            <input type="text" name="lastname" id="address-lastname" placeholder="Last Name" />
+                        </div>
+                        <div class="address-street">
+                            <input type="text" name="street" id="address-street" placeholder="Address" />
+                        </div>
+                        <div class="address-optional">
+                            <input type="text" name="optional" id="address-optional" placeholder="Address Complement (optional)" />
+                        </div>
+                        <div class="address-city-region">
+                            <input type="text" name="city" id="address-city" placeholder="City" />
+                            <input type="text" name="zip" id="address-zip" placeholder="ZIP Code" />
+                            <input type="text" name="region" id="address-region" placeholder="Province" />
+                        </div>
+                        <div class="address-country">
+                            <input type="text" name="country" id="address-country" placeholder="Country" />
+                        </div>
+                    </div>
+                    <div class="btns">
+                        <a href="/cart" class="back-link">Back to cart</a>
+                        <button class="blue" type="submit">Go to shipping</button>
+                    </div>
+                </form>
+            </div>
         </div>
-        <form action="/shipping" class="shipping-form" method="post">
-            <div class="contact">
-                <div class="contact-header">
-                    <span class="title">Contact</span>
-                    <a href="/login" class="login">Login</a>
-                </div>
-                <input type="email" placeholder="example@email.com" id="contact-email" />
-            </div>
-            <div class="address">
-                <div class="address-header">
-                    <span class="title">Shipping Address</span>
-                </div>
-                <div class="address-name">
-                    <input type="text" name="name" id="address-name" placeholder="Name" />
-                    <input type="text" name="lastname" id="address-lastname" placeholder="Last Name" />
-                </div>
-                <div class="address-street">
-                    <input type="text" name="street" id="address-street" placeholder="Address" />
-                </div>
-                <div class="address-optional">
-                    <input type="text" name="optional" id="address-optional" placeholder="Address Complement (optional)" />
-                </div>
-                <div class="address-city-region">
-                    <input type="text" name="city" id="address-city" placeholder="City" />
-                    <input type="text" name="zip" id="address-zip" placeholder="ZIP Code" />
-                    <input type="text" name="region" id="address-region" placeholder="Region or Province" />
-                </div>
-                <div class="address-country">
-                    <input type="text" name="country" id="address-country" placeholder="Country" />
-                </div>
-            </div>
-            <div class="btns">
-                <a href="/cart" class="back-link">Back to cart</a>
-                <button type="submit">Go to shipping</button>
-            </div>
-        </form>
+        <div class="order-info">
+
+        </div>
     </div>
+
     <!--        end page template           -->
 </section>
 
@@ -96,11 +104,14 @@
     <div class="footer-line"></div>
     <div class="footer-ctn">
         <div class="footer-left">
-            <div class="footer-logo"><img src="http://localhost:4000/static/img/logo/takeabyte_logo_inverted_transparent.png" alt="TakeAByte logo" /></div>
-            <div class="footer-slogan">
-                Need some high tech device?
-                Take A Byte!
+            <div class="top">
+                <div class="footer-logo"><img src="http://localhost:4000/static/img/logo/takeabyte_logo_inverted_transparent.png" alt="TakeAByte logo" /></div>
+                <div class="footer-slogan">
+                    <p>Need some high tech device?</p>
+                    <p>Take A Byte!</p>
+                </div>
             </div>
+            <div class="copyright">© TakeAByte 2024 - All Rights Reserved</div>
         </div>
         <div class="footer-links">
             <div class="link-group">

@@ -1,85 +1,222 @@
 @import "base";
 
-.shipping {
 
-  .title-nav {
+// #####################################################################################################################
+// # template main container
+// #####################################################################################################################
 
-    .title-text {
+.main {
+  display: flex;
+  justify-content: space-between;
 
-    }
-    .title-separator {
+  // #####################################################################################################################
+  // # shipping
+  // #####################################################################################################################
 
+  .shipping-ctn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    padding-top: 2rem;
+    padding-bottom: 9rem;
+
+    .shipping {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 60%;
+
+      .title-nav {
+        width: 100%;
+        display: flex;
+        gap: 1.2rem;
+        margin-bottom: 4.5rem;
+
+        .title-text {
+          font-size: 1.8rem;
+          color: transparentize($darkblue, 0.7);
+        }
+        .title-separator {
+          font-size: 1.7rem;
+          color: $darkblue;
+        }
+        .previous {
+          color: $blue;
+        }
+        .current {
+          color: $darkblue;
+        }
+      }
+      form.shipping-form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 3.5rem;
+
+        input {
+          flex: 1 1 auto;
+          padding: 1rem .1rem 1rem 1.5rem;
+          appearance: none;
+          border: 2px solid $darkblue;
+          background: none;
+          outline: none;
+          font-family: "Dosis", sans-serif;
+          color: $darkblue;
+          font-weight: 600;
+          font-size: 1.3rem;
+          min-width: 50px;
+
+          &:focus{
+            outline: none;
+            appearance: none;
+            border: 2px solid transparentize($blue, 0.4);
+            background: none;
+          }
+        }
+
+        span.title {
+          font-size: 2rem;
+        }
+
+        .contact {
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          gap: 1.2rem;
+
+          .contact-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            width: 100%;
+            gap: 1.2rem;
+
+            .login {
+              display: flex;
+              gap: .5rem;
+              align-items: flex-end;
+
+              .msg {
+                color: $darkblue;
+                font-size: 1.3rem;
+              }
+              a.login-link {
+                color: $blue;
+                font-size: 1.3rem;
+
+                &:hover {
+                  color: $orange;
+                  text-decoration: underline;
+                }
+              }
+            }
+          }
+          input#contact-email {
+
+          }
+        }
+        .address {
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          gap: 1.2rem;
+
+          .address-header {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            gap: 1.2rem;
+          }
+          .address-name {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            gap: 1.2rem;
+
+            input#address-name {
+
+            }
+            input#address-lastname {
+
+            }
+          }
+          .address-street {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            gap: 1.2rem;
+
+            input#address-street {
+
+            }
+          }
+          .address-optional {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            gap: 1.2rem;
+
+            input#address-optional {
+
+            }
+          }
+          .address-city-region {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            gap: 1.2rem;
+
+            input#address-city {
+
+            }
+            input#address-zip {
+              flex-shrink: 5;
+            }
+            input#address-region {
+
+            }
+          }
+          .address-country {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            gap: 1.2rem;
+
+            input#address-country {
+
+            }
+          }
+        }
+        .btns {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-end;
+          width: 100%;
+          gap: 1.2rem;
+
+          a.back-link {
+            color: $blue;
+            font-size: 1.5rem;
+
+            &:hover {
+              color: $orange;
+              text-decoration: underline;
+            }
+          }
+        }
+      }
     }
   }
-  form.shipping-form {
 
-    .contact {
+  // #####################################################################################################################
+  // # order info
+  // #####################################################################################################################
 
-      .contact-header {
-
-        span.title {
-
-        }
-        a.login {
-
-        }
-      }
-      input#contact-email {
-
-      }
-    }
-    .address {
-
-      .address-header {
-        span.title {
-
-        }
-      }
-      .address-name {
-        input#address-name {
-
-        }
-        input#address-lastname {
-
-        }
-      }
-      .address-street {
-        input#address-street {
-
-        }
-      }
-      .address-optional {
-        input#address-optional {
-
-        }
-      }
-      .address-city-region {
-
-        input#address-city {
-
-        }
-        input#address-zip {
-
-        }
-        input#address-region {
-
-        }
-      }
-      .address-country {
-
-        input#address-country {
-
-        }
-      }
-    }
-    .btns {
-
-      a.back-link {
-
-      }
-      button {
-
-      }
-    }
+  .order-info {
+    width: 50%;
+    flex: 1;
+    background-color: transparentize($orange, 0.92);
   }
 }
+
