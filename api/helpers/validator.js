@@ -39,6 +39,10 @@ class Validator {
     output() {
         return Object.fromEntries(this.errors);
     }
+
+    clear() {
+        this.errors.clear();
+    }
 }
 
 function checkLength (data, min, max) {
