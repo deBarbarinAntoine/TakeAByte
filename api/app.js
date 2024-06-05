@@ -12,6 +12,7 @@ const salesRoutes = require('./routes/sales')
 const brandsRoutes = require('./routes/brand');
 const colorsRoutes = require('./routes/color');
 const typesRoutes = require('./routes/type');
+const imagesRoutes = require('./routes/image');
 
 app.use(cors());
 app.use(express.json());
@@ -26,6 +27,8 @@ app.use(salesRoutes)
 app.use(brandsRoutes)
 app.use(colorsRoutes)
 app.use(typesRoutes)
+app.use(imagesRoutes)
+
 
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`);

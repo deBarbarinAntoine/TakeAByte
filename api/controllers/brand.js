@@ -4,7 +4,8 @@ const {
     creatBrandQuery,
     updateBrandQuery,
     getBrandQuery,
-    deleteBrandQuery
+    deleteBrandQuery,
+    getBrandIdByNameQuery, getTypeIdByNameQuery, creatTypeQuery
 } = require("../models/db-queries");
 
 // Function to create a new brand
@@ -63,3 +64,28 @@ exports.deleteBrand = async (req, res) => {
         serverErrorResponse(res, "Failed to delete brand");
     }
 };
+
+exports.getBrandIdByName = async (req, res) => {
+    let { name } = req.params;
+    name = name.split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join(' ');
+    try {
+        const results = await connection.query(getBrandIdByNameQuery, [name] );
+        if (results.length > 0) {
+            return results[0][0].brand_id;
+        }
+    } catch (error) {
+        if (error.message === "Cannot read properties of undefined (reading 'brand_id')") {
+            try {
+                const insertResult = await connection.query(creatBrandQuery, [name]);
+                return insertResult[0].insertId
+            } catch (insertError) {
+                console.error("Error while inserting new brand:", insertError);
+                return serverErrorResponse(res, "Failed to create Brand");
+            }
+        }
+        console.error("Unexpected error:", error);
+        return serverErrorResponse(res, "Failed to get Brand id with given name");
+    }
+}

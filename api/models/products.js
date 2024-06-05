@@ -1,32 +1,8 @@
 const connection = require("./db-connect");
-const {getAllproductsQuery, getAllproductsByTypeQuery} = require("./db-queries");
+const { getAllproductsQuery, getAllproductsByTypeQuery, isExistingProduct} = require("./db-queries");
 
 class Product {
-    id;
-    name;
-    description;
-    quantityStock;
-    price;
-    processor;
-    RAM;
-    size;
-    captor;
-    weight;
-    socketCPU;
-    dimension;
-    others;
-    connectivity;
-    resolution;
-    screenType;
-    VRAM;
-    batteryPowerTime;
-    type;
-    storage;
-    color;
-    createdAt;
-    UpdatedAt;
-
-    constructor(id, name, description, quantityStock, price, processor, RAM, size, captor, weight, socketCPU, dimension, others, connectivity, resolution, screenType, VRAM, batteryPowerTime, type, storage, color, createdAt, UpdatedAt) {
+    constructor(id, name, description, quantityStock, price, processor, RAM, size, captor, weight, socketCPU, dimension, others, connectivity, resolution, screenType, VRAM, batteryPowerTime, type, storage, color, createdAt, updatedAt) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -49,16 +25,16 @@ class Product {
         this.storage = storage;
         this.color = color;
         this.createdAt = createdAt;
-        this.UpdatedAt = UpdatedAt;
+        this.updatedAt = updatedAt;
     }
 }
 
 function newProductArray(arr) {
-    const productArray = [];
-    for (let i = 0; i < arr.length; i++) {
-        productArray.push(new Product(arr[i]));
-    }
-    return productArray;
+    return arr.map(item => new Product(
+        item.id, item.name, item.description, item.quantityStock, item.price, item.processor, item.RAM, item.size,
+        item.captor, item.weight, item.socketCPU, item.dimension, item.others, item.connectivity, item.resolution,
+        item.screenType, item.VRAM, item.batteryPowerTime, item.type, item.storage, item.color, item.createdAt, item.updatedAt
+    ));
 }
 
 async function productsByType(type) {
@@ -67,7 +43,8 @@ async function productsByType(type) {
         const [rows] = await connection.query(getAllproductsByTypeQuery, [type]);
         return newProductArray(rows);
     } catch (err) {
-        console.error('Error fetching all products', err);
+        console.error('Error fetching products by type', err);
+        throw err;
     }
 }
 
@@ -77,5 +54,14 @@ async function getAllProducts() {
         return newProductArray(rows);
     } catch (err) {
         console.error('Error fetching all products', err);
+        throw err;
     }
 }
+
+// Helper function to get product by name and brand
+async function getProductByNameAndBrand(name, brandId) {
+    const [rows] = await connection.query(isExistingProduct, [name, brandId]);
+    return rows.length ? rows[0] : null;
+}
+
+module.exports = { getAllProducts, productsByType ,getProductByNameAndBrand};
