@@ -7,6 +7,7 @@
 * a {
   text-decoration: none;
   color: #112D4E;
+  cursor: pointer;
 }
 
 @font-face {
@@ -14,7 +15,8 @@
   font-weight: 600;
   font-style: normal;
 }
-button {
+button,
+.button {
   border-radius: 0.5rem;
   padding: 1rem 2rem;
   appearance: none;
@@ -23,31 +25,35 @@ button {
   cursor: pointer;
   transition: all 200ms ease-in-out 50ms;
 }
-button.blue {
+button.blue,
+.button.blue {
   background-color: #3F72AF;
   color: #F9F7F7;
   border: none;
 }
-button.white {
+button.white,
+.button.white {
   border: 2px solid #3F72AF;
   background-color: #F9F7F7;
   color: #3F72AF;
 }
-button.disabled, button[disabled] {
+button.disabled, button[disabled],
+.button.disabled,
+.button[disabled] {
   background-color: #DBE2EF;
   color: #112D4E;
   border: none;
   cursor: not-allowed;
 }
-button:hover:not(.disabled, button[disabled]) {
+button:hover:not(.disabled, button[disabled],
+.button[disabled]),
+.button:hover:not(.disabled, button[disabled],
+.button[disabled]) {
   background-color: #FBA834;
   color: #112D4E;
 }
 
 body {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   min-height: 100dvh;
   background-color: #F9F7F7;
   font-family: "Dosis", sans-serif;

@@ -16,6 +16,7 @@ $font-weight: 600;
   a {
     text-decoration: none;
     color: $darkblue;
+    cursor: pointer;
   }
 }
 
@@ -31,7 +32,8 @@ $font-weight: 600;
 // # buttons
 // #####################################################################################################################
 
-button {
+button,
+.button {
   border-radius: .5rem;
   padding: 1rem 2rem;
   appearance: none;
@@ -68,9 +70,6 @@ button {
 
 
 body {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   min-height: 100dvh;
   background-color: $white;
   font-family: $font;
