@@ -136,7 +136,45 @@ const updateTypeQuery = "UPDATE types SET name = ? WHERE type_id = ?";
 // PUT /api/types/:id: Update type by ID.
 const deleteTypeQuery = "DELETE FROM types WHERE type_id = ?";
 
+// POST /api/images: Create a new Image.
+const creatImageQuery = 'INSERT INTO images (image_path, ind, product_id) VALUES (?, ?, ?)';
+
+// GET /api/images/:id: Get Image by ID.
+const getImageQuery = 'SELECT * FROM images WHERE image_id = ?';
+
+// Get /api/images/product/:id : Get all image for this product id
+const getProductImageQuery = 'SELECT * FROM images WHERE product_id = ?';
+
+// PUT /api/images/:id: Update Image by ID.
+const updateImageQuery = 'UPDATE images SET image_path = ?, ind = ?, product_id = ? WHERE image_id = ?'
+
+// DELETE /api/images/:id: Delete Image by ID.
+const deleteImageQuery ='DELETE FROM images WHERE image_id = ?'
+
+// check for image validity
+const checkImageIndQuery = "SELECT * FROM images WHERE product_id = ? AND ind = ?";
+const checkImagePathQuery = "SELECT * FROM images WHERE image_path = ?";
+//
+
+// getter for name of Type and brand to create product
+const getTypeIdByNameQuery = 'SELECT type_id FROM types WHERE name = ?'
+const getBrandIdByNameQuery = 'SELECT brand_id FROM brands WHERE name = ?'
+//
+
+// Check if product already exist
+const isExistingProduct ='SELECT * FROM products WHERE name = ? AND brand_id = ?'
+
 module.exports = {getAllUsersQuery,
+    isExistingProduct,
+    getTypeIdByNameQuery,
+    getBrandIdByNameQuery,
+    checkImageIndQuery,
+    checkImagePathQuery,
+    creatImageQuery,
+    getImageQuery,
+    getProductImageQuery,
+    updateImageQuery,
+    deleteImageQuery,
     creatTypeQuery,
     getTypeQuery,
     updateTypeQuery,

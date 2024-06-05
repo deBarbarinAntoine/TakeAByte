@@ -1,6 +1,6 @@
 const express = require('express');
 const {
-    createNewProduct, getProductById, updateProductData, deleteProduct, getProducts,getTopProduct
+    createNewProduct, getProductById, updateProductData, deleteProduct, getProducts, getTopProduct
 } = require('../controllers/products');
 const router = express.Router();
 
@@ -13,9 +13,10 @@ router.get('/api/products/:product_id', getProductById);
 router.put('/api/products/:product_id', updateProductData);
 // DELETE /api/products/:product_id: Delete a product.
 router.delete('/api/products/:product_id', deleteProduct);
-// GET /api/products: Retrieve a list of products (with optional filtering and pagination).
-router.get('/api/products/:filters?/:page?', getProducts);
-// GET /api/product/top/:limit : Retrieve top products
-router.get('/api/products/top/:limit', getTopProduct)
+// GET /api/products: Retrieve a list of products (with optional filtering and pagination). >>
+// GET /api/products?filters[name]=Laptop&filters[price_min]=1000&filters[price_max]=2000&page=1 <<
+router.get('/api/products', getProducts);
+// GET /api/products/top/:limit: Retrieve top products.
+router.get('/api/products/top/:limit', getTopProduct);
 
 module.exports = router;

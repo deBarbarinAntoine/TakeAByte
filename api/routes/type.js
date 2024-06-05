@@ -1,5 +1,5 @@
 const express = require('express');
-const { createType, getTypeById, updateType, deleteType } = require("../controllers/type");
+const {createType, getTypeById, updateType, deleteType, getTypeIdByName} = require("../controllers/type");
 const router = express.Router();
 
 // Type Endpoints:
@@ -7,6 +7,8 @@ const router = express.Router();
 router.post('/api/types', createType);
 // GET /api/types/:id: Get Type by ID.
 router.get('/api/types/:id', getTypeById);
+// GET /api/type/name/:name, getTypeIdByName);
+router.get('/api/types/name/:name', getTypeIdByName);
 // PUT /api/types/:id: Update Type by ID.
 router.put('/api/types/:id', updateType);
 // DELETE /api/types/:id: Delete Type by ID.
