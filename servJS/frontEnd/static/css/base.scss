@@ -5,6 +5,9 @@ $lightblue: #DBE2EF;
 $orange: #FBA834;
 $lightgrey: #F7F4F0;
 
+$font: "Dosis", sans-serif;
+$font-weight: 600;
+
 * {
   margin: 0;
   padding: 0;
@@ -19,8 +22,8 @@ $lightgrey: #F7F4F0;
 @import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap');
 
 @font-face {
-  font-family: "Dosis", sans-serif;
-  font-weight: 600;
+  font-family: $font;
+  font-weight: $font-weight;
   font-style: normal;
 }
 
@@ -70,8 +73,8 @@ body {
   justify-content: space-between;
   min-height: 100dvh;
   background-color: $white;
-  font-family: 'Dosis', sans-serif;
-  font-weight: 600;
+  font-family: $font;
+  font-weight: $font-weight;
   color: $darkblue;
 
   // #####################################################################################################################

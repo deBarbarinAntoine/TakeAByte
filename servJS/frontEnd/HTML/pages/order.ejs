@@ -1,0 +1,41 @@
+<div class="main">
+    <div class="shipping-ctn">
+
+        <%######################################################################################%>
+        <%#       Shipping Template                                                             %>
+        <%######################################################################################%>
+
+        <%  const attributeClasses = (index) => {
+                const classes = ['', '', ''];
+                if (index < 0 || index > 2) return classes;
+                for (let i = 0; i < index; ++i ) {
+                    classes[i] = ' previous';
+                }
+                classes[index] = ' current';
+                return classes;
+            };
+            let orderPage;
+            switch (page) {
+                case 'details':
+                    orderPage = attributeClasses(0);
+                    break;
+                case 'shipping':
+                    orderPage = attributeClasses(1);
+                    break;
+                case 'payment':
+                    orderPage = attributeClasses(2);
+                    break;
+        } %>
+        <%- include(`../partials/${pageName}`, {orderPage: orderPage}); %>
+
+    </div>
+    <div class="cart-resume-ctn">
+
+        <%######################################################################################%>
+        <%#       Cart Resume Template                                                          %>
+        <%######################################################################################%>
+
+        <%- include('../partials/cart-resume', {order: order}); %>
+
+    </div>
+</div>
