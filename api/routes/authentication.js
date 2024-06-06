@@ -1,7 +1,7 @@
 const express = require('express');
 const {login,logout,register,resetPassword, requestPasswordReset} = require("../controllers/users");
 const authenticate = require("../controllers/tokens");
-const {authorizeMod, authorizeUser, authorizeMail} = require("../models/Authorization Middleware");
+const {authorizeUser, authorizeMail} = require("../models/Authorization Middleware");
 const limiter = require("../models/limiting Middleware");
 const router = express.Router();
 

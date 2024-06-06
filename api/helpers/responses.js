@@ -40,4 +40,4 @@ function conflictErrorResponse (res, err, message) {
     });
 }
 
-module.exports = {serverErrorResponse, notFoundErrorResponse, badRequestErrorResponse, methodNotAllowedErrorResponse, unauthorizedErrorResponse, forbiddenErrorResponse, conflictErrorResponse};
+module.exports = {serverErrorResponse, notFoundErrorResponse, badRequestErrorResponse, unauthorizedErrorResponse, conflictErrorResponse};

@@ -1,5 +1,4 @@
 const {unauthorizedErrorResponse, notFoundErrorResponse, serverErrorResponse} = require("../helpers/responses");
-const {getTokenFromUserId, Token} = require("./tokens");
 const {getUserByEmail} = require("./users");
 
 const authorizeUser = (req, res, next) => {
