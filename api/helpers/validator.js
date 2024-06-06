@@ -8,7 +8,8 @@ const validateNewUser = ajv.compile(userModel);
 const validateCredentials = ajv.compile(credentials);
 
 const emailRX = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-const passwordRX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+const passwordRX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d!@#$%^&*()-_=+`~\[\]{}|;:'",.<>/?]{8,}$/;
+
 
 class Validator {
     errors
