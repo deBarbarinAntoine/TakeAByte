@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="http://localhost:4000/static/css/style.css">
+    <title>TakeAByte Shop</title>
+</head>
+<body>
+<header class="header">
+    <div class="header-ctn">
+        <div class="logo">
+            <img src="http://localhost:4000/static/img/logo/takeabyte_logo_transparent.png" alt="TakeAByte logo" class="logo-img" />
+        </div>
+        <form action="/search" method="get" class="search-bar">
+            <button type="submit" class="search-logo">
+                <img src="http://localhost:4000/static/img/icon/search.png" alt="search logo" />
+            </button>
+            <input type="text" name="search" id="search" placeholder="Search..." />
+        </form>
+        <nav class="header-nav">
+            <div class="header-link">
+                <a href="/discovery">Discovery</a>
+                <div class="discovery-expandable">
+                    <img src="http://localhost:4000/static/img/icon/simple-arrow.png" alt="arrow-expand icon" class="expand-icon" />
+                </div>
+            </div>
+            <div class="header-link">
+                <a href="/offers">Offers</a>
+            </div>
+            <div class="header-link">
+                <a href="/contact-us">Contact us</a>
+            </div>
+        </nav>
+        <div class="header-btns">
+            <div class="account-btn"><img src="http://localhost:4000/static/img/icon/user.png" alt="login icon" /></div>
+            <div class="cart-btn"><img src="http://localhost:4000/static/img/icon/cart.png" alt="cart icon" /></div>
+        </div>
+    </div>
+</header>
+
+<section class="template-page">
+    <!--        include page template       -->
+
+    <div class="main">
+        <div class="cart">
+            <div class="cart-header">
+                <div class="title">Your cart items</div>
+                <a href="/shopping">Back to shopping</a>
+            </div>
+            <div class="cart-list">
+                <div class="list-header">
+                    <span class="label-1">Products</span>
+                    <span class="label-2">Price</span>
+                    <span class="label-3">Quantity</span>
+                    <span class="label-4">Total</span>
+                </div>
+                <div class="separator"></div>
+                <div class="products-list">
+                    <div class="cart-product">
+                        <div class="product-img-info">
+                            <div class="product-img">
+                                <img src="http://localhost:4000/static/img/products/product.jpg"
+                                     onerror="this.onerror=null;this.src='/static/img/image-not-found.webp'" alt="product image" />
+                            </div>
+                            <div class="product-info">
+                                <div class="product-name">Steelseries Arctis 7 Headset</div>
+                                <a class="remove-link">Remove</a>
+                            </div>
+                        </div>
+                        <div class="product-price">149.99€</div>
+                        <div class="quantity-ctn">
+                            <div class="quantity">
+                                <div class="minus"><div class="text">-</div></div>
+                                <div class="product-quantity"><div class="text">1</div></div>
+                                <div class="plus"><div class="text">+</div></div>
+                            </div>
+                        </div>
+                        <div class="product-total">149.99€</div>
+                    </div>
+                </div>
+                <div class="separator"></div>
+                <div class="list-footer">
+                    <div class="cart-info">
+                        <div class="subtotal">
+                            <div class="title">Sub-total</div>
+                            <div class="subtotal-nb">149.99€</div>
+                        </div>
+                        <div class="message">Shipping will be calculated later</div>
+                    </div>
+                    <a href="/order" class="button blue">Check-out</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--        end page template           -->
+</section>
+
+<footer class="footer">
+    <div class="footer-line"></div>
+    <div class="footer-ctn">
+        <div class="footer-left">
+            <div class="top">
+                <div class="footer-logo"><img src="http://localhost:4000/static/img/logo/takeabyte_logo_inverted_transparent.png" alt="TakeAByte logo" /></div>
+                <div class="footer-slogan">
+                    <p>Need some high tech device?</p>
+                    <p>Take A Byte!</p>
+                </div>
+            </div>
+            <div class="copyright">© TakeAByte 2024 - All Rights Reserved</div>
+        </div>
+        <div class="footer-links">
+            <div class="link-group">
+                <span class="title">Discovery</span>
+                <a href="/offers">Offers</a>
+                <a href="/popular">Popular</a>
+                <a href="/latest">New</a>
+            </div>
+            <div class="link-group">
+                <span class="title">Info</span>
+                <a href="/contact-us">Contact Us</a>
+                <a href="/privacy-policy">Privacy Policy</a>
+                <a href="/terms-conditions">Terms & Conditions</a>
+            </div>
+            <div class="link-group">
+                <span class="title">About</span>
+                <a href="/about">About Us</a>
+                <a href="/shipping">Shipping</a>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

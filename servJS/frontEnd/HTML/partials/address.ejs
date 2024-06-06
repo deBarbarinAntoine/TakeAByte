@@ -1,18 +1,16 @@
-<div class="shipping">
-    <div class="title-nav">
-        <div class="title-text">Cart</div>
-        <div class="title-separator">></div>
-        <div class="title-text">Details</div>
-        <div class="title-separator">></div>
-        <div class="title-text">Shipping</div>
-        <div class="title-separator">></div>
-        <div class="title-text">Payment</div>
-    </div>
+<div class="order-address">
+
+    <%######################################################################################%>
+    <%#       Order Nav Template                                                            %>
+    <%######################################################################################%>
+
+    <%- include('../order-nav', {page: orderPage}); %>
+
     <form action="/shipping" class="shipping-form" method="post">
         <div class="contact">
             <div class="contact-header">
                 <span class="title">Contact</span>
-                <a href="/login" class="login">Login</a>
+                <div class="login"><span class="msg">Do you have an account?</span><a href="/login" class="login-link">Login</a></div>
             </div>
             <input type="email" placeholder="example@email.com" id="contact-email" />
         </div>
@@ -33,7 +31,7 @@
             <div class="address-city-region">
                 <input type="text" name="city" id="address-city" placeholder="City" />
                 <input type="text" name="zip" id="address-zip" placeholder="ZIP Code" />
-                <input type="text" name="region" id="address-region" placeholder="Region or Province" />
+                <input type="text" name="region" id="address-region" placeholder="Province" />
             </div>
             <div class="address-country">
                 <input type="text" name="country" id="address-country" placeholder="Country" />
@@ -41,7 +39,7 @@
         </div>
         <div class="btns">
             <a href="/cart" class="back-link">Back to cart</a>
-            <button type="submit">Go to shipping</button>
+            <button class="blue" type="submit">Go to shipping</button>
         </div>
     </form>
 </div>

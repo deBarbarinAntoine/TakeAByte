@@ -44,7 +44,13 @@
     </header>
 
     <section class="template-page">
-        <!--        include page template       -->
+
+        <%######################################################################################%>
+        <%#       Page Template                                                                 %>
+        <%######################################################################################%>
+
+        <%- include(`pages/${template}`, {data: pageData}); %>
+
     </section>
 
     <footer class="footer">

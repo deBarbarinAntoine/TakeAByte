@@ -1,0 +1,33 @@
+<div class="main">
+    <div class="cart">
+        <div class="cart-header">
+            <div class="title">Your cart items</div>
+            <a href="/shopping">Back to shopping</a>
+        </div>
+        <div class="cart-list">
+            <div class="list-header">
+                <span class="label-1">Products</span>
+                <span class="label-2">Price</span>
+                <span class="label-3">Quantity</span>
+                <span class="label-4">Total</span>
+            </div>
+            <div class="separator"></div>
+            <div class="products-list">
+                <% cart.products.forEach(function (product) { %>
+                    <%- include('../partials/cart-product', {product: product}); %>
+                <% });%>
+            </div>
+            <div class="separator"></div>
+            <div class="list-footer">
+                <div class="cart-info">
+                    <div class="subtotal">
+                        <div class="title">Sub-total</div>
+                        <div class="subtotal-nb"><% cart.subtotal %></div>
+                    </div>
+                    <div class="message">Shipping will be calculated later</div>
+                </div>
+                <a href="/order" class="button blue">Check-out</a>
+            </div>
+        </div>
+    </div>
+</div>

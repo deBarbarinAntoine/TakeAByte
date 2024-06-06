@@ -10,18 +10,346 @@
   justify-content: space-between;
 
   // #####################################################################################################################
-  // # shipping
+  // # common elements
   // #####################################################################################################################
 
-  .shipping-ctn {
+  .separator {
+    width: 100%;
+    height: 3px;
+    background-color: $lightblue;
+    border-radius: 3px;
+  }
+
+  .quantity {
+    width: 3.5rem;
+    height: 2rem;
+    padding: 0 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: .5rem;
+    border: 2px solid $blue;
+
+    .product-quantity {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+
+      .text {
+        font-size: 1.1rem;
+      }
+    }
+    .minus,
+    .plus {
+      height: 100%;
+      cursor: pointer;
+
+      .text {
+        font-size: 1.5rem;
+      }
+      &:hover {
+        color: $orange;
+      }
+    }
+  }
+
+
+  // #####################################################################################################################
+  // # product page
+  // #####################################################################################################################
+
+  .product {
     display: flex;
     justify-content: center;
+    gap: 3.5rem;
+    padding: 4rem 0 9rem 0;
+
+    .product-carousel {
+      width: 35%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .product-img {
+        width: 70%;
+        aspect-ratio: 1;
+
+        img {
+          object-fit: contain;
+          object-position: center;
+          width: 100%;
+          height: 100%;
+        }
+      }
+      .previews {
+        display: flex;
+        justify-content: center;
+        width: 70%;
+
+        img {
+          width: 30%;
+          flex: 1;
+          aspect-ratio: 1;
+        }
+      }
+    }
+    .product-info {
+      width: 25%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4rem;
+
+      .title {
+        min-width: 20ch;
+        width: max-content;
+        font-size: 1.4rem;
+      }
+
+      .generic {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+
+        .name {
+          font-size: 2.5rem;
+        }
+        .description {
+          font-size: 1.2rem;
+          text-align: justify;
+          line-height: 1.9rem;
+          color: $blue;
+        }
+      }
+      .quantity-price {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+
+        .price {
+          font-size: 1.6rem;
+        }
+      }
+      .colors {
+        width: 100%;
+        display: flex;
+        align-items: flex-end;
+        gap: 5rem;
+
+        .color-list {
+          display: flex;
+          gap: 1.5rem;
+
+          .color {
+            width: 1.8rem;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            border: .2rem solid $darkblue;
+            cursor: pointer;
+          }
+          .color.selected {
+            border: .2rem solid $orange;
+          }
+        }
+      }
+      .miscellaneous {
+        display: flex;
+        flex-direction: column;
+        gap: 1.2rem;
+        width: 100%;
+
+        .specification {
+          display: flex;
+          align-items: flex-end;
+
+          .content {
+            flex: 1;
+            font-size: 1.3rem;
+            color: $blue;
+          }
+        }
+      }
+    }
+  }
+
+
+  // #####################################################################################################################
+  // # cart
+  // #####################################################################################################################
+
+  .cart {
+    display: flex;
+    flex-direction: column;
     align-items: center;
+    width: 85%;
+    padding: 5rem 7.5%;
+    gap: 3rem;
+
+    .cart-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      gap: 1.5rem;
+
+      .title {
+        font-size: 2.5rem;
+      }
+      a {
+        color: $blue;
+        font-size: 1.3rem;
+
+        &:hover {
+          color: $orange;
+          text-decoration: underline;
+        }
+      }
+    }
+    .cart-list {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      gap: 2.2rem;
+
+      .list-header {
+        display: flex;
+        justify-content: space-between;
+        width: 95%;
+
+        span {
+          font-size: 1.5rem;
+        }
+        .label-1 {
+          flex: 2;
+        }
+        .label-2,
+        .label-3 {
+          flex: 1;
+        }
+      }
+      .products-list {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        gap: 1.5rem;
+
+        .cart-product {
+          display: flex;
+          justify-content: space-between;
+          width: 95%;
+
+          .product-img-info {
+            flex: 2;
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+
+            .product-img {
+              width: 17rem;
+              aspect-ratio: 1;
+
+              img {
+                object-fit: contain;
+                object-position: center;
+                width: 100%;
+                height: 100%;
+              }
+            }
+            .product-info {
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              gap: 1.5rem;
+
+              .product-name {
+                font-size: 1.5rem;
+              }
+              a.remove-link {
+                color: $blue;
+                font-size: 1.3rem;
+
+                &:hover {
+                  color: $orange;
+                  text-decoration: underline;
+                }
+              }
+            }
+          }
+          .product-price {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            font-size: 1.4rem;
+          }
+          .quantity-ctn {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+          }
+          .product-total {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            font-size: 1.4rem;
+          }
+        }
+      }
+      .list-footer {
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+        gap: 10rem;
+
+        .cart-info {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          gap: 3rem;
+
+          .subtotal {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 2rem;
+
+            .title {
+              font-size: 1.6rem;
+            }
+            .subtotal-nb {
+              color: $blue;
+              font-size: 1.7rem;
+            }
+          }
+          .message {
+            font-size: 1.4rem;
+            color: $blue;
+          }
+        }
+      }
+    }
+  }
+
+
+  // #####################################################################################################################
+  // # address
+  // #####################################################################################################################
+
+  .order-ctn {
+    display: flex;
+    justify-content: center;
     width: 50%;
     padding-top: 2rem;
     padding-bottom: 9rem;
 
-    .shipping {
+    .order-address {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -210,13 +538,114 @@
   }
 
   // #####################################################################################################################
-  // # order info
+  // # cart resume
   // #####################################################################################################################
 
-  .order-info {
-    width: 50%;
+  .cart-resume-ctn {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    padding-top: 5rem;
+    padding-left: 8%;
+    padding-bottom: 7rem;
+    width: 42%;
+    height: inherit;
     flex: 1;
     background-color: transparentize($orange, 0.92);
+
+    .cart-resume {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2.7rem;
+      width: 60%;
+
+      .product-list {
+        width: 100%;
+        max-height: 30dvh;
+        display: flex;
+        flex-direction: column;
+        gap: 1.2rem;
+        padding: 2rem .8rem 2rem 0;
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: $darkblue $lightblue;
+        scrollbar-arrow-color: $blue;
+
+        .product {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          .product-img {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 15rem;
+            aspect-ratio: 1;
+
+            img {
+              width: 90%;
+              height: 90%;
+            }
+            .quantity-bullet {
+              position: absolute;
+              top: 0;
+              right: 0;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              width: 1.8rem;
+              height: 1.8rem;
+              border-radius: 50%;
+              background-color: $blue;
+
+              .text {
+                color: $lightblue;
+                font-weight: bold;
+                font-size: 1.2rem;
+              }
+            }
+          }
+          .product-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+
+            .product-name {
+              color: $darkblue;
+              font-size: 1.6rem;
+            }
+            .product-price {
+              color: $blue;
+              font-size: 2rem;
+            }
+          }
+        }
+      }
+      .subtotal-ctn,
+      .shipping-cost-ctn,
+      .total-ctn {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+
+        .title {
+          font-size: 1.3rem;
+          color: $darkblue;
+        }
+        .subtotal,
+        .shipping-cost {
+          font-size: 1.3rem;
+          color: $blue;
+        }
+        .total {
+          font-size: 1.8rem;
+          color: $blue;
+        }
+      }
+    }
   }
 }
 

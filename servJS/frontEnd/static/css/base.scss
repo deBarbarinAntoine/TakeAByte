@@ -5,6 +5,9 @@ $lightblue: #DBE2EF;
 $orange: #FBA834;
 $lightgrey: #F7F4F0;
 
+$font: "Dosis", sans-serif;
+$font-weight: 600;
+
 * {
   margin: 0;
   padding: 0;
@@ -13,14 +16,15 @@ $lightgrey: #F7F4F0;
   a {
     text-decoration: none;
     color: $darkblue;
+    cursor: pointer;
   }
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap');
 
 @font-face {
-  font-family: "Dosis", sans-serif;
-  font-weight: 600;
+  font-family: $font;
+  font-weight: $font-weight;
   font-style: normal;
 }
 
@@ -28,7 +32,8 @@ $lightgrey: #F7F4F0;
 // # buttons
 // #####################################################################################################################
 
-button {
+button,
+.button {
   border-radius: .5rem;
   padding: 1rem 2rem;
   appearance: none;
@@ -36,16 +41,13 @@ button {
   font-size: 1.3rem;
   cursor: pointer;
   transition: all 200ms ease-in-out 50ms;
+  height: fit-content;
+  width: fit-content;
 
   &.blue {
     background-color: $blue;
     color: $white;
     border: none;
-  }
-  &.white {
-    border: 2px solid $blue;
-    background-color: $white;
-    color: $blue;
   }
   &.disabled, &[disabled] {
     background-color: $lightblue;
@@ -57,6 +59,21 @@ button {
     background-color: $orange;
     color: $darkblue;
   }
+  &.white {
+    border: 2px solid $blue;
+    background-color: $white;
+    color: $blue;
+
+    &:hover:not(.disabled, &[disabled]) {
+      background-color: $blue;
+      color: $white;
+    }
+  }
+  img {
+    margin: 0 1.5rem 0 0;
+    width: 1.2rem;
+    aspect-ratio: 1;
+  }
 }
 
 // #####################################################################################################################
@@ -65,13 +82,10 @@ button {
 
 
 body {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   min-height: 100dvh;
   background-color: $white;
-  font-family: 'Dosis', sans-serif;
-  font-weight: 600;
+  font-family: $font;
+  font-weight: $font-weight;
   color: $darkblue;
 
   // #####################################################################################################################

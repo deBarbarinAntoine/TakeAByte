@@ -1,0 +1,21 @@
+<div class="cart-resume">
+    <div class="product-list">
+        <% order.products.forEach(function (product) { %>
+            <%- include('order-product', {product: product}); %>
+        <% }); %>
+    </div>
+    <div class="separator"></div>
+    <div class="subtotal-ctn">
+        <div class="title">Subtotal</div>
+        <div class="subtotal"><%= order.subtotal %></div>
+    </div>
+    <div class="shipping-cost-ctn">
+        <div class="title">Shipping</div>
+        <div class="shipping-cost"><%= order.shippingCost %></div>
+    </div>
+    <div class="separator"></div>
+    <div class="total-ctn">
+        <div class="title">Total</div>
+        <div class="total"><%= order.total %></div>
+    </div>
+</div>
