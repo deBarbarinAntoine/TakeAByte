@@ -4,7 +4,6 @@
         <%######################################################################################%>
         <%#       Shipping Template                                                             %>
         <%######################################################################################%>
-
         <%  const attributeClasses = (index) => {
                 const classes = ['', '', ''];
                 if (index < 0 || index > 2) return classes;
@@ -15,7 +14,7 @@
                 return classes;
             };
             let orderPage;
-            switch (page) {
+            switch (data.page) {
                 case 'details':
                     orderPage = attributeClasses(0);
                     break;
@@ -28,14 +27,15 @@
         } %>
         <%- include(`../partials/${pageName}`, {orderPage: orderPage}); %>
 
+
     </div>
     <div class="cart-resume-ctn">
 
         <%######################################################################################%>
         <%#       Cart Resume Template                                                          %>
         <%######################################################################################%>
+        <%- include('../partials/cart-resume', {order: data.order}); %>
 
-        <%- include('../partials/cart-resume', {order: order}); %>
 
     </div>
 </div>

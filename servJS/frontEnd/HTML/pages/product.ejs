@@ -1,52 +1,60 @@
-<div class="main">
-    <div class="product">
-        <div class="product-carousel">
-            <div class="product-img">
-                <img src="/static/img/products/<%= product.images[0] %>"
-                     onerror="this.onerror=null;this.src='/static/img/image-not-found.webp'" alt="<%= product.name %> image" />
-            </div>
-            <div class="previews">
-                <% product.images.forEach(function (img) { %>
-                <img src="/static/img/products/<%= img %>"
-                     onerror="this.onerror=null;this.src='/static/img/image-not-found.webp'" alt="<%= product.name %> image" />
-                <% }); %>
-            </div>
-        </div>
-        <div class="product-info">
-            <div class="generic">
-                <div class="name"><%= product.name %></div>
-                <div class="description"><%= product.description %></div>
-            </div>
-            <div class="quantity-price">
-                <div class="title">Quantity</div>
-                <div class="quantity">
-                    <div class="minus"><div class="text">-</div></div>
-                    <div class="product-quantity"><div class="text">1</div></div>
-                    <div class="plus"><div class="text">+</div></div>
+<div class="main-column gap5 padding-top3">
+
+    <%######################################################################################%>
+    <%#       Title Nav Template                                                            %>
+    <%######################################################################################%>
+    <%- include('../partials/stroll-nav', {data: data.navData}); %>
+
+    <div class="product-ctn">
+        <div class="product">
+            <div class="product-carousel">
+                <div class="product-img">
+                    <img src="/static/img/products/<%= data.product.images[0] %>"
+                         onerror="this.onerror=null;this.src='/static/img/image-not-found.webp'" alt="<%= data.product.name %> image" />
                 </div>
-                <div class="price"><%= product.price %></div>
+                <div class="previews">
+                    <% data.product.images.forEach(function (img) { %>
+                        <img src="/static/img/products/<%= img %>"
+                             onerror="this.onerror=null;this.src='/static/img/image-not-found.webp'" alt="<%= data.product.name %> image" />
+                    <% }); %>
+                </div>
             </div>
-            <div class="colors">
+            <div class="product-info">
+                <div class="generic">
+                    <div class="name"><%= data.product.name %></div>
+                    <div class="description"><%= data.product.description %></div>
+                </div>
+                <div class="quantity-price">
+                    <div class="title">Quantity</div>
+                    <div class="quantity">
+                        <div class="minus"><div class="text">-</div></div>
+                        <div class="product-quantity"><div class="text">1</div></div>
+                        <div class="plus"><div class="text">+</div></div>
+                    </div>
+                    <div class="price"><%= data.product.price %></div>
+                </div>
+                <div class="colors">
                     <div class="title">Color</div>
                     <div class="color-list">
-                        <% product.colors.forEach(function (color) { %>
+                        <% data.product.colors.forEach(function (color) { %>
                             <div class="color" style="background-color: <%= color %>>"></div>
                         <% }); %>
                     </div>
-            </div>
-            <div class="miscellaneous">
-                <div class="specification">
-                    <div class="title">Brand</div>
-                    <div class="content"><%= product.brand %></div>
                 </div>
-                <% product.miscellaneous.forEach(function (spec) { %>
+                <div class="miscellaneous">
                     <div class="specification">
-                        <div class="title"><%= spec.name %></div>
-                        <div class="content"><%= spec.content %></div>
+                        <div class="title">Brand</div>
+                        <div class="content"><%= data.product.brand %></div>
                     </div>
-                <% }); %>
+                    <% data.product.miscellaneous.forEach(function (spec) { %>
+                        <div class="specification">
+                            <div class="title"><%= spec.name %></div>
+                            <div class="content"><%= spec.content %></div>
+                        </div>
+                    <% }); %>
+                </div>
+                <div class="button white"><img src="/static/img/icon/cart.png" alt="cart icon" /> + Add to cart</div>
             </div>
-            <div class="button white"><img src="/static/img/icon/cart.png" alt="cart icon" /> + Add to cart</div>
         </div>
     </div>
 </div>

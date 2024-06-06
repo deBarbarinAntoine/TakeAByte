@@ -1,8 +1,16 @@
 <div class="cart-resume">
-    <div class="product-list">
-        <% order.products.forEach(function (product) { %>
-            <%- include('order-product', {product: product}); %>
-        <% }); %>
+    <div class="product-list-ctn relative">
+        <div class="product-list">
+
+            <%################################################################################%>
+            <%#     order-product templates                                                   %>
+            <%################################################################################%>
+            <% order.products.forEach(function (product) { %>
+                <%- include('order-product', {product: product}); %>
+            <% }); %>
+
+
+        </div>
     </div>
     <div class="separator"></div>
     <div class="subtotal-ctn">

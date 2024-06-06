@@ -2,54 +2,189 @@
 
 
 // #####################################################################################################################
-// # template main container
+// # common elements
 // #####################################################################################################################
 
-.main {
+.separator {
+  width: 100%;
+  height: 3px;
+  background-color: $lightblue;
+  border-radius: 3px;
+}
+
+.quantity {
+  width: 3.5rem;
+  height: 2rem;
+  padding: 0 1rem;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  gap: .5rem;
+  border: 2px solid $blue;
+
+  .product-quantity {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+
+    .text {
+      font-size: 1.1rem;
+    }
+  }
+  .minus,
+  .plus {
+    height: 100%;
+    cursor: pointer;
+
+    .text {
+      font-size: 1.5rem;
+    }
+    &:hover {
+      color: $orange;
+    }
+  }
+}
+
+.title-nav {
+  width: 100%;
+  display: flex;
+  gap: 1.2rem;
+  margin-bottom: 4.5rem;
+
+  .title-text {
+    font-size: 1.8rem;
+    color: transparentize($darkblue, 0.7);
+  }
+  .title-separator {
+    font-size: 1.7rem;
+    color: $darkblue;
+  }
+  .previous {
+    color: $blue;
+  }
+  .current {
+    color: $darkblue;
+  }
+}
+
+
+// #####################################################################################################################
+// # template main container (flex column)
+// #####################################################################################################################
+
+.main-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 9rem;
+
 
   // #####################################################################################################################
-  // # common elements
+  // # title nav container
   // #####################################################################################################################
 
-  .separator {
-    width: 100%;
-    height: 3px;
-    background-color: $lightblue;
-    border-radius: 3px;
+  .title-nav-ctn {
+    width: 70%;
+    min-width: fit-content;
   }
 
-  .quantity {
-    width: 3.5rem;
-    height: 2rem;
-    padding: 0 1rem;
+
+  // #####################################################################################################################
+  // # banner template
+  // #####################################################################################################################
+
+  .banner {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    gap: .5rem;
-    border: 2px solid $blue;
+    width: 100%;
+    height: calc(100dvh - 9.2rem);
+    min-height: fit-content;
 
-    .product-quantity {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    img {
+      object-fit: cover;
+      object-position: center;
+      width: 100%;
       height: 100%;
+    }
+    .banner-ctn {
+      z-index: 10;
+      width: 40%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+      padding: 7rem;
+      background-color: $lightblue;
+      border-radius: .5rem;
 
+      .title {
+        font-size: 3rem;
+      }
       .text {
-        font-size: 1.1rem;
+        font-size: 1.7rem;
+        text-align: justify;
       }
     }
-    .minus,
-    .plus {
-      height: 100%;
-      cursor: pointer;
+  }
 
-      .text {
-        font-size: 1.5rem;
-      }
-      &:hover {
-        color: $orange;
+
+  // #####################################################################################################################
+  // # products-carousel template
+  // #####################################################################################################################
+
+  .products-carousel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3.5rem;
+    width: 70%;
+
+    .title {
+      font-size: 2.2rem;
+    }
+    .products-list {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .product-card {
+        width: 22%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-shadow: $shadow 0 .2rem 1.6rem;
+
+        .product-card-img {
+          width: 100%;
+          aspect-ratio: 1;
+
+          img {
+            object-fit: contain;
+            object-position: center;
+            width: 100%;
+            height: 100%;
+          }
+        }
+        .product-card-description {
+          width: calc(100% - 2rem);
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          gap: 1.7rem;
+          padding: 1.5rem 1rem;
+          background-color: $lightblue;
+
+          .title {
+            font-size: 1.4rem;
+          }
+          .price {
+            font-size: 1.5rem;
+            color: $blue;
+            text-align: right;
+          }
+        }
       }
     }
   }
@@ -59,121 +194,136 @@
   // # product page
   // #####################################################################################################################
 
-  .product {
+  .product-ctn {
     display: flex;
-    justify-content: center;
-    gap: 3.5rem;
-    padding: 4rem 0 9rem 0;
+    justify-content: space-between;
 
-    .product-carousel {
-      width: 35%;
+    .product {
       display: flex;
-      flex-direction: column;
       justify-content: center;
-      align-items: center;
+      gap: 3.5rem;
+      padding: 4rem 0 9rem 0;
 
-      .product-img {
-        width: 70%;
-        aspect-ratio: 1;
-
-        img {
-          object-fit: contain;
-          object-position: center;
-          width: 100%;
-          height: 100%;
-        }
-      }
-      .previews {
+      .product-carousel {
+        width: 35%;
         display: flex;
+        flex-direction: column;
         justify-content: center;
-        width: 70%;
+        align-items: center;
 
-        img {
-          width: 30%;
-          flex: 1;
+        .product-img {
+          width: 70%;
           aspect-ratio: 1;
+
+          img {
+            object-fit: contain;
+            object-position: center;
+            width: 100%;
+            height: 100%;
+          }
         }
-      }
-    }
-    .product-info {
-      width: 25%;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 4rem;
-
-      .title {
-        min-width: 20ch;
-        width: max-content;
-        font-size: 1.4rem;
-      }
-
-      .generic {
-        display: flex;
-        flex-direction: column;
-        gap: 2rem;
-
-        .name {
-          font-size: 2.5rem;
-        }
-        .description {
-          font-size: 1.2rem;
-          text-align: justify;
-          line-height: 1.9rem;
-          color: $blue;
-        }
-      }
-      .quantity-price {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-end;
-
-        .price {
-          font-size: 1.6rem;
-        }
-      }
-      .colors {
-        width: 100%;
-        display: flex;
-        align-items: flex-end;
-        gap: 5rem;
-
-        .color-list {
+        .previews {
           display: flex;
-          gap: 1.5rem;
+          justify-content: center;
+          width: 70%;
 
-          .color {
-            width: 1.8rem;
+          img {
+            width: 30%;
+            flex: 1;
             aspect-ratio: 1;
-            border-radius: 50%;
-            border: .2rem solid $darkblue;
-            cursor: pointer;
-          }
-          .color.selected {
-            border: .2rem solid $orange;
           }
         }
       }
-      .miscellaneous {
+      .product-info {
+        width: 25%;
         display: flex;
         flex-direction: column;
-        gap: 1.2rem;
-        width: 100%;
+        align-items: flex-end;
+        gap: 4rem;
 
-        .specification {
+        .title {
+          min-width: 20ch;
+          width: max-content;
+          font-size: 1.4rem;
+        }
+
+        .generic {
           display: flex;
+          flex-direction: column;
+          gap: 2rem;
+
+          .name {
+            font-size: 2.5rem;
+          }
+          .description {
+            font-size: 1.2rem;
+            text-align: justify;
+            line-height: 1.9rem;
+            color: $blue;
+          }
+        }
+        .quantity-price {
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
           align-items: flex-end;
 
-          .content {
-            flex: 1;
-            font-size: 1.3rem;
-            color: $blue;
+          .price {
+            font-size: 1.6rem;
+          }
+        }
+        .colors {
+          width: 100%;
+          display: flex;
+          align-items: flex-end;
+          gap: 5rem;
+
+          .color-list {
+            display: flex;
+            gap: 1.5rem;
+
+            .color {
+              width: 1.8rem;
+              aspect-ratio: 1;
+              border-radius: 50%;
+              border: .2rem solid $darkblue;
+              cursor: pointer;
+            }
+            .color.selected {
+              border: .2rem solid $orange;
+            }
+          }
+        }
+        .miscellaneous {
+          display: flex;
+          flex-direction: column;
+          gap: 1.2rem;
+          width: 100%;
+
+          .specification {
+            display: flex;
+            align-items: flex-end;
+
+            .content {
+              flex: 1;
+              font-size: 1.3rem;
+              color: $blue;
+            }
           }
         }
       }
     }
   }
+}
+
+
+// #####################################################################################################################
+// # template main container (flex row)
+// #####################################################################################################################
+
+.main {
+  display: flex;
+  justify-content: space-between;
 
 
   // #####################################################################################################################
@@ -353,29 +503,8 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      width: 60%;
+      width: 65%;
 
-      .title-nav {
-        width: 100%;
-        display: flex;
-        gap: 1.2rem;
-        margin-bottom: 4.5rem;
-
-        .title-text {
-          font-size: 1.8rem;
-          color: transparentize($darkblue, 0.7);
-        }
-        .title-separator {
-          font-size: 1.7rem;
-          color: $darkblue;
-        }
-        .previous {
-          color: $blue;
-        }
-        .current {
-          color: $darkblue;
-        }
-      }
       form.shipping-form {
         width: 100%;
         display: flex;
@@ -551,7 +680,7 @@
     width: 42%;
     height: inherit;
     flex: 1;
-    background-color: transparentize($orange, 0.92);
+    background-color: $cream;
 
     .cart-resume {
       display: flex;
@@ -560,66 +689,96 @@
       gap: 2.7rem;
       width: 60%;
 
-      .product-list {
+      .product-list-ctn {
         width: 100%;
         max-height: 30dvh;
-        display: flex;
-        flex-direction: column;
-        gap: 1.2rem;
-        padding: 2rem .8rem 2rem 0;
-        overflow-y: auto;
-        scrollbar-width: thin;
-        scrollbar-color: $darkblue $lightblue;
-        scrollbar-arrow-color: $blue;
 
-        .product {
+        &::before {
+          position: absolute;
+          content: '';
+          width: 100%;
+          height: 1.5rem;
+          top: 0;
+          z-index: 10;
+          background: linear-gradient($cream, transparent);
+          pointer-events: none;
+        }
+
+        &::after {
+          position: absolute;
+          content: '';
+          width: 100%;
+          height: 1.5rem;
+          bottom: 0;
+          z-index: 10;
+          background: linear-gradient(transparent, $cream);
+          pointer-events: none;
+        }
+
+        .product-list {
+          width: calc(100% - .8rem);
+          height: calc(100% - 2rem);
           display: flex;
-          justify-content: space-between;
-          align-items: center;
+          flex-direction: column;
+          gap: 1.2rem;
+          padding: 1rem .8rem 1rem 0;
+          overflow-y: auto;
+          scrollbar-width: thin;
+          scrollbar-color: $darkblue $lightblue;
+          scrollbar-arrow-color: $blue;
 
-          .product-img {
-            position: relative;
+          .product {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            width: 15rem;
-            aspect-ratio: 1;
+            padding: 0;
+            gap: 0;
 
-            img {
-              width: 90%;
-              height: 90%;
-            }
-            .quantity-bullet {
-              position: absolute;
-              top: 0;
-              right: 0;
+            .product-img {
+              position: relative;
               display: flex;
               justify-content: center;
               align-items: center;
-              width: 1.8rem;
-              height: 1.8rem;
-              border-radius: 50%;
-              background-color: $blue;
+              width: 15rem;
+              aspect-ratio: 1;
 
-              .text {
-                color: $lightblue;
-                font-weight: bold;
-                font-size: 1.2rem;
+              img {
+                width: 90%;
+                height: 90%;
+              }
+              .quantity-bullet {
+                position: absolute;
+                top: 0;
+                right: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 1.8rem;
+                height: 1.8rem;
+                border-radius: 50%;
+                background-color: $blue;
+
+                .text {
+                  color: $lightblue;
+                  font-weight: bold;
+                  font-size: 1.2rem;
+                }
               }
             }
-          }
-          .product-info {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
+            .product-info {
+              width: inherit;
+              display: flex;
+              flex-direction: column;
+              gap: 2rem;
 
-            .product-name {
-              color: $darkblue;
-              font-size: 1.6rem;
-            }
-            .product-price {
-              color: $blue;
-              font-size: 2rem;
+              .product-name {
+                color: $darkblue;
+                font-size: 1.6rem;
+              }
+              .product-price {
+                color: $blue;
+                font-size: 2rem;
+              }
             }
           }
         }

@@ -1,11 +1,11 @@
-<div class="banner">
-    <img src="/static/img/banner.png" alt="banner image" class="banner-img" />
+<div class="banner relative">
+    <div class="abs full">
+        <img src="/static/img/products/<%= banner.img %>"
+             onerror="this.onerror=null;this.src='/static/img/banner-not-found.webp'" alt="<%= banner.title %> banner image" />
+    </div>
     <div class="banner-ctn">
-        <div class="title">Computer Components</div>
-        <div class="text">
-            All you need to build or power up your computer
-            or even set up your own home lab.
-        </div>
-        <div class="btn">Discover our collection</div>
+        <div class="title"><%= banner.title %>></div>
+        <div class="text"><%= banner.text %>></div>
+        <a href="<%= banner.link %>>" class="button white"><%= banner.btnContent %>></a>
     </div>
 </div>

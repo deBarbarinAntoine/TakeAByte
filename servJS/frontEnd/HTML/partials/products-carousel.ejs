@@ -1,0 +1,13 @@
+<div class="products-carousel">
+    <div class="title"><%= data.title %></div>
+    <div class="products-list">
+
+        <%################################################################################%>
+        <%#     product-card template                                                     %>
+        <%################################################################################%>
+        <% data.products.forEach(function (product) { %>
+            <%- include('./product-card', {product: product}); %>
+        <% }); %>
+
+    </div>
+</div>

@@ -15,6 +15,31 @@
   font-weight: 600;
   font-style: normal;
 }
+.relative {
+  position: relative;
+}
+
+.abs {
+  position: absolute;
+}
+
+.full {
+  width: 100%;
+  height: 100%;
+}
+
+.gap12 {
+  gap: 12rem;
+}
+
+.gap5 {
+  gap: 5rem;
+}
+
+.padding-top3 {
+  padding-top: 3rem;
+}
+
 button,
 .button {
   border-radius: 0.5rem;
@@ -32,14 +57,6 @@ button.blue,
   background-color: #3F72AF;
   color: #F9F7F7;
   border: none;
-}
-button.disabled, button[disabled],
-.button.disabled,
-.button[disabled] {
-  background-color: #DBE2EF;
-  color: #112D4E;
-  border: none;
-  cursor: not-allowed;
 }
 button:hover:not(.disabled, button[disabled],
 .button[disabled]),
@@ -60,6 +77,14 @@ button.white:hover:not(.disabled, button.white[disabled],
 .button.white[disabled]) {
   background-color: #3F72AF;
   color: #F9F7F7;
+}
+button.disabled, button[disabled],
+.button.disabled,
+.button[disabled] {
+  background-color: #DBE2EF;
+  color: #112D4E;
+  border: none;
+  cursor: not-allowed;
 }
 button img,
 .button img {

@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title><%= title %></title>
+    <title><%= data.title %></title>
 </head>
 <body>
     <header class="header">
@@ -33,7 +33,7 @@
                 </div>
             </nav>
             <div class="header-btns">
-                <% if (isAuthenticated) { %>
+                <% if (data.isAuthenticated) { %>
                     <div class="account-btn"><img src="/static/img/icon/login.png" alt="login icon" /></div>
                 <% } else { %>
                     <div class="account-btn"><img src="/static/img/icon/logout.png" alt="logout icon" /></div>
@@ -48,8 +48,8 @@
         <%######################################################################################%>
         <%#       Page Template                                                                 %>
         <%######################################################################################%>
+        <%- include(`pages/${template}`, {data: data.templateData}); %>
 
-        <%- include(`pages/${template}`, {data: pageData}); %>
 
     </section>
 
@@ -58,7 +58,7 @@
         <div class="footer-ctn">
             <div class="footer-left">
                 <div class="footer-logo"><img src="/static/img/logo/logo_transparent_inverted.png" alt="TakeAByte logo" /></div>
-                <div class="footer-slogan"><% slogan %></div>
+                <div class="footer-slogan"><% data.slogan %></div>
             </div>
             <div class="footer-links">
                 <div class="link-group">

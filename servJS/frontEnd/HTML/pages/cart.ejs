@@ -13,16 +13,21 @@
             </div>
             <div class="separator"></div>
             <div class="products-list">
+
+                <%################################################################################%>
+                <%#     cart-product templates                                                    %>
+                <%################################################################################%>
                 <% cart.products.forEach(function (product) { %>
-                    <%- include('../partials/cart-product', {product: product}); %>
-                <% });%>
+                    <%- include('../partials/cart-product', {product: data.product}); %>
+                <% }); %>
+
             </div>
             <div class="separator"></div>
             <div class="list-footer">
                 <div class="cart-info">
                     <div class="subtotal">
                         <div class="title">Sub-total</div>
-                        <div class="subtotal-nb"><% cart.subtotal %></div>
+                        <div class="subtotal-nb"><% data.cart.subtotal %></div>
                     </div>
                     <div class="message">Shipping will be calculated later</div>
                 </div>
