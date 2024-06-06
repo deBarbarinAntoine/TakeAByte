@@ -164,7 +164,19 @@ const getBrandIdByNameQuery = 'SELECT brand_id FROM brands WHERE name = ?'
 // Check if product already exist
 const isExistingProduct ='SELECT * FROM products WHERE name = ? AND brand_id = ?'
 
+// GET user id from token
+const getUserIdFromTokenQuery ='SELECT user_id FROM tokens WHERE token = ?'
+
+// GET token from user id
+const getTokenFromUserIdQuery ='SELECT token FROM tokens WHERE user_id = ?'
+
+// Check if user is mod
+const isModQuery ='SELECT is_mod FROM users WHERE user_id = ?'
+
 module.exports = {getAllUsersQuery,
+    getTokenFromUserIdQuery,
+    isModQuery,
+    getUserIdFromTokenQuery,
     isExistingProduct,
     getTypeIdByNameQuery,
     getBrandIdByNameQuery,

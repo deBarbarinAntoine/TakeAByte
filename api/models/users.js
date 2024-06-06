@@ -122,4 +122,6 @@ async function updatePassword(user_id,hash){
     }
 }
 
+
+
 module.exports = {User, getUsers, getUserById, getUserByEmail, checkCredentials, errDuplicateEmail, errDuplicateUsername,updatePassword};

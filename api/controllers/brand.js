@@ -5,7 +5,7 @@ const {
     updateBrandQuery,
     getBrandQuery,
     deleteBrandQuery,
-    getBrandIdByNameQuery, getTypeIdByNameQuery, creatTypeQuery
+    getBrandIdByNameQuery,
 } = require("../models/db-queries");
 
 // Function to create a new brand
