@@ -24,18 +24,14 @@ button,
   font-size: 1.3rem;
   cursor: pointer;
   transition: all 200ms ease-in-out 50ms;
+  height: fit-content;
+  width: fit-content;
 }
 button.blue,
 .button.blue {
   background-color: #3F72AF;
   color: #F9F7F7;
   border: none;
-}
-button.white,
-.button.white {
-  border: 2px solid #3F72AF;
-  background-color: #F9F7F7;
-  color: #3F72AF;
 }
 button.disabled, button[disabled],
 .button.disabled,
@@ -51,6 +47,25 @@ button:hover:not(.disabled, button[disabled],
 .button[disabled]) {
   background-color: #FBA834;
   color: #112D4E;
+}
+button.white,
+.button.white {
+  border: 2px solid #3F72AF;
+  background-color: #F9F7F7;
+  color: #3F72AF;
+}
+button.white:hover:not(.disabled, button.white[disabled],
+.button.white[disabled]),
+.button.white:hover:not(.disabled, button.white[disabled],
+.button.white[disabled]) {
+  background-color: #3F72AF;
+  color: #F9F7F7;
+}
+button img,
+.button img {
+  margin: 0 1.5rem 0 0;
+  width: 1.2rem;
+  aspect-ratio: 1;
 }
 
 body {

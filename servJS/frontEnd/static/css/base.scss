@@ -41,16 +41,13 @@ button,
   font-size: 1.3rem;
   cursor: pointer;
   transition: all 200ms ease-in-out 50ms;
+  height: fit-content;
+  width: fit-content;
 
   &.blue {
     background-color: $blue;
     color: $white;
     border: none;
-  }
-  &.white {
-    border: 2px solid $blue;
-    background-color: $white;
-    color: $blue;
   }
   &.disabled, &[disabled] {
     background-color: $lightblue;
@@ -61,6 +58,21 @@ button,
   &:hover:not(.disabled, &[disabled]) {
     background-color: $orange;
     color: $darkblue;
+  }
+  &.white {
+    border: 2px solid $blue;
+    background-color: $white;
+    color: $blue;
+
+    &:hover:not(.disabled, &[disabled]) {
+      background-color: $blue;
+      color: $white;
+    }
+  }
+  img {
+    margin: 0 1.5rem 0 0;
+    width: 1.2rem;
+    aspect-ratio: 1;
   }
 }
 

@@ -10,6 +10,173 @@
   justify-content: space-between;
 
   // #####################################################################################################################
+  // # common elements
+  // #####################################################################################################################
+
+  .separator {
+    width: 100%;
+    height: 3px;
+    background-color: $lightblue;
+    border-radius: 3px;
+  }
+
+  .quantity {
+    width: 3.5rem;
+    height: 2rem;
+    padding: 0 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: .5rem;
+    border: 2px solid $blue;
+
+    .product-quantity {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+
+      .text {
+        font-size: 1.1rem;
+      }
+    }
+    .minus,
+    .plus {
+      height: 100%;
+      cursor: pointer;
+
+      .text {
+        font-size: 1.5rem;
+      }
+      &:hover {
+        color: $orange;
+      }
+    }
+  }
+
+
+  // #####################################################################################################################
+  // # product page
+  // #####################################################################################################################
+
+  .product {
+    display: flex;
+    justify-content: center;
+    gap: 3.5rem;
+    padding: 4rem 0 9rem 0;
+
+    .product-carousel {
+      width: 35%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .product-img {
+        width: 70%;
+        aspect-ratio: 1;
+
+        img {
+          object-fit: contain;
+          object-position: center;
+          width: 100%;
+          height: 100%;
+        }
+      }
+      .previews {
+        display: flex;
+        justify-content: center;
+        width: 70%;
+
+        img {
+          width: 30%;
+          flex: 1;
+          aspect-ratio: 1;
+        }
+      }
+    }
+    .product-info {
+      width: 25%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4rem;
+
+      .title {
+        min-width: 20ch;
+        width: max-content;
+        font-size: 1.4rem;
+      }
+
+      .generic {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+
+        .name {
+          font-size: 2.5rem;
+        }
+        .description {
+          font-size: 1.2rem;
+          text-align: justify;
+          line-height: 1.9rem;
+          color: $blue;
+        }
+      }
+      .quantity-price {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+
+        .price {
+          font-size: 1.6rem;
+        }
+      }
+      .colors {
+        width: 100%;
+        display: flex;
+        align-items: flex-end;
+        gap: 5rem;
+
+        .color-list {
+          display: flex;
+          gap: 1.5rem;
+
+          .color {
+            width: 1.8rem;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            border: .2rem solid $darkblue;
+            cursor: pointer;
+          }
+          .color.selected {
+            border: .2rem solid $orange;
+          }
+        }
+      }
+      .miscellaneous {
+        display: flex;
+        flex-direction: column;
+        gap: 1.2rem;
+        width: 100%;
+
+        .specification {
+          display: flex;
+          align-items: flex-end;
+
+          .content {
+            flex: 1;
+            font-size: 1.3rem;
+            color: $blue;
+          }
+        }
+      }
+    }
+  }
+
+
+  // #####################################################################################################################
   // # cart
   // #####################################################################################################################
 
@@ -63,12 +230,6 @@
         .label-3 {
           flex: 1;
         }
-      }
-      .separator {
-        width: 100%;
-        height: 3px;
-        background-color: $lightblue;
-        border-radius: 3px;
       }
       .products-list {
         display: flex;
@@ -132,39 +293,6 @@
             flex-direction: column;
             justify-content: center;
 
-            .quantity {
-              width: 3.5rem;
-              height: 2rem;
-              padding: 0 1rem;
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              gap: .5rem;
-              border: 2px solid $blue;
-
-              .product-quantity {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100%;
-
-                .text {
-                  font-size: 1.1rem;
-                }
-              }
-              .minus,
-              .plus {
-                height: 100%;
-                cursor: pointer;
-
-                .text {
-                  font-size: 1.5rem;
-                }
-                &:hover {
-                  color: $orange;
-                }
-              }
-            }
           }
           .product-total {
             display: flex;
@@ -205,9 +333,6 @@
             color: $blue;
           }
         }
-        .button {
-          height: fit-content;
-        }
       }
     }
   }
@@ -220,7 +345,6 @@
   .order-ctn {
     display: flex;
     justify-content: center;
-    align-items: center;
     width: 50%;
     padding-top: 2rem;
     padding-bottom: 9rem;
@@ -423,6 +547,7 @@
     gap: 4rem;
     padding-top: 5rem;
     padding-left: 8%;
+    padding-bottom: 7rem;
     width: 42%;
     height: inherit;
     flex: 1;
@@ -437,9 +562,15 @@
 
       .product-list {
         width: 100%;
+        max-height: 30dvh;
         display: flex;
         flex-direction: column;
         gap: 1.2rem;
+        padding: 2rem .8rem 2rem 0;
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: $darkblue $lightblue;
+        scrollbar-arrow-color: $blue;
 
         .product {
           display: flex;
@@ -458,7 +589,7 @@
               width: 90%;
               height: 90%;
             }
-            .quantity {
+            .quantity-bullet {
               position: absolute;
               top: 0;
               right: 0;
@@ -492,12 +623,6 @@
             }
           }
         }
-      }
-      .separator {
-        width: 100%;
-        height: 3px;
-        background-color: $lightblue;
-        border-radius: 3px;
       }
       .subtotal-ctn,
       .shipping-cost-ctn,
