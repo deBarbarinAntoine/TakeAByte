@@ -12,6 +12,7 @@ CREATE TABLE users
     street_name         VARCHAR(100),
     street_number       SMALLINT,
     address_complements VARCHAR(300),
+    is_mod              TINYINT NOT NULL DEFAULT 0 ,
     PRIMARY KEY (user_id),
     UNIQUE (username),
     UNIQUE (email)

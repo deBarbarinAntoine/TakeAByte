@@ -4,7 +4,7 @@ const {serverErrorResponse, conflictErrorResponse} = require("../helpers/respons
 
 exports.likeProduct = (req, res) => {
     const { product_id } = req.params;
-    const user_id = req.body.user_id;
+    const user_id = req.userId
     const created_at = new Date(); // Current timestamp
     connection.query(likeProductQuery, [user_id, product_id, created_at], (error) => {
         if (error) {
@@ -20,7 +20,7 @@ exports.likeProduct = (req, res) => {
 
 exports.unlikeProduct = (req, res) => {
     const { product_id } = req.params;
-    const user_id = req.body.user_id;
+    const user_id = req.userId
     connection.query(unlikeProductQuery, [user_id, product_id], (error) => {
         if (error) {
             return serverErrorResponse(res, "Failed to unlike product");

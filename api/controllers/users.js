@@ -9,25 +9,29 @@ const response = require('../errors/status');
 const {validateCredentials, validateNewUser, Validator, notEmpty, checkLength, matches, emailRX, passwordRX,
     matchesMail, matchesPassword
 } = require("../helpers/validator");
-const {Token} = require("../models/tokens");
+const {Token, getTokenFromUserId} = require("../models/tokens");
 const nodemailer = require('nodemailer');
 
 async function register(req, res) {
     const data = req.body;
-
+// Sanitize input using parameterized queries
+    const username = data.username;
+    const email = data.email;
+    const password = data.password;
+    const confirm_password = data.confirm_password;
     if (!validateNewUser(data)) {
         badRequestErrorResponse(res, new Error('users/register bad request'), validateNewUser.errors);
         return;
     }
 
     const userValidator = Validator.New();
-    userValidator.check(notEmpty(data.username), 'username', 'must be provided');
-    userValidator.check(checkLength(data.username, 3, 25), 'username', 'must be between 3 and 25 bytes long');
-    userValidator.check(notEmpty(data.email), 'email', 'must be provided');
-    userValidator.check(matchesMail(data.email, emailRX), 'email', 'invalid email');
-    userValidator.check(notEmpty(data.password), 'password', 'must be provided');
-    userValidator.check(matchesPassword(data.password, passwordRX), "password", "must contain 1 lowercase and 1 uppercase letter, a digit and be at least 8 characters long");
-    userValidator.check(data.password === data.confirm_password, 'password', 'passwords must be equals');
+    userValidator.check(notEmpty(username), 'username', 'must be provided');
+    userValidator.check(checkLength(username, 3, 25), 'username', 'must be between 3 and 25 bytes long');
+    userValidator.check(notEmpty(email), 'email', 'must be provided');
+    userValidator.check(matchesMail(email, emailRX), 'email', 'invalid email');
+    userValidator.check(notEmpty(password), 'password', 'must be provided');
+    userValidator.check(matchesPassword(password, passwordRX), "password", "must contain 1 lowercase and 1 uppercase letter, a digit and be at least 8 characters long");
+    userValidator.check(password === confirm_password, 'password', 'passwords must be equals');
 
 
     if (!userValidator.valid()) {
@@ -38,12 +42,12 @@ async function register(req, res) {
 
     let hash = '';
     try {
-        hash = await newHash(data.password);
+        hash = await newHash(password);
     } catch (err) {
         serverErrorResponse(res, err);
         return;
     }
-    let user = await User.New(data.username, data.email, hash);
+    let user = await User.New(username, email, hash);
     try {
         const query = await user.create();
         user.id = query[0].insertId;
@@ -89,21 +93,28 @@ async function login(req, res) {
     res.status(response.StatusOK).json({"response": response.StatusOK, "user": {token: tokenInstance.token, ExpirationDate: tokenInstance.expiry}});
 }
 
-async function logout(req,res){
-    // Extract token from request headers, query parameters, or cookies
-    const token = req.headers.authorization || req.query.token || req.cookies.token;
-    // If token is not provided, send a bad request response
-    if (!token) {
-        badRequestErrorResponse(res, new Error('Token is missing'));
-        return;
-    }
+async function logout(req, res) {
+    const userId = req.userId;
+    let token;
 
-    // Invalidate the token by deleting it from the database
     try {
-        await Token.delete(token); // Assuming you have a method to delete the token
-        res.status(response.StatusOK).json({"response": response.StatusOK, "message": "Logout successful"});
+        // Retrieve token associated with the user ID
+        token = await getTokenFromUserId(userId);
+
+        if (!token) {
+            // If token not found, send a 404 Not Found response
+            return notFoundErrorResponse(res, "Token not found for the user");
+        }
+
+        // Invalidate the token by deleting it from the database
+        await Token.delete(token);
+
+        // Send a successful logout response
+        res.status(200).json({ "status": "success", "message": "Logout successful" });
     } catch (error) {
-        serverErrorResponse(res, new Error('Error logging out'))
+        // Handle any unexpected errors
+        console.error("Error logging out:", error);
+        serverErrorResponse(res, "An unexpected error occurred during logout.");
     }
 }
 
@@ -153,7 +164,7 @@ async function resetPassword(req, res) {
         try {
             hash = await newHash(newPassword);
         } catch (err) {
-            return serverErrorResponse(res, "failled to hash password");
+            return serverErrorResponse(res, "failed to hash password");
         }
 
         // Update the user's password in the database
@@ -163,7 +174,7 @@ async function resetPassword(req, res) {
         res.status(response.StatusOK).json({"response": response.StatusOK, "message": "Password reset successful"});
     } catch (error) {
         // Handle other errors
-        return serverErrorResponse(res, "failed to change password");
+        return serverErrorResponse(res, error,"failed to change password");
     }
 }
 

@@ -1,5 +1,5 @@
 const crypto = require('crypto');
-const { createTokenQuery, getTokenQuery, deleteTokenQuery} = require("./db-queries");
+const { createTokenQuery, getTokenQuery, deleteTokenQuery, getUserIdFromTokenQuery, isModQuery, getTokenFromUserIdQuery} = require("./db-queries");
 const connection = require("./db-connect");
 
 const expiry_ms = process.env.TOKEN_EXPIRY_HOURS * 3_600_000;
@@ -38,8 +38,9 @@ class Token {
     }
 
     static async delete(token) {
+        const hash = crypto.createHash('sha512').update(token).digest('base64url');
         try {
-            await connection.execute(deleteTokenQuery, [token]);
+            await connection.execute(deleteTokenQuery, [hash]);
         } catch (error) {
             console.error("Error deleting token:", error);
             throw error; // Rethrow the error for handling in the caller
@@ -59,7 +60,7 @@ class Token {
             if (result.length === 0) {
                 return null;
             }
-            return result[0].userID;
+            return result[0].user_id;
         } catch (error) {
             console.error("Error verifying reset token:", error);
             throw error;
@@ -81,7 +82,7 @@ async function getToken(token) {
 
     try {
         const [rows] = await connection.query(getTokenQuery, [hash]);
-        if (rows[0].affectedRows === 0) {
+        if (rows.length === 0) {
             return [null, false];
         }
         return [rows[0].end_date, true];
@@ -91,4 +92,48 @@ async function getToken(token) {
     }
 }
 
-module.exports = { Token, getToken };
+async function getUserIdFromToken(token) {
+    try {
+        const [rows] = await connection.query(getUserIdFromTokenQuery, [token]);
+        if (rows.length > 0) {
+            return rows[0].user_id;
+        } else {
+            return null; // No user found for the given token
+        }
+    } catch (error) {
+        console.error('Error fetching user ID from token:', error);
+        throw new Error('Database error');
+    }
+}
+
+async function checkIfMod(user_id) {
+    try {
+        const [rows] = await connection.query(isModQuery, [user_id]);
+        if (rows.length > 0) {
+            return rows[0].is_mod;
+        } else {
+            return 0; // Default to 0 (not a mod) if no record found
+        }
+    } catch (error) {
+        console.error('Error checking if user is mod:', error);
+        throw new Error('Database error');
+    }
+}
+
+async function getTokenFromUserId(userId) {
+    try {
+        const [rows] = await connection.query(getTokenFromUserIdQuery, [userId]);
+        if (rows.length > 0) {
+            return rows[0].token;
+        } else {
+            return null; // No user found for the given token
+        }
+    } catch (error) {
+        console.error('Error fetching user ID from token:', error);
+        throw new Error('Database error');
+    }
+}
+
+
+
+module.exports = { Token, getToken, getUserIdFromToken, checkIfMod,getTokenFromUserId };
