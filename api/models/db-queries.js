@@ -34,8 +34,11 @@ const unlikeProductQuery = 'DELETE FROM likes WHERE user_id = ? AND product_id =
 // GET /api/products/:product_id/likes: Retrieve likes for a specific product.
 const getProductLikesQuery = 'SELECT user_id, created_at FROM likes WHERE product_id = ?';
 
-// POST /api/orders: Create a new order.
-const createNewOrderQuery = 'INSERT INTO orders (user_id, product_id, date_ordered_at, quantity) VALUES (?, ?, ?, ?)';
+// Define the query to create a new order
+const createNewOrderQuery = 'INSERT INTO orders (user_id, date_ordered_at, status) VALUES (?, ?, ?)';
+
+// Define the query to create new order items
+const createNewOrderItemQuery = 'INSERT INTO order_items (order_id, product_id, quantity) VALUES (?, ?, ?)';
 
 // GET /api/orders/:order_id: Retrieve order details by order ID.
 const getOrderDataQuery = 'SELECT * FROM orders WHERE order_id = ?';
@@ -47,7 +50,11 @@ const getUserOrdersDataQuery = 'SELECT * FROM orders WHERE user_id = ?';
 const getOrdersOfProductQuery = 'SELECT * FROM orders WHERE product_id = ?';
 
 // POST /api/products: Create a new product.
-const createNewProductQuery = `INSERT INTO products (name, description, quantity_stocked, price, processor, ram, size, captor, weight, socket_cpu,dimension, others, connectivity, resolution, screen_type, vram, battery_power_time, type_id, storage, brand_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+const createNewProductQuery = `INSERT INTO products (name, description, quantity_stocked, price, processor, ram, size,
+                                                     captor, weight, socket_cpu, dimension, others, connectivity,
+                                                     resolution, screen_type, vram, battery_power_time, type_id,
+                                                     storage, brand_id)
+                               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
 // GET /api/products/:product_id: Retrieve product details by product ID.
 const getProductByIdQuery = 'SELECT * FROM products WHERE product_id = ?';
@@ -55,11 +62,29 @@ const getProductByIdQuery = 'SELECT * FROM products WHERE product_id = ?';
 // PUT /api/products/:product_id: Update product details.
 const updateProductDataQuery = `
     UPDATE products
-    SET name = ?, description = ?, quantity_stocked = ?, price = ?, processor = ?, ram = ?, size = ?, captor = ?, weight = ?,
-        socket_cpu = ?, dimension = ?, others = ?, connectivity = ?, resolution = ?, screen_type = ?, vram = ?, battery_power_time = ?,
-        type_id = ?, storage = ?, brand_id = ?, updated_at = CURRENT_TIMESTAMP
+    SET name               = ?,
+        description        = ?,
+        quantity_stocked   = ?,
+        price              = ?,
+        processor          = ?,
+        ram                = ?,
+        size               = ?,
+        captor             = ?,
+        weight             = ?,
+        socket_cpu         = ?,
+        dimension          = ?,
+        others             = ?,
+        connectivity       = ?,
+        resolution         = ?,
+        screen_type        = ?,
+        vram               = ?,
+        battery_power_time = ?,
+        type_id            = ?,
+        storage            = ?,
+        brand_id           = ?,
+        updated_at         = CURRENT_TIMESTAMP
     WHERE product_id = ?
-  `;
+`;
 
 // DELETE /api/products/:product_id: Delete a product.
 const deleteProductQuery = 'DELETE FROM products WHERE product_id = ?';
@@ -68,15 +93,17 @@ const deleteProductQuery = 'DELETE FROM products WHERE product_id = ?';
 const createNewSalesQuery = `
     INSERT INTO sales (product_id, sale_price, start_date, end_date)
     VALUES (?, ?, ?, ?)
-  `;
+`;
 
 // GET /api/sales/:user_id: Do users order products have sales-promotion.
 const getUserOngoingSalesQuery = `
-    SELECT s.* 
+    SELECT s.*
     FROM sales s
-    JOIN likes l ON s.product_id = l.product_id
-    WHERE l.user_id = ? AND s.start_date <= NOW() AND s.end_date >= NOW()
-  `;
+             JOIN likes l ON s.product_id = l.product_id
+    WHERE l.user_id = ?
+      AND s.start_date <= NOW()
+      AND s.end_date >= NOW()
+`;
 
 // GET /api/users/:user_id: Retrieve user details by user ID.
 const getUserDataQuery = 'SELECT * FROM users WHERE user_id = ?';
@@ -84,21 +111,29 @@ const getUserDataQuery = 'SELECT * FROM users WHERE user_id = ?';
 // PUT /api/users/:user_id: Update user details.
 const changeUserDataQuery = `
     UPDATE users
-    SET username = ?, email = ?, country = ?, city = ?, zip_code = ?, street_name = ?, street_number = ?, address_complements = ?, updated_at = CURRENT_TIMESTAMP
+    SET username            = ?,
+        email               = ?,
+        country             = ?,
+        city                = ?,
+        zip_code            = ?,
+        street_name         = ?,
+        street_number       = ?,
+        address_complements = ?,
+        updated_at          = CURRENT_TIMESTAMP
     WHERE user_id = ?
-  `;
+`;
 
 // DELETE /api/users/:user_id: Delete a user.
 const deleteUserQuery = 'DELETE FROM users WHERE user_id = ?';
 
 // GET /api/product/top/:limit : Retrieve top products
-const getPopularProducts='SELECT p.product_id, p.name, p.description, p.quantity_stocked, p.price, p.processor, p.ram, p.size, p.captor, p.weight, p.socket_cpu, p.dimension, p.others, p.connectivity, p.resolution, p.screen_type, p.vram, p.battery_power_time, p.storage,COUNT(l.product_id)  AS likes_count FROM products p JOIN likes l ON p.product_id = l.product_id GROUP BY p.product_id ORDER BY likes_count DESC LIMIT ?;'
+const getPopularProducts = 'SELECT p.product_id, p.name, p.description, p.quantity_stocked, p.price, p.processor, p.ram, p.size, p.captor, p.weight, p.socket_cpu, p.dimension, p.others, p.connectivity, p.resolution, p.screen_type, p.vram, p.battery_power_time, p.storage,COUNT(l.product_id)  AS likes_count FROM products p JOIN likes l ON p.product_id = l.product_id GROUP BY p.product_id ORDER BY likes_count DESC LIMIT ?;'
 
 // GET /api/orders/:user_id Retrieve user specified status order
-const getOrderByStatusQuery ='SELECT * FROM orders WHERE user_id = ? AND status = ?'
+const getOrderByStatusQuery = 'SELECT * FROM orders WHERE user_id = ? AND status = ?'
 
 
-const newPasswordQuery ='UPDATE users SET password_hash = ? WHERE user_id = ?;'
+const newPasswordQuery = 'UPDATE users SET password_hash = ? WHERE user_id = ?;'
 
 // POST /api/brands: Create a new brand.
 const creatBrandQuery = "INSERT INTO brands (name) VALUES (?)";
@@ -149,7 +184,7 @@ const getProductImageQuery = 'SELECT * FROM images WHERE product_id = ?';
 const updateImageQuery = 'UPDATE images SET image_path = ?, ind = ?, product_id = ? WHERE image_id = ?'
 
 // DELETE /api/images/:id: Delete Image by ID.
-const deleteImageQuery ='DELETE FROM images WHERE image_id = ?'
+const deleteImageQuery = 'DELETE FROM images WHERE image_id = ?'
 
 // check for image validity
 const checkImageIndQuery = "SELECT * FROM images WHERE product_id = ? AND ind = ?";
@@ -162,18 +197,27 @@ const getBrandIdByNameQuery = 'SELECT brand_id FROM brands WHERE name = ?'
 //
 
 // Check if product already exist
-const isExistingProduct ='SELECT * FROM products WHERE name = ? AND brand_id = ?'
+const isExistingProduct = 'SELECT * FROM products WHERE name = ? AND brand_id = ?'
 
 // GET user id from token
-const getUserIdFromTokenQuery ='SELECT user_id FROM tokens WHERE token = ?'
+const getUserIdFromTokenQuery = 'SELECT user_id FROM tokens WHERE token = ?'
 
 // GET token from user id
-const getTokenFromUserIdQuery ='SELECT token FROM tokens WHERE user_id = ?'
+const getTokenFromUserIdQuery = 'SELECT token FROM tokens WHERE user_id = ?'
 
 // Check if user is mod
-const isModQuery ='SELECT is_mod FROM users WHERE user_id = ?'
+const isModQuery = 'SELECT is_mod FROM users WHERE user_id = ?'
 
-module.exports = {getAllUsersQuery,
+// Check if rest token is valid
+const verifyResetTokenQuery = 'SELECT user_id FROM password_reset_tokens WHERE token = ? AND end_date > ?'
+
+// Delete rest token
+const deleteResetTokenQuery = 'DELETE FROM password_reset_tokens WHERE token = ?'
+
+module.exports = {
+    getAllUsersQuery,
+    deleteResetTokenQuery,
+    verifyResetTokenQuery,
     getTokenFromUserIdQuery,
     isModQuery,
     getUserIdFromTokenQuery,
@@ -225,5 +269,7 @@ module.exports = {getAllUsersQuery,
     deleteUserQuery,
     getPopularProducts,
     getOrderByStatusQuery,
-    newPasswordQuery};
+    newPasswordQuery,
+    createNewOrderItemQuery
+};
 

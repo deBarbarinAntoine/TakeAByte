@@ -13,8 +13,8 @@ router.post('/api/auth/logout',  authenticate,authorizeUser,logout);
 // POST /api/auth/register: User registration.
 router.post('/api/auth/register', limiter,register);
 // POST /api/auth/reset-password: Request to reset password.
-router.post('/api/auth/:mail',  authenticate,authorizeMail,requestPasswordReset);
+router.post('/api/auth/:mail',  limiter,authorizeMail,requestPasswordReset);
 // POST /api/auth/reset-password: Request to reset password.
-router.post('/api/auth/reset-password', resetPassword);
+router.post('/api/auth/reset-password', limiter,resetPassword);
 
 module.exports = router;

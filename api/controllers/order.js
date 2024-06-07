@@ -1,15 +1,51 @@
-const { createNewOrderQuery, getOrderDataQuery,getUserOrdersDataQuery, getOrdersOfProductQuery, getOrderByStatusQuery} = require("../models/db-queries");
+const { createNewOrderQuery, getOrderDataQuery,getUserOrdersDataQuery, getOrdersOfProductQuery, getOrderByStatusQuery,
+    createNewOrderItemQuery
+} = require("../models/db-queries");
 const connection = require("../models/db-connect");
 const {serverErrorResponse, notFoundErrorResponse} = require("../helpers/responses");
 
+// Function to handle creating a new order
 exports.createNewOrder = (req, res) => {
-    const { user_id, product_id, quantity } = req.body;
+    const { user_id } = req.userId
+    const { items } = req.body; // items should be an array of { product_id, quantity }
     const date_ordered_at = new Date(); // Current timestamp
-    connection.query(createNewOrderQuery, [user_id, product_id, date_ordered_at, quantity], (error, results) => {
-        if (error) {
-            return serverErrorResponse (res, "Failed to create new order");
+    const status = 'waiting'; // Default status
+
+    connection.beginTransaction((err) => {
+        if (err) {
+            return serverErrorResponse(res, "Transaction start failed");
         }
-        res.status(201).json({ message: 'Order created successfully', order_id: results.insertId });
+
+        // Step 1: Insert into orders table
+        connection.query(createNewOrderQuery, [user_id, date_ordered_at, status], (error, results) => {
+            if (error) {
+                return connection.rollback(() => {
+                    serverErrorResponse(res, "Failed to create new order");
+                });
+            }
+
+            const order_id = results.insertId;
+
+            // Step 2: Insert each item into order_items table
+            const orderItems = items.map(item => [order_id, item.product_id, item.quantity]);
+
+            connection.query(createNewOrderItemQuery, [orderItems], (error) => {
+                if (error) {
+                    return connection.rollback(() => {
+                        serverErrorResponse(res, "Failed to create order items");
+                    });
+                }
+
+                connection.commit((err) => {
+                    if (err) {
+                        return connection.rollback(() => {
+                            serverErrorResponse(res, "Transaction commit failed");
+                        });
+                    }
+                    res.status(201).json({ message: 'Order created successfully', order_id });
+                });
+            });
+        });
     });
 };
 

@@ -170,6 +170,12 @@ async function resetPassword(req, res) {
         // Update the user's password in the database
         await updatePassword(userID, hash);
 
+        try{
+            await  connection.query(deleteResetTokenQuery, [token])
+        }catch (err){
+        console.log("failed to delete the reset token")
+        }
+
         // Send success response
         res.status(response.StatusOK).json({"response": response.StatusOK, "message": "Password reset successful"});
     } catch (error) {
@@ -207,7 +213,7 @@ async function sendResetEmail(email, resetToken) {
 
 
 const connection = require("../models/db-connect");
-const {getUserDataQuery, changeUserDataQuery, deleteUserQuery} = require("../models/db-queries");
+const {getUserDataQuery, changeUserDataQuery, deleteUserQuery, deleteResetTokenQuery} = require("../models/db-queries");
 
 async function getUserData(req, res) {
     const { user_id } = req.params;
