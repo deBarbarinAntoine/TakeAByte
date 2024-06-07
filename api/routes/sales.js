@@ -7,9 +7,9 @@ const {authorizeMod, authorizeUser} = require("../models/Authorization Middlewar
 const router = express.Router();
 
 // Sales Endpoints: // sale = promotion !!
-// GET /api/sales/:user_id: Do users order products have sales-promotion.
-router.get('/api/sales/:user_id', authenticate,authorizeUser,getUserOngoingSales);
-// POST /api/sales: Create a new sale - promotion.
-router.post('/api/sales', authenticate,authorizeMod,createNewSales);
+// GET /sales/:user_id: Do users order products have sales-promotion.
+router.get('/sales/:user_id', authenticate,authorizeUser,getUserOngoingSales);
+// POST /sales: Create a new sale - promotion.
+router.post('/sales', authenticate,authorizeMod,createNewSales);
 
 module.exports = router;

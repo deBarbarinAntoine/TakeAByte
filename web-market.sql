@@ -1,4 +1,4 @@
-CREATE TABLE users
+  CREATE TABLE users
 (
     user_id             INT AUTO_INCREMENT,
     username            VARCHAR(25)  NOT NULL,

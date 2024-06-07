@@ -2,9 +2,9 @@
   "name": "servjs",
   "version": "1.0.0",
   "description": "web_market_backServ",
-  "main": "app.js",
+  "main": "backEnd/serv.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon backEnd/serv.js"
   },
   "author": "nicolas",
   "license": "ISC",
