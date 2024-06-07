@@ -1,6 +1,6 @@
 const express = require('express');
-const getProductById = require("../controllers/productsController");
 const {isAuthenticated} = require("../middleware/auth");
+const {fetchLatestProducts, fetchPopularProducts, fetchRandomCategoryProducts,getProductById} = require("../controllers/productsController");
 const router = express.Router();
 
 // Define a route for the home page
@@ -12,20 +12,40 @@ router.get('/fav', (req, res) => {
     res.render('fav&cart', { title: "shop app" });
 });
 
-router.get('/home',isAuthenticated, (req, res) => {
-    const data = {
-        title: "Home - TakeAByte",
-        isAuthenticated: req.isAuthenticated,
-        template: "landing",
-        templateData :{
-            banner: { /* banner data */ },
-            latest: { /* latest products data */ },
-            popular: { /* popular products data */ },
-            random: { /* random category products data */ }
-        },
-        slogan: "Your Trusted Tech Partner"
-    };
-    res.render('base', { data: data });
+router.get('/home', isAuthenticated, async (req, res) => {
+    try {
+        // Call functions to fetch latest, popular, and random products
+        const latestProducts = await fetchLatestProducts();
+        const popularProducts = await fetchPopularProducts();
+        const randomCategoryProducts = await fetchRandomCategoryProducts();
+
+        // Construct the data object with the fetched products
+        const data = {
+            title: "Home - TakeAByte",
+            isAuthenticated: req.isAuthenticated,
+            template: "landing",
+            templateData: {
+                banner: {
+                    img: "/static/img/banner.jpg",
+                    title: "Computer Components",
+                    text: "All you need to build or power up your computer or even set up your own home lab.",
+                    link: "/type/Computer Components",
+                    btnContent: "Discover our collection"
+                },
+                latest: latestProducts,
+                popular: popularProducts,
+                random: randomCategoryProducts
+            },
+            slogan: "Your Trusted Tech Partner"
+        };
+
+        // Render the page with the populated data
+        res.render('base', { data: data });
+    } catch (error) {
+        console.error("Error fetching products:", error);
+        // Handle errors appropriately
+        res.status(500).send("Internal Server Error");
+    }
 });
 
 router.get('/login',isAuthenticated,(req,res) =>{

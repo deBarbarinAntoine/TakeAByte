@@ -1,5 +1,5 @@
 const express = require('express');
-const {createType, getTypeById, updateType, deleteType, getTypeIdByName} = require("../controllers/type");
+const {createType, getTypeById, updateType, deleteType, getTypeIdByName, allTypesIds} = require("../controllers/type");
 const authenticate = require("../controllers/tokens");
 const {authorizeMod} = require("../models/Authorization Middleware");
 const router = express.Router();
@@ -15,5 +15,7 @@ router.get('/types/name/:name', authenticate,authorizeMod,getTypeIdByName);
 router.put('/types/:id', authenticate,authorizeMod,updateType);
 // DELETE /types/:id: Delete Type by ID.
 router.delete('/types/:id', authenticate,authorizeMod,deleteType);
+// GET all type ids
+router.get('/allTypes', authenticate,authorizeMod,allTypesIds);
 
 module.exports = router;

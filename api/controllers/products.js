@@ -3,11 +3,10 @@ const {
     getProductByIdQuery,
     updateProductDataQuery,
     deleteProductQuery,
-    getPopularProducts
 } = require("../models/db-queries");
 const connection = require("../models/db-connect");
 const {serverErrorResponse, notFoundErrorResponse} = require("../helpers/responses");
-const {Product, newProductArray, getProductByNameAndBrand} = require("../models/products");
+const {newProductArray, getProductByNameAndBrand} = require("../models/products");
 const {getTypeIdByName} = require("./type");
 const {getBrandIdByName} = require("./brand");
 
@@ -86,123 +85,84 @@ exports.deleteProduct = (req, res) => {
     });
 };
 
-exports.getProducts = (req, res) => {
-    const {filters = {}, page = 1} = req.query; // Assuming filters and page come from query parameters
-    const limit = 10; // You can adjust the limit as needed
+exports.getProducts = async (req, res) => {
+    const {filters = {}, page = 1} = req.query;
+    const limit = 10;
     const offset = (page - 1) * limit;
 
     let getProductsQuery = 'SELECT * FROM products';
     let queryParams = [];
 
-    // Apply filters if any
-    if (filters) {
-        const filterConditions = [];
-        if (filters.name) {
-            filterConditions.push('name LIKE ?');
-            queryParams.push(`%${filters.name}%`);
+    // Building the WHERE clause for filtering
+    const filterConditions = [];
+    for (const key in filters) {
+        if (Object.hasOwnProperty.call(filters, key)) {
+            switch (key) {
+                case 'name':
+                case 'processor':
+                case 'captor':
+                case 'socket_cpu':
+                case 'dimension':
+                case 'others':
+                case 'connectivity':
+                case 'resolution':
+                case 'screen_type':
+                case 'color':
+                    filterConditions.push(`${key} LIKE ?`);
+                    queryParams.push(`%${filters[key]}%`);
+                    break;
+                case 'brand_id':
+                case 'type_id':
+                case 'ram':
+                case 'size':
+                case 'vram':
+                case 'battery_power_time':
+                case 'storage':
+                    filterConditions.push(`${key} = ?`);
+                    queryParams.push(filters[key]);
+                    break;
+                case 'price_min':
+                    filterConditions.push(`price >= ?`);
+                    queryParams.push(filters[key]);
+                    break;
+                case 'price_max':
+                    filterConditions.push(`price <= ?`);
+                    queryParams.push(filters[key]);
+                    break;
+                case 'updated_at':
+                    getProductsQuery += ' ORDER BY updated_at ' + filters[key];
+                    break;
+                default:
+                    break;
+            }
         }
-        if (filters.brand_id) {
-            filterConditions.push('brand_id = ?');
-            queryParams.push(filters.brand_id);
-        }
-        if (filters.type_id) {
-            filterConditions.push('type_id = ?');
-            queryParams.push(filters.type_id);
-        }
-        if (filters.processor) {
-            filterConditions.push('processor LIKE ?');
-            queryParams.push(`%${filters.processor}%`);
-        }
-        if (filters.ram) {
-            filterConditions.push('ram = ?');
-            queryParams.push(filters.ram);
-        }
-        if (filters.size) {
-            filterConditions.push('size = ?');
-            queryParams.push(filters.size);
-        }
-        if (filters.captor) {
-            filterConditions.push('captor LIKE ?');
-            queryParams.push(`%${filters.captor}%`);
-        }
-        if (filters.weight) {
-            filterConditions.push('weight = ?');
-            queryParams.push(filters.weight);
-        }
-        if (filters.socket_cpu) {
-            filterConditions.push('socket_cpu LIKE ?');
-            queryParams.push(`%${filters.socket_cpu}%`);
-        }
-        if (filters.dimension) {
-            filterConditions.push('dimension LIKE ?');
-            queryParams.push(`%${filters.dimension}%`);
-        }
-        if (filters.others) {
-            filterConditions.push('others LIKE ?');
-            queryParams.push(`%${filters.others}%`);
-        }
-        if (filters.connectivity) {
-            filterConditions.push('connectivity LIKE ?');
-            queryParams.push(`%${filters.connectivity}%`);
-        }
-        if (filters.resolution) {
-            filterConditions.push('resolution LIKE ?');
-            queryParams.push(`%${filters.resolution}%`);
-        }
-        if (filters.screen_type) {
-            filterConditions.push('screen_type LIKE ?');
-            queryParams.push(`%${filters.screen_type}%`);
-        }
-        if (filters.vram) {
-            filterConditions.push('vram = ?');
-            queryParams.push(filters.vram);
-        }
-        if (filters.battery_power_time) {
-            filterConditions.push('battery_power_time = ?');
-            queryParams.push(filters.battery_power_time);
-        }
-        if (filters.storage) {
-            filterConditions.push('storage = ?');
-            queryParams.push(filters.storage);
-        }
-        if (filters.color) {
-            filterConditions.push('color LIKE ?');
-            queryParams.push(`%${filters.color}%`);
-        }
-        if (filters.price_min) {
-            filterConditions.push('price >= ?');
-            queryParams.push(filters.price_min);
-        }
-        if (filters.price_max) {
-            filterConditions.push('price <= ?');
-            queryParams.push(filters.price_max);
-        }
+    }
 
-        if (filterConditions.length > 0) {
-            getProductsQuery += ' WHERE ' + filterConditions.join(' AND ');
-        }
+    if (filterConditions.length > 0) {
+        getProductsQuery += ' WHERE ' + filterConditions.join(' AND ');
     }
 
     getProductsQuery += ' LIMIT ? OFFSET ?';
     queryParams.push(limit, offset);
-
-    connection.query(getProductsQuery, queryParams, (error, results) => {
-        if (error) {
-            return serverErrorResponse(res, "Failed to get products with given filters and offset");
-        }
+    try {
+        const results = await connection.query(getProductsQuery, queryParams)
         const products = newProductArray(results);
         res.status(200).json(products);
-    });
+    } catch (err) {
+        return serverErrorResponse(res, err, "Failed to get products with given filters and offset");
+    }
 };
 
-
-exports.getTopProduct = (req, res) => {
+exports.getTopProduct = async (req, res) => {
     const {limit} = req.params;
-    connection.query(getPopularProducts, [limit], (error, results) => {
-        if (error) {
-            return serverErrorResponse(res, "Failed to get top products with given limit");
-        }
+    const getPopularProducts = 'SELECT p.product_id, p.name, p.description, p.quantity_stocked, p.price, p.processor, p.ram, p.size, p.captor, p.weight, p.socket_cpu, p.dimension, p.others, p.connectivity, p.resolution, p.screen_type, p.vram, p.battery_power_time, p.storage, COUNT(l.product_id) AS likes_count FROM products p JOIN likes l ON p.product_id = l.product_id GROUP BY p.product_id ORDER BY likes_count DESC LIMIT ?';
+    try {
+        const results = await connection.query(getPopularProducts, [parseInt(limit)])
         const products = newProductArray(results);
         res.status(200).json(products);
-    });
+
+    } catch (err) {
+        return serverErrorResponse(res, err,"Failed to get top products with given limit");
+    }
+
 };

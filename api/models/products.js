@@ -2,7 +2,11 @@ const connection = require("./db-connect");
 const { getAllproductsQuery, getAllproductsByTypeQuery, isExistingProduct} = require("./db-queries");
 
 class Product {
-    constructor(id, name, description, quantityStock, price, processor, RAM, size, captor, weight, socketCPU, dimension, others, connectivity, resolution, screenType, VRAM, batteryPowerTime, type, storage, color, createdAt, updatedAt) {
+    constructor({
+                    id, name, description, quantityStock, price, processor, RAM, size, captor, weight,
+                    socketCPU, dimension, others, connectivity, resolution, screenType, VRAM, batteryPowerTime,
+                    type, storage, color, createdAt, updatedAt
+                }) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -29,12 +33,35 @@ class Product {
     }
 }
 
+
 function newProductArray(arr) {
-    return arr.map(item => new Product(
-        item.id, item.name, item.description, item.quantityStock, item.price, item.processor, item.RAM, item.size,
-        item.captor, item.weight, item.socketCPU, item.dimension, item.others, item.connectivity, item.resolution,
-        item.screenType, item.VRAM, item.batteryPowerTime, item.type, item.storage, item.color, item.createdAt, item.updatedAt
-    ));
+    const productsArray = arr[0]; // Accessing the array of product objects
+
+    return productsArray.map(item => new Product({
+        id: item.product_id,
+        name: item.name,
+        description: item.description,
+        quantityStock: item.quantity_stocked,
+        price: item.price,
+        processor: item.processor,
+        RAM: item.ram,
+        size: item.size,
+        captor: item.captor,
+        weight: item.weight,
+        socketCPU: item.socket_cpu,
+        dimension: item.dimension,
+        others: item.others,
+        connectivity: item.connectivity,
+        resolution: item.resolution,
+        screenType: item.screen_type,
+        VRAM: item.vram,
+        batteryPowerTime: item.battery_power_time,
+        type: item.type_id,
+        storage: item.storage,
+        color: null, // Assuming color is not provided in the data
+        createdAt: item.created_at,
+        updatedAt: item.updated_at
+    }));
 }
 
 async function productsByType(type) {
@@ -64,4 +91,4 @@ async function getProductByNameAndBrand(name, brandId) {
     return rows.length ? rows[0] : null;
 }
 
-module.exports = { getAllProducts, productsByType ,getProductByNameAndBrand};
+module.exports = { getAllProducts, productsByType ,getProductByNameAndBrand,newProductArray};

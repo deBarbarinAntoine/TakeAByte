@@ -90,3 +90,22 @@ exports.getTypeIdByName = async (req, res) => {
         return serverErrorResponse(res, "Failed to get Type id with given name");
     }
 }
+
+exports.allTypesIds = async (req, res) => {
+    try {
+        let results = await connection.query('SELECT type_id FROM `types`');
+        let typeIds = [];
+        if (results && results.length > 0) {
+            const innerArray = results[0]; // Access the inner array
+            for (let i = 0; i < innerArray.length; i++) {
+                if (innerArray[i].type_id !== undefined) {
+                    typeIds.push(innerArray[i].type_id);
+                }
+            }
+        }
+        res.status(200).json({typeIds});
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Failed to get all type ids" });
+    }
+}
