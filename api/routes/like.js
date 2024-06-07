@@ -5,11 +5,11 @@ const {authorizeMod} = require("../models/Authorization Middleware");
 const router = express.Router();
 
 // Like Endpoints:
-// POST /api/products/:product_id/like: Like a product.
-router.post('/api/products/:product_id/like', authenticate,authorizeMod,likeProduct);
-// DELETE /api/products/:product_id/unlike: Unlike a product.
-router.delete('/api/products/:product_id/unlike', authenticate,authorizeMod,unlikeProduct);
-// GET /api/products/:product_id/likes: Retrieve likes and users that liked a specific product.
-router.get('/api/products/:product_id/likes', authenticate,authorizeMod,getProductLikes);
+// POST /like: Like a product.
+router.post('/like', authenticate,authorizeMod,likeProduct);
+// DELETE /unlike: Unlike a product.
+router.delete('/unlike', authenticate,authorizeMod,unlikeProduct);
+// GET /likes: Retrieve likes and users that liked a specific product.
+router.get('/likes', authenticate,authorizeMod,getProductLikes);
 
 module.exports = router;

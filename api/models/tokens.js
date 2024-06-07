@@ -1,5 +1,7 @@
 const crypto = require('crypto');
-const { createTokenQuery, getTokenQuery, deleteTokenQuery, getUserIdFromTokenQuery, isModQuery, getTokenFromUserIdQuery} = require("./db-queries");
+const { createTokenQuery, getTokenQuery, deleteTokenQuery, getUserIdFromTokenQuery, isModQuery, getTokenFromUserIdQuery,
+    verifyResetTokenQuery
+} = require("./db-queries");
 const connection = require("./db-connect");
 
 const expiry_ms = process.env.TOKEN_EXPIRY_HOURS * 3_600_000;
@@ -56,7 +58,7 @@ class Token {
 
     static async verifyResetToken(token) {
         try {
-            const [result] = await connection.execute('SELECT user_id FROM password_reset_tokens WHERE token = ? AND end_date > ?', [token, new Date()]);
+            const [result] = await connection.execute(verifyResetTokenQuery, [token, new Date()]);
             if (result.length === 0) {
                 return null;
             }

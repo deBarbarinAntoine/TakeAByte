@@ -6,15 +6,15 @@ const limiter = require("../models/limiting Middleware");
 const router = express.Router();
 
 // Authentication Endpoints:
-// POST /api/auth/login: User login.
-router.post('/api/auth/login', limiter,login);
-// POST /api/auth/logout: User logout.
-router.post('/api/auth/logout',  authenticate,authorizeUser,logout);
-// POST /api/auth/register: User registration.
-router.post('/api/auth/register', limiter,register);
-// POST /api/auth/reset-password: Request to reset password.
-router.post('/api/auth/:mail',  authenticate,authorizeMail,requestPasswordReset);
-// POST /api/auth/reset-password: Request to reset password.
-router.post('/api/auth/reset-password', resetPassword);
+// POST login: User login.
+router.post('/login', limiter,login);
+// POST logout: User logout.
+router.post('/logout',  authenticate,authorizeUser,logout);
+// POST register: User registration.
+router.post('/register', limiter,register);
+// POST reset-password: Request to reset password.
+router.post('/:mail',  limiter,authorizeMail,requestPasswordReset);
+// POST reset-password: Request to reset password.
+router.post('/reset-password', limiter,resetPassword);
 
 module.exports = router;

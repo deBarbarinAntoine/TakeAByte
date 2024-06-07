@@ -1,4 +1,4 @@
-CREATE TABLE users
+  CREATE TABLE users
 (
     user_id             INT AUTO_INCREMENT,
     username            VARCHAR(25)  NOT NULL,
@@ -98,14 +98,23 @@ CREATE TABLE orders
 (
     order_id        INT AUTO_INCREMENT,
     user_id         INT,
-    product_id      INT,
-    date_ordered_at DATETIME NOT NULL                      DEFAULT CURRENT_TIMESTAMP,
-    quantity        SMALLINT NOT NULL CHECK (quantity > 0) DEFAULT 1,
-    status          ENUM('waiting','ordered', 'on_the_way', 'delivered') NOT NULL DEFAULT 'waiting',
+    date_ordered_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    status          ENUM('waiting', 'ordered', 'on_the_way', 'delivered') NOT NULL DEFAULT 'waiting',
     PRIMARY KEY (order_id),
     FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE,
+    INDEX (user_id)
+) ENGINE = INNODB;
+
+CREATE TABLE order_items
+(
+    order_item_id   INT AUTO_INCREMENT,
+    order_id        INT,
+    product_id      INT,
+    quantity        SMALLINT NOT NULL CHECK (quantity > 0) DEFAULT 1,
+    PRIMARY KEY (order_item_id),
+    FOREIGN KEY (order_id) REFERENCES orders (order_id) ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES products (product_id) ON DELETE CASCADE,
-    INDEX (user_id),
+    INDEX (order_id),
     INDEX (product_id)
 ) ENGINE = INNODB;
 

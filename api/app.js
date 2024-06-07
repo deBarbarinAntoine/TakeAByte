@@ -18,16 +18,16 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/static', express.static('./public'));
-app.use(productsRoutes);
-app.use(userRoutes);
-app.use(authRoutes)
-app.use(likeRoutes)
-app.use(ordersRoutes)
-app.use(salesRoutes)
-app.use(brandsRoutes)
-app.use(colorsRoutes)
-app.use(typesRoutes)
-app.use(imagesRoutes)
+app.use('/v1',productsRoutes);
+app.use('/v1',userRoutes);
+app.use('/v1/auth',authRoutes)
+app.use('/v1/products/:product_id',likeRoutes)
+app.use('/v1',ordersRoutes)
+app.use('/v1',salesRoutes)
+app.use('/v1',brandsRoutes)
+app.use('/v1',colorsRoutes)
+app.use('/v1',typesRoutes)
+app.use('/v1',imagesRoutes)
 
 
 app.listen(port, () => {
