@@ -10,6 +10,13 @@ router.get('/fav', (req, res) => {
     res.render('fav&cart', { title: "shop app" });
 });
 
+// Home page
+router.get('/home', (req,res) =>{
+    res.render('landing')
+})
+
+
+
 // Define a route for the 404 page
 router.get('*', (req, res) => {
     res.render('404', { title: "Error not found 404 I'm a teapot 418" });
