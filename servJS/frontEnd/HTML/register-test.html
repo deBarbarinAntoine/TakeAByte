@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" href="http://localhost:4000/static/css/style.css">
-    <title>Login - TakeAByte Shop</title>
+    <title>Register - TakeAByte Shop</title>
 </head>
 <body>
 <div class="page-ctn">
@@ -45,18 +45,19 @@
         <!--        include page template       -->
 
         <div class="main-column padding-top3">
-            <form action="/login" method="post" class="auth-form big-shadow">
-                <div class="title">Login</div>
+            <form action="/register" method="post" class="auth-form big-shadow">
+                <div class="title">Register</div>
                 <div class="inputs">
-                    <input type="email" name="email" id="email" placeholder="example@mail.com" required autofocus />
+                    <input type="text" name="username" id="username" placeholder="username" required autofocus />
+                    <input type="email" name="email" id="email" placeholder="example@mail.com" required />
                     <input type="password" name="password" id="password" placeholder="Password" required />
-                    <a href="/forgot-password" class="link">Forgot password?</a>
+                    <input type="password" name="confirm-password" id="confirm-password" placeholder="Confirm password" required />
                 </div>
-                <button type="submit" class="auth-btn blue">Login</button>
+                <button type="submit" class="auth-btn blue">Register</button>
                 <div class="separator blue"></div>
                 <div class="auth-redirect-link">
-                    <div class="message">Doesn't have an account?</div>
-                    <a href="/register" class="link">Register</a>
+                    <div class="message">Already have an account?</div>
+                    <a href="/login" class="link">Login</a>
                 </div>
             </form>
         </div>

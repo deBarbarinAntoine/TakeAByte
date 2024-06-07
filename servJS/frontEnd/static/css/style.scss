@@ -96,7 +96,7 @@
   padding-bottom: 9rem;
 
   // ###########################################################################################
-  // # login template
+  // # login/register/update-password/confirm form template
   // ###########################################################################################
 
   form.auth-form {
@@ -111,6 +111,10 @@
 
     .title {
       font-size: 2.7rem;
+    }
+    .content-text {
+      font-size: 1.5rem;
+      text-align: justify;
     }
     .inputs {
       width: 30rem;
@@ -609,7 +613,7 @@
           padding: 1rem .1rem 1rem 1.5rem;
           appearance: none;
           border: 2px solid $darkblue;
-          background: none;
+          background: $white;
           outline: none;
           font-family: "Dosis", sans-serif;
           color: $darkblue;
@@ -621,7 +625,7 @@
             outline: none;
             appearance: none;
             border: 2px solid transparentize($blue, 0.4);
-            background: none;
+            background: $white;
           }
         }
 
@@ -817,7 +821,7 @@
           padding: 1rem .8rem 1rem 0;
           overflow-y: auto;
 
-          .product {
+          a.product {
             display: flex;
             justify-content: space-between;
             align-items: center;

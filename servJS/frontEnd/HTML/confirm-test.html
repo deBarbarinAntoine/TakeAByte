@@ -4,18 +4,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title><%= data.title %></title>
+    <link rel="stylesheet" href="http://localhost:4000/static/css/style.css">
+    <title>Confirmation - TakeAByte Shop</title>
 </head>
 <body>
 <div class="page-ctn">
     <header class="header">
         <div class="header-ctn">
             <div class="logo">
-                <img src="/static/img/logo/logo_transparent.png" alt="TakeAByte logo" class="logo-img" />
+                <img src="http://localhost:4000/static/img/logo/takeabyte_logo_transparent.png" alt="TakeAByte logo" class="logo-img" />
             </div>
             <form action="/search" method="get" class="search-bar">
                 <button type="submit" class="search-logo">
-                    <img src="/static/img/icon/search.png" alt="search logo" />
+                    <img src="http://localhost:4000/static/img/icon/search.png" alt="search logo" />
                 </button>
                 <input type="text" name="search" id="search" placeholder="Search..." />
             </form>
@@ -23,7 +24,7 @@
                 <div class="header-link">
                     <a href="/discovery">Discovery</a>
                     <div class="discovery-expandable">
-                        <img src="/static/img/icon/simple-arrow.png" alt="arrow-expand icon" class="expand-icon" />
+                        <img src="http://localhost:4000/static/img/icon/simple-arrow.png" alt="arrow-expand icon" class="expand-icon" />
                     </div>
                 </div>
                 <div class="header-link">
@@ -34,32 +35,40 @@
                 </div>
             </nav>
             <div class="header-btns">
-                <% if (data.isAuthenticated) { %>
-                    <div class="account-btn"><img src="/static/img/icon/login.png" alt="login icon" /></div>
-                <% } else { %>
-                    <div class="account-btn"><img src="/static/img/icon/logout.png" alt="logout icon" /></div>
-                <% } %>
-                <div class="cart-btn"><img src="/static/img/icon/cart.png" alt="cart icon" /></div>
+                <div class="account-btn"><img src="http://localhost:4000/static/img/icon/user.png" alt="login icon" /></div>
+                <div class="cart-btn"><img src="http://localhost:4000/static/img/icon/cart.png" alt="cart icon" /></div>
             </div>
         </div>
     </header>
 
     <section class="template-page">
+        <!--        include page template       -->
 
-        <%######################################################################################%>
-        <%#       Page Template                                                                 %>
-        <%######################################################################################%>
-        <%- include(`pages/${data.template}`, {data: data.templateData}); %>
+        <div class="main-column padding-top3 flex-center">
+            <form action="/users/confirm/c4sCdG_Jm2xjrcoE6mfG6XqfgzhnezAfAo-SAjZxdcg" method="post" class="auth-form big-shadow">
+                <div class="title">Welcome to TakeAByte!</div>
+                <div class="content-text">
+                    Click to activate your account
+                </div>
+                <button type="submit" class="auth-btn blue">Confirm</button>
+            </form>
+        </div>
 
-
+        <!--        end page template           -->
     </section>
 
     <footer class="footer">
         <div class="footer-line"></div>
         <div class="footer-ctn">
             <div class="footer-left">
-                <div class="footer-logo"><img src="/static/img/logo/logo_transparent_inverted.png" alt="TakeAByte logo" /></div>
-                <div class="footer-slogan"><%= data.slogan %></div>
+                <div class="top">
+                    <div class="footer-logo"><img src="http://localhost:4000/static/img/logo/takeabyte_logo_inverted_transparent.png" alt="TakeAByte logo" /></div>
+                    <div class="footer-slogan">
+                        <p>Need some high tech device?</p>
+                        <p>Take A Byte!</p>
+                    </div>
+                </div>
+                <div class="copyright">© TakeAByte 2024 - All Rights Reserved</div>
             </div>
             <div class="footer-links">
                 <div class="link-group">

@@ -42,12 +42,25 @@
   height: 100%;
 }
 
+.flex-center {
+  justify-content: center;
+  align-items: center;
+}
+
+.flex1 {
+  flex: 1;
+}
+
 .gap12 {
   gap: 12rem;
 }
 
 .gap5 {
   gap: 5rem;
+}
+
+.padding0 {
+  padding: 0 !important;
 }
 
 .padding-top3 {
@@ -121,6 +134,11 @@ body {
   font-family: "Dosis", sans-serif;
   font-weight: 600;
   color: #112D4E;
+}
+body .page-ctn {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 body header.header {
   display: flex;
@@ -242,6 +260,9 @@ body header.header .header-ctn .header-btns .cart-btn img {
   object-position: center;
   height: 100%;
   width: 100%;
+}
+body section.template-page {
+  flex: 1;
 }
 body footer.footer {
   display: flex;

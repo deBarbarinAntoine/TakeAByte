@@ -13,6 +13,22 @@ pages are the ones used in `base.ejs`.
 
 partials are models used in the pages: they are always called from a `page` template.
 
+---
+
+## Table of contents
+
+- [`base.ejs`](#baseejs)
+- [`landing.ejs`](#landingejs)
+- [`category.ejs`](#categoryejs)
+- [`product.ejs`](#productejs)
+- [`order.ejs`](#orderejs)
+- [`login.ejs`](#loginejs)
+- [`register.ejs`](#registerejs)
+- [`update-password.ejs`](#update-passwordejs)
+- [`confirm.ejs`](#confirmejs)
+
+---
+
 ## `base.ejs`
 
 Data format to pass to `base.ejs`:
@@ -26,9 +42,10 @@ const data = {
 };
 ````
 
-## pages
+---
 
-### `landing.ejs`
+
+## `landing.ejs`
 
 Data format:
 
@@ -77,7 +94,9 @@ Data format:
 }
 ````
 
-### `category.ejs`
+---
+
+## `category.ejs`
 
 Data format:
 
@@ -103,7 +122,9 @@ Data format:
 }
 ````
 
-### `product.ejs`
+---
+
+## `product.ejs`
 
 Data format:
 
@@ -139,7 +160,9 @@ Data format:
 }
 ````
 
-### `order.ejs`
+---
+
+## `order.ejs`
 
 Data format:
 
@@ -181,12 +204,58 @@ Form names:
 > **region**
 > 
 > **country**
- 
 
-### `login.ejs`
+---
+
+## `login.ejs`
 
 Form names:
 > **email**
 > 
 > **password**
+>
+
+---
+
+## `register.ejs`
+
+Form names:
+> **username**
 > 
+> **email**
+> 
+> **password**
+> 
+> **confirm-password**
+>
+
+---
+
+## `update-password.ejs`
+
+Data format:
+
+````json
+{
+  "updatePwdToken": "token-to-update-password"
+}
+````
+
+Form names:
+> **password**
+>
+> **confirm-password**
+>
+
+
+---
+
+## `confirm.ejs`
+
+Data format:
+
+````json
+{
+  "activationToken": "activation-token"
+}
+````

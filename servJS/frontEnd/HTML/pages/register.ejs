@@ -1,0 +1,17 @@
+<div class="main-column padding-top3">
+    <form action="/register" method="post" class="auth-form big-shadow">
+        <div class="title">Register</div>
+        <div class="inputs">
+            <input type="text" name="username" id="username" placeholder="username" required autofocus />
+            <input type="email" name="email" id="email" placeholder="example@mail.com" required />
+            <input type="password" name="password" id="password" placeholder="Password" required />
+            <input type="password" name="confirm-password" id="confirm-password" placeholder="Confirm password" required />
+        </div>
+        <button type="submit" class="auth-btn blue">Register</button>
+        <div class="separator blue"></div>
+        <div class="auth-redirect-link">
+            <div class="message">Already have an account?</div>
+            <a href="/login" class="link">Login</a>
+        </div>
+    </form>
+</div>

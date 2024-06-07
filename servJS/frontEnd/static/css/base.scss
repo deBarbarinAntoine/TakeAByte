@@ -67,12 +67,25 @@ $font-weight: 600;
   height: 100%;
 }
 
+.flex-center {
+  justify-content: center;
+  align-items: center;
+}
+
+.flex1 {
+  flex: 1;
+}
+
 .gap12 {
   gap: 12rem;
 }
 
 .gap5 {
   gap: 5rem;
+}
+
+.padding0 {
+  padding: 0 !important;
 }
 
 .padding-top3 {
@@ -146,6 +159,12 @@ body {
   font-family: $font;
   font-weight: $font-weight;
   color: $darkblue;
+
+  .page-ctn {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
 
   // ##############################################################################################
   // # header
@@ -291,7 +310,7 @@ body {
   // ##############################################################################################
 
   section.template-page {
-
+    flex: 1;
   }
 
   // ##############################################################################################
