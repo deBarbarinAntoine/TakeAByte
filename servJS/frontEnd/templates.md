@@ -162,3 +162,23 @@ Data format:
   }
 }
 ````
+
+Form names:
+> **email**
+> 
+> **name**
+> 
+> **lastname**
+> 
+> **street**
+> 
+> **optional**
+> 
+> **city**
+> 
+> **zip**
+> 
+> **region**
+> 
+> **country**
+> 
