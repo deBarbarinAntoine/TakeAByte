@@ -12,6 +12,17 @@
   color: #112D4E;
   cursor: pointer;
 }
+* a:hover {
+  color: #FBA834;
+}
+* a.link {
+  color: #3F72AF;
+  font-size: 1.3rem;
+}
+* a.link:hover {
+  color: #FBA834;
+  text-decoration: underline;
+}
 
 @font-face {
   font-family: "Dosis", sans-serif;
@@ -41,6 +52,14 @@
 
 .padding-top3 {
   padding-top: 3rem;
+}
+
+.small-shadow {
+  box-shadow: rgba(21, 21, 32, 0.1254901961) 0 0.2rem 1.6rem;
+}
+
+.big-shadow {
+  box-shadow: rgba(21, 21, 32, 0.1254901961) 0 0.5rem 2.2rem;
 }
 
 button,
@@ -310,6 +329,12 @@ body footer.footer .footer-ctn .footer-links .link-group a:hover {
 .separator.orange {
   background-color: #FBA834;
 }
+.separator.white {
+  background-color: #F9F7F7;
+}
+.separator.cream {
+  background-color: #F7EFE6;
+}
 
 .quantity {
   width: 3.5rem;
@@ -376,7 +401,7 @@ body footer.footer .footer-ctn .footer-links .link-group a:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
+  gap: 3.2rem;
   padding: 7rem;
   background-color: #DBE2EF;
   border-radius: 0.5rem;
@@ -385,30 +410,42 @@ body footer.footer .footer-ctn .footer-links .link-group a:hover {
   font-size: 2.7rem;
 }
 .main-column form.auth-form .inputs {
+  width: 30rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-end;
   gap: 1.2rem;
 }
 .main-column form.auth-form .inputs input {
-  width: 30rem;
-  flex: 1 1 auto;
+  width: calc(100% - 1.6rem);
   padding: 1rem 0.1rem 1rem 1.5rem;
   appearance: none;
   border: 2px solid #112D4E;
-  background: none;
+  background: #F9F7F7;
   outline: none;
   font-family: "Dosis", sans-serif;
   color: #112D4E;
   font-weight: 600;
   font-size: 1.3rem;
-  min-width: 50px;
 }
 .main-column form.auth-form .inputs input:focus {
   outline: none;
   appearance: none;
   border: 2px solid rgba(63, 114, 175, 0.6);
-  background: none;
+  background: #F9F7F7;
+}
+.main-column form.auth-form button.auth-btn {
+  min-width: 50%;
+}
+.main-column form.auth-form .auth-redirect-link {
+  width: 30rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.main-column form.auth-form .auth-redirect-link .message {
+  font-size: 1.3rem;
+  color: #112D4E;
 }
 .main-column .title-nav-ctn {
   width: 70%;
@@ -473,7 +510,6 @@ body footer.footer .footer-ctn .footer-links .link-group a:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: rgba(21, 21, 32, 0.1254901961) 0 0.2rem 1.6rem;
 }
 .main-column .product-card .product-card-img {
   width: 100%;

@@ -1,10 +1,16 @@
 <div class="main-column padding-top3">
-    <form action="/login" method="post" class="auth-form">
+    <form action="/login" method="post" class="auth-form big-shadow">
         <div class="title">Login</div>
         <div class="inputs">
-            <input type="email" name="email" id="email" placeholder="example@mail.com" />
-            <input type="password" name="password" id="password" placeholder="Password" />
+            <input type="email" name="email" id="email" placeholder="example@mail.com" required autofocus />
+            <input type="password" name="password" id="password" placeholder="Password" required />
+            <a href="/forgot-password" class="link">Forgot password?</a>
         </div>
-        <button type="submit" class="blue">Login</button>
+        <button type="submit" class="auth-btn blue">Login</button>
+        <div class="separator blue"></div>
+        <div class="auth-redirect-link">
+            <div class="message">Doesn't have an account?</div>
+            <a href="/register" class="link">Register</a>
+        </div>
     </form>
 </div>

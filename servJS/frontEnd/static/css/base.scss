@@ -27,6 +27,19 @@ $font-weight: 600;
     text-decoration: none;
     color: $darkblue;
     cursor: pointer;
+
+    &:hover {
+      color: $orange;
+    }
+    &.link {
+      color: $blue;
+      font-size: 1.3rem;
+
+      &:hover {
+        color: $orange;
+        text-decoration: underline;
+      }
+    }
   }
 }
 
@@ -64,6 +77,14 @@ $font-weight: 600;
 
 .padding-top3 {
   padding-top: 3rem;
+}
+
+.small-shadow {
+  box-shadow: $shadow 0 .2rem 1.6rem;
+}
+
+.big-shadow {
+  box-shadow: $shadow 0 .5rem 2.2rem;
 }
 
 // ##############################################################################################
