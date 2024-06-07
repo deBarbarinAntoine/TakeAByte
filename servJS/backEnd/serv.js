@@ -3,10 +3,11 @@ const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, 'data.env') });
 const express = require('express');
 const cors = require('cors');
-
+const cookieParser = require('cookie-parser');
 // Import routes
 const apiRoutes = require('./routes/apiRoutes');
 const displayRoutes = require('./routes/displayRoutes');
+const {setMultipleViews} = require("./middleware/views");
 
 // Create an instance of Express.js
 const app = express();
@@ -18,17 +19,25 @@ app.use('/static', express.static(path.resolve(__dirname, '../frontEnd/static'))
 // Set EJS as the view engine
 app.set('view engine', 'ejs');
 
-// Specify the directory where your EJS templates are located
-app.set('views', path.resolve(__dirname, '../frontEnd/HTML'));
+// Specify the directories where your EJS templates are located
+const viewDirectories = [
+    path.resolve(__dirname, '../frontEnd/HTML/pages'),
+    path.resolve(__dirname, '../frontEnd/HTML/'),
+    path.resolve(__dirname, '../frontEnd/HTML/partials'),
+];
 
+// Use the custom middleware to set multiple view directories
+app.use(setMultipleViews(viewDirectories));
+app.use(cookieParser());
 // Use routes
 app.use('/api', apiRoutes);
 app.use('/', displayRoutes);
+
 
 // Define the port number using environment variables for flexibility
 const port = process.env.PORT || 4000;
 
 // Start the server
 app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}/`);
+    console.log(`Server running at http://localhost:${port}/home`);
 });

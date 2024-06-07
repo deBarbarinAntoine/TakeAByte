@@ -5,6 +5,7 @@ const { getAddressSuggestions } = require('../controllers/addressController');
 const { getCloseDeliveryPoint } = require('../controllers/deliveryPointController');
 const { toggleFavoriteItem, toggleCartItem } = require('../controllers/itemController');
 const {checkUserLogs, logoutUser, registerUser} = require("../controllers/authController");
+const {requireAuth} = require ("../middleware/auth")
 
 // Define a route to get address suggestions
 router.get('/getAddress/:address', getAddressSuggestions);

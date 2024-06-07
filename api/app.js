@@ -21,7 +21,7 @@ app.use('/static', express.static('./public'));
 app.use('/v1',productsRoutes);
 app.use('/v1',userRoutes);
 app.use('/v1/auth',authRoutes)
-app.use('/v1/products/:product_id',likeRoutes)
+app.use('/v1/product/:product_id',likeRoutes)
 app.use('/v1',ordersRoutes)
 app.use('/v1',salesRoutes)
 app.use('/v1',brandsRoutes)

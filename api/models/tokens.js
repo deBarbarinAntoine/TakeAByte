@@ -80,19 +80,20 @@ class Token {
 }
 
 async function getToken(token) {
-    const hash = crypto.createHash('sha512').update(token).digest('base64url');
-
     try {
-        const [rows] = await connection.query(getTokenQuery, [hash]);
-        if (rows.length === 0) {
-            return [null, false];
+        const result = await connection.query(getTokenQuery, [token]);
+        if (result && result.length > 0) {
+            const endDate = result[0].end_date;
+            return { endDate, found: true };
+        } else {
+            return { endDate: null, found: false };
         }
-        return [rows[0].end_date, true];
     } catch (error) {
         console.error("Error fetching token:", error);
         throw error; // Rethrow the error for handling in the caller
     }
 }
+
 
 async function getUserIdFromToken(token) {
     try {
