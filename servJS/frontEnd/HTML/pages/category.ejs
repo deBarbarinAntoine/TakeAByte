@@ -1,0 +1,19 @@
+<div class="main-column gap5 padding-top3">
+
+    <%######################################################################################%>
+    <%#       Title Nav Template                                                            %>
+    <%######################################################################################%>
+    <%- include('../partials/stroll-nav', {data: data.navData}); %>
+
+
+    <div class="category-ctn">
+
+        <%######################################################################################%>
+        <%#       Product-Card Template                                                         %>
+        <%######################################################################################%>
+        <% data.category.products.forEach(function (product) { %>
+            <%- include('../partials/product-card', {product: product}); %>
+        <% }); %>
+
+    </div>
+</div>
