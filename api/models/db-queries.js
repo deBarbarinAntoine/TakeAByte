@@ -126,9 +126,6 @@ const changeUserDataQuery = `
 // DELETE /api/users/:user_id: Delete a user.
 const deleteUserQuery = 'DELETE FROM users WHERE user_id = ?';
 
-// GET /api/product/top/:limit : Retrieve top products
-const getPopularProducts = 'SELECT p.product_id, p.name, p.description, p.quantity_stocked, p.price, p.processor, p.ram, p.size, p.captor, p.weight, p.socket_cpu, p.dimension, p.others, p.connectivity, p.resolution, p.screen_type, p.vram, p.battery_power_time, p.storage,COUNT(l.product_id)  AS likes_count FROM products p JOIN likes l ON p.product_id = l.product_id GROUP BY p.product_id ORDER BY likes_count DESC LIMIT ?;'
-
 // GET /api/orders/:user_id Retrieve user specified status order
 const getOrderByStatusQuery = 'SELECT * FROM orders WHERE user_id = ? AND status = ?'
 
@@ -267,7 +264,6 @@ module.exports = {
     getUserDataQuery,
     changeUserDataQuery,
     deleteUserQuery,
-    getPopularProducts,
     getOrderByStatusQuery,
     newPasswordQuery,
     createNewOrderItemQuery
