@@ -181,4 +181,12 @@ Form names:
 > **region**
 > 
 > **country**
+ 
+
+### `login.ejs`
+
+Form names:
+> **email**
+> 
+> **password**
 > 

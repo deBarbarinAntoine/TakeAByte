@@ -301,6 +301,15 @@ body footer.footer .footer-ctn .footer-links .link-group a:hover {
   background-color: #DBE2EF;
   border-radius: 3px;
 }
+.separator.dark {
+  background-color: #112D4E;
+}
+.separator.blue {
+  background-color: #3F72AF;
+}
+.separator.orange {
+  background-color: #FBA834;
+}
 
 .quantity {
   width: 3.5rem;
@@ -361,6 +370,45 @@ body footer.footer .footer-ctn .footer-links .link-group a:hover {
   flex-direction: column;
   align-items: center;
   padding-bottom: 9rem;
+}
+.main-column form.auth-form {
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 7rem;
+  background-color: #DBE2EF;
+  border-radius: 0.5rem;
+}
+.main-column form.auth-form .title {
+  font-size: 2.7rem;
+}
+.main-column form.auth-form .inputs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+}
+.main-column form.auth-form .inputs input {
+  width: 30rem;
+  flex: 1 1 auto;
+  padding: 1rem 0.1rem 1rem 1.5rem;
+  appearance: none;
+  border: 2px solid #112D4E;
+  background: none;
+  outline: none;
+  font-family: "Dosis", sans-serif;
+  color: #112D4E;
+  font-weight: 600;
+  font-size: 1.3rem;
+  min-width: 50px;
+}
+.main-column form.auth-form .inputs input:focus {
+  outline: none;
+  appearance: none;
+  border: 2px solid rgba(63, 114, 175, 0.6);
+  background: none;
 }
 .main-column .title-nav-ctn {
   width: 70%;

@@ -10,6 +10,16 @@
   height: 3px;
   background-color: $lightblue;
   border-radius: 3px;
+
+  &.dark {
+    background-color: $darkblue;
+  }
+  &.blue {
+    background-color: $blue;
+  }
+  &.orange {
+    background-color: $orange;
+  }
 }
 
 .quantity {
@@ -78,6 +88,54 @@
   flex-direction: column;
   align-items: center;
   padding-bottom: 9rem;
+
+  // ###########################################################################################
+  // # login template
+  // ###########################################################################################
+
+  form.auth-form {
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    padding: 7rem;
+    background-color: $lightblue;
+    border-radius: .5rem;
+
+    .title {
+      font-size: 2.7rem;
+    }
+    .inputs {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.2rem;
+
+      input {
+        width: 30rem;
+        flex: 1 1 auto;
+        padding: 1rem .1rem 1rem 1.5rem;
+        appearance: none;
+        border: 2px solid $darkblue;
+        background: none;
+        outline: none;
+        font-family: "Dosis", sans-serif;
+        color: $darkblue;
+        font-weight: 600;
+        font-size: 1.3rem;
+        min-width: 50px;
+
+        &:focus{
+          outline: none;
+          appearance: none;
+          border: 2px solid transparentize($blue, 0.4);
+          background: none;
+        }
+      }
+    }
+  }
+
 
 
   // ###########################################################################################
