@@ -2,12 +2,26 @@
 * {
   margin: 0;
   padding: 0;
-  font-size: clamp(10px, 4px + 0.5vw, 32px);
+  font-size: clamp(10px, 6px + 0.45vw, 32px);
+  scrollbar-width: thin;
+  scrollbar-color: #112D4E #DBE2EF;
+  scrollbar-arrow-color: #3F72AF;
 }
 * a {
   text-decoration: none;
   color: #112D4E;
   cursor: pointer;
+}
+* a:hover {
+  color: #FBA834;
+}
+* a.link {
+  color: #3F72AF;
+  font-size: 1.3rem;
+}
+* a.link:hover {
+  color: #FBA834;
+  text-decoration: underline;
 }
 
 @font-face {
@@ -38,6 +52,14 @@
 
 .padding-top3 {
   padding-top: 3rem;
+}
+
+.small-shadow {
+  box-shadow: rgba(21, 21, 32, 0.1254901961) 0 0.2rem 1.6rem;
+}
+
+.big-shadow {
+  box-shadow: rgba(21, 21, 32, 0.1254901961) 0 0.5rem 2.2rem;
 }
 
 button,
