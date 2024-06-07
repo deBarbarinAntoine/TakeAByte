@@ -14,18 +14,25 @@
                 return classes;
             };
             let orderPage;
+            let pageName;
             switch (data.page) {
                 case 'details':
                     orderPage = attributeClasses(0);
+                    pageName = 'details';
                     break;
                 case 'shipping':
                     orderPage = attributeClasses(1);
+                    pageName = 'shipping';
                     break;
                 case 'payment':
                     orderPage = attributeClasses(2);
+                    pageName = 'payment';
                     break;
         } %>
-        <%- include(`../partials/${pageName}`, {orderPage: orderPage}); %>
+
+        <% if (!!pageName) { %>
+            <%- include(`../partials/${pageName}`, {orderPage: orderPage}); %>
+        <% } %>
 
 
     </div>
