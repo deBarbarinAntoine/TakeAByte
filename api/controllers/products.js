@@ -45,18 +45,17 @@ exports.createNewProduct = async (req, res) => {
     }
 };
 
-exports.getProductById = (req, res) => {
+exports.getProductById = async (req, res) => {
     const {product_id} = req.params;
-    connection.query(getProductByIdQuery, [product_id], (error, results) => {
-        if (error) {
-            return serverErrorResponse(res, "Failed to get product with given id");
-        }
-        if (results.length === 0) {
+    try {
+        const result = await connection.query(getProductByIdQuery, [product_id])
+        if (result.length === 0) {
             return notFoundErrorResponse(res, "No result for product with given id");
         }
-        const product = new Product(...results[0]);
-        res.status(200).json(product);
-    });
+        res.status(200).json(result[0]);
+    } catch (err) {
+        return serverErrorResponse(res, err, "Failed to get product with given id");
+    }
 };
 
 exports.updateProductData = (req, res) => {

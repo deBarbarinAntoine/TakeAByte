@@ -21,13 +21,14 @@ async function authenticate(req, res, next) {
     }
 
     try {
-        const [expiry, ok] = await getToken(bearer); // Assuming getToken returns [expiry, ok]
-        if (!ok) {
+        const { endDate, found } = await getToken(bearer);
+
+        if (!found) {
             unauthorizedErrorResponse(res, new Error('Invalid token'));
             return;
         }
 
-        if (expiry < Date.now()) {
+        if (new Date(endDate) < new Date()) {
             unauthorizedErrorResponse(res, new Error('Token has expired'));
             return;
         }
