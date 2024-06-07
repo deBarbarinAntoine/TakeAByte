@@ -24,8 +24,9 @@ partials are models used in the pages: they are always called from a `page` temp
 - [`order.ejs`](#orderejs)
 - [`login.ejs`](#loginejs)
 - [`register.ejs`](#registerejs)
-- [`update-password.ejs`](#update-passwordejs)
 - [`confirm.ejs`](#confirmejs)
+- [`forgot-password.ejs`](#forgot-passwordejs)
+- [`update-password.ejs`](#update-passwordejs)
 
 ---
 
@@ -37,13 +38,16 @@ const data = {
   title: 'header-title',
     isAuthenticated: req.isAuthenticated /* boolean value with user authentication status */,
   template: 'page\'s name',
-  templateData: {/* any specific data for page template*/},
+  templateData: {/* any specific data for page template (see below for each template) */},
   slogan: 'footer-slogan'  
 };
 ````
 
 ---
 
+# Template pages
+
+---
 
 ## `landing.ejs`
 
@@ -231,6 +235,27 @@ Form names:
 
 ---
 
+## `confirm.ejs`
+
+Data format:
+
+````json
+{
+  "activationToken": "activation-token"
+}
+````
+
+---
+
+## `forgot-password.ejs`
+
+Form names:
+> **email**
+>
+
+
+---
+
 ## `update-password.ejs`
 
 Data format:
@@ -246,16 +271,3 @@ Form names:
 >
 > **confirm-password**
 >
-
-
----
-
-## `confirm.ejs`
-
-Data format:
-
-````json
-{
-  "activationToken": "activation-token"
-}
-````
