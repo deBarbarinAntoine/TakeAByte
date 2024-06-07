@@ -10,11 +10,45 @@ router.get('/fav', (req, res) => {
     res.render('fav&cart', { title: "shop app" });
 });
 
-// Home page
-router.get('/home', (req,res) =>{
-    res.render('landing')
+router.get('/home',isAuthenticated, (req, res) => {
+    const data = {
+        title: "Home - TakeAByte",
+        isAuthenticated: req.isAuthenticated,
+        template: "landing",
+        templateData :{
+            banner: { /* banner data */ },
+            latest: { /* latest products data */ },
+            popular: { /* popular products data */ },
+            random: { /* random category products data */ }
+        },
+        slogan: "Your Trusted Tech Partner"
+    };
+    res.render('base', { data: data });
+});
+
+router.get('/login',isAuthenticated,(req,res) =>{
+    const data = {
+        title: "Home - TakeAByte",
+        isAuthenticated: req.isAuthenticated,
+        template: "login",
+        templateData :{
+        },
+        slogan: "Your Trusted Tech Partner"
+    };
+    res.render('base', { data: data });
 })
 
+router.get('/register', isAuthenticated, (req, res) =>{
+    const data = {
+        title: "Home - TakeAByte",
+        isAuthenticated: req.isAuthenticated,
+        template: "register",
+        templateData :{
+        },
+        slogan: "Your Trusted Tech Partner"
+    };
+    res.render('base', { data: data });
+})
 
 
 // Define a route for the 404 page
