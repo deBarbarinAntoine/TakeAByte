@@ -1,9 +1,9 @@
 <% if (!!data) { %>
     <div class="title-nav">
-        <div class="title-text<%= data[0].className %>"><%= data[0].title %>></div>
+        <a href="<%= data[0].link %>" class="title-text<%= data[0].className %>"><%= data[0].title %>></a>
         <% for (let i = 1; i < data.length; ++i) { %>
             <div class="title-separator">></div>
-            <div class="title-text<%= data[i].className %>"><%= data[i].title %>></div>
+            <a href="<%= data[i].link %>" class="title-text<%= data[i].className %>"><%= data[i].title %>></a>
         <% } %>
     </div>
 <% } %>

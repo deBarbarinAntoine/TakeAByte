@@ -1,4 +1,4 @@
-<div class="product">
+<a href="<%= product.link %>" class="product">
     <div class="product-img">
         <img src="/static/img/products/<%= product.img %>"
              onerror="this.onerror=null;this.src='/static/img/image-not-found.webp'" alt="<%= product.name %> image" />
@@ -8,4 +8,4 @@
         <div class="product-name"><%= product.name %></div>
         <div class="product-price"><%= product.price %></div>
     </div>
-</div>
+</a>
