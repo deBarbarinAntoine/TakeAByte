@@ -32,11 +32,20 @@ router.get('/home', isAuthenticated, async (req, res) => {
                     link: "/type/Computer Components",
                     btnContent: "Discover our collection"
                 },
-                latest: latestProducts,
-                popular: popularProducts,
-                random: randomCategoryProducts
+            latest: {
+            title: 'Latest Products',
+                products: latestProducts
+            },
+            popular:{
+                title : 'Most Popular',
+                products : popularProducts
+            } ,
+            random: {
+                title : 'May interest you',
+               products: randomCategoryProducts
             },
             slogan: "Your Trusted Tech Partner"
+            },
         };
 
         // Render the page with the populated data

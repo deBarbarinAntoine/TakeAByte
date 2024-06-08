@@ -18,30 +18,33 @@ async function getProductById(productId) {
             }
         });
 
-        // Extract type and brand IDs
-        const typeId = response.data.type_id;
-        const brandId = response.data.brand_id;
+        // Iterate over each product item in the response array
+        for (const product of response.data) {
+            const typeId = product.type;
+            const brandId = product.brand;
 
-        // Fetch type name
-        if (typeId) {
-            const typeUrl = `http://localhost:3001/v1/types/${typeId}`;
-            const typeResponse = await axios.get(typeUrl, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-            response.data.type_name = typeResponse.data.name;
-        }
+            // Fetch type name
+            if (typeId) {
 
-        // Fetch brand name
-        if (brandId) {
-            const brandUrl = `http://localhost:3001/v1/brands/${brandId}`;
-            const brandResponse = await axios.get(brandUrl, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-            response.data.brand_name = brandResponse.data.name;
+                const typeUrl = `http://localhost:3001/v1/types/${typeId}`;
+                const typeResponse = await axios.get(typeUrl, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                product.type = typeResponse.data[0].name;
+            }
+
+            // Fetch brand name
+            if (brandId) {
+                const brandUrl = `http://localhost:3001/v1/brands/${brandId}`;
+                const brandResponse = await axios.get(brandUrl, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                product.brand = brandResponse.data[0].name;
+            }
         }
 
         return response.data;
@@ -68,18 +71,21 @@ async function fetchLatestProducts(){
 
         // Iterate over each product item in the response array
         for (const product of response.data) {
+            product.link = `/product/${product.id}`;
+            product.img = '/static/img/image-not-found.webp'
             const typeId = product.type;
-            const brandId = product.brand_id;
+            const brandId = product.brand;
 
             // Fetch type name
             if (typeId) {
+
                 const typeUrl = `http://localhost:3001/v1/types/${typeId}`;
                 const typeResponse = await axios.get(typeUrl, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
                 });
-                product.type_name = typeResponse.data.name;
+                product.type = typeResponse.data[0].name;
             }
 
             // Fetch brand name
@@ -90,7 +96,7 @@ async function fetchLatestProducts(){
                         Authorization: `Bearer ${token}`
                     }
                 });
-                product.brand_name = brandResponse.data.name;
+                product.brand = brandResponse.data[0].name;
             }
         }
 
@@ -118,18 +124,21 @@ async function fetchPopularProducts(){
 
         // Iterate over each product item in the response array
         for (const product of response.data) {
+            product.link = `/product/${product.id}`;
+            product.img = '/static/img/image-not-found.webp'
             const typeId = product.type;
-            const brandId = product.brand_id;
+            const brandId = product.brand;
 
             // Fetch type name
             if (typeId) {
+
                 const typeUrl = `http://localhost:3001/v1/types/${typeId}`;
                 const typeResponse = await axios.get(typeUrl, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
                 });
-                product.type_name = typeResponse.data.name;
+                product.type = typeResponse.data[0].name;
             }
 
             // Fetch brand name
@@ -140,10 +149,9 @@ async function fetchPopularProducts(){
                         Authorization: `Bearer ${token}`
                     }
                 });
-                product.brand_name = brandResponse.data.name;
+                product.brand = brandResponse.data[0].name;
             }
         }
-
         return response.data;
     } catch (error) {
         console.error('Error fetching product:', error);
@@ -157,13 +165,15 @@ async function fetchRandomCategoryProducts(){
         console.error('WEB_TOKEN is not set in environment variables');
         return null;
     }
-    const typeIds =await axios.get('http://localhost:3001/v1/allTypes',{
+    const type =await axios.get('http://localhost:3001/v1/allTypes',{
         headers: {
             Authorization: `Bearer ${token}`
         }
     })
+    let typeIds = type.data.typeIds
     const randIndex = Math.floor(Math.random() * typeIds.length);
     const randTypeId = typeIds[randIndex];
+
 
     const url = `http://localhost:3001/v1/products?filters[type_id]=${randTypeId}`;
 
@@ -177,18 +187,28 @@ async function fetchRandomCategoryProducts(){
 
         // Iterate over each product item in the response array
         for (const product of response.data) {
+            product.link = `/product/${product.id}`;
+            product.img = '/static/img/image-not-found.webp'
+            //const imgPath = `http://localhost:3001/v1/images/${product.id}`;
+           // const imgRes = await axios.get(imgPath, {
+            //    headers: {
+            //        Authorization: `Bearer ${token}`
+             //   }
+           // })
+
             const typeId = product.type;
-            const brandId = product.brand_id;
+            const brandId = product.brand;
 
             // Fetch type name
             if (typeId) {
+
                 const typeUrl = `http://localhost:3001/v1/types/${typeId}`;
                 const typeResponse = await axios.get(typeUrl, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
                 });
-                product.type_name = typeResponse.data.name;
+                product.type = typeResponse.data[0].name;
             }
 
             // Fetch brand name
@@ -199,10 +219,9 @@ async function fetchRandomCategoryProducts(){
                         Authorization: `Bearer ${token}`
                     }
                 });
-                product.brand_name = brandResponse.data.name;
+                product.brand = brandResponse.data[0].name;
             }
         }
-
         return response.data;
     } catch (error) {
         console.error('Error fetching product:', error);
