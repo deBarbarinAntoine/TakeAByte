@@ -1,0 +1,38 @@
+<div class="order-address">
+
+    <%######################################################################################%>
+    <%#       Order Nav Template                                                            %>
+    <%######################################################################################%>
+    <%- include('../order-nav', {page: orderPage}); %>
+
+
+    <form action="/shipping" class="order-form" method="post">
+        <div class="recap">
+            <div class="contact">
+                <div class="title">Contact</div>
+                <div class="content"><%= client.email %></div>
+                <a class="edit-link" href="/address">Edit</a>
+            </div>
+            <div class="separator"></div>
+            <div class="shipping-address">
+                <div class="title">Ship to</div>
+                <div class="content"><%= `${client.street}, ${client.complement}, ${client.zip}, ${client.province}, ${client.city}, ${client.country}` %></div>
+                <a class="edit-link" href="/address">Edit</a>
+            </div>
+        </div>
+        <div class="shipping">
+            <div class="shipping-header">
+                <span class="title">Shipping method</span>
+            </div>
+            <div class="shipping-method">
+                <input type="radio" name="shipping-method" id="shipping-method" value="standard" checked required />
+                <label for="shipping-method">Standart shipping</label>
+                <span class="shipping-cost">FREE</span>
+            </div>
+        </div>
+        <div class="btns">
+            <a href="/cart" class="back-link">Back to details</a>
+            <button class="blue" type="submit">Go to payment</button>
+        </div>
+    </form>
+</div>

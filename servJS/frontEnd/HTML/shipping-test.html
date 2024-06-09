@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" href="http://localhost:4000/static/css/style.css">
-    <title>Order - TakeAByte Shop</title>
+    <title>Shipping - TakeAByte Shop</title>
 </head>
 <body>
 <div class="page-ctn">
@@ -49,46 +49,39 @@
                     <div class="title-nav">
                         <div class="title-text previous">Cart</div>
                         <div class="title-separator">></div>
-                        <div class="title-text current">Details</div>
+                        <div class="title-text previous">Details</div>
                         <div class="title-separator">></div>
-                        <div class="title-text">Shipping</div>
+                        <div class="title-text current">Shipping</div>
                         <div class="title-separator">></div>
                         <div class="title-text">Payment</div>
                     </div>
                     <form action="/shipping" class="order-form" method="post">
-                        <div class="contact">
-                            <div class="contact-header">
-                                <span class="title">Contact</span>
-                                <div class="login"><span class="msg">Do you have an account?</span><a href="/login" class="login-link">Login</a></div>
+                        <div class="recap">
+                            <div class="contact">
+                                <div class="title">Contact</div>
+                                <div class="content">mail@example.com</div>
+                                <a class="edit-link" href="/address">Edit</a>
                             </div>
-                            <input type="email" placeholder="example@email.com" id="contact-email" />
+                            <div class="separator"></div>
+                            <div class="shipping-address">
+                                <div class="title">Ship to</div>
+                                <div class="content">104 Cours Gambetta, Résidence Gustave Eiffel, 13090 Aix-en-Provence, France</div>
+                                <a class="edit-link" href="/address">Edit</a>
+                            </div>
                         </div>
-                        <div class="address">
-                            <div class="address-header">
-                                <span class="title">Shipping Address</span>
+                        <div class="shipping">
+                            <div class="shipping-header">
+                                <span class="title">Shipping method</span>
                             </div>
-                            <div class="address-name">
-                                <input type="text" name="name" id="address-name" placeholder="Name" />
-                                <input type="text" name="lastname" id="address-lastname" placeholder="Last Name" />
-                            </div>
-                            <div class="address-street">
-                                <input type="text" name="street" id="address-street" placeholder="Address" />
-                            </div>
-                            <div class="address-optional">
-                                <input type="text" name="optional" id="address-optional" placeholder="Address Complement (optional)" />
-                            </div>
-                            <div class="address-city-region">
-                                <input type="text" name="city" id="address-city" placeholder="City" />
-                                <input type="text" name="zip" id="address-zip" placeholder="ZIP Code" />
-                                <input type="text" name="region" id="address-region" placeholder="Province" />
-                            </div>
-                            <div class="address-country">
-                                <input type="text" name="country" id="address-country" placeholder="Country" />
+                            <div class="shipping-method">
+                                <input type="radio" name="shipping-method" id="shipping-method" value="standard" checked required />
+                                <label for="shipping-method">Standart shipping</label>
+                                <span class="shipping-cost">FREE</span>
                             </div>
                         </div>
                         <div class="btns">
-                            <a href="/cart" class="back-link">Back to cart</a>
-                            <button class="blue" type="submit">Go to shipping</button>
+                            <a href="/cart" class="back-link">Back to details</a>
+                            <button class="blue" type="submit">Go to payment</button>
                         </div>
                     </form>
                 </div>

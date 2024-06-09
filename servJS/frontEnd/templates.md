@@ -186,6 +186,20 @@ Data format:
     "subtotal": "sub-total-price-€",
     "shippingCost": "shipping-cost-€",
     "total": "total-price-€"
+  },
+  "client": {
+    "email": "email@example.com",
+    "name": "name",
+    "lastName": "last-name",
+    "address": {
+      "street": "street",
+      "complement": "address-complement",
+      "city": "city",
+      "zip": "zip-code",
+      "province": "province",
+      "country": "country"
+    },
+    "shippingMethod": "Standard Shipping - FREE"
   }
 }
 ````

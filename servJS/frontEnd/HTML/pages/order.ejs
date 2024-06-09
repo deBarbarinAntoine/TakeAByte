@@ -31,7 +31,7 @@
         } %>
 
         <% if (!!pageName) { %>
-            <%- include(`../partials/${pageName}`, {orderPage: orderPage}); %>
+            <%- include(`../partials/${pageName}`, {orderPage: orderPage, data: data.client}); %>
         <% } %>
 
 

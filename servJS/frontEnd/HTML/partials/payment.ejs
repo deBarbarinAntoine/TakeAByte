@@ -1,0 +1,50 @@
+<div class="order-address">
+
+    <%######################################################################################%>
+    <%#       Order Nav Template                                                            %>
+    <%######################################################################################%>
+    <%- include('../order-nav', {page: orderPage}); %>
+
+
+    <form action="/payment" class="order-form" method="post">
+        <div class="recap">
+            <div class="contact">
+                <div class="title">Contact</div>
+                <div class="content"><%= client.email %></div>
+                <a class="edit-link" href="/address">Edit</a>
+            </div>
+            <div class="separator"></div>
+            <div class="shipping-address">
+                <div class="title">Ship to</div>
+                <div class="content"><%= `${client.street}, ${client.complement}, ${client.zip}, ${client.province}, ${client.city}, ${client.country}` %></div>
+                <a class="edit-link" href="/address">Edit</a>
+            </div>
+            <div class="separator"></div>
+            <div class="shipping-method">
+                <div class="title">Method</div>
+                <div class="content"><%= `${client.shippingMethod}` %></div>
+                <a class="edit-link" href="/shipping">Edit</a>
+            </div>
+        </div>
+        <div class="payment">
+            <div class="payment-header">
+                <img src="/static/img/icon/credit-card.png" alt="credit card icon" />
+                <span class="title">Payment method</span>
+            </div>
+            <div class="card-number">
+                <input type="text" name="card-number" id="card-number" placeholder="Card Number" required autofocus />
+            </div>
+            <div class="card-holder-name">
+                <input type="text" name="card-holder" id="card-holder" placeholder="Holder Name" required />
+            </div>
+            <div class="card-details">
+                <input type="date" name="expiration" id="expiration" placeholder="Expiration (MM/YY)" required />
+                <input type="text" name="cvv" id="cvv" placeholder="CVV" required />
+            </div>
+        </div>
+        <div class="btns">
+            <a href="/cart" class="back-link">Back to shipping</a>
+            <button class="blue" type="submit">Pay now</button>
+        </div>
+    </form>
+</div>

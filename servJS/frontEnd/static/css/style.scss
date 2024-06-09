@@ -586,29 +586,30 @@
 
 
   // ###########################################################################################
-  // # address
+  // # order
   // ###########################################################################################
 
   .order-ctn {
     display: flex;
     justify-content: center;
     width: 50%;
+    min-height: calc(100dvh - 27rem);
     padding-top: 2rem;
     padding-bottom: 9rem;
 
-    .order-address {
+    .order-left {
       display: flex;
       flex-direction: column;
       align-items: center;
       width: 65%;
 
-      form.shipping-form {
+      form.order-form {
         width: 100%;
         display: flex;
         flex-direction: column;
         gap: 3.5rem;
 
-        input {
+        input:not([type="radio"]), {
           flex: 1 1 auto;
           padding: 1rem .1rem 1rem 1.5rem;
           appearance: none;
@@ -666,79 +667,122 @@
               }
             }
           }
-          input#contact-email {
-
-          }
+          input#contact-email {}
         }
-        .address {
+        .address,
+        .payment {
           display: flex;
           flex-direction: column;
           width: 100%;
           gap: 1.2rem;
 
-          .address-header {
+          .address-header,
+          .payment-header,
+          .shipping-header {
             display: flex;
-            justify-content: space-between;
             width: 100%;
-            gap: 1.2rem;
-          }
-          .address-name {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            gap: 1.2rem;
+            gap: 5rem;
 
-            input#address-name {
-
-            }
-            input#address-lastname {
-
+            img {
+              height: 3rem;
             }
           }
-          .address-street {
+          .address-name,
+          .address-street,
+          .address-optional,
+          .address-city-region,
+          .address-country,
+          .card-number,
+          .card-holder-name,
+          .card-details {
             display: flex;
             justify-content: space-between;
             width: 100%;
             gap: 1.2rem;
 
-            input#address-street {
-
-            }
-          }
-          .address-optional {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            gap: 1.2rem;
-
-            input#address-optional {
-
-            }
-          }
-          .address-city-region {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            gap: 1.2rem;
-
-            input#address-city {
-
-            }
+            input#address-name {}
+            input#address-lastname {}
+            input#address-street {}
+            input#address-optional {}
+            input#address-city {}
             input#address-zip {
               flex-shrink: 5;
             }
-            input#address-region {
+            input#address-region {}
+            input#address-country {}
+            input#card-number{}
+            input#card-holder{}
+            input#expiration{}
+            input#cvv{}
+          }
+        }
+        .recap {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          width: calc(100% - 2.6rem);
+          padding: 1.3rem;
+          gap: 1.3rem;
+          border: 2px solid $lightblue;
+          border-radius: .5rem;
 
+          .contact,
+          .shipping-address,
+          .shipping-method {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            gap: 1rem;
+
+            .title {
+              font-size: 1.3rem;
+              color: $blue;
+              flex-shrink: 0;
+            }
+            .content {
+              font-size: 1.3rem;
+              flex: 1;
+            }
+            a.edit-link {
+              color: $blue;
+              font-size: 1.3rem;
+              flex-shrink: 0;
+
+              &:hover {
+                color: $orange;
+                text-decoration: underline;
+              }
             }
           }
-          .address-country {
+        }
+        .shipping {
+          display: flex;
+          flex-direction: column;
+          gap: 2rem;
+
+          .shipping-method {
             display: flex;
+            flex-direction: row;
             justify-content: space-between;
-            width: 100%;
-            gap: 1.2rem;
+            width: calc(100% - 2.6rem);
+            padding: 1.3rem;
+            gap: 1rem;
+            border: 2px solid $lightblue;
+            border-radius: .5rem;
 
-            input#address-country {
+            input#shipping-method {
+              accent-color: $blue;
+            }
 
+            label {
+              font-size: 1.3rem;
+            }
+
+            span.shipping-cost {
+              font-size: 1.3rem;
+              font-weight: bold;
+              color: $blue;
             }
           }
         }

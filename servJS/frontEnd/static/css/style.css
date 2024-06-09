@@ -820,22 +820,23 @@ body footer.footer .footer-ctn .footer-links .link-group a:hover {
   display: flex;
   justify-content: center;
   width: 50%;
+  min-height: calc(100dvh - 27rem);
   padding-top: 2rem;
   padding-bottom: 9rem;
 }
-.main .order-ctn .order-address {
+.main .order-ctn .order-left {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 65%;
 }
-.main .order-ctn .order-address form.shipping-form {
+.main .order-ctn .order-left form.order-form {
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 3.5rem;
 }
-.main .order-ctn .order-address form.shipping-form input {
+.main .order-ctn .order-left form.order-form input:not([type=radio]) {
   flex: 1 1 auto;
   padding: 1rem 0.1rem 1rem 1.5rem;
   appearance: none;
@@ -848,102 +849,192 @@ body footer.footer .footer-ctn .footer-links .link-group a:hover {
   font-size: 1.3rem;
   min-width: 50px;
 }
-.main .order-ctn .order-address form.shipping-form input:focus {
+.main .order-ctn .order-left form.order-form input:not([type=radio]):focus {
   outline: none;
   appearance: none;
   border: 2px solid rgba(63, 114, 175, 0.6);
   background: #F9F7F7;
 }
-.main .order-ctn .order-address form.shipping-form span.title {
+.main .order-ctn .order-left form.order-form span.title {
   font-size: 2rem;
 }
-.main .order-ctn .order-address form.shipping-form .contact {
+.main .order-ctn .order-left form.order-form .contact {
   display: flex;
   flex-direction: column;
   width: 100%;
   gap: 1.2rem;
 }
-.main .order-ctn .order-address form.shipping-form .contact .contact-header {
+.main .order-ctn .order-left form.order-form .contact .contact-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
   width: 100%;
   gap: 1.2rem;
 }
-.main .order-ctn .order-address form.shipping-form .contact .contact-header .login {
+.main .order-ctn .order-left form.order-form .contact .contact-header .login {
   display: flex;
   gap: 0.5rem;
   align-items: flex-end;
 }
-.main .order-ctn .order-address form.shipping-form .contact .contact-header .login .msg {
+.main .order-ctn .order-left form.order-form .contact .contact-header .login .msg {
   color: #112D4E;
   font-size: 1.3rem;
 }
-.main .order-ctn .order-address form.shipping-form .contact .contact-header .login a.login-link {
+.main .order-ctn .order-left form.order-form .contact .contact-header .login a.login-link {
   color: #3F72AF;
   font-size: 1.3rem;
 }
-.main .order-ctn .order-address form.shipping-form .contact .contact-header .login a.login-link:hover {
+.main .order-ctn .order-left form.order-form .contact .contact-header .login a.login-link:hover {
   color: #FBA834;
   text-decoration: underline;
 }
-.main .order-ctn .order-address form.shipping-form .address {
+.main .order-ctn .order-left form.order-form .address,
+.main .order-ctn .order-left form.order-form .payment {
   display: flex;
   flex-direction: column;
   width: 100%;
   gap: 1.2rem;
 }
-.main .order-ctn .order-address form.shipping-form .address .address-header {
+.main .order-ctn .order-left form.order-form .address .address-header,
+.main .order-ctn .order-left form.order-form .address .payment-header,
+.main .order-ctn .order-left form.order-form .address .shipping-header,
+.main .order-ctn .order-left form.order-form .payment .address-header,
+.main .order-ctn .order-left form.order-form .payment .payment-header,
+.main .order-ctn .order-left form.order-form .payment .shipping-header {
+  display: flex;
+  width: 100%;
+  gap: 5rem;
+}
+.main .order-ctn .order-left form.order-form .address .address-header img,
+.main .order-ctn .order-left form.order-form .address .payment-header img,
+.main .order-ctn .order-left form.order-form .address .shipping-header img,
+.main .order-ctn .order-left form.order-form .payment .address-header img,
+.main .order-ctn .order-left form.order-form .payment .payment-header img,
+.main .order-ctn .order-left form.order-form .payment .shipping-header img {
+  height: 3rem;
+}
+.main .order-ctn .order-left form.order-form .address .address-name,
+.main .order-ctn .order-left form.order-form .address .address-street,
+.main .order-ctn .order-left form.order-form .address .address-optional,
+.main .order-ctn .order-left form.order-form .address .address-city-region,
+.main .order-ctn .order-left form.order-form .address .address-country,
+.main .order-ctn .order-left form.order-form .address .card-number,
+.main .order-ctn .order-left form.order-form .address .card-holder-name,
+.main .order-ctn .order-left form.order-form .address .card-details,
+.main .order-ctn .order-left form.order-form .payment .address-name,
+.main .order-ctn .order-left form.order-form .payment .address-street,
+.main .order-ctn .order-left form.order-form .payment .address-optional,
+.main .order-ctn .order-left form.order-form .payment .address-city-region,
+.main .order-ctn .order-left form.order-form .payment .address-country,
+.main .order-ctn .order-left form.order-form .payment .card-number,
+.main .order-ctn .order-left form.order-form .payment .card-holder-name,
+.main .order-ctn .order-left form.order-form .payment .card-details {
   display: flex;
   justify-content: space-between;
   width: 100%;
   gap: 1.2rem;
 }
-.main .order-ctn .order-address form.shipping-form .address .address-name {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  gap: 1.2rem;
-}
-.main .order-ctn .order-address form.shipping-form .address .address-street {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  gap: 1.2rem;
-}
-.main .order-ctn .order-address form.shipping-form .address .address-optional {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  gap: 1.2rem;
-}
-.main .order-ctn .order-address form.shipping-form .address .address-city-region {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  gap: 1.2rem;
-}
-.main .order-ctn .order-address form.shipping-form .address .address-city-region input#address-zip {
+.main .order-ctn .order-left form.order-form .address .address-name input#address-zip,
+.main .order-ctn .order-left form.order-form .address .address-street input#address-zip,
+.main .order-ctn .order-left form.order-form .address .address-optional input#address-zip,
+.main .order-ctn .order-left form.order-form .address .address-city-region input#address-zip,
+.main .order-ctn .order-left form.order-form .address .address-country input#address-zip,
+.main .order-ctn .order-left form.order-form .address .card-number input#address-zip,
+.main .order-ctn .order-left form.order-form .address .card-holder-name input#address-zip,
+.main .order-ctn .order-left form.order-form .address .card-details input#address-zip,
+.main .order-ctn .order-left form.order-form .payment .address-name input#address-zip,
+.main .order-ctn .order-left form.order-form .payment .address-street input#address-zip,
+.main .order-ctn .order-left form.order-form .payment .address-optional input#address-zip,
+.main .order-ctn .order-left form.order-form .payment .address-city-region input#address-zip,
+.main .order-ctn .order-left form.order-form .payment .address-country input#address-zip,
+.main .order-ctn .order-left form.order-form .payment .card-number input#address-zip,
+.main .order-ctn .order-left form.order-form .payment .card-holder-name input#address-zip,
+.main .order-ctn .order-left form.order-form .payment .card-details input#address-zip {
   flex-shrink: 5;
 }
-.main .order-ctn .order-address form.shipping-form .address .address-country {
+.main .order-ctn .order-left form.order-form .recap {
   display: flex;
-  justify-content: space-between;
-  width: 100%;
-  gap: 1.2rem;
+  flex-direction: column;
+  align-items: center;
+  width: calc(100% - 2.6rem);
+  padding: 1.3rem;
+  gap: 1.3rem;
+  border: 2px solid #DBE2EF;
+  border-radius: 0.5rem;
 }
-.main .order-ctn .order-address form.shipping-form .btns {
+.main .order-ctn .order-left form.order-form .recap .contact,
+.main .order-ctn .order-left form.order-form .recap .shipping-address,
+.main .order-ctn .order-left form.order-form .recap .shipping-method {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.main .order-ctn .order-left form.order-form .recap .contact .title,
+.main .order-ctn .order-left form.order-form .recap .shipping-address .title,
+.main .order-ctn .order-left form.order-form .recap .shipping-method .title {
+  font-size: 1.3rem;
+  color: #3F72AF;
+  flex-shrink: 0;
+}
+.main .order-ctn .order-left form.order-form .recap .contact .content,
+.main .order-ctn .order-left form.order-form .recap .shipping-address .content,
+.main .order-ctn .order-left form.order-form .recap .shipping-method .content {
+  font-size: 1.3rem;
+  flex: 1;
+}
+.main .order-ctn .order-left form.order-form .recap .contact a.edit-link,
+.main .order-ctn .order-left form.order-form .recap .shipping-address a.edit-link,
+.main .order-ctn .order-left form.order-form .recap .shipping-method a.edit-link {
+  color: #3F72AF;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+.main .order-ctn .order-left form.order-form .recap .contact a.edit-link:hover,
+.main .order-ctn .order-left form.order-form .recap .shipping-address a.edit-link:hover,
+.main .order-ctn .order-left form.order-form .recap .shipping-method a.edit-link:hover {
+  color: #FBA834;
+  text-decoration: underline;
+}
+.main .order-ctn .order-left form.order-form .shipping {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.main .order-ctn .order-left form.order-form .shipping .shipping-method {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: calc(100% - 2.6rem);
+  padding: 1.3rem;
+  gap: 1rem;
+  border: 2px solid #DBE2EF;
+  border-radius: 0.5rem;
+}
+.main .order-ctn .order-left form.order-form .shipping .shipping-method input#shipping-method {
+  accent-color: #3F72AF;
+}
+.main .order-ctn .order-left form.order-form .shipping .shipping-method label {
+  font-size: 1.3rem;
+}
+.main .order-ctn .order-left form.order-form .shipping .shipping-method span.shipping-cost {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #3F72AF;
+}
+.main .order-ctn .order-left form.order-form .btns {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
   width: 100%;
   gap: 1.2rem;
 }
-.main .order-ctn .order-address form.shipping-form .btns a.back-link {
+.main .order-ctn .order-left form.order-form .btns a.back-link {
   color: #3F72AF;
   font-size: 1.5rem;
 }
-.main .order-ctn .order-address form.shipping-form .btns a.back-link:hover {
+.main .order-ctn .order-left form.order-form .btns a.back-link:hover {
   color: #FBA834;
   text-decoration: underline;
 }
