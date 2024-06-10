@@ -1,0 +1,21 @@
+<div class="main-column gap5 padding-top3">
+    <% const length = data.products.length;
+       const items = length > 1 ? "items" : "item" %>
+
+    <h1 class="title center">Your favorites (<%= length %> <%= items %></h1>
+
+    <% if (length === 0) { %>
+        <div class="message">You haven't any favorite yet :(</div>
+    <% } else { %>
+    <div class="category-ctn">
+
+        <%######################################################################################%>
+        <%#       Product-Card Template                                                         %>
+        <%######################################################################################%>
+        <% data.category.products.forEach(function (product) { %>
+            <%- include('../partials/product-card', {product: product}); %>
+        <% }); %>
+
+    </div>
+    <% } %>
+</div>
