@@ -9,12 +9,12 @@
         <div class="product">
             <div class="product-carousel">
                 <div class="product-img">
-                    <img src="/static/img/products/<%= data.product.images[0] %>"
+                    <img src="<%= data.product.images[0] %>"
                          onerror="this.onerror=null;this.src='/static/img/image-not-found.webp'" alt="<%= data.product.name %> image" />
                 </div>
                 <div class="previews">
                     <% data.product.images.forEach(function (img) { %>
-                        <img src="/static/img/products/<%= img %>"
+                        <img src="<%= img %>"
                              onerror="this.onerror=null;this.src='/static/img/image-not-found.webp'" alt="<%= data.product.name %> image" />
                     <% }); %>
                 </div>
@@ -58,3 +58,51 @@
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Get elements
+        const quantityContainer = document.querySelector('.quantity');
+        const quantityDisplay = document.querySelector('.product-quantity .text');
+        const minusButton = document.querySelector('.minus');
+        const plusButton = document.querySelector('.plus');
+        const price = document.querySelector('.price')
+        const addToCartButton = document.querySelector('.button.white');
+        // Initial quantity
+        let quantity = 1;
+        updateQuantityDisplay();
+
+        // Event listeners for plus and minus buttons
+        minusButton.addEventListener('click', decreaseQuantity);
+        plusButton.addEventListener('click', increaseQuantity);
+
+        function decreaseQuantity() {
+            if (quantity > 1) {
+                quantity--;
+                updateQuantityDisplay();
+            }
+        }
+
+        function increaseQuantity() {
+            if (quantity < <%= data.quantityStock %>) {
+                quantity++;
+                updateQuantityDisplay();
+            }
+        }
+
+        function updateQuantityDisplay() {
+            quantityDisplay.textContent = quantity;
+            // Extracting numerical value from data.product.price
+            if (quantity !== 0){
+                const priceValue = parseFloat('<%= data.product.price.replace(/[^\d.-]/g, "") %>');
+                price.textContent = `${quantity * priceValue} €`;
+            }
+
+            if (<%= data.quantityStock %> === 0) {
+                addToCartButton.disabled = true;
+            } else {
+                addToCartButton.disabled = false;
+            }
+        }
+    });
+</script>
+

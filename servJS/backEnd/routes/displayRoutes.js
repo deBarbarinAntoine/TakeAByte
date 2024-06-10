@@ -6,6 +6,7 @@ const {
     fetchRandomCategoryProducts,
     getProductById
 } = require("../controllers/productsController");
+const axios = require("axios");
 const router = express.Router();
 
 // Define a route for the home page
@@ -79,11 +80,7 @@ router.get('/products', (req, res) => {
         title: "Products - TakeAByte",
         isAuthenticated: req.isAuthenticated,
         template: "product-list",
-        templateData: {
-            products: [
-                // Array of product objects with details like id, name, price, image, etc.
-            ]
-        },
+        templateData: {},
         slogan: "Your Trusted Tech Partner"
     };
     res.render('base', {data: data});
@@ -91,12 +88,31 @@ router.get('/products', (req, res) => {
 
 router.get('/products/:productId', async (req, res) => {
     const productId = req.params.productId;
-
+    const token = process.env.WEB_TOKEN;
     // Validate the productId
     if (isNaN(productId)) {
         return res.status(400).render('400', {title: "Invalid Product ID"});
     }
+    function getImagePaths(allImg) {
+        // Get the length of the allImg.data array
+        const length = allImg.data.length;
 
+        // Create an array to store the image paths
+        const imagePaths = [];
+
+        // Loop through the allImg.data array and push the image paths to the imagePaths array
+        for (let i = 0; i < length; i++) {
+            imagePaths.push(allImg.data[i].image_path);
+        }
+
+        // Add "/static/img/image-not-found.webp" to the array until it has 3 elements
+        while (imagePaths.length < 3) {
+            imagePaths.push("/static/img/image-not-found.webp");
+        }
+
+        // Return the array of image paths
+        return imagePaths;
+    }
     try {
         const product = await getProductById(productId);
 
@@ -104,15 +120,90 @@ router.get('/products/:productId', async (req, res) => {
             return res.status(404).render('404', {title: "Product Not Found"});
         }
 
-        const data = {
-            title: `${product.name} - TakeAByte`,
-            isAuthenticated: req.isAuthenticated,
-            template: "product-detail",
-            templateData: {product},
-            slogan: "Your Trusted Tech Partner"
-        };
+            const getImagesUrl = `http://localhost:3001/v1/images/product/${productId}`;
+            allImg = await axios.get(getImagesUrl,{
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            product.img = allImg.data[0].image_path;
+            const typeId = product[0].type_id;
+            const brandId = product[0].brand_id;
 
-        res.render('base', {data});
+            // Fetch type name
+            if (typeId) {
+                const typeUrl = `http://localhost:3001/v1/types/${typeId}`;
+                const typeResponse = await axios.get(typeUrl, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                product.type = typeResponse.data[0].name;
+            }
+            // Fetch brand name
+            if (brandId) {
+                const brandUrl = `http://localhost:3001/v1/brands/${brandId}`;
+                const brandResponse = await axios.get(brandUrl, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                product.brand = brandResponse.data[0].name;
+            }
+        const imagePaths = getImagePaths(allImg);
+        const miscellaneous = [];
+
+        for (let key in product[0]) {
+            if (product[0].hasOwnProperty(key) && key !== 'created_at' && key !== 'updated_at' && key !== 'type_id' && key !== 'product_id' && key !== 'brand_id' && key !== 'image' && key !== 'description' && key !== 'price' && key !== 'sales' && key !== 'name' && product[0][key] !== null) {
+                let content = product[0][key];
+                if (key === 'quantity_stocked') {
+                    if (content === "0" || content === null || content === undefined) {
+                        key = "Availability"
+                        content = 'Not available';
+                    } else {
+                        content = `Only ${content} left. Order now!`;
+                    }
+                }
+                const formattedKey = key.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()); // Capitalize first letter // Replace underscores with spaces
+                miscellaneous.push({
+                    name: formattedKey,
+                    content: content
+                });
+            }
+        }
+
+        const data = {
+            title: "Products - TakeAByte",
+            isAuthenticated: req.isAuthenticated,
+            template: "product",
+            templateData: {
+                "navData": [
+                    {
+                        "link": `/category/${product.type}`,
+                        "className": "previous",
+                        "title": product.type
+                    },
+                    {
+                        "className": "current",
+                        "title": product[0].name
+                    }
+                ],
+                "product": {
+                    "images": imagePaths,
+                    "name": product[0].name,
+                    "description": product[0].description,
+                    "price": `${product[0].price} €`,
+                    "colors": [
+                        "css-color-name"
+                    ],
+                    "brand": product.brand,
+                    "miscellaneous": miscellaneous
+                },
+                quantityStock :product[0].quantity_stocked
+            },
+            slogan: "Your Trusted Tech Partner",
+
+        };
         res.render('base', {data: data});
     } catch (error) {
         console.error('Internal server error:', error);
