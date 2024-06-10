@@ -104,14 +104,14 @@ async function saveImagePath(image, id) {
     };
 
     // Retrieve the highest index and increment it
-    const highestInd = await getHighestIndByProductId(id.product_id);
+    const highestInd = await getHighestIndByProductId(id);
     const newInd = highestInd !== null ? highestInd + 1 : 1; // Ensure new index starts at 1 if no existing images
 
     const req = {
         body: {
             image_path: image,
             ind: newInd,
-            product_id: id.product_id
+            product_id: id
         }
     };
 

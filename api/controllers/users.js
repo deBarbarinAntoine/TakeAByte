@@ -86,7 +86,7 @@ async function login(req, res) {
         // Create the token in the database
         await tokenInstance.create();
     } catch (error) {
-        serverErrorResponse(res, new Error('Error creating token'))
+        serverErrorResponse(res,error, new Error('Error creating token'))
         return;
     }
     // Send response with user email and generated token

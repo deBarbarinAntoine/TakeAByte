@@ -22,7 +22,7 @@ class Token {
     }
 
     async create() {
-        const hash = this.hashToken();
+        const hash = this.token;
         try {
             await connection.execute(createTokenQuery, [this.userID, hash, this.expiry]);
         } catch (error) {
