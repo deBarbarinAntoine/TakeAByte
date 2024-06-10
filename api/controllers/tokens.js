@@ -29,7 +29,7 @@ async function authenticate(req, res, next) {
         }
 
         if (new Date(endDate) < new Date()) {
-            unauthorizedErrorResponse(res, new Error('Token has expired'));
+            unauthorizedErrorResponse(res, new Error('Token has expired , you are already logged out'));
             return;
         }
 

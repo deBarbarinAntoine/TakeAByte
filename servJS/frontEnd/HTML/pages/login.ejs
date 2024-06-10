@@ -1,9 +1,9 @@
 <div class="main-column padding-top3">
-    <form action="/login" method="post" class="auth-form big-shadow">
+    <form action="" method="post" class="auth-form big-shadow">
         <div class="title">Login</div>
         <div class="inputs">
-            <input type="email" name="email" id="email" placeholder="example@mail.com" required autofocus />
-            <input type="password" name="password" id="password" placeholder="Password" required />
+            <label for="email"></label><input type="email" name="email" id="email" placeholder="example@mail.com" required autofocus />
+            <label for="password"></label><input type="password" name="password" id="password" placeholder="Password" required />
             <a href="/forgot-password" class="link">Forgot password?</a>
         </div>
         <button type="submit" class="auth-btn blue">Login</button>
@@ -13,4 +13,6 @@
             <a href="/register" class="link">Register</a>
         </div>
     </form>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../../static/js/loginScript.js"></script>
 </div>

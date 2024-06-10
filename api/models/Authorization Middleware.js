@@ -41,4 +41,20 @@ const authorizeMail = async (req, res, next) => {
     next(); // Call next() to proceed to the next middleware/route handler
 };
 
-module.exports = {authorizeUser, authorizeMod, authorizeMail};
+const authorizeUserLogout = (req, res, next) => {
+    // Check if userId is populated and is a valid number
+    const userId = req.userId;
+    if (typeof userId !== 'number' || isNaN(userId)) {
+        return res.status(400).json({ error: 'Invalid userId' });
+    }
+
+    // Check if is_mod is populated and is a valid number
+    const is_mod = req.is_mod;
+    if (typeof is_mod !== 'number' || isNaN(is_mod)) {
+        return res.status(400).json({ error: 'Invalid is_mod' });
+    }
+
+    // If both userId and is_mod are valid, proceed to the next middleware/route handler
+    next();
+};
+module.exports = {authorizeUser, authorizeMod, authorizeMail,authorizeUserLogout};

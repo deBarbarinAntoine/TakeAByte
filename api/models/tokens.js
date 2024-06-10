@@ -40,9 +40,8 @@ class Token {
     }
 
     static async delete(token) {
-        const hash = crypto.createHash('sha512').update(token).digest('base64url');
         try {
-            await connection.execute(deleteTokenQuery, [hash]);
+            await connection.execute(deleteTokenQuery, [token]);
         } catch (error) {
             console.error("Error deleting token:", error);
             throw error; // Rethrow the error for handling in the caller

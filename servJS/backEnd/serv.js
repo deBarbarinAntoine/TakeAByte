@@ -27,6 +27,7 @@ const viewDirectories = [
 ];
 app.set('views', viewDirectories);
 app.use(cookieParser());
+app.use(express.json());
 // Use routes
 app.use('/api', apiRoutes);
 app.use('/', displayRoutes);

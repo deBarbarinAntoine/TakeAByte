@@ -20,10 +20,10 @@ router.get('/setFav/:id', toggleFavoriteItem);
 router.get('/addToCart/:id', toggleCartItem);
 
 // Route to log user
-router.post('/Login', checkUserLogs);
+router.post('/login', checkUserLogs);
 
 // Route to log out user
-router.post('/logoutUser', requireAuth,logoutUser)
+router.get('/logoutUser', requireAuth,logoutUser)
 
 // Route to register user
 router.post('/registerUser', registerUser)

@@ -26,7 +26,6 @@ async function checkUserLogs(req, res) {
     } catch (error) {
         // Handle any errors that occur during the request
         console.error('Error:', error.message);
-        res.status(500).json({error: 'An error occurred while checking user logs'});
     }
 }
 
@@ -34,20 +33,23 @@ async function logoutUser(req, res) {
     try {
         // Verify if the token cookie exists
         if (!req.cookies.token) {
-            return res.status(401).json({error: 'Token cookie not found'});
+            return res.status(401).json({ error: 'Token cookie not found' });
         }
 
         // Retrieve token from cookie
         const token = req.cookies.token;
 
-        const response = await axios.post('http://localhost:3001/v1/auth/logout', null, {
+        // Make a request to the authentication server to logout
+        await axios.post('http://localhost:3001/v1/auth/logout', null, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
         });
+// Delete the token cookie
+        res.clearCookie('token');
 
-        // Respond to the client
-        res.status(response.status).json({success: true, message: 'Logout successful'});
+        // Redirect to /login
+        res.redirect('/login');
     } catch (error) {
         // Handle any errors that occur during the request
         console.error('Error:', error.message);

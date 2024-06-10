@@ -18,6 +18,7 @@ router.get('/fav', (req, res) => {
 });
 
 router.get('/home', isAuthenticated, async (req, res) => {
+
     try {
         // Call functions to fetch latest, popular, and random products
         const latestProducts = await fetchLatestProducts();
@@ -170,16 +171,6 @@ router.get('/faq', isAuthenticated, (req, res) => {
     res.render('base', {data: data});
 })
 router.get('/about', isAuthenticated, (req, res) => {
-    const data = {
-        title: "Home - TakeAByte",
-        isAuthenticated: req.isAuthenticated,
-        template: "register",
-        templateData: {},
-        slogan: "Your Trusted Tech Partner"
-    };
-    res.render('base', {data: data});
-})
-router.get('/register', isAuthenticated, (req, res) => {
     const data = {
         title: "Home - TakeAByte",
         isAuthenticated: req.isAuthenticated,
