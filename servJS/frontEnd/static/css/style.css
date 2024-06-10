@@ -832,6 +832,35 @@ body footer.footer .footer-ctn .footer-links .link-group a:hover {
   align-items: center;
   width: 65%;
 }
+.main .order-ctn .order-left .payment-confirm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5rem;
+}
+.main .order-ctn .order-left .payment-confirm img.check-img {
+  width: 12rem;
+}
+.main .order-ctn .order-left .payment-confirm .title {
+  font-size: 2.5rem;
+}
+.main .order-ctn .order-left .payment-confirm a.order-link {
+  font-size: 1.5rem;
+  color: #3F72AF;
+}
+.main .order-ctn .order-left .payment-confirm a.order-link:hover {
+  color: #FBA834;
+  text-decoration: underline;
+}
+.main .order-ctn .order-left .payment-confirm .message {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.main .order-ctn .order-left .payment-confirm .message p {
+  font-size: 1.4rem;
+  color: #3F72AF;
+}
 .main .order-ctn .order-left form.order-form {
   width: 100%;
   display: flex;

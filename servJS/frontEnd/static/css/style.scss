@@ -605,6 +605,40 @@
       align-items: center;
       width: 65%;
 
+      .payment-confirm {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2.5rem;
+
+        img.check-img {
+          width: 12rem;
+        }
+        .title {
+          font-size: 2.5rem;
+        }
+        a.order-link {
+          font-size: 1.5rem;
+          color: $blue;
+
+          &:hover {
+            color: $orange;
+            text-decoration: underline;
+          }
+        }
+        .message {
+          display: flex;
+          flex-direction: column;
+          gap: .3rem;
+
+          p {
+            font-size: 1.4rem;
+            color: $blue;
+          }
+        }
+      }
+
+
       form.order-form {
         width: 100%;
         display: flex;
