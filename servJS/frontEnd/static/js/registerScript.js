@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
         })
             .then(response => {
                 if (response.status === 201) {
-                    window.location.href = '/home'; // Redirect to home page if response is successful
+                    window.location.href = '/login'; // Redirect to home page if response is successful
                 } else {
                     console.log(response); // Return response data
                 }
