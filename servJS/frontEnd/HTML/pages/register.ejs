@@ -1,11 +1,11 @@
 <div class="main-column padding-top3">
-    <form action="/register" method="post" class="auth-form big-shadow">
+    <form action="" method="post" class="auth-form big-shadow">
         <div class="title">Register</div>
         <div class="inputs">
             <input type="text" name="username" id="username" placeholder="username" required autofocus />
             <input type="email" name="email" id="email" placeholder="example@mail.com" required />
             <input type="password" name="password" id="password" placeholder="Password" required />
-            <input type="password" name="confirm-password" id="confirm-password" placeholder="Confirm password" required />
+            <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm password" required />
         </div>
         <button type="submit" class="auth-btn blue">Register</button>
         <div class="separator blue"></div>
@@ -14,4 +14,6 @@
             <a href="/login" class="link">Login</a>
         </div>
     </form>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../../static/js/registerScript.js"></script>
 </div>

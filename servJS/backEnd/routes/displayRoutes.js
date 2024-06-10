@@ -160,11 +160,11 @@ router.get('/profile', isAuthenticated, (req, res) => {
     };
     res.render('base', {data: data});
 })
-router.get('/faq', isAuthenticated, (req, res) => {
+router.get('/contact-us', isAuthenticated, (req, res) => {
     const data = {
         title: "Home - TakeAByte",
         isAuthenticated: req.isAuthenticated,
-        template: "register",
+        template: "contact-us",
         templateData: {},
         slogan: "Your Trusted Tech Partner"
     };
@@ -174,7 +174,37 @@ router.get('/about', isAuthenticated, (req, res) => {
     const data = {
         title: "Home - TakeAByte",
         isAuthenticated: req.isAuthenticated,
-        template: "register",
+        template: "about",
+        templateData: {},
+        slogan: "Your Trusted Tech Partner"
+    };
+    res.render('base', {data: data});
+})
+router.get('/privacy-policy', isAuthenticated, (req, res) => {
+    const data = {
+        title: "Home - TakeAByte",
+        isAuthenticated: req.isAuthenticated,
+        template: "privacy-policy",
+        templateData: {},
+        slogan: "Your Trusted Tech Partner"
+    };
+    res.render('base', {data: data});
+})
+router.get('/terms-conditions', isAuthenticated, (req, res) => {
+    const data = {
+        title: "Home - TakeAByte",
+        isAuthenticated: req.isAuthenticated,
+        template: "terms-conditions",
+        templateData: {},
+        slogan: "Your Trusted Tech Partner"
+    };
+    res.render('base', {data: data});
+})
+router.get('/shipping', isAuthenticated, (req, res) => {
+    const data = {
+        title: "Home - TakeAByte",
+        isAuthenticated: req.isAuthenticated,
+        template: "about-shipping",
         templateData: {},
         slogan: "Your Trusted Tech Partner"
     };

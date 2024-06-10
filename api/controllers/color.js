@@ -16,7 +16,7 @@ exports.createColor = async (req, res) => {
     } catch (error) {
         console.error("Unexpected error:", error);
         if (error.errno === 1062) {
-            conflictErrorResponse(res, "Color already exists");
+            conflictErrorResponse(res, "Error : Color already exists");
         } else {
             serverErrorResponse(res, "Failed to create Color");
         }
