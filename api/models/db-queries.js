@@ -47,7 +47,7 @@ const getOrderDataQuery = 'SELECT * FROM orders WHERE order_id = ?';
 const getUserOrdersDataQuery = 'SELECT * FROM orders WHERE user_id = ?';
 
 // GET /api/products/:product_id/orders: Retrieve orders for a specific product.
-const getOrdersOfProductQuery = 'SELECT * FROM orders WHERE product_id = ?';
+const getOrdersOfProductQuery = 'SELECT order_id FROM order_items WHERE product_id = ?';
 
 // POST /api/products: Create a new product.
 const createNewProductQuery = `INSERT INTO products (name, description, quantity_stocked, price, processor, ram, size,

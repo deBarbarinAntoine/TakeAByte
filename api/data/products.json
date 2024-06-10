@@ -383,7 +383,7 @@
   "battery_power_time": "Up to 8 hours (ANC on)",
   "connectivity": "Bluetooth",
   "brand": "Samsung",
-    "sales": 0
+  "sales": 0
   },
   {
     "id": 31,
@@ -467,7 +467,7 @@
     "price": 299,
     "image": "/static/img/computer/components/amd-ryzen-5-5600x-CPU.jpg",
     "cores": 6,
-    "socket": "AM4",
+    "socket_cpu": "AM4",
     "brand": "AMD",
     "sales": 0
   },
@@ -501,7 +501,7 @@
     "description": "The ASUS ROG Strix B550-F Gaming WiFi motherboard is a premium choice for gamers and PC enthusiasts. Featuring support for AMD Ryzen processors, PCIe 4.0, and dual M.2 slots, it offers excellent performance and expandability. Equipped with built-in WiFi, robust power delivery, and customizable RGB lighting, it combines style with functionality to meet the demands of modern gaming rigs.",
     "price": 229,
     "image": "/static/img/computer/components/asus-rog-strix-b550-f-gaming-wifi-motherboard.jpg",
-    "socket": "AM4",
+    "socket_cpu": "AM4",
     "form_factor": "ATX",
     "wifi": "yes",
     "brand": "ASUS",
@@ -656,7 +656,7 @@
     "description": "The Gigabyte B560M DS3H V2 Micro ATX Motherboard is a compact yet powerful motherboard designed for mainstream users and gamers. Built on the Intel B560 chipset, it supports 10th and 11th generation Intel Core processors, offering excellent performance and versatility. With its Micro ATX form factor, it fits into smaller cases while still providing ample connectivity options and expansion slots.",
     "price": 119,
     "image": "/static/img/computer/components/gigabyte-b560m-ds3h-motherboard.jpg",
-    "socket": "LGA1200",
+    "socket_cpu": "LGA1200",
     "form_factor": "micro ATX",
     "brand": "Gigabyte",
     "sales": 0
@@ -857,7 +857,7 @@
   "description": "Build your dream PC with the MSI B460M Mortar Micro ATX Motherboard, a versatile and reliable foundation for your budget-oriented desktop setup. With support for Intel CPUs and essential features like PCIe slots and M.2 connectors, this Micro ATX motherboard offers the perfect balance of performance and affordability. Its compact form factor makes it ideal for smaller PC builds, while its robust construction ensures long-term reliability for all your computing needs.",
   "price": 139,
   "image": "/static/img/computer/components/msi-b460m-mortar-motherboard.jpg",
-  "socket": "LGA1200",
+  "socket_cpu": "LGA1200",
   "form_factor": "micro ATX",
   "brand": "MSI",
   "sales": 0
@@ -906,7 +906,7 @@
     "price": 189,
     "image": "/static/img/computer/components/intel-core-i5-12400-CPU.jpg",
     "cores": "6 cores",
-    "socket": "likely LGA1200 (check specifications)",
+    "socket_cpu": "likely LGA1200 (check specifications)",
     "brand": "Intel",
     "sales": 0
   },
