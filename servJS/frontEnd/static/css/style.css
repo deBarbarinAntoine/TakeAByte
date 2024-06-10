@@ -386,6 +386,27 @@ body footer.footer .footer-ctn .footer-links .link-group a:hover {
   color: #FBA834;
 }
 
+.favorite-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  aspect-ratio: 1;
+  cursor: pointer;
+  z-index: 20;
+}
+.favorite-button svg.favorite-icon {
+  object-fit: contain;
+  object-position: center;
+  width: 100%;
+  height: 100%;
+}
+.favorite-button svg.favorite-icon .favorite-fill {
+  fill: transparent;
+}
+.favorite-button svg.favorite-icon.favorite .favorite-fill {
+  fill: #FBA834;
+}
+
 .title-nav {
   width: 100%;
   display: flex;
@@ -529,12 +550,20 @@ body footer.footer .footer-ctn .footer-links .link-group a:hover {
   gap: 3rem;
 }
 .main-column .product-card {
+  position: relative;
   width: 22%;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+.main-column .product-card .product-card-link {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
 .main-column .product-card .product-card-img {
+  position: relative;
   width: 100%;
   aspect-ratio: 1;
 }
@@ -543,6 +572,13 @@ body footer.footer .footer-ctn .footer-links .link-group a:hover {
   object-position: center;
   width: 100%;
   height: 100%;
+}
+.main-column .product-card .product-card-img .favorite-button {
+  top: 0.5rem;
+  right: 0.5rem;
+}
+.main-column .product-card .product-card-img .favorite-button .favorite-icon {
+  width: 2.5rem;
 }
 .main-column .product-card .product-card-description {
   width: calc(100% - 2rem);
@@ -579,6 +615,7 @@ body footer.footer .footer-ctn .footer-links .link-group a:hover {
   align-items: center;
 }
 .main-column .product-ctn .product .product-carousel .product-img {
+  position: relative;
   width: 70%;
   aspect-ratio: 1;
 }
@@ -587,6 +624,9 @@ body footer.footer .footer-ctn .footer-links .link-group a:hover {
   object-position: center;
   width: 100%;
   height: 100%;
+}
+.main-column .product-ctn .product .product-carousel .product-img .favorite-button {
+  width: 3rem;
 }
 .main-column .product-ctn .product .product-carousel .previews {
   display: flex;
