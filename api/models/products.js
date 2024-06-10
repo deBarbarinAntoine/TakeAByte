@@ -3,7 +3,7 @@ const { getAllproductsQuery, getAllproductsByTypeQuery, isExistingProduct} = req
 
 class Product {
     constructor({
-                    name, description, quantity_stocked, price, processor, ram,
+                    id,name, description, quantity_stocked, price, processor, ram,
                     storage_capacity, battery_power_time, screen_type, resolution, camera,
                     connectivity, operating_system, brand, sales, sensor, megapixels,
                     display_size, gps, film_format, cores, Interface, form_factor, wifi,
@@ -15,8 +15,9 @@ class Product {
                     security_features, Function, smart_assistant, technology, coverage,
                     stabilization, gaming_oriented, features, benefits, autofocus,
                     weatherproof, target_audience, uses, cpu_generation, g_sync_compatible,
-                    power_consumption, created_at, updated_at
+                    power_consumption, created_at, updated_at,image
                 }) {
+        this.id = id
         this.name = name;
         this.description = description;
         this.quantityStock = quantity_stocked;
@@ -87,12 +88,14 @@ class Product {
         this.powerConsumption = power_consumption;
         this.createdAt = created_at;
         this.updatedAt = updated_at;
+        this.image = image;
     }
 }
 
 function newProductArray(arr) {
      // Accessing the array of product objects
     return arr.map(item => new Product({
+        id: item.product_id,
         name: item.name,
         description: item.description,
         quantity_stocked: item.quantityStock,
@@ -162,7 +165,8 @@ function newProductArray(arr) {
         g_sync_compatible: item.gSyncCompatible,
         power_consumption: item.powerConsumption,
         created_at: item.createdAt,
-        updated_at: item.updatedAt
+        updated_at: item.updatedAt,
+        image : item.image
     }));
 }
 

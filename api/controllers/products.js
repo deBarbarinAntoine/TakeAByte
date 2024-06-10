@@ -10,17 +10,100 @@ const {newProductArray, getProductByNameAndBrand} = require("../models/products"
 const {getTypeIdByName} = require("./type");
 const {getBrandIdByName} = require("./brand");
 const {saveImagePath} = require("./image");
+const {query} = require("express");
 
 exports.createNewProduct = async (req, res) => {
     const products = Array.isArray(req.body) ? req.body : [req.body];
-
     try {
         let createdProducts = [];
 
         for (let product of products) {
             let {
-                name, description, quantity_stocked, price, processor, ram, size, captor, weight, socket, dimension,
-                others, connectivity, resolution, screen_type, vram, battery_power_time, type, brand, storage, image, core
+                airflow,
+                aspect_ratio,
+                autofocus,
+                battery_power,
+                battery_power_time,
+                benefits,
+                brand,
+                business_oriented,
+                camera,
+                capacity,
+                cellular,
+                certification,
+                compatibility,
+                connectivity,
+                cores,
+                coverage,
+                CPU,
+                cpu_generation,
+                curve,
+                description,
+                display,
+                display_size,
+                durability,
+                features,
+                film_format,
+                form_factor,
+                functions,
+                g_sync_compatible,
+                gaming_oriented,
+                gps,
+                grade,
+                graphics_card,
+                image,
+                interfaces,
+                keyboard,
+                layout,
+                lens_mount,
+                lighting,
+                materials,
+                megapixels,
+                microphone,
+                name,
+                noise_cancellation,
+                noise_level,
+                operating_system,
+                options,
+                panel_type,
+                performance_focus,
+                portability,
+                power_consumption,
+                price,
+                RAM,
+                refresh_rate,
+                resolution,
+                response_time,
+                sales,
+                screen_type,
+                security_features,
+                sensor,
+                sensor_resolution,
+                sensor_size,
+                side_panel,
+                size,
+                smart_assistant,
+                socket_compatibility,
+                socket_cpu,
+                speed,
+                stabilization,
+                storage_capacity,
+                style,
+                switch_type,
+                sync_technology,
+                target_audience,
+                technology,
+                touchscreen,
+                type,
+                uses,
+                video_recording,
+                wattage,
+                weatherproof,
+                weight,
+                wifi,
+                wifi_standard,
+                zoom,
+                quantity_stocked
             } = product;
 
             // Get typeId and brandId
@@ -40,19 +123,102 @@ exports.createNewProduct = async (req, res) => {
             quantity_stocked = quantity_stocked ?? 0;
 
             const values = [
-                name, description, quantity_stocked, price, processor, ram, size, captor, weight, socket, dimension,
-                others, connectivity, resolution, screen_type, vram, battery_power_time, typeId, storage, brandId
+                airflow = product.airflow,
+                aspect_ratio = product.aspect_ratio,
+                autofocus = product.autofocus,
+                battery_power = product.battery_power,
+                battery_power_time = product.battery_power_time,
+                benefits = product.benefits,
+                brandId,
+                business_oriented = product.business_oriented,
+                camera = product.camera,
+                capacity = product.capacity,
+                cellular = product.cellular,
+                certification = product.certification,
+                compatibility = product.compatibility,
+                connectivity = product.connectivity,
+                cores = product.cores,
+                coverage = product.coverage,
+                CPU = product.CPU,
+                cpu_generation = product.cpu_generation,
+                curve = product.curve,
+                description = product.description,
+                display = product.display,
+                display_size = product.display_size,
+                durability = product.durability,
+                features = product.features,
+                film_format = product.film_format,
+                form_factor = product.form_factor,
+                functions = product.functions,
+                g_sync_compatible = product.g_sync_compatible,
+                gaming_oriented = product.gaming_oriented,
+                gps = product.gps,
+                grade = product.grade,
+                graphics_card = product.graphics_card,
+                image = product.image,
+                interfaces = product.interfaces,
+                keyboard = product.keyboard,
+                layout = product.layout,
+                lens_mount = product.lens_mount,
+                lighting = product.lighting,
+                materials = product.materials,
+                megapixels = product.megapixels,
+                microphone = product.microphone,
+                name = product.name,
+                noise_cancellation = product.noise_cancellation,
+                noise_level = product.noise_level,
+                operating_system = product.operating_system,
+                options = product.options,
+                panel_type = product.panel_type,
+                performance_focus = product.performance_focus,
+                portability = product.portability,
+                power_consumption = product.power_consumption,
+                price = product.price,
+                quantity_stocked,
+                RAM = product.RAM,
+                refresh_rate = product.refresh_rate,
+                resolution = product.resolution,
+                response_time = product.response_time,
+                sales = product.sales,
+                screen_type = product.screen_type,
+                security_features = product.security_features,
+                sensor = product.sensor,
+                sensor_resolution = product.sensor_resolution,
+                sensor_size = product.sensor_size,
+                side_panel = product.side_panel,
+                size = product.size,
+                smart_assistant = product.smart_assistant,
+                socket_compatibility = product.socket_compatibility,
+                socket_cpu = product.socket_cpu,
+                speed = product.speed,
+                stabilization = product.stabilization,
+                storage_capacity = product.storage_capacity,
+                style = product.style,
+                switch_type = product.switch_type,
+                sync_technology = product.sync_technology,
+                target_audience = product.target_audience,
+                technology = product.technology,
+                touchscreen = product.touchscreen,
+                typeId,
+                uses = product.uses,
+                video_recording = product.video_recording,
+                wattage = product.wattage,
+                weatherproof = product.weatherproof,
+                weight = product.weight,
+                wifi = product.wifi,
+                wifi_standard = product.wifi_standard,
+                zoom = product.zoom
             ];
-
             // Insert product into the database
-            const results = await connection.query(createNewProductQuery, values);
-            const newProductId = results.insertId;
+            await connection.query(createNewProductQuery, values);
+
+            const newProduct = await getProductByNameAndBrand(product.name, brandId);
 
             // Save the image path
-            await saveImagePath(image, newProductId);
+            await saveImagePath(product.image, newProduct.product_id);
 
             // Add created product info to the response array
-            createdProducts.push({product_id: newProductId, name, brand});
+            createdProducts.push({product_id: newProduct.product_id, name, brand});
         }
 
         res.status(201).json({message: 'Products created successfully', products: createdProducts});
@@ -104,7 +270,7 @@ exports.deleteProduct = (req, res) => {
 };
 
 exports.getProducts = async (req, res) => {
-    const {filters = {}, page = 1} = req.query;
+    const { filters = {}, page = 1 } = req.query;
     const limit = 10;
     const offset = (page - 1) * limit;
 
@@ -116,29 +282,28 @@ exports.getProducts = async (req, res) => {
     for (const key in filters) {
         if (Object.hasOwnProperty.call(filters, key)) {
             switch (key) {
+                // Handle each filter case based on the schema fields
                 case 'name':
-                case 'processor':
-                case 'captor':
+                case 'CPU':
                 case 'socket_cpu':
-                case 'dimension':
-                case 'others':
-                case 'connectivity':
                 case 'resolution':
                 case 'screen_type':
                 case 'color':
+                    // Add more cases for other fields if needed
                     filterConditions.push(`${key} LIKE ?`);
                     queryParams.push(`%${filters[key]}%`);
                     break;
                 case 'brand_id':
                 case 'type_id':
-                case 'ram':
+                case 'RAM':
                 case 'size':
-                case 'vram':
+                case 'price':
                 case 'battery_power_time':
-                case 'storage':
+                    // Add more cases for other fields if needed
                     filterConditions.push(`${key} = ?`);
                     queryParams.push(filters[key]);
                     break;
+                // Handle price range filtering separately
                 case 'price_min':
                     filterConditions.push(`price >= ?`);
                     queryParams.push(filters[key]);
@@ -148,7 +313,7 @@ exports.getProducts = async (req, res) => {
                     queryParams.push(filters[key]);
                     break;
                 case 'updated_at':
-                    getProductsQuery += ' ORDER BY updated_at ' + filters[key];
+                    getProductsQuery += ` ORDER BY updated_at ${filters[key]}`;
                     break;
                 default:
                     break;
@@ -162,9 +327,10 @@ exports.getProducts = async (req, res) => {
 
     getProductsQuery += ' LIMIT ? OFFSET ?';
     queryParams.push(limit, offset);
+
     try {
-        const results = await connection.query(getProductsQuery, queryParams)
-        const products = newProductArray(results);
+        const results = await connection.query(getProductsQuery, queryParams);
+        const products = newProductArray(results[0]);
         res.status(200).json(products);
     } catch (err) {
         return serverErrorResponse(res, err, "Failed to get products with given filters and offset");
@@ -173,14 +339,14 @@ exports.getProducts = async (req, res) => {
 
 exports.getTopProduct = async (req, res) => {
     const {limit} = req.params;
-    const getPopularProducts = 'SELECT p.product_id, p.name, p.description, p.quantity_stocked, p.price, p.processor, p.ram, p.size, p.captor, p.weight, p.socket_cpu, p.dimension, p.others, p.connectivity, p.resolution, p.screen_type, p.vram, p.battery_power_time, p.storage,p.brand_id, COUNT(l.product_id) AS likes_count FROM products p JOIN likes l ON p.product_id = l.product_id GROUP BY p.product_id ORDER BY likes_count DESC LIMIT ?';
+    const getPopularProducts = 'SELECT p.*, COUNT(l.product_id) AS likes_count FROM products p JOIN likes l ON p.product_id = l.product_id GROUP BY p.product_id ORDER BY likes_count DESC LIMIT ?';
     try {
         const results = await connection.query(getPopularProducts, [parseInt(limit)])
-        const products = newProductArray(results);
+        const products = newProductArray(results[0]);
         res.status(200).json(products);
 
     } catch (err) {
-        return serverErrorResponse(res, err,"Failed to get top products with given limit");
+        return serverErrorResponse(res, err, "Failed to get top products with given limit");
     }
 
 };

@@ -70,7 +70,6 @@ async function fetchLatestProducts(){
                 Authorization: `Bearer ${token}`
             }
         });
-
         // Iterate over each product item in the response array
         for (const product of response.data) {
             product.link = `/product/${product.id}`;
@@ -86,7 +85,6 @@ async function fetchLatestProducts(){
 
             // Fetch type name
             if (typeId) {
-
                 const typeUrl = `http://localhost:3001/v1/types/${typeId}`;
                 const typeResponse = await axios.get(typeUrl, {
                     headers: {
@@ -122,6 +120,7 @@ async function fetchPopularProducts(){
         console.error('WEB_TOKEN is not set in environment variables');
         return null;
     }
+    let allImg;
     try {
         // Fetch product details
         const response = await axios.get(url, {
@@ -129,12 +128,11 @@ async function fetchPopularProducts(){
                 Authorization: `Bearer ${token}`
             }
         });
-
         // Iterate over each product item in the response array
         for (const product of response.data) {
             product.link = `/product/${product.id}`;
             const getImagesUrl = `http://localhost:3001/v1/images/product/${product.id}`;
-            allImg = await axios.get(getImagesUrl,{
+            allImg = await axios.get(getImagesUrl, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
