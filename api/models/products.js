@@ -5,7 +5,7 @@ class Product {
     constructor({
                     id, name, description, quantityStock, price, processor, RAM, size, captor, weight,
                     socketCPU, dimension, others, connectivity, resolution, screenType, VRAM, batteryPowerTime,
-                    type,brand, storage, color, createdAt, updatedAt
+                    type,brand, storage, color, createdAt, updatedAt, image
                 }) {
         this.id = id;
         this.name = name;
@@ -31,6 +31,7 @@ class Product {
         this.color = color;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.image = image;
     }
 }
 
@@ -62,7 +63,8 @@ function newProductArray(arr) {
         storage: item.storage,
         color: null, // Assuming color is not provided in the data
         createdAt: item.created_at,
-        updatedAt: item.updated_at
+        updatedAt: item.updated_at,
+        image : item.image
     }));
 }
 

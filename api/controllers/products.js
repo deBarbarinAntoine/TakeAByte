@@ -9,38 +9,54 @@ const {serverErrorResponse, notFoundErrorResponse} = require("../helpers/respons
 const {newProductArray, getProductByNameAndBrand} = require("../models/products");
 const {getTypeIdByName} = require("./type");
 const {getBrandIdByName} = require("./brand");
+const {saveImagePath} = require("./image");
 
 exports.createNewProduct = async (req, res) => {
-    let {
-        name, description, quantity_stocked, price, processor, ram, size, captor, weight, socket_cpu, dimension,
-        others, connectivity, resolution, screen_type, vram, battery_power_time, type, brand, storage
-    } = req.body;
+    const products = Array.isArray(req.body) ? req.body : [req.body];
 
+    let product_id;
     try {
-        const typeId = await getTypeIdByName({params: {name: type}});
-        const brandId = await getBrandIdByName({params: {name: brand}});
+        let createdProducts = [];
 
-        const existingProduct = await getProductByNameAndBrand(name, brandId);
-        if (existingProduct) {
-            return res.status(400).json({
-                message: 'Product with same name and brand already exists',
-                existing_product_id: existingProduct.product_id
-            });
+        for (let product of products) {
+            let {
+                name, description, quantity_stocked, price, processor, ram, size, captor, weight, socket_cpu, dimension,
+                others, connectivity, resolution, screen_type, vram, battery_power_time, type, brand, storage, image
+            } = product;
+
+            const typeId = await getTypeIdByName({params: {name: type}});
+            const brandId = await getBrandIdByName({params: {name: brand}});
+
+
+            const existingProduct = await getProductByNameAndBrand(name, brandId);
+            if (existingProduct) {
+                return res.status(400).json({
+                    message: `Product with name ${name} and brand ${brand} already exists`,
+                    existing_product_id: existingProduct.product_id
+                });
+            }
+
+            if (quantity_stocked === null || quantity_stocked === undefined) {
+                quantity_stocked = 0;
+            }
+
+            const values = [
+                name, description, quantity_stocked, price, processor, ram, size, captor, weight, socket_cpu, dimension,
+                others, connectivity, resolution, screen_type, vram, battery_power_time, typeId, storage, brandId
+            ];
+
+            // Insert product into the database
+            const results = await connection.query(createNewProductQuery, values);
+            createdProducts.push({product_id: results.insertId, name, brand});
+
+            product_id = await getProductByNameAndBrand(name, brandId)
+            await saveImagePath(image, product_id);
         }
 
-        if (quantity_stocked === null || quantity_stocked === undefined) {
-            quantity_stocked = 0;
-        }
-        const values = [
-            name, description, quantity_stocked, price, processor, ram, size, captor, weight, socket_cpu, dimension,
-            others, connectivity, resolution, screen_type, vram, battery_power_time, typeId, storage, brandId
-        ];
-        // Insert product into the database
-        const results = await connection.query(createNewProductQuery, values);
-        res.status(201).json({message: 'Product created successfully', product_id: results.insertId});
+        res.status(201).json({message: 'Products created successfully', products: createdProducts});
     } catch (error) {
         console.error("Unexpected error:", error);
-        serverErrorResponse(res, "Failed to create product");
+        serverErrorResponse(res, "Failed to create products");
     }
 };
 

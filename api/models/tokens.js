@@ -96,10 +96,8 @@ async function getToken(token) {
 
 
 async function getUserIdFromToken(token) {
-    console.log(token)
     try {
         const [rows] = await connection.query(getUserIdFromTokenQuery, [token]);
-        console.log(rows)
         if (rows.length > 0) {
             return rows[0].user_id;
         } else {
