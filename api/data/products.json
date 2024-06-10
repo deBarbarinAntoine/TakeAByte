@@ -374,16 +374,16 @@
     "sales": 0
   },
   {
-  "id": 30,
-  "name": "Samsung Galaxy Buds Pro 2",
-  "type": "Audio",
-  "description": "The Samsung Galaxy Buds Pro 2 are cutting-edge wireless earbuds designed to deliver premium sound quality and immersive listening experiences. With active noise cancellation and a comfortable, ergonomic design, they provide an uninterrupted audio experience in any environment. Whether you're listening to music, taking calls, or accessing voice assistants, the Galaxy Buds Pro 2 offer crystal-clear sound and intuitive controls, making them the perfect companion for your on-the-go lifestyle.",
-  "price": 229,
-  "image": "/static/img/audio/samsung-galaxy-buds-pro-2.jpg",
-  "battery_power_time": "Up to 8 hours (ANC on)",
-  "connectivity": "Bluetooth",
-  "brand": "Samsung",
-  "sales": 0
+    "id": 30,
+    "name": "Samsung Galaxy Buds Pro 2",
+    "type": "Audio",
+    "description": "The Samsung Galaxy Buds Pro 2 are cutting-edge wireless earbuds designed to deliver premium sound quality and immersive listening experiences. With active noise cancellation and a comfortable, ergonomic design, they provide an uninterrupted audio experience in any environment. Whether you're listening to music, taking calls, or accessing voice assistants, the Galaxy Buds Pro 2 offer crystal-clear sound and intuitive controls, making them the perfect companion for your on-the-go lifestyle.",
+    "price": 229,
+    "image": "/static/img/audio/samsung-galaxy-buds-pro-2.jpg",
+    "battery_power_time": "Up to 8 hours (ANC on)",
+    "connectivity": "Bluetooth",
+    "brand": "Samsung",
+    "sales": 0
   },
   {
     "id": 31,
@@ -448,15 +448,15 @@
     "sales": 0
   },
   {
-  "id": 36,
-  "name": "Belkin BOOSTCHARGE Pro USB-C Power Delivery Wall Charger",
-  "type": "Smartphone Chargers",
-  "description": "The Belkin BOOSTCHARGE Pro USB-C Power Delivery Wall Charger is a fast charger for smartphones. It uses USB-C Power Delivery to provide up to 25W of power for Samsung devices and 20W for iPhones. It is compact and portable, making it easy to take with you wherever you go.",
-  "price": 39,
-  "image": "/static/img/phone/chargers/belkin-boostcharge-pro-usb-c-power-delivery-wall-charger.jpg",
-  "wattage": "typically 30W or higher",
-  "connectivity": "USB-C",
-  "brand": "Belkin",
+    "id": 36,
+    "name": "Belkin BOOSTCHARGE Pro USB-C Power Delivery Wall Charger",
+    "type": "Smartphone Chargers",
+    "description": "The Belkin BOOSTCHARGE Pro USB-C Power Delivery Wall Charger is a fast charger for smartphones. It uses USB-C Power Delivery to provide up to 25W of power for Samsung devices and 20W for iPhones. It is compact and portable, making it easy to take with you wherever you go.",
+    "price": 39,
+    "image": "/static/img/phone/chargers/belkin-boostcharge-pro-usb-c-power-delivery-wall-charger.jpg",
+    "wattage": "typically 30W or higher",
+    "connectivity": "USB-C",
+    "brand": "Belkin",
     "sales": 0
   },
   {
@@ -506,17 +506,18 @@
     "wifi": "yes",
     "brand": "ASUS",
     "sales": 0
-  },{
-  "id": 41,
-  "name": "Corsair Vengeance RGB Pro 16GB (2x8GB) DDR4 3200MHz RAM",
-  "type": "Computer Components",
-  "description": "The Corsair Vengeance RGB Pro 16GB (2x8GB) DDR4 3200MHz RAM kit is designed to enhance your gaming and multitasking experience. With a stylish design and customizable RGB lighting, it adds flair to your build. Operating at a high frequency of 3200MHz, it offers fast and reliable performance for smooth gameplay and seamless multitasking. With a total capacity of 16GB spread across two modules, it provides ample memory for demanding applications and games.",
-  "price": 89,
-  "image": "/static/img/computer/components/corsair-vengeance-rgb-pro-ddr4-ram.jpg",
-  "capacity": "16GB",
-  "speed": "3200MHz",
-  "brand": "Corsair",
-  "sales": 0
+  },
+  {
+    "id": 41,
+    "name": "Corsair Vengeance RGB Pro 16GB (2x8GB) DDR4 3200MHz RAM",
+    "type": "Computer Components",
+    "description": "The Corsair Vengeance RGB Pro 16GB (2x8GB) DDR4 3200MHz RAM kit is designed to enhance your gaming and multitasking experience. With a stylish design and customizable RGB lighting, it adds flair to your build. Operating at a high frequency of 3200MHz, it offers fast and reliable performance for smooth gameplay and seamless multitasking. With a total capacity of 16GB spread across two modules, it provides ample memory for demanding applications and games.",
+    "price": 89,
+    "image": "/static/img/computer/components/corsair-vengeance-rgb-pro-ddr4-ram.jpg",
+    "capacity": "16GB",
+    "speed": "3200MHz",
+    "brand": "Corsair",
+    "sales": 0
   },
   {
     "id": 42,
@@ -625,16 +626,16 @@
     "sales": 0
   },
   {
-  "id": 51,
-  "name": "SteelSeries Apex Pro TKL Mechanical Keyboard",
-  "type": "Computer Peripherals",
-  "description": "The SteelSeries Apex Pro TKL Mechanical Keyboard is a premium gaming keyboard designed for professional gamers and enthusiasts. Featuring SteelSeries' innovative OmniPoint switches, it offers customizable actuation points to suit your gaming style and preferences. With per-key RGB lighting and sleek aluminum construction, it provides a stunning aesthetic to complement your gaming setup.",
-  "price": 179,
-  "image": "/static/img/computer/peripherals/steelseries-apex-pro-tkl-keyboard.jpg",
-  "layout": "tenkeyless",
-  "lighting": "per-key RGB",
-  "switch_type": "adjustable actuation (check specifications)",
-  "brand": "SteelSeries",
+    "id": 51,
+    "name": "SteelSeries Apex Pro TKL Mechanical Keyboard",
+    "type": "Computer Peripherals",
+    "description": "The SteelSeries Apex Pro TKL Mechanical Keyboard is a premium gaming keyboard designed for professional gamers and enthusiasts. Featuring SteelSeries' innovative OmniPoint switches, it offers customizable actuation points to suit your gaming style and preferences. With per-key RGB lighting and sleek aluminum construction, it provides a stunning aesthetic to complement your gaming setup.",
+    "price": 179,
+    "image": "/static/img/computer/peripherals/steelseries-apex-pro-tkl-keyboard.jpg",
+    "layout": "tenkeyless",
+    "lighting": "per-key RGB",
+    "switch_type": "adjustable actuation (check specifications)",
+    "brand": "SteelSeries",
     "sales": 0
   },
   {
@@ -745,16 +746,16 @@
     "sales": 0
   },
   {
-  "id": 61,
-  "name": "Logitech G PRO X Superlight Wireless Gaming Mouse",
-  "type": "Computer Peripherals",
-  "description": "Elevate your gaming prowess with the Logitech G PRO X Superlight, an ultra-lightweight wireless gaming mouse designed for competitive play. Harness the power of a high-performance sensor for pixel-perfect accuracy and precision. Its customizable design ensures a perfect fit for your hand, while the long-lasting battery life keeps you in the game for extended sessions without interruption.",
-  "price": 149,
-  "image": "/static/img/computer/peripherals/logitech-g-pro-x-superlight-mouse.jpg",
-  "connectivity": "wireless",
-  "brand": "Logitech",
+    "id": 61,
+    "name": "Logitech G PRO X Superlight Wireless Gaming Mouse",
+    "type": "Computer Peripherals",
+    "description": "Elevate your gaming prowess with the Logitech G PRO X Superlight, an ultra-lightweight wireless gaming mouse designed for competitive play. Harness the power of a high-performance sensor for pixel-perfect accuracy and precision. Its customizable design ensures a perfect fit for your hand, while the long-lasting battery life keeps you in the game for extended sessions without interruption.",
+    "price": 149,
+    "image": "/static/img/computer/peripherals/logitech-g-pro-x-superlight-mouse.jpg",
+    "connectivity": "wireless",
+    "brand": "Logitech",
     "sales": 0
-},
+  },
   {
     "id": 62,
     "name": "Seagate Backup Plus Slim Portable Hard Drive 1TB",
@@ -793,17 +794,17 @@
     "sales": 0
   },
   {
-  "id": 65,
-  "name": "DJI Osmo Mobile SE",
-  "type": "Smartphone Accessories",
-  "description": "Transform your smartphone videos into cinematic masterpieces with the DJI Osmo Mobile SE, a portable smartphone gimbal designed for vlogging and content creation on the go. Stabilize your video footage with precision and ease, ensuring smooth and professional-looking results every time. Compatible with a wide range of smartphones, the Osmo Mobile SE empowers creators to unleash their creativity and capture life's moments with unparalleled stability and style.",
-  "price": 109,
-  "image": "/static/img/phone/accessories/dji-osmo-mobile-se.jpg",
-  "function": "stabilizes video footage",
-  "compatibility": "smartphones",
-  "brand": "DJI",
+    "id": 65,
+    "name": "DJI Osmo Mobile SE",
+    "type": "Smartphone Accessories",
+    "description": "Transform your smartphone videos into cinematic masterpieces with the DJI Osmo Mobile SE, a portable smartphone gimbal designed for vlogging and content creation on the go. Stabilize your video footage with precision and ease, ensuring smooth and professional-looking results every time. Compatible with a wide range of smartphones, the Osmo Mobile SE empowers creators to unleash their creativity and capture life's moments with unparalleled stability and style.",
+    "price": 109,
+    "image": "/static/img/phone/accessories/dji-osmo-mobile-se.jpg",
+    "function": "stabilizes video footage",
+    "compatibility": "smartphones",
+    "brand": "DJI",
     "sales": 0
-},
+  },
   {
     "id": 66,
     "name": "AOC 24G2 Monitor",
@@ -850,18 +851,19 @@
     "compatibility": "PC or gaming consoles",
     "brand": "Logitech",
     "sales": 0
-  },{
-  "id": 70,
-  "name": "MSI B460M Mortar Micro ATX Motherboard",
-  "type": "Computer Components",
-  "description": "Build your dream PC with the MSI B460M Mortar Micro ATX Motherboard, a versatile and reliable foundation for your budget-oriented desktop setup. With support for Intel CPUs and essential features like PCIe slots and M.2 connectors, this Micro ATX motherboard offers the perfect balance of performance and affordability. Its compact form factor makes it ideal for smaller PC builds, while its robust construction ensures long-term reliability for all your computing needs.",
-  "price": 139,
-  "image": "/static/img/computer/components/msi-b460m-mortar-motherboard.jpg",
-  "socket_cpu": "LGA1200",
-  "form_factor": "micro ATX",
-  "brand": "MSI",
-  "sales": 0
-},
+  },
+  {
+    "id": 70,
+    "name": "MSI B460M Mortar Micro ATX Motherboard",
+    "type": "Computer Components",
+    "description": "Build your dream PC with the MSI B460M Mortar Micro ATX Motherboard, a versatile and reliable foundation for your budget-oriented desktop setup. With support for Intel CPUs and essential features like PCIe slots and M.2 connectors, this Micro ATX motherboard offers the perfect balance of performance and affordability. Its compact form factor makes it ideal for smaller PC builds, while its robust construction ensures long-term reliability for all your computing needs.",
+    "price": 139,
+    "image": "/static/img/computer/components/msi-b460m-mortar-motherboard.jpg",
+    "socket_cpu": "LGA1200",
+    "form_factor": "micro ATX",
+    "brand": "MSI",
+    "sales": 0
+  },
   {
     "id": 71,
     "name": "Phanteks Enthoo Pro ATX Full Tower Case",
@@ -1021,18 +1023,19 @@
     "lighting": "RGB",
     "brand": "CORSAIR",
     "sales": 0
-  },{
-  "id": 84,
-  "name": "SteelSeries Arctis 7 Wireless Gaming Headset",
-  "type": "Audio",
-  "description": "Immerse yourself in gaming audio with the SteelSeries Arctis 7 Wireless Gaming Headset. With its comfortable design, clear audio quality, and built-in microphone, this wireless headset provides an immersive gaming communication experience, allowing you to stay connected and focused during intense gaming sessions.",
-  "price": 209,
-  "image": "/static/img/audio/steelseries-arctis-7-headset.jpg",
-  "connectivity": "wireless",
-  "microphone": "built-in",
-  "brand": "SteelSeries",
-  "sales": 0
-},
+  },
+  {
+    "id": 84,
+    "name": "SteelSeries Arctis 7 Wireless Gaming Headset",
+    "type": "Audio",
+    "description": "Immerse yourself in gaming audio with the SteelSeries Arctis 7 Wireless Gaming Headset. With its comfortable design, clear audio quality, and built-in microphone, this wireless headset provides an immersive gaming communication experience, allowing you to stay connected and focused during intense gaming sessions.",
+    "price": 209,
+    "image": "/static/img/audio/steelseries-arctis-7-headset.jpg",
+    "connectivity": "wireless",
+    "microphone": "built-in",
+    "brand": "SteelSeries",
+    "sales": 0
+  },
   {
     "id": 85,
     "name": "EVGA GeForce GTX 1650 SC Ultra Graphics Card",
@@ -1219,18 +1222,19 @@
     "storage_capacity": "check specifications (supports multiple disks)",
     "brand": "Synology",
     "sales": 0
-  },{
-  "id": 100,
-  "name": "Netgear Nighthawk Pro Gaming XR500 Router",
-  "type": "Computer Network",
-  "description": " A high-performance router designed for gamers, offering prioritization of gaming traffic, advanced Quality of Service (QoS) features, and low latency for smooth online gaming experiences. With its gaming-oriented features, it ensures a competitive edge for serious gamers.",
-  "price": 349,
-  "image": "/static/img/computer/network/netgear-nighthawk-pro-gaming-xr500-router.jpg",
-  "gaming_oriented": "yes (from description)",
-  "features": "prioritization of gaming traffic, advanced QoS, low latency",
-  "brand": "Netgear",
-  "sales": 0
-},
+  },
+  {
+    "id": 100,
+    "name": "Netgear Nighthawk Pro Gaming XR500 Router",
+    "type": "Computer Network",
+    "description": " A high-performance router designed for gamers, offering prioritization of gaming traffic, advanced Quality of Service (QoS) features, and low latency for smooth online gaming experiences. With its gaming-oriented features, it ensures a competitive edge for serious gamers.",
+    "price": 349,
+    "image": "/static/img/computer/network/netgear-nighthawk-pro-gaming-xr500-router.jpg",
+    "gaming_oriented": "yes (from description)",
+    "features": "prioritization of gaming traffic, advanced QoS, low latency",
+    "brand": "Netgear",
+    "sales": 0
+  },
   {
     "id": 101,
     "name": "Nikon Z fc Mirrorless Camera",
@@ -1354,19 +1358,20 @@
     "uses": "gaming, design work, multitasking",
     "brand": "Samsung",
     "sales": 0
-  },{
-  "id": 110,
-  "name": "Orange Pi 5 Single-Board Computer",
-  "type": "Computer Mini-PC/SBC",
-  "description": "A cost-effective single-board computer featuring a Rockchip RK3566 CPU, suitable for basic computing tasks, educational purposes, and hobbyist projects. With its affordability and versatility, it provides a platform for learning and experimentation.",
-  "price": 55,
-  "image": "/static/img/computer/mini-pc_sbc/orange-pi-5-sbc.jpg",
-  "CPU": "Rockchip RK3566",
-  "grade": "cost-effective",
-  "uses": "basic computing tasks, educational purposes, hobbyist projects",
-  "brand": "Orange Pi",
-  "sales": 0
-},
+  },
+  {
+    "id": 110,
+    "name": "Orange Pi 5 Single-Board Computer",
+    "type": "Computer Mini-PC/SBC",
+    "description": "A cost-effective single-board computer featuring a Rockchip RK3566 CPU, suitable for basic computing tasks, educational purposes, and hobbyist projects. With its affordability and versatility, it provides a platform for learning and experimentation.",
+    "price": 55,
+    "image": "/static/img/computer/mini-pc_sbc/orange-pi-5-sbc.jpg",
+    "CPU": "Rockchip RK3566",
+    "grade": "cost-effective",
+    "uses": "basic computing tasks, educational purposes, hobbyist projects",
+    "brand": "Orange Pi",
+    "sales": 0
+  },
   {
     "id": 111,
     "name": "Geekworm Onion Omega 2",
@@ -1408,20 +1413,21 @@
     "uses": "running media servers, emulation, light desktop applications",
     "brand": "Rock Pi",
     "sales": 0
-  },{
-  "id": 114,
-  "name": "Apple Mac Mini (M2)",
-  "type": "Computer Mini-PC/SBC",
-  "description": "A compact and powerful Mac desktop computer featuring Apple's M2 chip, offering excellent performance for demanding tasks like video editing, music production, and professional workflows. With its small footprint, it provides desktop-class performance in a compact package.",
-  "price": 899,
-  "image": "/static/img/computer/mini-pc_sbc/apple-mac-mini-m2.jpg",
-  "cpu": "Apple M2 chip",
-  "performance_focus": "excellent",
-  "uses": "video editing, music production, professional workflows",
-  "form_factor": "compact",
-  "brand": "Apple",
-  "sales": 0
-},
+  },
+  {
+    "id": 114,
+    "name": "Apple Mac Mini (M2)",
+    "type": "Computer Mini-PC/SBC",
+    "description": "A compact and powerful Mac desktop computer featuring Apple's M2 chip, offering excellent performance for demanding tasks like video editing, music production, and professional workflows. With its small footprint, it provides desktop-class performance in a compact package.",
+    "price": 899,
+    "image": "/static/img/computer/mini-pc_sbc/apple-mac-mini-m2.jpg",
+    "CPU": "Apple M2 chip",
+    "performance_focus": "excellent",
+    "uses": "video editing, music production, professional workflows",
+    "form_factor": "compact",
+    "brand": "Apple",
+    "sales": 0
+  },
   {
     "id": 115,
     "name": "MSI Modern AM271 2K Monitor",
