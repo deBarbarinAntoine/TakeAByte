@@ -128,7 +128,6 @@ async function fetchPopularProducts(){
                 Authorization: `Bearer ${token}`
             }
         });
-console.log(response.data)
         // Iterate over each product item in the response array
         for (const product of response.data) {
             product.link = `/product/${product.id}`;
