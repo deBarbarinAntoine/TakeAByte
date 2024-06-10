@@ -672,6 +672,29 @@ body footer.footer .footer-ctn .footer-links .link-group a:hover {
   font-size: 1.3rem;
   color: #3F72AF;
 }
+.main-column .text-page {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  width: 70%;
+}
+.main-column .text-page h1.title {
+  width: max-content;
+  font-size: 3.5rem;
+}
+.main-column .text-page p {
+  font-size: 1.5rem;
+  color: #3F72AF;
+  text-align: justify;
+}
+.main-column .text-page .subtitle {
+  font-size: 2.5rem;
+  color: #112D4E;
+}
+.main-column .text-page .label {
+  font-size: 2rem;
+  color: #112D4E;
+}
 
 .main {
   display: flex;
