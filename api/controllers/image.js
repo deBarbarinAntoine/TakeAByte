@@ -129,7 +129,6 @@ async function saveImagePath(image, id) {
     await createImage(req, res);
 }
 
-
 module.exports = {
     saveImagePath,
     createImage,

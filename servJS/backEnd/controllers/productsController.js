@@ -1,4 +1,5 @@
 const axios = require('axios');
+
 require('dotenv').config();
 
 async function getProductById(productId) {
@@ -61,6 +62,7 @@ async function fetchLatestProducts(){
         console.error('WEB_TOKEN is not set in environment variables');
         return null;
     }
+    let allImg;
     try {
         // Fetch product details
         const response = await axios.get(url, {
@@ -72,7 +74,13 @@ async function fetchLatestProducts(){
         // Iterate over each product item in the response array
         for (const product of response.data) {
             product.link = `/product/${product.id}`;
-            product.img = '/static/img/image-not-found.webp'
+            const getImagesUrl = `http://localhost:3001/v1/images/product/${product.id}`;
+            allImg = await axios.get(getImagesUrl,{
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            product.img = allImg.data[0].image_path;
             const typeId = product.type;
             const brandId = product.brand;
 
@@ -125,7 +133,13 @@ async function fetchPopularProducts(){
         // Iterate over each product item in the response array
         for (const product of response.data) {
             product.link = `/product/${product.id}`;
-            product.img = '/static/img/image-not-found.webp'
+            const getImagesUrl = `http://localhost:3001/v1/images/product/${product.id}`;
+            allImg = await axios.get(getImagesUrl,{
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            product.img = allImg.data[0].image_path;
             const typeId = product.type;
             const brandId = product.brand;
 
@@ -188,13 +202,17 @@ async function fetchRandomCategoryProducts(){
         // Iterate over each product item in the response array
         for (const product of response.data) {
             product.link = `/product/${product.id}`;
-            product.img = '/static/img/image-not-found.webp'
-            //const imgPath = `http://localhost:3001/v1/images/${product.id}`;
-           // const imgRes = await axios.get(imgPath, {
-            //    headers: {
-            //        Authorization: `Bearer ${token}`
-             //   }
-           // })
+            const getImagesUrl = `http://localhost:3001/v1/images/product/${product.id}`;
+            allImg = await axios.get(getImagesUrl,{
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            if (allImg.data[0].image_path === undefined ||allImg.data[0].image_path === null){
+                product.img= '/static/img/image-not-found.webp'
+            }else {
+                product.img = allImg.data[0].image_path;
+            }
 
             const typeId = product.type;
             const brandId = product.brand;

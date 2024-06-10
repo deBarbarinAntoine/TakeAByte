@@ -14,20 +14,20 @@ const {saveImagePath} = require("./image");
 exports.createNewProduct = async (req, res) => {
     const products = Array.isArray(req.body) ? req.body : [req.body];
 
-    let product_id;
     try {
         let createdProducts = [];
 
         for (let product of products) {
             let {
-                name, description, quantity_stocked, price, processor, ram, size, captor, weight, socket_cpu, dimension,
-                others, connectivity, resolution, screen_type, vram, battery_power_time, type, brand, storage, image
+                name, description, quantity_stocked, price, processor, ram, size, captor, weight, socket, dimension,
+                others, connectivity, resolution, screen_type, vram, battery_power_time, type, brand, storage, image, core
             } = product;
 
+            // Get typeId and brandId
             const typeId = await getTypeIdByName({params: {name: type}});
             const brandId = await getBrandIdByName({params: {name: brand}});
 
-
+            // Check if product already exists
             const existingProduct = await getProductByNameAndBrand(name, brandId);
             if (existingProduct) {
                 return res.status(400).json({
@@ -36,27 +36,29 @@ exports.createNewProduct = async (req, res) => {
                 });
             }
 
-            if (quantity_stocked === null || quantity_stocked === undefined) {
-                quantity_stocked = 0;
-            }
+            // Ensure quantity_stocked has a default value if not provided
+            quantity_stocked = quantity_stocked ?? 0;
 
             const values = [
-                name, description, quantity_stocked, price, processor, ram, size, captor, weight, socket_cpu, dimension,
+                name, description, quantity_stocked, price, processor, ram, size, captor, weight, socket, dimension,
                 others, connectivity, resolution, screen_type, vram, battery_power_time, typeId, storage, brandId
             ];
 
             // Insert product into the database
             const results = await connection.query(createNewProductQuery, values);
-            createdProducts.push({product_id: results.insertId, name, brand});
+            const newProductId = results.insertId;
 
-            product_id = await getProductByNameAndBrand(name, brandId)
-            await saveImagePath(image, product_id);
+            // Save the image path
+            await saveImagePath(image, newProductId);
+
+            // Add created product info to the response array
+            createdProducts.push({product_id: newProductId, name, brand});
         }
 
         res.status(201).json({message: 'Products created successfully', products: createdProducts});
     } catch (error) {
         console.error("Unexpected error:", error);
-        serverErrorResponse(res, "Failed to create products");
+        res.status(500).json({message: "Failed to create products"});
     }
 };
 
