@@ -17,7 +17,7 @@ exports.createBrand = async (req, res) => {
     } catch (error) {
         console.error("Unexpected error:", error);
         if (error.errno === 1062) {
-            conflictErrorResponse(res, "Brand already exists");
+            conflictErrorResponse(res, "message : Brand already exists");
         } else {
             serverErrorResponse(res, "Failed to create brand");
         }
