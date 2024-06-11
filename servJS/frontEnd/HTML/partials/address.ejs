@@ -3,8 +3,7 @@
     <%######################################################################################%>
     <%#       Order Nav Template                                                            %>
     <%######################################################################################%>
-    <%- include('../order-nav', {page: orderPage}); %>
-
+    <%- include('./order-nav', {page: orderPage}); %>
 
     <form action="/address" class="order-form" method="post">
         <div class="contact">
@@ -13,7 +12,7 @@
                 <div class="login"><span class="msg">Do you have an account?</span><a href="/login" class="login-link">Login</a></div>
             </div>
             <label class="abs hidden" for="contact-email"></label>
-            <input type="email" name="email" placeholder="example@email.com" id="contact-email" />
+            <input type="email" name="email" placeholder="example@email.com" id="contact-email" value="<%= (data && data.email) || '' %>" />
         </div>
         <div class="address">
             <div class="address-header">
@@ -21,29 +20,29 @@
             </div>
             <div class="address-name">
                 <label class="abs hidden" for="address-name"></label>
-                <input type="text" name="name" id="address-name" placeholder="Name" required autofocus <% if (!!data.name) { %><%= `value="${data.name}"` %><% } %> />
+                <input type="text" name="name" id="address-name" placeholder="Name" required autofocus value="<%= (data && data.name) || '' %>" />
                 <label class="abs hidden" for="address-lastname"></label>
-                <input type="text" name="lastname" id="address-lastname" placeholder="Last Name" required <% if (!!data.lastName) { %><%= `value="${data.lastName}"` %><% } %> />
+                <input type="text" name="lastname" id="address-lastname" placeholder="Last Name" required value="<%= (data && data.lastName) || '' %>" />
             </div>
             <div class="address-street">
                 <label class="abs hidden" for="address-street"></label>
-                <input type="text" name="street" id="address-street" placeholder="Address" required <% if (!!data.street) { %><%= `value="${data.street}"` %><% } %> />
+                <input type="text" name="street" id="address-street" placeholder="Address" required value="<%= (data && data.street) || '' %>" />
             </div>
             <div class="address-optional">
                 <label class="abs hidden" for="address-optional"></label>
-                <input type="text" name="optional" id="address-optional" placeholder="Address Complement (optional)" <% if (!!data.complement) { %><%= `value="${data.complement}"` %><% } %> />
+                <input type="text" name="optional" id="address-optional" placeholder="Address Complement (optional)" value="<%= (data && data.complement) || '' %>" />
             </div>
             <div class="address-city-region">
                 <label class="abs hidden" for="address-city"></label>
-                <input type="text" name="city" id="address-city" placeholder="City" required <% if (!!data.city) { %><%= `value="${data.city}"` %><% } %> />
+                <input type="text" name="city" id="address-city" placeholder="City" required value="<%= (data && data.city) || '' %>" />
                 <label class="abs hidden" for="address-zip"></label>
-                <input type="text" name="zip" id="address-zip" placeholder="ZIP Code" required <% if (!!data.zip) { %><%= `value="${data.zip}"` %><% } %> />
+                <input type="text" name="zip" id="address-zip" placeholder="ZIP Code" required value="<%= (data && data.zip) || '' %>" />
                 <label class="abs hidden" for="address-region"></label>
-                <input type="text" name="region" id="address-region" placeholder="Province" <% if (!!data.province) { %><%= `value="${data.province}"` %><% } %> />
+                <input type="text" name="region" id="address-region" placeholder="Province" value="<%= (data && data.province) || '' %>" />
             </div>
             <div class="address-country">
                 <label class="abs hidden" for="address-country"></label>
-                <input type="text" name="country" id="address-country" placeholder="Country" required <% if (!!data.country) { %><%= `value="${data.country}"` %><% } %> />
+                <input type="text" name="country" id="address-country" placeholder="Country" required value="<%= (data && data.country) || '' %>" />
             </div>
         </div>
         <div class="btns">
@@ -52,3 +51,4 @@
         </div>
     </form>
 </div>
+<script src="/static/js/testing.js"></script>

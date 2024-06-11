@@ -1,11 +1,12 @@
-<a href="<%= product.link %>" class="product">
+
+<a href="/product/<%= product.product[0].product_id %>" class="product">
     <div class="product-img">
-        <img src="/static/img/products/<%= product.img %>"
-             onerror="this.onerror=null;this.src='/static/img/image-not-found.webp'" alt="<%= product.name %> image" />
-        <div class="quantity-bullet"><div class="text"><%= product.quantity %></div></div>
+        <img src="<%= product.product[0].image %>"
+             onerror="this.onerror=null;this.src='/static/img/image-not-found.webp'" alt="<%= product.product[0].name %> image" />
+        <div class="quantity-bullet"><div class="text"><%= product.product[0].quantity %></div></div>
     </div>
     <div class="product-info">
-        <div class="product-name"><%= product.name %></div>
-        <div class="product-price"><%= product.price %></div>
+        <div class="product-name"><%= product.product[0].name %></div>
+        <div class="product-price"><%= product.product[0].price %> €</div>
     </div>
 </a>

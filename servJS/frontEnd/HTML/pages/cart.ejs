@@ -31,27 +31,9 @@
                     </div>
                     <div class="message">Shipping will be calculated later</div>
                 </div>
-                <a href="" class="button blue">Check-out</a>
+                <a href="/order" class="button blue">Check-out</a>
             </div>
         </div>
     </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        console.log('ui')
-        document.querySelector('.button.blue').addEventListener('click', function() {
-            console.log('ui');
-            axios.post('/order', {
-                data: <%- JSON.stringify(data) %>
-            })
-                .then(function (response) {
-                    //console.log(response);
-                })
-                .catch(function (error) {
-                    console.error(error);
-                    // Handle error, if needed
-                });
-        });
-    });
-</script>
+
