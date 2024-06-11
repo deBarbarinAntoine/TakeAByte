@@ -517,6 +517,7 @@ router.get('/order', isAuthenticated, async (req, res) => {
     res.render('base', {data: data});
 });
 
+
 router.post('/cartAdd', isAuthenticated, (req, res) => {
     // Extract data from request body
     const itemId = req.body.itemId;
@@ -620,7 +621,7 @@ router.get('/terms-conditions', isAuthenticated, (req, res) => {
     };
     res.render('base', {data: data});
 })
-router.get('/shipping', isAuthenticated, async (req, res) => {
+router.post('/shipping', isAuthenticated, async (req, res) => {
     const lon = req.body.longitude;
     const lat = req.body.latitude;
     let postData
