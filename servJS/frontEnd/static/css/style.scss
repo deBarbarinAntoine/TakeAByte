@@ -127,6 +127,7 @@
   .title-text {
     font-size: 1.8rem;
     color: transparentize($darkblue, 0.7);
+    cursor: not-allowed;
   }
   .title-separator {
     font-size: 1.7rem;
@@ -134,9 +135,11 @@
   }
   .previous {
     color: $blue;
+    cursor: pointer;
   }
   .current {
     color: $darkblue;
+    cursor: auto;
   }
 }
 
@@ -322,10 +325,13 @@
 
   .product-card {
     position: relative;
-    width: 22%;
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    &.swiper-slide {
+      aspect-ratio: 2/3;
+    }
 
     .product-card-link {
       position: absolute;
@@ -356,7 +362,7 @@
     }
     .product-card-description {
       width: calc(100% - 2rem);
-      flex: 1;
+      flex-grow: 1;
       display: flex;
       flex-direction: column;
       gap: 1.7rem;
@@ -365,6 +371,7 @@
 
       .title {
         font-size: 1.4rem;
+        height: 3.7ch;
       }
       .price {
         font-size: 1.5rem;
@@ -1053,6 +1060,7 @@
               align-items: center;
               width: 15rem;
               aspect-ratio: 1;
+              flex-shrink: 0;
 
               img {
                 width: 90%;

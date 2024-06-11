@@ -491,6 +491,7 @@ body footer.footer .footer-ctn .footer-links .link-group a:hover {
 .title-nav .title-text {
   font-size: 1.8rem;
   color: rgba(17, 45, 78, 0.3);
+  cursor: not-allowed;
 }
 .title-nav .title-separator {
   font-size: 1.7rem;
@@ -498,9 +499,11 @@ body footer.footer .footer-ctn .footer-links .link-group a:hover {
 }
 .title-nav .previous {
   color: #3F72AF;
+  cursor: pointer;
 }
 .title-nav .current {
   color: #112D4E;
+  cursor: auto;
 }
 
 .main-column {
@@ -615,8 +618,6 @@ body footer.footer .footer-ctn .footer-links .link-group a:hover {
   align-items: center;
   gap: 3.5rem;
   width: 70%;
-  position: relative;
-  overflow: hidden;
 }
 .main-column .products-carousel .title {
   font-size: 2.2rem;
@@ -625,8 +626,6 @@ body footer.footer .footer-ctn .footer-links .link-group a:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  transition: transform 0.5s ease;
-  position: relative;
 }
 .main-column .category-ctn {
   width: 80%;
@@ -637,10 +636,12 @@ body footer.footer .footer-ctn .footer-links .link-group a:hover {
 }
 .main-column .product-card {
   position: relative;
-  width: 22%;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+.main-column .product-card.swiper-slide {
+  aspect-ratio: 2/3;
 }
 .main-column .product-card .product-card-link {
   position: absolute;
@@ -668,7 +669,7 @@ body footer.footer .footer-ctn .footer-links .link-group a:hover {
 }
 .main-column .product-card .product-card-description {
   width: calc(100% - 2rem);
-  flex: 1;
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   gap: 1.7rem;
@@ -677,6 +678,7 @@ body footer.footer .footer-ctn .footer-links .link-group a:hover {
 }
 .main-column .product-card .product-card-description .title {
   font-size: 1.4rem;
+  height: 3.7ch;
 }
 .main-column .product-card .product-card-description .price {
   font-size: 1.5rem;
@@ -1300,6 +1302,7 @@ body footer.footer .footer-ctn .footer-links .link-group a:hover {
   align-items: center;
   width: 15rem;
   aspect-ratio: 1;
+  flex-shrink: 0;
 }
 .main .cart-resume-ctn .cart-resume .product-list-ctn .product-list a.product .product-img img {
   width: 90%;
@@ -1363,11 +1366,6 @@ body footer.footer .footer-ctn .footer-links .link-group a:hover {
 .main .cart-resume-ctn .cart-resume .total-ctn .total {
   font-size: 1.8rem;
   color: #3F72AF;
-}
-
-.product-card {
-  flex: 0 0 25%; /* Display 4 items */
-  margin-right: 1rem;
 }
 
 /*# sourceMappingURL=style.css.map */
