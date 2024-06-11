@@ -504,10 +504,13 @@ router.get('/order', isAuthenticated, async (req, res) => {
         isAuthenticated: req.isAuthenticated,
         template: 'order',
         slogan: "Your Trusted Tech Partner",
+
         templateData: {
+            page: 'address',
             order: {
                 products: {resultArray},
-                subtotal: calculateSubtotal(cartItemsArray) // Subtotal of the cart
+                subtotal: calculateSubtotal(cartItemsArray), // Subtotal of the cart
+                shippingCost : "FREE for a limited time"
             }
         }
     };

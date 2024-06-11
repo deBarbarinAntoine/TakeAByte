@@ -1,4 +1,4 @@
-const axios = require('axios');
+
 // Define a variable to store the clicked address suggestion temporarily
 let clickedAddressLon = null;
 let clickedAddressLat = null;

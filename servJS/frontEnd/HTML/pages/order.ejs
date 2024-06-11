@@ -1,41 +1,44 @@
 <div class="main">
     <div class="order-ctn">
-
         <%######################################################################################%>
         <%#       Shipping Template                                                             %>
         <%######################################################################################%>
-        <%  const attributeClasses = (index) => {
-                const classes = ['', '', ''];
-                if (index < 0 || index > 2) return classes;
-                for (let i = 0; i < index; ++i ) {
-                    classes[i] = ' previous';
-                }
-                classes[index] = ' current';
-                return classes;
-            };
-            let orderPage;
-            let pageName;
-            switch (data.page) {
-                case 'details':
-                    orderPage = attributeClasses(0);
-                    pageName = 'details';
-                    break;
-                case 'shipping':
-                    orderPage = attributeClasses(1);
-                    pageName = 'shipping';
-                    break;
-                case 'payment':
-                    orderPage = attributeClasses(2);
-                    pageName = 'payment';
-                    break;
-        } %>
+        <%
+        // Function to determine CSS classes for order steps
+        const attributeClasses = (index) => {
+            const classes = ['', '', ''];
+            if (index < 0 || index > 2) return classes; // Invalid index check
+            for (let i = 0; i < index; ++i ) {
+                classes[i] = 'previous'; // Mark all previous steps
+            }
+            classes[index] = 'current'; // Mark the current step
+            return classes;
+        };
+
+        // Variables to hold the order page classes and the current page name
+        let orderPage;
+        let pageName;
+
+        // Determine the current step based on data.page
+        switch (data.page) {
+            case 'address':
+                orderPage = attributeClasses(0); // First step
+                pageName = 'address';
+                break;
+            case 'shipping':
+                orderPage = attributeClasses(1); // Second step
+                pageName = 'shipping';
+                break;
+            case 'payment':
+                orderPage = attributeClasses(2); // Third step
+                pageName = 'payment';
+                break;
+        }
+        %>
 
         <% if (!!pageName) { %>
-            <%- include(`../partials/${pageName}`, {orderPage: orderPage, data: data.client}); %>
+            <%- include(`../partials/${pageName}`, { orderPage: orderPage, data: data.client }); %>
         <% } %>
-        <div>
-            <pre><%= console.log((data));%></pre>
-        </div>
 
     </div>
     <div class="cart-resume-ctn">

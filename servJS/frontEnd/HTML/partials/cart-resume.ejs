@@ -4,17 +4,16 @@
             <%################################################################################%>
             <%#     order-product templates                                                   %>
             <%################################################################################%>
-            <% order.products.forEach(function (product) { %>
+            <% data.order.products.resultArray.forEach(function (product) { %>
                 <%- include('order-product', {product: product}); %>
             <% }); %>
-
 
         </div>
     </div>
     <div class="separator"></div>
     <div class="subtotal-ctn">
         <div class="title">Subtotal</div>
-        <div class="subtotal"><%= order.subtotal %></div>
+        <div class="subtotal"><%= order.subtotal %> €</div>
     </div>
     <div class="shipping-cost-ctn">
         <div class="title">Shipping</div>
@@ -23,6 +22,21 @@
     <div class="separator"></div>
     <div class="total-ctn">
         <div class="title">Total</div>
-        <div class="total"><%= order.total %></div>
+        <div class="total">
+            <%
+            // Retrieve subtotal and shipping cost from the order object
+            const subtotal = parseFloat(order.subtotal);
+            const shippingCost = parseFloat(order.shippingCost);
+
+            // Check if subtotal and shipping cost are valid numbers, if not, set them to 0
+            const subtotalValue = isNaN(subtotal) ? 0 : subtotal;
+            const shippingCostValue = isNaN(shippingCost) ? 0 : shippingCost;
+
+            // Calculate the total
+            const total = subtotalValue + shippingCostValue;
+
+            // Output the total
+            %> <%= total %> €
+        </div>
     </div>
 </div>
