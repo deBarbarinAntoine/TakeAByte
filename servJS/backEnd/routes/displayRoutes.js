@@ -362,7 +362,15 @@ router.get('/cart', isAuthenticated, async (req, res) => {
     res.render('base', {data: data});
 })
 
+router.post('/order', isAuthenticated, (req, res) => {
+    // Retrieve the data from the request body
+    const orderData = req.body;
 
+    // Log the data to the console
+    console.log(orderData);
+
+    // Other logic related to processing the order
+});
 
 router.post('/cartAdd', isAuthenticated, (req, res) => {
     // Extract data from request body
@@ -513,7 +521,6 @@ router.get('/shipping', isAuthenticated, async (req, res) => {
     };
     res.render('base', {data: data});
 });
-
 router.get('/about-shipping', (req, res) => {
     const data = {
         title: "Home - TakeAByte",
@@ -526,8 +533,6 @@ router.get('/about-shipping', (req, res) => {
     };
     res.render('base', {data: data});
 })
-
-
 router.get('/register', isAuthenticated, (req, res) => {
     const data = {
         title: "Home - TakeAByte",
@@ -538,8 +543,6 @@ router.get('/register', isAuthenticated, (req, res) => {
     };
     res.render('base', {data: data});
 })
-
-
 // Define a route for the 404 page
 router.get('*', (req, res) => {
     res.render('404', {title: "Error not found 404 I'm a teapot 418"});
