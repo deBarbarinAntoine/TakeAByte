@@ -967,6 +967,25 @@ body footer.footer .footer-ctn .footer-links .link-group a:hover {
 .main .order-ctn .order-left form.order-form span.title {
   font-size: 2rem;
 }
+.main .order-ctn .order-left form.order-form .suggestions {
+  border: 1px solid #112D4E;
+  padding: 1rem 0.1rem 1rem 1.5rem;
+  background-color: #F9F7F7;
+  max-height: 150px;
+  overflow-y: auto;
+  display: none;
+  position: absolute;
+  z-index: 1000;
+  width: calc(100% - 1.6rem);
+  top: 100%;
+}
+.main .order-ctn .order-left form.order-form .suggestions .suggestion {
+  padding: 8px;
+  cursor: pointer;
+}
+.main .order-ctn .order-left form.order-form .suggestions .suggestion:hover {
+  background-color: #f0f0f0;
+}
 .main .order-ctn .order-left form.order-form .contact {
   display: flex;
   flex-direction: column;
@@ -1038,6 +1057,7 @@ body footer.footer .footer-ctn .footer-links .link-group a:hover {
 .main .order-ctn .order-left form.order-form .payment .card-number,
 .main .order-ctn .order-left form.order-form .payment .card-holder-name,
 .main .order-ctn .order-left form.order-form .payment .card-details {
+  position: relative;
   display: flex;
   justify-content: space-between;
   width: 100%;
