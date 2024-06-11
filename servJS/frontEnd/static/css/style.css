@@ -104,19 +104,13 @@ button,
   height: fit-content;
   width: fit-content;
 }
-button img,
 button svg,
-.button img,
 .button svg {
   margin: 0 1.5rem 0 0;
   width: 2rem;
   aspect-ratio: 1;
 }
-button img .line, button img .wheel,
-button svg .line,
-button svg .wheel,
-.button img .line,
-.button img .wheel,
+button svg .line, button svg .wheel,
 .button svg .line,
 .button svg .wheel {
   transition: all 200ms ease-in-out 50ms;
