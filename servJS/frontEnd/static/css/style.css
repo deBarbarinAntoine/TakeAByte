@@ -128,6 +128,20 @@ button img,
   aspect-ratio: 1;
 }
 
+.cart-img {
+  object-fit: contain;
+  object-position: center;
+  width: 100%;
+  height: 100%;
+}
+.cart-img .line {
+  stroke-width: 2;
+  stroke: #112D4E;
+}
+.cart-img .wheel {
+  fill: #112D4E;
+}
+
 body {
   min-height: 100dvh;
   background-color: #F9F7F7;
@@ -252,8 +266,8 @@ body header.header .header-ctn .header-btns .account-btn img {
   width: 100%;
 }
 body header.header .header-ctn .header-btns .cart-btn {
-  width: 2.4rem;
-  height: 2.4rem;
+  width: 2.6rem;
+  aspect-ratio: 1;
 }
 body header.header .header-ctn .header-btns .cart-btn img {
   object-fit: contain;
