@@ -27,6 +27,7 @@
             <div class="address-street">
                 <label class="abs hidden" for="address-street"></label>
                 <input type="text" name="street" id="address-street" placeholder="Address" required value="<%= (data && data.street) || '' %>" />
+                <div id="address-suggestions" class="suggestions"></div>
             </div>
             <div class="address-optional">
                 <label class="abs hidden" for="address-optional"></label>
