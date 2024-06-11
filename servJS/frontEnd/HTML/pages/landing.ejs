@@ -29,7 +29,7 @@
 <script>
     // Function that builds the swipers individually
     const buildSwiperSlider = sliderElm => {
-        const sliderTitle = sliderElm.dataset.title;
+        const sliderClass = sliderElm.dataset.class;
         return new Swiper(`#${sliderElm.id}`, {
             spaceBetween: 20,
             loop: 'infinite',
@@ -64,7 +64,7 @@
                 },
             },
             pagination: {
-                el: `.carousel-nav-${sliderTitle}`,
+                el: `.carousel-nav-${sliderClass}`,
                 clickable: true,
                 dynamicBullets: true,
             },
