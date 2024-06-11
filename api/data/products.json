@@ -465,7 +465,7 @@
     "type": "Computer Components",
     "description": "The AMD Ryzen 5 5600X is a high-performance CPU designed for gaming and productivity. With 6 cores and 12 threads, it offers exceptional multi-threaded performance and energy efficiency. Featuring a base clock of 3.7 GHz and a max boost clock of 4.6 GHz, this processor is built on AMD's advanced Zen 3 architecture, delivering superior speed and responsiveness for demanding applications and multitasking.",
     "price": 299,
-    "image": "/static/img/computer/components/amd-ryzen-5-5600x-CPU.jpg",
+    "image": "/static/img/computer/components/amd-ryzen-5-5600x-processor.jpg",
     "cores": 6,
     "socket_cpu": "AM4",
     "brand": "AMD",

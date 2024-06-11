@@ -85,7 +85,7 @@ router.get('/products', (req, res) => {
     res.render('base', {data: data});
 });
 
-router.get('/products/:productId', async (req, res) => {
+router.get('/product/:productId', async (req, res) => {
     const productId = req.params.productId;
     const token = process.env.WEB_TOKEN;
     // Validate the productId
