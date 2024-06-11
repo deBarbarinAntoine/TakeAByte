@@ -1,4 +1,11 @@
+const axios = require('axios');
+// Define a variable to store the clicked address suggestion temporarily
+let clickedAddressLon = null;
+let clickedAddressLat = null;
+
+// Add event listener when the DOM content is loaded
 document.addEventListener('DOMContentLoaded', function () {
+    // Retrieve DOM elements
     const addressInput = document.getElementById('address-street');
     const suggestionsContainer = document.getElementById('address-suggestions');
     const cityInput = document.getElementById('address-city');
@@ -7,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const zipcodeInput = document.getElementById('address-zip');
     let debounceTimeout;
 
+    // Event listener for input changes in the address field
     addressInput.addEventListener('input', function () {
         clearTimeout(debounceTimeout);
         const query = addressInput.value.trim();
@@ -44,6 +52,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
                                 suggestionsContainer.innerHTML = '';
                                 suggestionsContainer.style.display = 'none';
+                                clickedAddressLon = item.longitude
+                                clickedAddressLat = item.latitude
                             });
                             suggestionsContainer.appendChild(suggestion);
                         });
@@ -61,6 +71,36 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+
+    const goToShippingButton = document.querySelector('.blue[type="submit"]');
+    goToShippingButton.addEventListener('click', function (event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        // Check if both longitude and latitude are not null
+        if (clickedAddressLon === null || clickedAddressLat === null) {
+            // If either longitude or latitude is null, show a warning message
+            console.warn("Please select an address before proceeding.");
+        } else {
+            // If both longitude and latitude are not null, proceed with redirection
+            // Create a data object with the coordinates
+            const data = {
+                lon: clickedAddressLon,
+                lat: clickedAddressLat
+            };
+
+            // Send a POST request to the /shipping endpoint
+            axios.post('/shipping', data)
+                .then(() => {
+                    // If the request is successful, redirect to the /shipping page
+                    window.location.href = '/shipping';
+                })
+                .catch(error => {
+                    console.error('Error sending data:', error);
+                });
+        }
+    });
+
+    // Event listener to close suggestions when clicking outside the input and suggestions container
     document.addEventListener('click', function (event) {
         if (!addressInput.contains(event.target) && !suggestionsContainer.contains(event.target)) {
             suggestionsContainer.style.display = 'none';
