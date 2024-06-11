@@ -25,77 +25,55 @@
 
 
 </div>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const carousels = document.querySelectorAll('.products-carousel');
-
-        carousels.forEach(carousel => {
-            const productList = carousel.querySelector('.products-list');
-            const numItems = productList.querySelectorAll('.product-card').length;
-            let startX = 0;
-            let isDragging = false;
-            const itemWidth = carousel.offsetWidth / 4;
-            const cloneFirstItem = productList.firstElementChild.cloneNode(true);
-            const cloneLastItem = productList.lastElementChild.cloneNode(true);
-
-
-            productList.appendChild(cloneFirstItem);
-            productList.insertBefore(cloneLastItem, productList.firstElementChild);
-
-            let currentIndex = 1; // Start at the first item after the cloned last item
-
-            function updateCarousel() {
-                const offset = -currentIndex * itemWidth;
-                productList.style.transform = `translateX(${offset}px)`;
-            }
-
-            function startDragging(e) {
-                e.preventDefault();
-                startX = e.clientX || e.touches[0].clientX;
-                isDragging = true;
-                productList.style.transition = 'none';
-            }
-
-            function whileDragging(e) {
-                if (!isDragging) return;
-                const x = e.clientX || e.touches[0].clientX;
-                const deltaX = startX - x;
-                startX = x;
-                currentIndex += deltaX / itemWidth;
-                updateCarousel();
-            }
-
-            function stopDragging(e) {
-                e.preventDefault();
-                isDragging = false;
-                productList.style.transition = '';
-                currentIndex = Math.round(currentIndex);
-                updateCarousel();
-            }
-
-            function loopCarousel() {
-                if (currentIndex >= numItems + 1) {
-                    currentIndex = 1;
-                    productList.style.transition = 'none';
-                } else if (currentIndex <= 0) {
-                    currentIndex = numItems;
-                    productList.style.transition = 'none';
-                }
-                updateCarousel();
-            }
-
-            productList.addEventListener('mousedown', startDragging);
-            productList.addEventListener('touchstart', startDragging);
-            document.addEventListener('mousemove', whileDragging);
-            document.addEventListener('touchmove', whileDragging);
-            document.addEventListener('mouseup', stopDragging);
-            document.addEventListener('touchend', stopDragging);
-            document.addEventListener('mouseleave', stopDragging);
-            document.addEventListener('touchcancel', stopDragging);
-
-            carousel.addEventListener('transitionend', loopCarousel);
-
-            updateCarousel();
+    // Function that builds the swipers individually
+    const buildSwiperSlider = (sliderElm) => {
+        const sliderClass = sliderElm.dataset.class;
+        return new Swiper(`#${sliderElm.id}`, {
+            spaceBetween: 20,
+            loop: 'infinite',
+            autoplay: {
+                enabled: true,
+                pauseOnMouseEnter: true,
+            },
+            effect: 'pagination',
+            mousewheel: {
+                enabled: true,
+                releaseOnEdges: true,
+            },
+            keyboard: {
+                enabled: true,
+                onlyInViewport: true,
+            },
+            breakpoints: {
+                // 0px <= window width < 768px (phones)
+                0: {
+                    slidesPerView: 2,
+                    spaceBetween: 20,
+                },
+                // 768px <= window width < 1024px (tablets)
+                768: {
+                    slidesPerView: 3,
+                    spaceBetween: 25
+                },
+                // 1024px <= window width (desktop)
+                1024: {
+                    slidesPerView: 5,
+                    spaceBetween: 30,
+                },
+            },
+            pagination: {
+                el: `.carousel-nav-${sliderClass}`,
+                clickable: true,
+                dynamicBullets: true,
+            },
         });
-    });
+    }
+
+    // Get all the swipers on the page
+    const allSliders = document.querySelectorAll('.swiper');
+
+    // Loop over all the fetched sliders and apply Swiper on each one.
+    allSliders.forEach(slider => buildSwiperSlider(slider));
 </script>

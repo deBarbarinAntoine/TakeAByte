@@ -127,6 +127,7 @@
   .title-text {
     font-size: 1.8rem;
     color: transparentize($darkblue, 0.7);
+    cursor: not-allowed;
   }
   .title-separator {
     font-size: 1.7rem;
@@ -134,9 +135,11 @@
   }
   .previous {
     color: $blue;
+    cursor: pointer;
   }
   .current {
     color: $darkblue;
+    cursor: auto;
   }
 }
 
@@ -322,10 +325,13 @@
 
   .product-card {
     position: relative;
-    width: 22%;
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    &.swiper-slide {
+      aspect-ratio: 3/5;
+    }
 
     .product-card-link {
       position: absolute;
@@ -335,7 +341,6 @@
     }
 
     .product-card-img {
-      position: relative;
       width: 100%;
       aspect-ratio: 1;
 
@@ -345,31 +350,35 @@
         width: 100%;
         height: 100%;
       }
-      .favorite-button {
-        top: .5rem;
-        right: .5rem;
-
-        .favorite-icon {
-          width: 2.5rem;
-        }
-      }
     }
     .product-card-description {
+      position: relative;
       width: calc(100% - 2rem);
-      flex: 1;
+      flex-grow: 1;
       display: flex;
       flex-direction: column;
-      gap: 1.7rem;
+      justify-content: space-between;
+      gap: .5rem;
+      height: 7ch;
       padding: 1.5rem 1rem;
       background-color: $lightblue;
 
       .title {
-        font-size: 1.4rem;
+        font-size: 1.2rem;
+        line-clamp: 2 auto;
       }
       .price {
         font-size: 1.5rem;
         color: $blue;
         text-align: right;
+      }
+      .favorite-button {
+        bottom: .5rem;
+        left: .5rem;
+
+        .favorite-icon {
+          width: 2.5rem;
+        }
       }
     }
   }
@@ -1053,6 +1062,7 @@
               align-items: center;
               width: 15rem;
               aspect-ratio: 1;
+              flex-shrink: 0;
 
               img {
                 width: 90%;

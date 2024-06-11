@@ -1,6 +1,6 @@
-    <div class="products-carousel " id="<%= data.class %>">
+    <div class="products-carousel swiper" id="<%= data.class %>" data-class="<%=data.class%>">
         <div class="title"><%= data.title %></div>
-        <div class="products-list">
+        <div class="products-list swiper-wrapper">
             <%################################################################################%>
             <%#     product-card template                                                     %>
             <%################################################################################%>
@@ -8,4 +8,5 @@
                 <%- include('./product-card', {product: product}); %>
             <% }); %>
         </div>
+        <div class="carousel-nav-<%=data.class%>"></div>
     </div>
