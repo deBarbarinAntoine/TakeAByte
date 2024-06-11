@@ -27,7 +27,10 @@ document.addEventListener('DOMContentLoaded', function () {
                             suggestion.textContent = item.address;
                             suggestion.addEventListener('click', function () {
                                 const addressParts = item.address.split(',').map(part => part.trim());
-                                const firstPart = addressParts[0];
+                                let firstPart = addressParts[0];
+                                if (!isNaN(firstPart) && !isNaN(addressParts[1])) {
+                                    firstPart = addressParts[0] + ' ' + addressParts[1];
+                                }
                                 const city = addressParts[addressParts.length - 6] || '';
                                 const province = addressParts[addressParts.length - 4] || '';
                                 const country = addressParts[addressParts.length - 1] || '';

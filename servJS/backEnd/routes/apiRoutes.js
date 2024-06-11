@@ -28,4 +28,7 @@ router.get('/logoutUser', requireAuth,logoutUser)
 // Route to register user
 router.post('/registerUser', registerUser)
 
+// Route to treat user address
+router.post('/shipping', registerUser)
+
 module.exports = router;
