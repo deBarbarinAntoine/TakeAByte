@@ -8,3 +8,5 @@ servJS/backEnd/data.env
 .idea/
 
 servJS/node_modules/
+
+web-market-perso.sql
