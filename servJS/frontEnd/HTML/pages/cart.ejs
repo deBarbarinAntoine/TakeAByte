@@ -21,9 +21,6 @@
                 <% data.cart.products.resultArray.forEach(function (product) { %>
                     <%- include('../partials/cart-product', {product: product}); %>
                 <% }); %>
-                <div>
-                    <pre><%= console.log((data.cart.subtotal));%></pre>
-                </div>
             </div>
             <div class="separator"></div>
             <div class="list-footer">
