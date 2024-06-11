@@ -28,7 +28,7 @@
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
     // Function that builds the swipers individually
-    const buildSwiperSlider = sliderElm => {
+    const buildSwiperSlider = (sliderElm) => {
         const sliderClass = sliderElm.dataset.class;
         return new Swiper(`#${sliderElm.id}`, {
             spaceBetween: 20,
@@ -71,9 +71,9 @@
         });
     }
 
-    // Get all of the swipers on the page
+    // Get all the swipers on the page
     const allSliders = document.querySelectorAll('.swiper');
 
-    // Loop over all of the fetched sliders and apply Swiper on each one.
+    // Loop over all the fetched sliders and apply Swiper on each one.
     allSliders.forEach(slider => buildSwiperSlider(slider));
 </script>

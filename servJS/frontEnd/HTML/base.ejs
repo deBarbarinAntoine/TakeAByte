@@ -102,6 +102,15 @@
             </div>
         </div>
     </footer>
+    <script>
+        const favoriteButtons = document.querySelectorAll('.favorite-icon');
+
+        function favoriteClick(e) {
+            e.currentTarget.classList.toggle('favorite');
+        }
+
+        favoriteButtons.forEach(btn => btn.addEventListener('click', favoriteClick));
+    </script>
 </div>
 </body>
 </html>
