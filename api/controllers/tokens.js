@@ -3,6 +3,7 @@ const { getToken, getUserIdFromToken, checkIfMod } = require("../models/tokens")
 
 async function authenticate(req, res, next) {
     const authHeader = req.headers['authorization'];
+
     if (!authHeader) {
         unauthorizedErrorResponse(res, new Error('Authorization header not found'));
         return;

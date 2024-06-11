@@ -7,7 +7,6 @@ const {
     fetchRandomCategoryProducts,
     getProductById
 } = require("../controllers/productsController");
-const axios = require("axios");
 const router = express.Router();
 
 // Define a route for the home page
@@ -340,7 +339,7 @@ router.get('/shipping', isAuthenticated, async (req, res) => {
     res.render('base', {data: data});
 });
 
-router.get('/about_shiping',(req, res) => {
+router.get('/about-shipping',(req, res) => {
     const data = {
         title: "Home - TakeAByte",
         isAuthenticated: req.isAuthenticated,
