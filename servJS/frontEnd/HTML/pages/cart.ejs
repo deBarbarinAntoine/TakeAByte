@@ -4,6 +4,7 @@
             <div class="title">Your cart items</div>
             <a href="/shopping">Back to shopping</a>
         </div>
+
         <div class="cart-list">
             <div class="list-header">
                 <span class="label-1">Products</span>
@@ -17,17 +18,19 @@
                 <%################################################################################%>
                 <%#     cart-product templates                                                    %>
                 <%################################################################################%>
-                <% cart.products.forEach(function (product) { %>
-                    <%- include('../partials/cart-product', {product: data.product}); %>
+                <% data.cart.products.resultArray.forEach(function (product) { %>
+                    <%- include('../partials/cart-product', {product: product}); %>
                 <% }); %>
-
+                <div>
+                    <pre><%= console.log((data.cart.subtotal));%></pre>
+                </div>
             </div>
             <div class="separator"></div>
             <div class="list-footer">
                 <div class="cart-info">
                     <div class="subtotal">
                         <div class="title">Sub-total</div>
-                        <div class="subtotal-nb"><% data.cart.subtotal %></div>
+                        <div class="subtotal-nb"><%= data.cart.subtotal %> €</div>
                     </div>
                     <div class="message">Shipping will be calculated later</div>
                 </div>
