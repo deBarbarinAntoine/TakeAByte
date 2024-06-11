@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" href="http://localhost:4000/static/css/style.css">
     <title>Order - TakeAByte Shop</title>
@@ -41,7 +41,7 @@
         </div>
     </header>
 
-    <section class="template-page">
+    <div class="template-page">
         <!--        include page template       -->
         <div class="main">
             <div class="order-ctn">
@@ -61,6 +61,7 @@
                                 <span class="title">Contact</span>
                                 <div class="login"><span class="msg">Do you have an account?</span><a href="/login" class="login-link">Login</a></div>
                             </div>
+                            <label class="abs hidden" for="contact-email"></label>
                             <input type="email" placeholder="example@email.com" id="contact-email" />
                         </div>
                         <div class="address">
@@ -68,21 +69,29 @@
                                 <span class="title">Shipping Address</span>
                             </div>
                             <div class="address-name">
+                                <label class="abs hidden" for="address-name"></label>
                                 <input type="text" name="name" id="address-name" placeholder="Name" />
+                                <label class="abs hidden" for="address-lastname"></label>
                                 <input type="text" name="lastname" id="address-lastname" placeholder="Last Name" />
                             </div>
                             <div class="address-street">
+                                <label class="abs hidden" for="address-street"></label>
                                 <input type="text" name="street" id="address-street" placeholder="Address" />
                             </div>
                             <div class="address-optional">
+                                <label class="abs hidden" for="address-optional"></label>
                                 <input type="text" name="optional" id="address-optional" placeholder="Address Complement (optional)" />
                             </div>
                             <div class="address-city-region">
+                                <label class="abs hidden" for="address-city"></label>
                                 <input type="text" name="city" id="address-city" placeholder="City" />
+                                <label class="abs hidden" for="address-zip"></label>
                                 <input type="text" name="zip" id="address-zip" placeholder="ZIP Code" />
+                                <label class="abs hidden" for="address-region"></label>
                                 <input type="text" name="region" id="address-region" placeholder="Province" />
                             </div>
                             <div class="address-country">
+                                <label class="abs hidden" for="address-country"></label>
                                 <input type="text" name="country" id="address-country" placeholder="Country" />
                             </div>
                         </div>
@@ -184,7 +193,7 @@
         </div>
 
         <!--        end page template           -->
-    </section>
+    </div>
 
     <footer class="footer">
         <div class="footer-line"></div>
@@ -193,7 +202,7 @@
                 <div class="top">
                     <div class="footer-logo"><img src="http://localhost:4000/static/img/logo/takeabyte_logo_inverted_transparent.png" alt="TakeAByte logo" /></div>
                     <div class="footer-slogan">
-                        <p>Need some high tech device?</p>
+                        <p>Need some high-tech device?</p>
                         <p>Take A Byte!</p>
                     </div>
                 </div>

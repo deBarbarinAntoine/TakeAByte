@@ -119,7 +119,8 @@ Data format:
         "link": "product-link",
         "img": "product-img",
         "name": "product-name",
-        "price": "product-price"
+        "price": "product-price",
+        "isFavorite": false
       }
     ]
   }
@@ -159,7 +160,8 @@ Data format:
         "name": "spec-name",
         "content": "spec-content"
       }
-    ]
+    ],
+    "isFavorite": false
   }
 }
 ````
