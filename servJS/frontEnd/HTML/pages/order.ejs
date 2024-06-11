@@ -33,7 +33,9 @@
         <% if (!!pageName) { %>
             <%- include(`../partials/${pageName}`, {orderPage: orderPage, data: data.client}); %>
         <% } %>
-
+        <div>
+            <pre><%= console.log((data));%></pre>
+        </div>
 
     </div>
     <div class="cart-resume-ctn">
