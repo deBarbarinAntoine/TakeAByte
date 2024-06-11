@@ -76,12 +76,45 @@
     width: 100%;
     height: 100%;
 
+    .st0{
+      display: none;
+    }
+    .st1{
+      display: inline;
+    }
+    .st2{
+      fill: none;
+      stroke: $darkblue;
+      stroke-width: 8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10;
+    }
+
     .favorite-fill {
       fill: transparent;
     }
-    &.favorite .favorite-fill {
-      fill: $orange;
+    &.favorite {
+
+      .favorite-fill {
+        fill: $orange;
+      }
+      .st2{
+        fill: $orange;
+      }
     }
+  }
+}
+
+.user-icon {
+  object-fit: contain;
+  object-position: center;
+  width: 100%;
+  height: 100%;
+
+  path {
+    stroke: $darkblue;
+    stroke-width: 2.1;
   }
 }
 
@@ -117,6 +150,19 @@
   flex-direction: column;
   align-items: center;
   padding-bottom: 9rem;
+
+
+  // ###########################################################################################
+  // # error 404 page
+  // ###########################################################################################
+
+  .error404-img {
+    width: 50%;
+  }
+  h1.big-title {
+    color: $blue;
+    font-size: 5rem;
+  }
 
   // ###########################################################################################
   // # login/register/update-password/confirm form template
@@ -726,7 +772,7 @@
           border: 2px solid $darkblue;
           background: $white;
           outline: none;
-          font-family: "Dosis", sans-serif;
+          font-family: $font;
           color: $darkblue;
           font-weight: 600;
           font-size: 1.3rem;
@@ -739,11 +785,28 @@
             background: $white;
           }
         }
-
         span.title {
           font-size: 2rem;
         }
-
+        .suggestions {
+          border: 1px solid $darkblue;
+          padding: 1rem .1rem 1rem 1.5rem;
+          background-color: $white;
+          max-height: 150px;
+          overflow-y: auto;
+          display: none;
+          position: absolute;
+          z-index: 1000;
+          width: calc(100% - 1.6rem);
+          top: 100%;
+        }
+        .suggestions .suggestion {
+          padding: 8px;
+          cursor: pointer;
+        }
+        .suggestions .suggestion:hover {
+          background-color: $lightblue;
+        }
         .contact {
           display: flex;
           flex-direction: column;
@@ -805,6 +868,7 @@
           .card-number,
           .card-holder-name,
           .card-details {
+            position: relative;
             display: flex;
             justify-content: space-between;
             width: 100%;
@@ -1055,4 +1119,3 @@
     }
   }
 }
-

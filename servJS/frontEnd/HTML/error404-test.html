@@ -1,31 +1,30 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="/static/css/style.css">
-    <title><%= data.title %></title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="http://localhost:4000/static/css/style.css">
+    <title>Error 404 - TakeAByte Shop</title>
 </head>
 <body>
 <div class="page-ctn">
     <header class="header">
         <div class="header-ctn">
             <div class="logo">
-                <img src="/static/img/logo/takeabyte_logo_transparent.png" alt="TakeAByte logo" class="logo-img" />
+                <img src="http://localhost:4000/static/img/logo/takeabyte_logo_transparent.png" alt="TakeAByte logo" class="logo-img" />
             </div>
             <form action="/search" method="get" class="search-bar">
                 <button type="submit" class="search-logo">
-                    <img src="/static/img/icon/search.png" alt="search logo" />
+                    <img src="http://localhost:4000/static/img/icon/search.png" alt="search logo" />
                 </button>
-                <label class="abs hidden" for="search"></label>
                 <input type="text" name="search" id="search" placeholder="Search..." />
             </form>
             <nav class="header-nav">
                 <div class="header-link">
                     <a href="/discovery">Discovery</a>
                     <div class="discovery-expandable">
-                        <img src="/static/img/icon/simple-arrow.png" alt="arrow-expand icon" class="expand-icon" />
+                        <img src="http://localhost:4000/static/img/icon/simple-arrow.png" alt="arrow-expand icon" class="expand-icon" />
                     </div>
                 </div>
                 <div class="header-link">
@@ -36,11 +35,7 @@
                 </div>
             </nav>
             <div class="header-btns">
-                <% if (data.isAuthenticated) { %>
-                    <div class="account-btn"><img src="/static/img/icon/login.png" alt="login icon" /></div>
-                <% } else { %>
-                    <div class="account-btn"><img src="/static/img/icon/logout.png" alt="logout icon" /></div>
-                <% } %>
+                <div class="account-btn"><img src="http://localhost:4000/static/img/icon/user.png" alt="login icon" /></div>
                 <div class="cart-btn">
                     <svg class="cart-img" width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path class="line" d="M2.83179 4.38657H3.34341C4.20256 4.38657 4.96125 4.94691 5.21392 5.76808L8.27786 15.7259C8.53053 16.547 9.28921 17.1074 10.1484 17.1074H17.1114C17.9373 17.1074 18.6743 16.5889 18.9534 15.8116L20.9925 10.1312C21.679 8.21867 20.2616 6.20383 18.2295 6.20383H10.66" stroke-linecap="round"/>
@@ -53,12 +48,14 @@
     </header>
 
     <div class="template-page">
-        <%######################################################################################%>
-        <%#       Page Template                                                                 %>
-        <%######################################################################################%>
-        <%- include(`pages/${data.template}`, {data: data.templateData}); %>
+        <!--        include page template       -->
+        <div class="main-column padding-top3 gap5">
+            <img class="error404-img" src="http://localhost:4000/static/img/404.png" alt="error 404 image" />
+            <h1 class="big-title">We didn't find what you were looking for...</h1>
+            <a href="/home" class="button blue big-btn">Back to shopping</a>
+        </div>
 
-
+        <!--        end page template           -->
     </div>
 
     <footer class="footer">
@@ -66,9 +63,9 @@
         <div class="footer-ctn">
             <div class="footer-left">
                 <div class="top">
-                    <div class="footer-logo"><img src="/static/img/logo/takeabyte_logo_inverted_transparent.png" alt="TakeAByte logo" /></div>
+                    <div class="footer-logo"><img src="http://localhost:4000/static/img/logo/takeabyte_logo_inverted_transparent.png" alt="TakeAByte logo" /></div>
                     <div class="footer-slogan">
-                        <p><%= data.slogan %></p>
+                        <p>Need some high-tech device?</p>
                         <p>Take A Byte!</p>
                     </div>
                 </div>
@@ -96,5 +93,6 @@
         </div>
     </footer>
 </div>
+<script src="../static/js/testing.js"></script>
 </body>
 </html>

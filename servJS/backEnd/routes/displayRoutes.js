@@ -1,4 +1,5 @@
 const express = require('express');
+const axios = require('axios');
 const {isAuthenticated} = require("../middleware/auth");
 const {
     fetchLatestProducts,
@@ -19,7 +20,6 @@ router.get('/fav', (req, res) => {
 });
 
 router.get('/home', isAuthenticated, async (req, res) => {
-
     try {
         // Call functions to fetch latest, popular, and random products
         const latestProducts = await fetchLatestProducts();
@@ -221,16 +221,18 @@ router.get('/cart', isAuthenticated, (req, res) => {
     };
     res.render('base', {data: data});
 })
+
 router.get('/checkout', isAuthenticated, (req, res) => {
     const data = {
         title: "Home - TakeAByte",
         isAuthenticated: req.isAuthenticated,
-        template: "register",
+        template: "order",
         templateData: {},
         slogan: "Your Trusted Tech Partner"
     };
     res.render('base', {data: data});
 })
+
 router.get('/order-confirmation', isAuthenticated, (req, res) => {
     const data = {
         title: "Home - TakeAByte",
@@ -291,16 +293,68 @@ router.get('/terms-conditions', isAuthenticated, (req, res) => {
     };
     res.render('base', {data: data});
 })
-router.get('/shipping', isAuthenticated, (req, res) => {
+router.get('/shipping', isAuthenticated, async (req, res) => {
+    const lon = req.body.longitude;
+    const lat = req.body.latitude;
+    let postData
+    try {
+        // Make axios request to get close delivery points
+        const deliveryPointsResponse = await axios.get(`http://localhost:4000/api/getCloseDeliveryPoint/5000/${lat}/${lon}`);
+        // Extract delivery points from response
+        const deliveryPoints = deliveryPointsResponse.data;
+        // Calculate the distances of each delivery point from the given coordinates
+        const distances = deliveryPoints.deliveryPoints.map(point => {
+            const { lon: pointLon, lat: pointLat } = point;
+            // Calculate distance (you can use any suitable formula here)
+            const distance = Math.sqrt(Math.pow(lon - pointLon, 2) + Math.pow(lat - pointLat, 2));
+            return { ...point, distance };
+        });
+
+        // Sort the delivery points by distance
+        distances.sort((a, b) => a.distance - b.distance);
+
+        // Get the closest delivery point
+        const closestDeliveryPoint = distances[0];
+
+        // Make axios request to get address for the closest delivery point
+        const addressResponse = await axios.get(`http://localhost:4000/api/getAddress/${closestDeliveryPoint.latitude},${closestDeliveryPoint.longitude}`);
+
+        // Extract address from response
+        const address = addressResponse.data[0].address;
+
+        postData =({ closestDeliveryPoint, address });
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+
+    const data = {
+        title: "Home - TakeAByte",
+        isAuthenticated: req.isAuthenticated,
+        template: "shipping",
+        templateData: {
+            nearbyPost : postData
+        },
+        slogan: "Your Trusted Tech Partner"
+    };
+    res.render('base', {data: data});
+});
+
+router.get('/about_shiping',(req, res) => {
     const data = {
         title: "Home - TakeAByte",
         isAuthenticated: req.isAuthenticated,
         template: "about-shipping",
-        templateData: {},
+        templateData: {
+            nearbyPost :{}
+        },
         slogan: "Your Trusted Tech Partner"
     };
     res.render('base', {data: data});
 })
+
+
+
 router.get('/register', isAuthenticated, (req, res) => {
     const data = {
         title: "Home - TakeAByte",
@@ -311,6 +365,9 @@ router.get('/register', isAuthenticated, (req, res) => {
     };
     res.render('base', {data: data});
 })
+
+
+
 
 
 // Define a route for the 404 page

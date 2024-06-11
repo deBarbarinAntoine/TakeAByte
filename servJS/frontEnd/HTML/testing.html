@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" href="http://localhost:4000/static/css/style.css">
     <title>Order - TakeAByte Shop</title>
@@ -36,12 +36,18 @@
             </nav>
             <div class="header-btns">
                 <div class="account-btn"><img src="http://localhost:4000/static/img/icon/user.png" alt="login icon" /></div>
-                <div class="cart-btn"><img src="http://localhost:4000/static/img/icon/cart.png" alt="cart icon" /></div>
+                <div class="cart-btn">
+                    <svg class="cart-img" width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path class="line" d="M2.83179 4.38657H3.34341C4.20256 4.38657 4.96125 4.94691 5.21392 5.76808L8.27786 15.7259C8.53053 16.547 9.28921 17.1074 10.1484 17.1074H17.1114C17.9373 17.1074 18.6743 16.5889 18.9534 15.8116L20.9925 10.1312C21.679 8.21867 20.2616 6.20383 18.2295 6.20383H10.66" stroke-linecap="round"/>
+                        <circle class="wheel" cx="10.1707" cy="20.5322" r="1.46779"/>
+                        <circle class="wheel" cx="17.0204" cy="20.5322" r="1.46779"/>
+                    </svg>
+                </div>
             </div>
         </div>
     </header>
 
-    <section class="template-page">
+    <div class="template-page">
         <!--        include page template       -->
         <div class="main">
             <div class="order-ctn">
@@ -55,12 +61,13 @@
                         <div class="title-separator">></div>
                         <div class="title-text">Payment</div>
                     </div>
-                    <form action="/shipping" class="order-form" method="post">
+                    <form action="" class="order-form" method="post">
                         <div class="contact">
                             <div class="contact-header">
                                 <span class="title">Contact</span>
                                 <div class="login"><span class="msg">Do you have an account?</span><a href="/login" class="login-link">Login</a></div>
                             </div>
+                            <label class="abs hidden" for="contact-email"></label>
                             <input type="email" placeholder="example@email.com" id="contact-email" />
                         </div>
                         <div class="address">
@@ -68,21 +75,29 @@
                                 <span class="title">Shipping Address</span>
                             </div>
                             <div class="address-name">
+                                <label class="abs hidden" for="address-name"></label>
                                 <input type="text" name="name" id="address-name" placeholder="Name" />
+                                <label class="abs hidden" for="address-lastname"></label>
                                 <input type="text" name="lastname" id="address-lastname" placeholder="Last Name" />
                             </div>
                             <div class="address-street">
-                                <input type="text" name="street" id="address-street" placeholder="Address" />
+                                <input type="text" name="street" id="address-street" placeholder="Address" autocomplete="off"/>
+                                <div id="address-suggestions" class="suggestions"></div>
                             </div>
                             <div class="address-optional">
+                                <label class="abs hidden" for="address-optional"></label>
                                 <input type="text" name="optional" id="address-optional" placeholder="Address Complement (optional)" />
                             </div>
                             <div class="address-city-region">
+                                <label class="abs hidden" for="address-city"></label>
                                 <input type="text" name="city" id="address-city" placeholder="City" />
+                                <label class="abs hidden" for="address-zip"></label>
                                 <input type="text" name="zip" id="address-zip" placeholder="ZIP Code" />
+                                <label class="abs hidden" for="address-region"></label>
                                 <input type="text" name="region" id="address-region" placeholder="Province" />
                             </div>
                             <div class="address-country">
+                                <label class="abs hidden" for="address-country"></label>
                                 <input type="text" name="country" id="address-country" placeholder="Country" />
                             </div>
                         </div>
@@ -184,7 +199,7 @@
         </div>
 
         <!--        end page template           -->
-    </section>
+    </div>
 
     <footer class="footer">
         <div class="footer-line"></div>
@@ -193,7 +208,7 @@
                 <div class="top">
                     <div class="footer-logo"><img src="http://localhost:4000/static/img/logo/takeabyte_logo_inverted_transparent.png" alt="TakeAByte logo" /></div>
                     <div class="footer-slogan">
-                        <p>Need some high tech device?</p>
+                        <p>Need some high-tech device?</p>
                         <p>Take A Byte!</p>
                     </div>
                 </div>
@@ -221,5 +236,7 @@
         </div>
     </footer>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="../static/js/testing.js"></script>
 </body>
 </html>

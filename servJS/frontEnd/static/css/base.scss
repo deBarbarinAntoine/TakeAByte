@@ -62,6 +62,10 @@ $font-weight: 600;
   position: absolute;
 }
 
+.hidden {
+  display: none;
+}
+
 .full {
   width: 100%;
   height: 100%;
@@ -97,11 +101,31 @@ $font-weight: 600;
 }
 
 // ##############################################################################################
-// # buttons
+// # icons & buttons
 // ##############################################################################################
+
+
+.cart-img {
+  object-fit: contain;
+  object-position: center;
+  width: 100%;
+  height: 100%;
+
+  .line {
+    stroke-width: 2;
+    stroke: $darkblue;
+  }
+  .wheel {
+    fill: $darkblue;
+  }
+}
+
 
 button,
 .button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: .5rem;
   padding: 1rem 2rem;
   appearance: none;
@@ -112,6 +136,16 @@ button,
   height: fit-content;
   width: fit-content;
 
+  img,
+  svg {
+    margin: 0 1.5rem 0 0;
+    width: 2rem;
+    aspect-ratio: 1;
+
+    .line, .wheel {
+      transition: all 200ms ease-in-out 50ms;
+    }
+  }
   &.blue {
     background-color: $blue;
     color: $white;
@@ -120,6 +154,16 @@ button,
   &:hover:not(.disabled, &[disabled]) {
     background-color: $orange;
     color: $darkblue;
+
+    svg {
+      .line {
+        stroke-width: 2;
+        stroke: $white;
+      }
+      .wheel {
+        fill: $white;
+      }
+    }
   }
   &.white {
     border: 2px solid $blue;
@@ -137,10 +181,10 @@ button,
     border: none;
     cursor: not-allowed;
   }
-  img {
-    margin: 0 1.5rem 0 0;
-    width: 1.2rem;
-    aspect-ratio: 1;
+  &.big-btn {
+    border-radius: .7rem;
+    padding: 1.7rem 3.4rem;
+    font-size: 2rem;
   }
 }
 
@@ -191,10 +235,11 @@ body {
       form.search-bar {
         display: flex;
         justify-content: space-between;
+        align-items: center;
         flex: 1 2 initial;
         min-width: 6.7rem;
         gap: 1.8rem;
-        padding: 5px 10px;
+        padding: .3rem 1.3rem;
         width: 28rem;
         height: 2rem;
         border-radius: .6rem;
@@ -273,11 +318,12 @@ body {
         display: flex;
         flex: 1;
         justify-content: flex-end;
+        align-items: center;
         gap: 2.2rem;
 
         .account-btn {
-          width: 2rem;
-          height: 2rem;
+          width: 2.3rem;
+          height: 2.3rem;
 
           img {
             object-fit: contain;
@@ -287,8 +333,8 @@ body {
           }
         }
         .cart-btn {
-          width: 2.4rem;
-          height: 2.4rem;
+          width: 2.6rem;
+          aspect-ratio: 1;
 
           img {
             object-fit: contain;
@@ -305,7 +351,7 @@ body {
   // # template container
   // ##############################################################################################
 
-  section.template-page {
+  .template-page {
     flex: 1;
   }
 

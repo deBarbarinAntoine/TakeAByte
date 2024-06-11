@@ -12,6 +12,7 @@
                 <span class="title">Contact</span>
                 <div class="login"><span class="msg">Do you have an account?</span><a href="/login" class="login-link">Login</a></div>
             </div>
+            <label class="abs hidden" for="contact-email"></label>
             <input type="email" name="email" placeholder="example@email.com" id="contact-email" />
         </div>
         <div class="address">
@@ -19,21 +20,29 @@
                 <span class="title">Shipping Address</span>
             </div>
             <div class="address-name">
+                <label class="abs hidden" for="address-name"></label>
                 <input type="text" name="name" id="address-name" placeholder="Name" required autofocus <% if (!!data.name) { %><%= `value="${data.name}"` %><% } %> />
+                <label class="abs hidden" for="address-lastname"></label>
                 <input type="text" name="lastname" id="address-lastname" placeholder="Last Name" required <% if (!!data.lastName) { %><%= `value="${data.lastName}"` %><% } %> />
             </div>
             <div class="address-street">
+                <label class="abs hidden" for="address-street"></label>
                 <input type="text" name="street" id="address-street" placeholder="Address" required <% if (!!data.street) { %><%= `value="${data.street}"` %><% } %> />
             </div>
             <div class="address-optional">
+                <label class="abs hidden" for="address-optional"></label>
                 <input type="text" name="optional" id="address-optional" placeholder="Address Complement (optional)" <% if (!!data.complement) { %><%= `value="${data.complement}"` %><% } %> />
             </div>
             <div class="address-city-region">
+                <label class="abs hidden" for="address-city"></label>
                 <input type="text" name="city" id="address-city" placeholder="City" required <% if (!!data.city) { %><%= `value="${data.city}"` %><% } %> />
+                <label class="abs hidden" for="address-zip"></label>
                 <input type="text" name="zip" id="address-zip" placeholder="ZIP Code" required <% if (!!data.zip) { %><%= `value="${data.zip}"` %><% } %> />
+                <label class="abs hidden" for="address-region"></label>
                 <input type="text" name="region" id="address-region" placeholder="Province" <% if (!!data.province) { %><%= `value="${data.province}"` %><% } %> />
             </div>
             <div class="address-country">
+                <label class="abs hidden" for="address-country"></label>
                 <input type="text" name="country" id="address-country" placeholder="Country" required <% if (!!data.country) { %><%= `value="${data.country}"` %><% } %> />
             </div>
         </div>
