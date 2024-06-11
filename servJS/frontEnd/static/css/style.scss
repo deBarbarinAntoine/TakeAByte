@@ -727,7 +727,7 @@
           border: 2px solid $darkblue;
           background: $white;
           outline: none;
-          font-family: "Dosis", sans-serif;
+          font-family: $font;
           color: $darkblue;
           font-weight: 600;
           font-size: 1.3rem;
@@ -743,6 +743,28 @@
 
         span.title {
           font-size: 2rem;
+        }
+
+        .suggestions {
+          border: 1px solid $darkblue;
+          padding: 1rem .1rem 1rem 1.5rem;
+          background-color: $white;
+          max-height: 150px;
+          overflow-y: auto;
+          display: none;
+          position: absolute;
+          z-index: 1000;
+          width: calc(100% - 1.6rem);
+          top: 100%;
+        }
+
+        .suggestions .suggestion {
+          padding: 8px;
+          cursor: pointer;
+        }
+
+        .suggestions .suggestion:hover {
+          background-color: #f0f0f0;
         }
 
         .contact {
@@ -806,6 +828,7 @@
           .card-number,
           .card-holder-name,
           .card-details {
+            position: relative;
             display: flex;
             justify-content: space-between;
             width: 100%;
@@ -1055,27 +1078,4 @@
       }
     }
   }
-}
-
-
-
-// nico est passer par la
-.suggestions {
-  border: 1px solid #ccc;
-  background-color: #fff;
-  max-height: 150px;
-  overflow-y: auto;
-  display: none;
-  position: absolute;
-  z-index: 1000;
-  width: 100%;
-}
-
-.suggestions .suggestion {
-  padding: 8px;
-  cursor: pointer;
-}
-
-.suggestions .suggestion:hover {
-  background-color: #f0f0f0;
 }
