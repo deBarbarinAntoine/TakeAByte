@@ -362,13 +362,23 @@ router.get('/cart', isAuthenticated, async (req, res) => {
     res.render('base', {data: data});
 })
 
-router.post('/order', isAuthenticated, (req, res) => {
+router.get('/order', isAuthenticated, (req, res) => {
     // Retrieve the data from the request body
     const orderData = req.body;
 
     // Log the data to the console
     console.log(orderData);
 
+
+    const data = {
+        title: "Products - TakeAByte",
+        isAuthenticated: req.isAuthenticated,
+        template: "order",
+        templateData: orderData,
+        slogan: "Your Trusted Tech Partner",
+
+    };
+    res.render('base', {data: data});
     // Other logic related to processing the order
 });
 

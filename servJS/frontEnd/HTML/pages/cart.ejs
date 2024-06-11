@@ -39,18 +39,21 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        console.log('ui')
         document.querySelector('.button.blue').addEventListener('click', function() {
-            console.log('ui');
-            axios.post('/order', {
+            axios.get('/order', {
                 data: <%- JSON.stringify(data) %>
             })
-                .then(function (response) {
-                    //console.log(response);
+                .then(function(response) {
+                    // Handle response if needed
+                    // This block will only execute if there is a successful response
                 })
-                .catch(function (error) {
+                .catch(function(error) {
                     console.error(error);
                     // Handle error, if needed
+                })
+                .finally(function() {
+                    // Redirect to another page regardless of response
+                    window.location.href = '/order';
                 });
         });
     });
