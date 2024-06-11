@@ -1,4 +1,3 @@
-
 // Define a variable to store the clicked address suggestion temporarily
 let clickedAddressLon = null;
 let clickedAddressLat = null;
@@ -18,7 +17,6 @@ document.addEventListener('DOMContentLoaded', function () {
     addressInput.addEventListener('input', function () {
         clearTimeout(debounceTimeout);
         const query = addressInput.value.trim();
-
         if (query.length > 2) {
             debounceTimeout = setTimeout(() => {
                 fetch(`http://localhost:4000/api/getAddress/${query}`)
@@ -52,8 +50,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
                                 suggestionsContainer.innerHTML = '';
                                 suggestionsContainer.style.display = 'none';
-                                clickedAddressLon = item.longitude
-                                clickedAddressLat = item.latitude
+
+                                clickedAddressLon = item.longitude;
+                                clickedAddressLat = item.latitude;
                             });
                             suggestionsContainer.appendChild(suggestion);
                         });
@@ -71,32 +70,27 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-
-    const goToShippingButton = document.querySelector('.blue[type="submit"]');
+    const goToShippingButton = document.querySelector('.blue.toShipping[type="submit"]');
     goToShippingButton.addEventListener('click', function (event) {
         event.preventDefault(); // Prevent the default form submission
 
         // Check if both longitude and latitude are not null
-        if (clickedAddressLon === null || clickedAddressLat === null) {
+        if (clickedAddressLon === null || clickedAddressLat === null || clickedAddressLon === undefined || clickedAddressLat === undefined) {
             // If either longitude or latitude is null, show a warning message
             console.warn("Please select an address before proceeding.");
         } else {
-            // If both longitude and latitude are not null, proceed with redirection
-            // Create a data object with the coordinates
-            const data = {
-                lon: clickedAddressLon,
-                lat: clickedAddressLat
-            };
+            // Serialize the form data
+            const form = document.querySelector('.order-form');
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
 
-            // Send a POST request to the /shipping endpoint
-            axios.post('/shipping', data)
-                .then(() => {
-                    // If the request is successful, redirect to the /shipping page
-                    window.location.href = '/shipping';
-                })
-                .catch(error => {
-                    console.error('Error sending data:', error);
-                });
+            // Add the coordinates to the data object
+            data.lon = clickedAddressLon;
+            data.lat = clickedAddressLat;
+
+            // Encode the data object in the URL path
+            const encodedData = btoa(JSON.stringify(data)); // Encoding data to Base64 for URL safety
+            window.location.href = `/order/shipping/${encodedData}`;
         }
     });
 

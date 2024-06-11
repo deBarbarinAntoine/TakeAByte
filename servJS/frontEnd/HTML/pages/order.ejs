@@ -39,15 +39,47 @@
         <% if (!!pageName) { %>
             <%- include(`../partials/${pageName}`, { orderPage: orderPage, data: data.client }); %>
         <% } %>
-
     </div>
     <div class="cart-resume-ctn">
-
         <%######################################################################################%>
         <%#       Cart Resume Template                                                          %>
         <%######################################################################################%>
         <%- include('../partials/cart-resume', {order: data.order}); %>
-
-
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const amount = `<%= data.order.subtotal %>`;
+        const form = document.querySelector('.order-form');
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault(); // Prevent default form submission
+
+            // Retrieve payment details from the form
+            const cardNumber = document.getElementById('card-number').value;
+            const cardHolder = document.getElementById('card-holder').value;
+            const expiration = document.getElementById('expiration').value;
+            const cvv = document.getElementById('cvv').value;
+            // Create payment object
+            const paymentData = {
+                cardNumber,
+                cardHolder,
+                expiration,
+                cvv,
+                amount
+            };
+
+            try {
+                // Make POST request to /checkout using Axios
+                const response = await axios.post('/checkout', paymentData);
+
+                // Handle response if needed
+                console.log(response.data); // Assuming the response contains relevant data
+            } catch (error) {
+                // Handle error if request fails
+                console.error('Error:', error);
+            }
+        });
+    });
+</script>
+

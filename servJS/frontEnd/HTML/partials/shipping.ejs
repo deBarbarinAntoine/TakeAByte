@@ -1,22 +1,21 @@
-<div class="order-address">
+<div class="order-left">
 
     <%######################################################################################%>
     <%#       Order Nav Template                                                            %>
     <%######################################################################################%>
-    <%- include('../order-nav', {page: orderPage}); %>
+    <%- include('./order-nav', {page: orderPage}); %>
 
-
-    <form action="/shipping" class="order-form" method="post">
+    <form action="#" class="order-form" method="post">
         <div class="recap">
             <div class="contact">
                 <div class="title">Contact</div>
-                <div class="content"><%= client.email %></div>
+                <div class="content"><%= data.client.email %></div>
                 <a class="edit-link" href="/address">Edit</a>
             </div>
             <div class="separator"></div>
             <div class="shipping-address">
                 <div class="title">Ship to</div>
-                <div class="content"><%= `${client.street}, ${client.complement}, ${client.zip}, ${client.province}, ${client.city}, ${client.country}` %></div>
+                <div class="content"><%= `${data.client.street}, ${data.client.optional}, ${data.client.zip}, ${data.client.region}, ${data.client.city}, ${data.client.country}` %></div>
                 <a class="edit-link" href="/address">Edit</a>
             </div>
         </div>
@@ -29,10 +28,25 @@
                 <label for="shipping-method">Standart shipping</label>
                 <span class="shipping-cost">FREE</span>
             </div>
+            <div class="recap">
+                <div class="contact">
+                    <input type="radio" name="shipping-method" id="shipping-method" value="standard" checked required />
+                    <label for="shipping-method">Shipping to nearby post office</label>
+                    <span class="shipping-cost">FREE</span>
+                </div>
+                <div class="separator"></div>
+                <div class="shipping-address">
+                    <div class="title">Ship to</div>
+                    <div class="content"><%= `${data.nearestPost.postData.address}`%>,</div>
+                    <a class="edit-link" href="/address">Edit</a>
+                </div>
+            </div>
         </div>
         <div class="btns">
             <a href="/cart" class="back-link">Back to details</a>
-            <button class="blue" type="submit">Go to payment</button>
+            <button class="blue buttonToPayment" type="submit">Go to payment</button>
         </div>
     </form>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/static/js/shipping.js"></script>
