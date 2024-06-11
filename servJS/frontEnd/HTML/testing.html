@@ -75,8 +75,8 @@
                                 <input type="text" name="lastname" id="address-lastname" placeholder="Last Name" />
                             </div>
                             <div class="address-street">
-                                <label class="abs hidden" for="address-street"></label>
-                                <input type="text" name="street" id="address-street" placeholder="Address" />
+                                <input type="text" name="street" id="address-street" placeholder="Address" autocomplete="off"/>
+                                <div id="address-suggestions" class="suggestions"></div>
                             </div>
                             <div class="address-optional">
                                 <label class="abs hidden" for="address-optional"></label>
@@ -230,5 +230,6 @@
         </div>
     </footer>
 </div>
+<script src="../static/js/testing.js"></script>
 </body>
 </html>
