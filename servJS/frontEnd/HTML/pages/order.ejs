@@ -9,9 +9,9 @@
             const classes = ['', '', ''];
             if (index < 0 || index > 2) return classes; // Invalid index check
             for (let i = 0; i < index; ++i ) {
-                classes[i] = 'previous'; // Mark all previous steps
+                classes[i] = ' previous'; // Mark all previous steps
             }
-            classes[index] = 'current'; // Mark the current step
+            classes[index] = ' current'; // Mark the current step
             return classes;
         };
 
