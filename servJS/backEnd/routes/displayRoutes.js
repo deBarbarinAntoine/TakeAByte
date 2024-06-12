@@ -612,9 +612,11 @@ router.get('/paymentOk', isAuthenticated, async (req,res) => {
     // Read the cart cookie
     const cartCookie = req.cookies.cart;
     const token = process.env.WEB_TOKEN;
+    const createOrderUrl = "http://localhost:3001/v1/orders"
     // Initialize a map to store the total quantity and price for each unique item
     const cartItemsMap = new Map();
     let imagePaths;
+    let orderId;
 
     // Iterate through the items in the cart and aggregate quantities and prices
     if (cartCookie) {
@@ -743,8 +745,25 @@ router.get('/paymentOk', isAuthenticated, async (req,res) => {
         });
         return subtotal;
     }
+    const formattedItems = resultArray.map(item => ({
+        product_id: item.product[0].product_id, // Assuming product_id is stored under id property of product
+        quantity: item.quantityOrdered
+    }));
 
+    try {
+        const response = await axios.post(createOrderUrl, {
+            items : formattedItems
+        }, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
 
+        orderId = response.data.order_id
+
+    } catch (err) {
+        console.log(err)
+    }
 
     const data = {
         title: "Home - TakeAByte",
@@ -752,6 +771,7 @@ router.get('/paymentOk', isAuthenticated, async (req,res) => {
         template: 'order',
         slogan: "Your Trusted Tech Partner",
         templateData: {
+            client :{orderId},
             page: 'payment-confirmed',
             order: {
                 products: {resultArray},
