@@ -18,6 +18,12 @@ Pour configurer le projet, suivez ces étapes :
 
 5. **Fichier Web Market:** Le fichier Web Market est [brève description du fichier Web Market et de son but]. Obtenez le chemin complet vers ce fichier, qui devrait ressembler à C://chemin/vers/fichier_web_market.
 
+6. **Cookies:** Assurez-vous que les cookies pour localhost:4000 sont effacés à des fins de test car cette fonctionnalité n'est pas encore implémentée dans le script.
+
+7. **DataBase Nom:** Faites attention au nom que vous donner a vote base de donné qu'il ne sois pas déja existant.
+
+8. **Prêt ?:** Si tous est check , lancé le "setup_databse.bat" dans le dosser INSTALL et suivez les instructions.
+
 ## Utilisation
 
 Une fois que vous avez préparé les chemins mentionnés ci-dessus, vous pouvez procéder à la configuration du projet. Des instructions détaillées sur la façon de le faire se trouvent dans la documentation de TakeaByte.

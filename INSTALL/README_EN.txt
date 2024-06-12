@@ -18,6 +18,12 @@ To set up the project, follow these steps:
 
 5. **Web Market File:** The Web Market file is [brief description of the Web Market file and its purpose]. Obtain the full path to this file, which should look like `C://path/to/web_market_file`.
 
+6. **Cookies:** Please assure that your coockies for localhost:4000 are cleared for test purpose as it's still not implemented in the script.
+
+7. **DataBase Name:** Please assure that you don't use a data base name that you already use .
+
+8. **Ready ?:** Once you're all ready , start the "setupe_database.bat" in the INSTALL folder and follow the instruction.
+
 ## Usage
 
 Once you have prepared the paths mentioned above, you can proceed with the setup and configuration of the project. Detailed instructions on how to do this can be found in the TakeaByte documentation.
