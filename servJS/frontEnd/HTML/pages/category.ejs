@@ -1,14 +1,9 @@
-<div class="main-column gap5 padding-top3 relative">
-
-    <%######################################################################################%>
-    <%#       Title Nav Template                                                            %>
-    <%######################################################################################%>
-    <%- include('../partials/stroll-nav', {data: data.navData}); %>
+<div class="main">
 
     <%# remove the condition when data.filters is fully implemented %>
     <% if (!!data.filters) { %>
 
-        <div class="filters-ctn abs">
+        <div class="filters-ctn">
 
             <%######################################################################################%>
             <%#       Filters Template                                                              %>
@@ -19,14 +14,23 @@
 
     <% } %>
 
-    <div class="category-ctn">
-
+    <div class="main-column padding-top3 gap5 flex1">
         <%######################################################################################%>
-        <%#       Product-Card Template                                                         %>
+        <%#       Title Nav Template                                                            %>
         <%######################################################################################%>
-        <% data.category.products.forEach(function (product) { %>
-            <%- include('../partials/product-card', {product: product}); %>
-        <% }); %>
+        <%- include('../partials/stroll-nav', {data: data.navData}); %>
 
+
+
+        <div class="category-ctn">
+
+            <%######################################################################################%>
+            <%#       Product-Card Template                                                         %>
+            <%######################################################################################%>
+            <% data.category.products.forEach(function (product) { %>
+                <%- include('../partials/product-card', {product: product}); %>
+            <% }); %>
+
+        </div>
     </div>
 </div>

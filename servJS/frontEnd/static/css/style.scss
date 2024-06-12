@@ -155,45 +155,48 @@
 // # filters
 // ###########################################################################################
 
-form.filters {
-  height: calc(100% - 6rem);
+.filters-ctn {
   width: 14vw;
   padding: 3rem 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 3.5rem;
   background-color: $darkblue;
 
-  .label {
-    font-size: 1.8rem;
-    color: $lightblue;
-  }
-  input {
-    position: absolute;
-    display: none;
-  }
-  .categories,
-  .prices,
-  .brands {
+  form.filters {
     display: flex;
-    flex-flow: row wrap;
-    gap: .5rem;
+    flex-direction: column;
+    gap: 6rem;
 
-    label {
-      padding: .5rem 1rem;
-      font-size: 1.3rem;
-      color: $blue;
-      background-color: $lightblue;
-      border-radius: .5rem;
-      cursor: pointer;
+    .label {
+      font-size: 1.8rem;
+      color: $lightblue;
+      margin-bottom: -4.5rem;
     }
-  }
-  .selected {
-    color: $darkblue;
-    background-color: $orange;
-  }
-  .btn-ctn {
-   margin: 0 auto;
+    input {
+      position: absolute;
+      display: none;
+    }
+    .categories,
+    .prices,
+    .brands {
+      display: flex;
+      flex-flow: row wrap;
+      gap: .5rem;
+
+      label {
+        padding: .5rem 1rem;
+        font-size: 1.3rem;
+        color: $blue;
+        background-color: $lightblue;
+        border-radius: .5rem;
+        cursor: pointer;
+      }
+    }
+    label.selected {
+      color: $darkblue;
+      background-color: $orange;
+    }
+    .btn-ctn {
+      margin: 0 auto;
+    }
   }
 }
 
@@ -438,6 +441,7 @@ form.filters {
     display: flex;
     flex-direction: column;
     align-items: center;
+    max-width: 35rem;
 
     &.swiper-slide {
       aspect-ratio: 3/5;

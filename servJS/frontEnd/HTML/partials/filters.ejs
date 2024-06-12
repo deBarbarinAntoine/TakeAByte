@@ -1,4 +1,4 @@
-<form class="filters">
+<form class="filters full">
 
     <%# Check if there are categories sent %>
     <% if (!!filters.categories) { %>
@@ -32,6 +32,8 @@
         <label for="price-all" class="price">None</label>
         <input type="radio" name="price" value="all" id="price-all" class="price-filter" hidden />
     </div>
+
+    <div class="label">Brands:</div>
     <div class="brands">
 
         <%#         displaying brands filters         %>
@@ -45,10 +47,19 @@
     </div>
 </form>
 <script>
-    const labels = document.querySelectorAll('.categories label, .prices label, .brands label');
-    labels.forEach(label => {
+    const labelsRadio = document.querySelectorAll('.prices label');
+    labelsRadio.forEach(label => {
        label.addEventListener('click', event => {
+           labelsRadio.forEach(label => {
+               if (label !== event.target) label.classList.remove('selected');
+           });
            event.target.classList.toggle('selected');
        });
+    });
+    const labelsCheckbox = document.querySelectorAll('.categories label, .brands label');
+    labelsCheckbox.forEach(label => {
+        label.addEventListener('click', event => {
+            event.target.classList.toggle('selected');
+        });
     });
 </script>

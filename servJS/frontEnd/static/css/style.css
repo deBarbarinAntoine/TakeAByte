@@ -560,33 +560,35 @@ body footer.footer .footer-ctn .footer-links .link-group a:hover {
   cursor: auto;
 }
 
-form.filters {
-  height: calc(100% - 6rem);
+.filters-ctn {
   width: 14vw;
   padding: 3rem 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 3.5rem;
   background-color: #112D4E;
 }
-form.filters .label {
+.filters-ctn form.filters {
+  display: flex;
+  flex-direction: column;
+  gap: 6rem;
+}
+.filters-ctn form.filters .label {
   font-size: 1.8rem;
   color: #DBE2EF;
+  margin-bottom: -4.5rem;
 }
-form.filters input {
+.filters-ctn form.filters input {
   position: absolute;
   display: none;
 }
-form.filters .categories,
-form.filters .prices,
-form.filters .brands {
+.filters-ctn form.filters .categories,
+.filters-ctn form.filters .prices,
+.filters-ctn form.filters .brands {
   display: flex;
   flex-flow: row wrap;
   gap: 0.5rem;
 }
-form.filters .categories label,
-form.filters .prices label,
-form.filters .brands label {
+.filters-ctn form.filters .categories label,
+.filters-ctn form.filters .prices label,
+.filters-ctn form.filters .brands label {
   padding: 0.5rem 1rem;
   font-size: 1.3rem;
   color: #3F72AF;
@@ -594,11 +596,11 @@ form.filters .brands label {
   border-radius: 0.5rem;
   cursor: pointer;
 }
-form.filters .selected {
+.filters-ctn form.filters label.selected {
   color: #112D4E;
   background-color: #FBA834;
 }
-form.filters .btn-ctn {
+.filters-ctn form.filters .btn-ctn {
   margin: 0 auto;
 }
 
@@ -783,6 +785,7 @@ form.filters .btn-ctn {
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 35rem;
 }
 .main-column .product-card.swiper-slide {
   aspect-ratio: 3/5;
