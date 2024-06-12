@@ -201,7 +201,7 @@ const newPasswordQuery = 'UPDATE users SET password_hash = ? WHERE user_id = ?;'
 const creatBrandQuery = "INSERT INTO brands (name) VALUES (?)";
 
 // GET /api/brands/:id: Get brand by ID.
-const getBrandQuery = "SELECT * FROM brands WHERE brand_id = ?";
+const getBrandQuery = "SELECT * FROM brands WHERE brand_id IN (?)";
 
 // PUT /api/brands/:id: Update brand by ID.
 const updateBrandQuery = "UPDATE brands SET name = ? WHERE brand_id = ?";

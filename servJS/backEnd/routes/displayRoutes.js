@@ -5,8 +5,10 @@ const {
     fetchLatestProducts,
     fetchPopularProducts,
     fetchRandomCategoryProducts,
-    getProductById
+    getProductById, getProductByTypeId
 } = require("../controllers/productsController");
+const {getTypeNameById} = require("../controllers/typeController");
+const {getBrandByIds} = require("../controllers/brandController");
 const router = express.Router();
 
 router.get('/home', isAuthenticated, async (req, res) => {
@@ -750,7 +752,7 @@ router.get('/paymentOk', isAuthenticated, async (req, res) => {
         orderId = response.data.order_id
 
     } catch (err) {
-        console.log(err)
+        console.error(err)
     }
 
     const data = {
@@ -1190,7 +1192,23 @@ router.get('/register', isAuthenticated, (req, res) => {
     res.render('base', {data: data});
 })
 
-router.get('/category', isAuthenticated, (req, res) => {
+router.get('/category/:type_id', isAuthenticated, async (req, res) => {
+    const type_id = req.params.type_id;
+    let type_name;
+    let product_list
+    let brand_list
+    try {
+
+        type_name = await getTypeNameById(type_id);
+        product_list = await getProductByTypeId(type_id)
+        const brandIds = product_list.map(product => product.brand);
+        brand_list = await getBrandByIds(brandIds);
+
+    } catch (err) {
+        console.error('Error in router handler:', err);
+
+    }
+
     const data = {
         title: "Home - TakeAByte",
         isAuthenticated: req.isAuthenticated,
@@ -1198,30 +1216,17 @@ router.get('/category', isAuthenticated, (req, res) => {
         templateData: {
             "navData": [
                 {
-                    "link": "nav-link",
-                    "className": "nav-class",
-                    "title": "nav-title"
+                    "link": "/category/2",
+                    "className":  " current",
+                    "title": type_name
                 }
             ],
             "category": {
-                "products": [
-                    {
-                        "link": "product-link",
-                        "img": "product-img",
-                        "name": "product-name",
-                        "price": "product-price",
-                        "isFavorite": false
-                    }
-                ]
+                "products": product_list
             },
             "filters": {
                 "categories": null,
-                "brands": [
-                    {
-                        "id": "brand-id",
-                        "name": "brand-name"
-                    }
-                ]
+                "brands":brand_list
             }
         },
         slogan: "Your Trusted Tech Partner"

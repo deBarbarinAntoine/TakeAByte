@@ -1,5 +1,4 @@
 <form class="filters full">
-
     <%# Check if there are categories sent %>
     <% if (!!filters.categories) { %>
         <div class="label">Categories:</div>
@@ -38,8 +37,8 @@
 
         <%#         displaying brands filters         %>
         <% filters.brands.forEach(brand => { %>
-            <label for="<%= brand.id %>" class="brand"><%= brand.name %></label>
-            <input type="checkbox" name="brand" value="<%= brand.id %>" id="<%= brand.id %>" hidden />
+            <label for="<%= brand.brand_id %>" class="brand"><%= brand.name %></label>
+            <input type="checkbox" name="brand" value="<%= brand.brand_id %>" id="<%= brand.brand_id %>" hidden />
         <% }); %>
     </div>
     <div class="btn-ctn">

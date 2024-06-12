@@ -25,18 +25,31 @@ exports.createBrand = async (req, res) => {
 };
 
 // Function to get a brand by its ID
-exports.getBrandById = async (req, res) => {
-    const { id } = req.params;
+exports.getBrandsByIds = async (req, res) => {
+    let { id } = req.params; // Assuming ids are passed as a string in the request params
     try {
-        const results = await connection.query(getBrandQuery, [id]);
-        if (results.length === 0) {
-            console.error("Brand not found with ID:", id);
-            return notFoundErrorResponse(res, "Brand not found");
+        // Convert ids string to an array of integers
+        const idArray = id.split(',').map(id => parseInt(id.trim(), 10));
+        const results = await connection.query(getBrandQuery, [idArray]);
+
+        if (idArray.length === 1) {
+            // If only one ID was provided, return the single result
+            if (results.length === 0) {
+                console.error("Brand not found with ID:", idArray[0]);
+                return notFoundErrorResponse(res, "Brand not found");
+            }
+            res.status(200).json(results[0]);
+        } else {
+            // If multiple IDs were provided, return the array of results
+            if (results.length === 0) {
+                console.error("Brands not found with IDs:", idArray.join(','));
+                return notFoundErrorResponse(res, "Brands not found");
+            }
+            res.status(200).json(results);
         }
-        res.status(200).json(results[0]);
     } catch (error) {
         console.error("Unexpected error:", error);
-        serverErrorResponse(res, "Failed to get brand");
+        serverErrorResponse(res, "Failed to get brands");
     }
 };
 

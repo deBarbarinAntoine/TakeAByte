@@ -1,5 +1,5 @@
 const express = require('express');
-const { createBrand, getBrandById, updateBrand, deleteBrand, getBrandIdByName} = require("../controllers/brand");
+const { createBrand, getBrandsByIds, updateBrand, deleteBrand, getBrandIdByName} = require("../controllers/brand");
 const authenticate = require("../controllers/tokens");
 const {authorizeMod} = require("../models/Authorization Middleware");
 const router = express.Router();
@@ -8,7 +8,7 @@ const router = express.Router();
 // POST /brands: Create a new brand.
 router.post('/brands',  authenticate,authorizeMod,createBrand);
 // GET /brands/:id: Get brand by ID.
-router.get('/brands/:id',  authenticate,authorizeMod,getBrandById);
+router.get('/brands/:id',  authenticate,authorizeMod,getBrandsByIds);
 // GET /rands/name/:name Get brand id by name
 router.get('/brands/name/:name',  authenticate,authorizeMod,getBrandIdByName);
 // PUT /brands/:id: Update brand by ID.

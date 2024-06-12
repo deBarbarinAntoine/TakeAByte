@@ -15,7 +15,7 @@ class Product {
                     security_features, Function, smart_assistant, technology, coverage,
                     stabilization, gaming_oriented, features, benefits, autofocus,
                     weatherproof, target_audience, uses, cpu_generation, g_sync_compatible,
-                    power_consumption, created_at, updated_at,image
+                    power_consumption, created_at, updated_at,image,type
                 }) {
         this.id = id
         this.name = name;
@@ -89,6 +89,7 @@ class Product {
         this.createdAt = created_at;
         this.updatedAt = updated_at;
         this.image = image;
+        this.type = type;
     }
 }
 
@@ -109,7 +110,7 @@ function newProductArray(arr) {
         camera: item.camera,
         connectivity: item.connectivity,
         operating_system: item.operatingSystem,
-        brand: item.brand,
+        brand: item.brand_id,
         sales: item.sales,
         sensor: item.sensor,
         megapixels: item.megapixels,
@@ -166,7 +167,8 @@ function newProductArray(arr) {
         power_consumption: item.powerConsumption,
         created_at: item.createdAt,
         updated_at: item.updatedAt,
-        image : item.image
+        image : item.image,
+        type : item.type_id
     }));
 }
 

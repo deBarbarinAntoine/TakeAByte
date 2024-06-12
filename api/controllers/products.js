@@ -327,7 +327,6 @@ exports.getProducts = async (req, res) => {
 
     getProductsQuery += ' LIMIT ? OFFSET ?';
     queryParams.push(limit, offset);
-
     try {
         const results = await connection.query(getProductsQuery, queryParams);
         const products = newProductArray(results[0]);
