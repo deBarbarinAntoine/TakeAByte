@@ -8,7 +8,8 @@ const {
     getProductById, getProductByTypeId
 } = require("../controllers/productsController");
 const {getTypeNameById,getAllType} = require("../controllers/typeController");
-const {getBrandByIds} = require("../controllers/brandController");
+const {getBrandByIds, getAllBrands} = require("../controllers/brandController");
+const {getSearchData} = require("../controllers/searchController");
 const router = express.Router();
 
 router.get('/home', isAuthenticated, async (req, res) => {
@@ -1254,6 +1255,36 @@ router.get('/category/:type_id', isAuthenticated, async (req, res) => {
             }
         },
         slogan: "Your Trusted Tech Partner"
+    };
+    res.render('base', {data: data});
+})
+
+router.get('/search', isAuthenticated, async (req, res) => {
+    console.log(req.query.search);
+    let searchData
+    const type_list = await getAllType();
+    const brand_list = await getAllBrands()
+    try {
+        searchData = await getSearchData(req.query.search,type_list,brand_list)
+    } catch (err) {
+        console.error('Error in router handler:', err);
+
+    }
+
+if(searchData === null ){
+    searchData = "No data found for the searched product"
+}
+    const data = {
+        title: "Home - TakeAByte",
+        isAuthenticated: req.isAuthenticated,
+        template: "search",
+        templateData: {
+            category : {
+                products : searchData
+            }
+        },
+        slogan: "Your Trusted Tech Partner",
+        categories:type_list
     };
     res.render('base', {data: data});
 })
