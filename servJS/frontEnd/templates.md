@@ -22,6 +22,7 @@ partials are models used in the pages: they are always called from a `page` temp
 - [`category.ejs`](#categoryejs)
 - [`product.ejs`](#productejs)
 - [`order.ejs`](#orderejs)
+- [`search.ejs`](#searchejs)
 - [`login.ejs`](#loginejs)
 - [`register.ejs`](#registerejs)
 - [`confirm.ejs`](#confirmejs)
@@ -121,6 +122,15 @@ Data format:
         "name": "product-name",
         "price": "product-price",
         "isFavorite": false
+      }
+    ]
+  },
+  "filters": {
+    "categories": null,
+    "brands": [
+      {
+        "id": "brand-id",
+        "name": "brand-name"
       }
     ]
   }
@@ -224,6 +234,53 @@ Form names:
 > **region**
 > 
 > **country**
+
+---
+
+## `search.ejs`
+
+````json
+{
+  "product": {
+    "image": "product-image-path",
+    "name": "product-name",
+    "description": "product-description",
+    "price": "product-price-€",
+    "colors": [
+      "css-color-name"
+    ],
+    "brand": "product-brand",
+    "miscellaneous": [
+      {
+        "name": "spec-name",
+        "content": "spec-content"
+      }
+    ],
+    "isFavorite": false
+  },
+  "filters": {
+    "categories": null,
+    "brands": [
+      {
+        "id": "brand-id",
+        "name": "brand-name"
+      }
+    ]
+  }
+}
+````
+
+Search form names:
+> **search**
+> 
+
+Filters from names:
+> **category**
+> 
+> **price**
+> 
+> **brand**
+> 
 
 ---
 
