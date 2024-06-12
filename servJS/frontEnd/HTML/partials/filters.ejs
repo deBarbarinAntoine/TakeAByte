@@ -1,7 +1,5 @@
-<form class="filters full">
-    <div>
-        <pre><%= console.log((filters));%></pre>
-    </div>
+<form class="filters full" action="javascript:void(0);" onsubmit="filterSubmit">
+
     <%############################################################%>
     <%#             Check if there are categories sent            %>
     <%############################################################%>
@@ -53,7 +51,7 @@
         <% }); %>
     </div>
     <div class="btn-ctn">
-        <button class="blue">Filter</button>
+        <button type="submit" class="blue" id="filter-submit">Filter</button>
     </div>
 </form>
 <script>
@@ -79,4 +77,18 @@
             event.target.classList.toggle('selected');
         });
     });
+
+    <%######################################################################%>
+    <%#  filter request  DO NOT TRESPASS - DEBUG - WORK IN PROGRESS - FIXME %>
+    <%######################################################################%>
+    const filterSubmit = () => {
+        console.log('panda');
+        const filterForm = document.querySelector('form.filters');
+        const filterSubmitBtn = document.querySelector('#filter-submit');
+        const formData = new FormData(filterForm);
+        const formProps = Object.fromEntries(formData);
+        console.log('form values: ');
+        console.log(formProps);
+    };
+
 </script>
