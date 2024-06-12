@@ -1,6 +1,6 @@
 // Import the necessary modules and configure environment variables
 const path = require('path');
-require('dotenv').config({ path: path.resolve(__dirname, 'data.env') });
+require('dotenv').config({path: path.resolve(__dirname, 'data.env')});
 const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');

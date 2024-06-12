@@ -9,10 +9,6 @@ const {
 } = require("../controllers/productsController");
 const router = express.Router();
 
-router.get('/fav', (req, res) => {
-    res.render('fav&cart', {title: "shop app"});
-});
-
 router.get('/home', isAuthenticated, async (req, res) => {
     try {
         // Call functions to fetch latest, popular, and random products
@@ -72,7 +68,7 @@ router.get('/login', isAuthenticated, (req, res) => {
     res.render('base', {data: data});
 })
 
-router.get('/products', (req, res) => {
+router.get('/products', isAuthenticated, (req, res) => {
     const data = {
         title: "Products - TakeAByte",
         isAuthenticated: req.isAuthenticated,
@@ -83,7 +79,7 @@ router.get('/products', (req, res) => {
     res.render('base', {data: data});
 });
 
-router.get('/product/:productId', async (req, res) => {
+router.get('/product/:productId', isAuthenticated, async (req, res) => {
     const productId = req.params.productId;
     const token = process.env.WEB_TOKEN;
     // Validate the productId
@@ -523,25 +519,16 @@ router.post('/cartAdd', isAuthenticated, (req, res) => {
     const itemPrice = req.body.itemPrice;
     const quantity = req.body.quantity;
 
-    // If the user is authenticated, store the cart in the session
-    if (req.isAuthenticated) {
-        if (!req.session.cart) {
-            req.session.cart = [];
-        }
-        req.session.cart.push({itemId, itemPrice, quantity});
-    } else { // If the user is not authenticated, store the cart in a cookie
-        let cart = req.cookies.cart || [];
-        cart.push({itemId, itemPrice, quantity});
-        const oneWeekInMilliseconds = 7 * 24 * 60 * 60 * 1000; // 7 days * 24 hours * 60 minutes * 60 seconds * 1000 milliseconds
-        res.cookie('cart', cart, {maxAge: oneWeekInMilliseconds, httpOnly: true}); // Set cookie expiry time
-        res.send({status: 'success'});
-    }
-
+    let cart = req.cookies.cart || [];
+    cart.push({itemId, itemPrice, quantity});
+    const oneWeekInMilliseconds = 7 * 24 * 60 * 60 * 1000; // 7 days * 24 hours * 60 minutes * 60 seconds * 1000 milliseconds
+    res.cookie('cart', cart, {maxAge: oneWeekInMilliseconds, httpOnly: true}); // Set cookie expiry time
+    res.send({status: 'success'});
 
 })
 
 router.post('/checkout', isAuthenticated, async (req, res) => {
-    const { cardNumber, expiration, cvv, amount } = req.body;
+    const {cardNumber, expiration, cvv, amount} = req.body;
     const api_key = process.env.ALLAN_TOKEN; // Make sure to load your environment variables
 
 // Trim spaces from cardNumber
@@ -600,15 +587,15 @@ router.post('/checkout', isAuthenticated, async (req, res) => {
 
         res.status(200).json({success: true, data: response.data});
     } catch (err) {
-        if ((err.response.data.message) === "La carte est expirée."){
+        if ((err.response.data.message) === "La carte est expirée.") {
             res.status(500).json({success: false, error: err.response.data.message});
-        }else{
+        } else {
             res.status(500).json({success: false, error: err.response.data.message});
         }
     }
 });
 
-router.get('/paymentOk', isAuthenticated, async (req,res) => {
+router.get('/paymentOk', isAuthenticated, async (req, res) => {
     // Read the cart cookie
     const cartCookie = req.cookies.cart;
     const token = process.env.WEB_TOKEN;
@@ -745,6 +732,7 @@ router.get('/paymentOk', isAuthenticated, async (req,res) => {
         });
         return subtotal;
     }
+
     const formattedItems = resultArray.map(item => ({
         product_id: item.product[0].product_id, // Assuming product_id is stored under id property of product
         quantity: item.quantityOrdered
@@ -752,7 +740,7 @@ router.get('/paymentOk', isAuthenticated, async (req,res) => {
 
     try {
         const response = await axios.post(createOrderUrl, {
-            items : formattedItems
+            items: formattedItems
         }, {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -771,7 +759,7 @@ router.get('/paymentOk', isAuthenticated, async (req,res) => {
         template: 'order',
         slogan: "Your Trusted Tech Partner",
         templateData: {
-            client :{orderId},
+            client: {orderId},
             page: 'payment-confirmed',
             order: {
                 products: {resultArray},
@@ -785,26 +773,6 @@ router.get('/paymentOk', isAuthenticated, async (req,res) => {
 
 });
 
-router.get('/order-confirmation', isAuthenticated, (req, res) => {
-    const data = {
-        title: "Home - TakeAByte",
-        isAuthenticated: req.isAuthenticated,
-        template: "register",
-        templateData: {},
-        slogan: "Your Trusted Tech Partner"
-    };
-    res.render('base', {data: data});
-})
-router.get('/profile', isAuthenticated, (req, res) => {
-    const data = {
-        title: "Home - TakeAByte",
-        isAuthenticated: req.isAuthenticated,
-        template: "register",
-        templateData: {},
-        slogan: "Your Trusted Tech Partner"
-    };
-    res.render('base', {data: data});
-})
 router.get('/contact-us', isAuthenticated, (req, res) => {
     const data = {
         title: "Home - TakeAByte",
@@ -815,6 +783,7 @@ router.get('/contact-us', isAuthenticated, (req, res) => {
     };
     res.render('base', {data: data});
 })
+
 router.get('/about', isAuthenticated, (req, res) => {
     const data = {
         title: "Home - TakeAByte",
@@ -825,6 +794,7 @@ router.get('/about', isAuthenticated, (req, res) => {
     };
     res.render('base', {data: data});
 })
+
 router.get('/privacy-policy', isAuthenticated, (req, res) => {
     const data = {
         title: "Home - TakeAByte",
@@ -835,6 +805,7 @@ router.get('/privacy-policy', isAuthenticated, (req, res) => {
     };
     res.render('base', {data: data});
 })
+
 router.get('/terms-conditions', isAuthenticated, (req, res) => {
     const data = {
         title: "Home - TakeAByte",
@@ -845,6 +816,7 @@ router.get('/terms-conditions', isAuthenticated, (req, res) => {
     };
     res.render('base', {data: data});
 })
+
 router.get('/order/shipping/:encodedData', isAuthenticated, async (req, res) => {
     // Decode the encoded data from the URL path
     const decodedData = Buffer.from(req.params.encodedData, 'base64').toString('latin1');
@@ -1195,7 +1167,6 @@ router.get('/order/payment/:encodedData', isAuthenticated, async (req, res) => {
     };
     res.render('base', {data: data});
 })
-router.get('/shipping')
 router.get('/about-shipping', (req, res) => {
     const data = {
         title: "Home - TakeAByte",
@@ -1218,6 +1189,46 @@ router.get('/register', isAuthenticated, (req, res) => {
     };
     res.render('base', {data: data});
 })
+
+router.get('/category', isAuthenticated, (req, res) => {
+    const data = {
+        title: "Home - TakeAByte",
+        isAuthenticated: req.isAuthenticated,
+        template: "category",
+        templateData: {
+            "navData": [
+                {
+                    "link": "nav-link",
+                    "className": "nav-class",
+                    "title": "nav-title"
+                }
+            ],
+            "category": {
+                "products": [
+                    {
+                        "link": "product-link",
+                        "img": "product-img",
+                        "name": "product-name",
+                        "price": "product-price",
+                        "isFavorite": false
+                    }
+                ]
+            },
+            "filters": {
+                "categories": null,
+                "brands": [
+                    {
+                        "id": "brand-id",
+                        "name": "brand-name"
+                    }
+                ]
+            }
+        },
+        slogan: "Your Trusted Tech Partner"
+    };
+    res.render('base', {data: data});
+})
+
 // Define a route for the 404 page
 router.get('*', (req, res) => {
     const data = {

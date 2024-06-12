@@ -45,6 +45,7 @@ async function authenticate(req, res, next) {
 
         req.userId = userId; // Attach userId to the request object
         req.is_mod = is_mod; // Attach is_mod to the request object, 0 false, 1 true
+        req.token = bearer;
         next();
     } catch (error) {
         console.error('Internal server error:', error);
