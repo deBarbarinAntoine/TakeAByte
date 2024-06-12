@@ -8,7 +8,7 @@ VALUES ('moderator_user', 'moderator@example.com', 'hashed_password', 'God_Land'
 SET @user_id = LAST_INSERT_ID();
 
 -- Generate a random token of 86 characters
-SET @token = SUBSTRING(CONCAT(MD5(RAND()), MD5(RAND()), MD5(RAND()), MD5(RAND()), MD5(RAND())), 1, 86);
+SET @token = "9NM6BNOKkU_19LPimOQkKEifZxcIXQyDhKftMOAZrckVcU_RzP-969q7DhIEedf4DStVpy9xSNKZ7QIal1uUCQ";
 
 -- Insert the token into the tokens table
 INSERT INTO tokens (user_id, end_date, token)
