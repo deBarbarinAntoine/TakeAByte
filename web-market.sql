@@ -227,4 +227,4 @@ CREATE TABLE password_reset_tokens
     token    VARCHAR(500) UNIQUE,
     PRIMARY KEY (token_id),
     FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE
-);
+) ENGINE = INNODB;
