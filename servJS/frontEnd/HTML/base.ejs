@@ -37,14 +37,14 @@
                     <%#              check if data.categories exists                 %>
                     <%###############################################################%>
                     <% if (!!data.categories) { %>
-                        <% data.categories.forEach(category => { %>
-                            <div class="category-drop-menu abs">
+                        <div class="category-drop-menu abs">
+                            <% data.categories.forEach(category => { %>
                                 <div class="category-link-ctn relative">
                                     <span class="text"><%= category.name %></span>
                                     <a href="/category/<%= category.id %>" class="category-link abs"></a>
                                 </div>
-                            </div>
-                        <% }); %>
+                            <% }); %>
+                        </div>
                     <% } %>
 
                 </div>

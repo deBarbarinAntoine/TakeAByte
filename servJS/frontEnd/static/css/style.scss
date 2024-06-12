@@ -441,11 +441,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 35rem;
-
-    &.swiper-slide {
-      aspect-ratio: 3/5;
-    }
+    width: clamp(15rem, 12vw, 35rem);
+    height: clamp(25rem, 20vw, calc(calc(35rem / 3) * 5));
+    aspect-ratio: 3/5;
 
     .product-card-link {
       position: absolute;
