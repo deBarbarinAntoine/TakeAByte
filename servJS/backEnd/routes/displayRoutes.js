@@ -1,6 +1,5 @@
 const express = require('express');
 const axios = require('axios');
-const stripe = require('stripe')('sk_test_51PQcvg08zidcTuWTFSoxJVQOoRFiVK6dqxYgaakkaGEM08MiNN4Rgwzh2eMnyJEx78QrwvjLtbkA8CrIG2Q5D0TO00EKVWACQw');
 const {isAuthenticated} = require("../middleware/auth");
 const {
     fetchLatestProducts,
@@ -542,23 +541,30 @@ router.post('/cartAdd', isAuthenticated, (req, res) => {
 })
 
 router.post('/checkout', isAuthenticated, async (req, res) => {
-    const { cardNumber, cardHolder, expiration, cvv, amount } = req.body;
+    const { cardNumber, expiration, cvv, amount } = req.body;
+    const api_key = process.env.ALLAN_TOKEN; // Make sure to load your environment variables
+
     try {
-        const paymentIntent = await stripe.paymentIntents.create({
-            amount: amount,
-            currency: 'eur',
-            payment_method_types: ['card'],
-            payment_method: 'pm_card_authenticationRequired',
-            confirm: true,
-            off_session: true
+        const response = await axios.post('https://challenge-js.ynovaix.com/payment', {
+            card: {
+                number: cardNumber,
+                expiration_date: expiration,
+                cvc: cvv
+            },
+            payment_intent: {
+                price: amount
+            }
+        }, {
+            headers: {
+                Authorization: `Bearer ${api_key}`,
+                'Content-Type': 'application/json'
+            }
         });
 
-        // Do something with the paymentIntent, like send it to the client-side for confirmation
-
-        res.status(200).json({ client_secret: paymentIntent.client_secret });
-    } catch (error) {
-        console.error('Error:', error);
-        res.status(500).json({ error: 'An error occurred while creating the payment intent' });
+        res.status(200).json({ success: true, data: response.data });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false, error: err.message });
     }
 });
 
