@@ -523,20 +523,11 @@ router.post('/cartAdd', isAuthenticated, (req, res) => {
     const itemPrice = req.body.itemPrice;
     const quantity = req.body.quantity;
 
-    // If the user is authenticated, store the cart in the session
-    if (req.isAuthenticated) {
-        if (!req.session.cart) {
-            req.session.cart = [];
-        }
-        req.session.cart.push({itemId, itemPrice, quantity});
-    } else { // If the user is not authenticated, store the cart in a cookie
-        let cart = req.cookies.cart || [];
-        cart.push({itemId, itemPrice, quantity});
-        const oneWeekInMilliseconds = 7 * 24 * 60 * 60 * 1000; // 7 days * 24 hours * 60 minutes * 60 seconds * 1000 milliseconds
-        res.cookie('cart', cart, {maxAge: oneWeekInMilliseconds, httpOnly: true}); // Set cookie expiry time
-        res.send({status: 'success'});
-    }
-
+    let cart = req.cookies.cart || [];
+    cart.push({itemId, itemPrice, quantity});
+    const oneWeekInMilliseconds = 7 * 24 * 60 * 60 * 1000; // 7 days * 24 hours * 60 minutes * 60 seconds * 1000 milliseconds
+    res.cookie('cart', cart, {maxAge: oneWeekInMilliseconds, httpOnly: true}); // Set cookie expiry time
+    res.send({status: 'success'});
 
 })
 

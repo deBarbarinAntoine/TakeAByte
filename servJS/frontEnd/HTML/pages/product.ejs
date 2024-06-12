@@ -124,9 +124,14 @@
         const plusButton = document.querySelector('.plus');
         const price = document.querySelector('.price');
         const addToCartButton = document.querySelector('.button.white');
-
+        let quantity;
         // Initial quantity
-        let quantity = 1;
+        if(<%= data.quantityStock %> === "0"){
+            quantity = 0;
+        }else{
+            quantity =1;
+        };
+
         updateQuantityDisplay();
 
         // Event listeners for plus and minus buttons
@@ -186,8 +191,13 @@
                 body: JSON.stringify(data)
             })
                 .then(response => {
-                    // Handle response if needed
-                    console.log('Item added to cart successfully.');
+                    if (response.ok) {
+                        // Redirect to /cart
+                        window.location.href = '/cart';
+                    } else {
+                        // Handle other responses if needed
+                        console.log('Item could not be added to cart.');
+                    }
                 })
                 .catch(error => {
                     console.error('Error adding item to cart:', error);

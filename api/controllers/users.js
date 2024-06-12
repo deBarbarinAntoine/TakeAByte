@@ -94,16 +94,13 @@ async function login(req, res) {
 }
 
 async function logout(req, res) {
-    const userId = req.userId;
-    let token;
+    const token = req.token;
 
     try {
-        // Retrieve token associated with the user ID
-        token = await getTokenFromUserId(userId);
 
         if (!token) {
             // If token not found, send a 404 Not Found response
-            return notFoundErrorResponse(res, "Token not found for the user");
+            return notFoundErrorResponse(res, "Token not found in req");
         }
 
         // Invalidate the token by deleting it from the database
