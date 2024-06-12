@@ -5,49 +5,35 @@ const connection = require("../models/db-connect");
 const {serverErrorResponse, notFoundErrorResponse} = require("../helpers/responses");
 
 // Function to handle creating a new order
-exports.createNewOrder = (req, res) => {
-    const { user_id } = req.userId
-    const { items } = req.body; // items should be an array of { product_id, quantity }
+exports.createNewOrder = async (req, res) => {
+    const  user_id = req.userId;
+    const { items }  = req.body; // items should be an array of { product_id, quantity }
     const date_ordered_at = new Date(); // Current timestamp
     const status = 'waiting'; // Default status
 
-    connection.beginTransaction((err) => {
-        if (err) {
-            return serverErrorResponse(res, "Transaction start failed");
-        }
+    // Validate request body
+    if (!Array.isArray(items) || items.some(item => !item.product_id || !item.quantity)) {
+        return res.status(400).json({error: "Invalid request body"});
+    }
+
+    try {
 
         // Step 1: Insert into orders table
-        connection.query(createNewOrderQuery, [user_id, date_ordered_at, status], (error, results) => {
-            if (error) {
-                return connection.rollback(() => {
-                    serverErrorResponse(res, "Failed to create new order");
-                });
-            }
+        const orderResult = await connection.execute(createNewOrderQuery, [user_id, date_ordered_at, status]);
+        const order_id = orderResult[0].insertId
 
-            const order_id = results.insertId;
+        // Step 2: Insert each item into order_items table
+        for (const item of items) {
+            await connection.execute(createNewOrderItemQuery, [order_id, item.product_id, item.quantity]);
+        }
 
-            // Step 2: Insert each item into order_items table
-            const orderItems = items.map(item => [order_id, item.product_id, item.quantity]);
-
-            connection.query(createNewOrderItemQuery, [orderItems], (error) => {
-                if (error) {
-                    return connection.rollback(() => {
-                        serverErrorResponse(res, "Failed to create order items");
-                    });
-                }
-
-                connection.commit((err) => {
-                    if (err) {
-                        return connection.rollback(() => {
-                            serverErrorResponse(res, "Transaction commit failed");
-                        });
-                    }
-                    res.status(201).json({ message: 'Order created successfully', order_id });
-                });
-            });
-        });
-    });
+        res.status(201).json({message: 'Order created successfully', order_id});
+    } catch (error) {
+        console.log(error)
+        serverErrorResponse(res, "Failed to create order", error);
+    }
 };
+
 
 exports.getOrderData = (req, res) => {
     const { order_id } = req.params;

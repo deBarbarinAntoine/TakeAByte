@@ -174,7 +174,7 @@ CREATE TABLE order_items
     order_item_id INT AUTO_INCREMENT,
     order_id      INT,
     product_id    INT,
-    quantity      SMALLINT NOT NULL CHECK (quantity > 0) DEFAULT 1,
+    quantity      SMALLINT NOT NULL,
     PRIMARY KEY (order_item_id),
     FOREIGN KEY (order_id) REFERENCES orders (order_id) ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES products (product_id) ON DELETE CASCADE,
