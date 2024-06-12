@@ -83,7 +83,7 @@
       display: inline;
     }
     .st2{
-      fill: none;
+      fill: $white;
       stroke: $darkblue;
       stroke-width: 8;
       stroke-linecap: round;
@@ -398,36 +398,41 @@
       gap: 3.5rem;
       padding: 4rem 0 9rem 0;
 
-      .product-carousel {
-        width: 35%;
+      .product-carousel-ctn {
         display: flex;
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
+        width: 42rem;
+        height: calc(42rem + calc(42rem / 3));
 
-        .product-img {
+        .product-carousel {
           position: relative;
-          width: 70%;
+          width: 42rem;
           aspect-ratio: 1;
+          overflow: hidden;
 
-          img {
-            object-fit: contain;
-            object-position: center;
-            width: 100%;
-            height: 100%;
-          }
           .favorite-button {
             width: 3rem;
+          }
+          .product-img {
+            aspect-ratio: 1;
+
+            img {
+              object-fit: contain;
+              object-position: center;
+              width: 100%;
+              height: 100%;
+            }
           }
         }
         .previews {
           display: flex;
           justify-content: center;
-          width: 70%;
+          width: 100%;
+          height: calc(42rem / 3);
+          overflow: hidden;
 
           img {
             width: 30%;
-            flex: 1;
             aspect-ratio: 1;
           }
         }

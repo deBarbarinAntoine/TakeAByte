@@ -7,24 +7,30 @@
 
     <div class="product-ctn">
         <div class="product">
-            <div class="product-carousel">
-                <div class="product-img">
+            <div class="product-carousel-ctn">
+                <div class="product-carousel swiper-container">
                     <div class="favorite-button<% if (!!data.product.isFavorite && data.product.isFavorite) { %><%= ' favorite' %><% } %>">
                         <svg class="favorite-icon" viewBox="0 0 128 128" version="1.1" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g class="st0" id="Layer_1"/><g id="Layer_2">
                                 <path class="st2" d="M57.3,32.7c-9.2-9.2-24.1-9.2-33.3,0c-9.2,9.2-9.2,24.1,0,33.3l6.7,6.7L64,106l33.3-33.3L104,66   c9.2-9.2,9.2-24.1,0-33.3s-24.1-9.2-33.3,0L64,39.4"/>
                                 <path class="st2" d="M29.1,49.1c0-6.9,5.6-12.4,12.4-12.4"/></g>
                         </svg>
                     </div>
-                    <img src="<%= data.product.images[0] %>"
-                         onerror="this.onerror=null;this.src='/static/img/image-not-found.webp'"
-                         alt="<%= data.product.name %> image"/>
+                    <div class="product-img swiper-wrapper">
+                        <% data.product.images.forEach(function (img) { %>
+                            <img class="swiper-slide" src="<%= img %>"
+                                 onerror="this.onerror=null;this.src='/static/img/image-not-found.webp'"
+                                 alt="<%= data.product.name %> image"/>
+                        <% }); %>
+                    </div>
                 </div>
-                <div class="previews">
-                    <% data.product.images.forEach(function (img) { %>
-                        <img src="<%= img %>"
-                             onerror="this.onerror=null;this.src='/static/img/image-not-found.webp'"
-                             alt="<%= data.product.name %> image"/>
-                    <% }); %>
+                <div class="previews swiper-container">
+                    <div class="product-img swiper-wrapper">
+                        <% data.product.images.forEach(function (img) { %>
+                            <img class="swiper-slide" src="<%= img %>"
+                                 onerror="this.onerror=null;this.src='/static/img/image-not-found.webp'"
+                                 alt="<%= data.product.name %> image"/>
+                        <% }); %>
+                    </div>
                 </div>
             </div>
             <div class="product-info">
@@ -79,7 +85,37 @@
         </div>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
+
+    const thumbsSwiper = new Swiper(`.previews`, {
+        slidesPerView: 3,
+        spaceBetween: 0,
+        slideToClickedSlide: true,
+        loop: true,
+        loopedSlides: 3
+    });
+    const mainSwiper = new Swiper('.product-carousel', {
+        slidesPerView: 1,
+        loop: true,
+        autoplay: {
+            enabled: true,
+            pauseOnMouseEnter: true,
+        },
+        mousewheel: {
+            enabled: true,
+            releaseOnEdges: true,
+        },
+        keyboard: {
+            enabled: true,
+            onlyInViewport: true,
+        },
+        loopedSlides: 3,
+        thumbs: {
+            swiper: thumbsSwiper
+        }
+    });
+
     document.addEventListener("DOMContentLoaded", function () {
         // Get elements
         const quantityContainer = document.querySelector('.quantity');
