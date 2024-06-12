@@ -51,7 +51,7 @@
                             <div class="text">+</div>
                         </div>
                     </div>
-                    <div class="price"><%= data.product.price %></div>
+                    <div class="price"> <%= data.product.price %> € </div>
                 </div>
                 <div class="colors">
                     <div class="title">Color</div>
@@ -151,7 +151,8 @@
             quantityDisplay.textContent = quantity;
             // Extracting numerical value from data.product.price
             const priceValue = parseFloat('<%= data.product.price.replace(/[^\d.-]/g, "") %>');
-            price.textContent = quantity * priceValue;
+            const totPrice = quantity * priceValue;
+            price.textContent = totPrice + '€';
 
             // Disable add to cart button if quantity stock is 0
             if (<%= data.quantityStock %> === 0)

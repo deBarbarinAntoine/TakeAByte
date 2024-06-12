@@ -1,38 +1,54 @@
-<div class="filters-ctn">
-    <form class="filters">
+<form class="filters">
+
+    <%# Check if there are categories sent %>
+    <% if (!!filters.categories) { %>
+        <div class="label">Categories:</div>
         <div class="categories">
 
             <%#         displaying category filters         %>
             <% filters.categories.forEach(category => {  %>
                 <label for="<%= category.id %>" class="category"><%= category.name %></label>
-                <input type="radio" name="category" id="<%= category.id %>" hidden />
+                <input type="checkbox" name="category" id="<%= category.id %>" hidden />
             <% }); %>
         </div>
-        <div class="prices">
+    <% } %>
 
-            <%#         displaying prices filters         %>
-            <label for="price-15" class="price">15€</label>
-            <input type="radio" name="price" id="price-15" class="price-filter" hidden />
-            <label for="price-50" class="price">50€</label>
-            <input type="radio" name="price" id="price-50" class="price-filter" hidden />
-            <label for="price-100" class="price">100€</label>
-            <input type="radio" name="price" id="price-100" class="price-filter" hidden />
-            <label for="price-250" class="price">250€</label>
-            <input type="radio" name="price" id="price-250" class="price-filter" hidden />
-            <label for="price-500" class="price">500€</label>
-            <input type="radio" name="price" id="price-500" class="price-filter" hidden />
-            <label for="price-1000" class="price">1000€</label>
-            <input type="radio" name="price" id="price-1000" class="price-filter" hidden />
-            <label for="price-all" class="price">None</label>
-            <input type="radio" name="price" id="price-all" class="price-filter" hidden />
-        </div>
-        <div class="brands">
+    <div class="label">Price max:</div>
+    <div class="prices">
 
-            <%#         displaying brands filters         %>
-            <% filters.brands.forEach(brand => { %>
-                <label for="<%= brand.id %>" class="brand"><%= brand.name %></label>
-                <input type="checkbox" name="brand" id="<%= brand.id %>" hidden />
-            <% }); %>
-        </div>
-    </form>
-</div>
+        <%#         displaying prices filters         %>
+        <label for="price-15" class="price">15€</label>
+        <input type="radio" name="price" id="price-15" class="price-filter" hidden />
+        <label for="price-50" class="price">50€</label>
+        <input type="radio" name="price" id="price-50" class="price-filter" hidden />
+        <label for="price-100" class="price">100€</label>
+        <input type="radio" name="price" id="price-100" class="price-filter" hidden />
+        <label for="price-250" class="price">250€</label>
+        <input type="radio" name="price" id="price-250" class="price-filter" hidden />
+        <label for="price-500" class="price">500€</label>
+        <input type="radio" name="price" id="price-500" class="price-filter" hidden />
+        <label for="price-1000" class="price">1000€</label>
+        <input type="radio" name="price" id="price-1000" class="price-filter" hidden />
+        <label for="price-all" class="price">None</label>
+        <input type="radio" name="price" id="price-all" class="price-filter" hidden />
+    </div>
+    <div class="brands">
+
+        <%#         displaying brands filters         %>
+        <% filters.brands.forEach(brand => { %>
+            <label for="<%= brand.id %>" class="brand"><%= brand.name %></label>
+            <input type="checkbox" name="brand" id="<%= brand.id %>" hidden />
+        <% }); %>
+    </div>
+    <div class="btn-ctn">
+        <button class="blue">Filter</button>
+    </div>
+</form>
+<script>
+    const labels = document.querySelectorAll('.categories label, .prices label, .brands label');
+    labels.forEach(label => {
+       label.addEventListener('click', event => {
+           event.target.classList.toggle('selected');
+       });
+    });
+</script>

@@ -1,9 +1,12 @@
 <div class="main-column gap5 padding-top3 relative">
 
-    <%######################################################################################%>
-    <%#       Title Nav Template                                                            %>
-    <%######################################################################################%>
-    <%- include('../partials/stroll-nav', {data: data.navData}); %>
+    <form action="/search" method="get" class="search-bar">
+        <button type="submit" class="search-logo">
+            <img src="/static/img/icon/search.png" alt="search logo" />
+        </button>
+        <label class="abs hidden" for="search"></label>
+        <input type="text" name="search" id="search" placeholder="Search..." value="<%= data.search || '' %>" autofocus required />
+    </form>
 
     <%# remove the condition when data.filters is fully implemented %>
     <% if (!!data.filters) { %>
@@ -19,7 +22,7 @@
 
     <% } %>
 
-    <div class="category-ctn">
+    <div class="search-ctn">
 
         <%######################################################################################%>
         <%#       Product-Card Template                                                         %>
