@@ -215,6 +215,53 @@ button,
   }
 }
 
+// ###########################################################################################
+// # drop down
+// ###########################################################################################
+
+.drop-down-ctn {
+  .category-drop-menu {
+    display: none;
+  }
+  &:hover {
+    .category-drop-menu {
+      display: flex;
+      flex-direction: column;
+      top: 100%;
+      padding-top: 1.5rem;
+      width: max-content;
+      z-index: 100;
+
+      .category-link-ctn {
+        padding: .4rem 1rem;
+        width: 100%;
+        background-color: $lightblue;
+        cursor: pointer;
+        transition: all 300ms ease-out 50ms;
+
+        a.category-link {
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+        }
+        span.text {
+          font-size: 1.3rem;
+          color: $blue;
+          transition: all 300ms ease-out 50ms;
+        }
+        &:hover {
+          background-color: $blue;
+
+          span.text {
+            color: $orange;
+          }
+        }
+      }
+    }
+  }
+}
+
 // ##############################################################################################
 // # base layout
 // ##############################################################################################
@@ -337,13 +384,6 @@ body {
               transform: translateY(3px);
               width: 100%;
               height: 100%;
-            }
-          }
-          .category-drop-menu {
-            display: none;
-
-            .category-link-ctn {
-
             }
           }
         }

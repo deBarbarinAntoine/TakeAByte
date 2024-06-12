@@ -34,15 +34,21 @@ partials are models used in the pages: they are always called from a `page` temp
 ## `base.ejs`
 
 Data format to pass to `base.ejs`:
-````js
+```js
 const data = {
   title: 'header-title',
     isAuthenticated: req.isAuthenticated /* boolean value with user authentication status */,
   template: 'page\'s name',
   templateData: {/* any specific data for page template (see below for each template) */},
-  slogan: 'footer-slogan'  
+  slogan: 'footer-slogan', 
+  categories: [
+        {
+            name: "category-name",
+            id: "category-id"
+        }
+    ],  
 };
-````
+```
 
 ---
 

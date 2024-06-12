@@ -1,10 +1,15 @@
 <form class="filters full">
-    <%# Check if there are categories sent %>
+
+    <%############################################################%>
+    <%#             Check if there are categories sent            %>
+    <%############################################################%>
     <% if (!!filters.categories) { %>
         <div class="label">Categories:</div>
         <div class="categories">
 
-            <%#         displaying category filters         %>
+        <%#############################################################%>
+        <%#                displaying categories filters               %>
+        <%#############################################################%>
             <% filters.categories.forEach(category => {  %>
                 <label for="<%= category.id %>" class="category"><%= category.name %></label>
                 <input type="checkbox" name="category" value="<%= category.id %>" id="<%= category.id %>" hidden />
@@ -15,7 +20,9 @@
     <div class="label">Price max:</div>
     <div class="prices">
 
-        <%#         displaying prices filters         %>
+        <%#########################################################%>
+        <%#                displaying prices filters               %>
+        <%#########################################################%>
         <label for="price-15" class="price">15€</label>
         <input type="radio" name="price" value="15" id="price-15" class="price-filter" hidden />
         <label for="price-50" class="price">50€</label>
@@ -35,10 +42,12 @@
     <div class="label">Brands:</div>
     <div class="brands">
 
-        <%#         displaying brands filters         %>
+        <%#########################################################%>
+        <%#                displaying brands filters               %>
+        <%#########################################################%>
         <% filters.brands.forEach(brand => { %>
-            <label for="<%= brand.brand_id %>" class="brand"><%= brand.name %></label>
-            <input type="checkbox" name="brand" value="<%= brand.brand_id %>" id="<%= brand.brand_id %>" hidden />
+            <label for="<%= brand.id %>" class="brand"><%= brand.name %></label>
+            <input type="checkbox" name="brand" value="<%= brand.id %>" id="<%= brand.id %>" hidden />
         <% }); %>
     </div>
     <div class="btn-ctn">
@@ -46,6 +55,9 @@
     </div>
 </form>
 <script>
+    <%###################################################################%>
+    <%# select and onClick events for labels which inputs are radio type %>
+    <%###################################################################%>
     const labelsRadio = document.querySelectorAll('.prices label');
     labelsRadio.forEach(label => {
        label.addEventListener('click', event => {
@@ -55,6 +67,10 @@
            event.target.classList.toggle('selected');
        });
     });
+
+    <%######################################################################%>
+    <%# select and onClick events for labels which inputs are checkbox type %>
+    <%######################################################################%>
     const labelsCheckbox = document.querySelectorAll('.categories label, .brands label');
     labelsCheckbox.forEach(label => {
         label.addEventListener('click', event => {

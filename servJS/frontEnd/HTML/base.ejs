@@ -26,22 +26,27 @@
                 <input type="text" name="search" id="search" placeholder="Search..." />
             </form>
             <nav class="header-nav">
-                <div class="header-link relative">
+                <div class="header-link drop-down-ctn relative">
                     <a href="/discovery">Discovery</a>
-                    <div class="discovery-expandable">
+                    <div class="discovery-expandable relative">
+                        <a href="/discovery" class="abs full"></a>
                         <img src="/static/img/icon/simple-arrow.png" alt="arrow-expand icon" class="expand-icon" />
                     </div>
-                    <div class="category-drop-menu abs">
-                        <%# check if data.categories exists %>
-                        <% if (!!data.categories) { %>
-                            <% data.categories.forEach(category => { %>
+
+                    <%###############################################################%>
+                    <%#              check if data.categories exists                 %>
+                    <%###############################################################%>
+                    <% if (!!data.categories) { %>
+                        <% data.categories.forEach(category => { %>
+                            <div class="category-drop-menu abs">
                                 <div class="category-link-ctn relative">
-                                    <%= category.name %>
-                                    <a href="<%= category.link %>" class="category-link abs full"></a>
+                                    <span class="text"><%= category.name %></span>
+                                    <a href="/category/<%= category.id %>" class="category-link abs"></a>
                                 </div>
-                            <% }); %>
-                        <% } %>
-                    </div>
+                            </div>
+                        <% }); %>
+                    <% } %>
+
                 </div>
                 <div class="header-link">
                     <a href="/offers">Offers</a>
@@ -131,6 +136,9 @@
         </div>
     </footer>
     <script>
+        <%####################################################################%>
+        <%#                     Add/remove favorites                          %>
+        <%####################################################################%>
         const favoriteButtons = document.querySelectorAll('.favorite-icon');
 
         function favoriteClick(e) {
