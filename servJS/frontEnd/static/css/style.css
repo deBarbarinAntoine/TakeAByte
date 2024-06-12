@@ -355,6 +355,7 @@ body header.header .header-ctn .header-btns .cart-btn:hover .logout-icon .line {
   fill: #FBA834;
 }
 body .template-page {
+  position: relative;
   flex: 1;
 }
 body footer.footer {
@@ -1289,30 +1290,66 @@ body footer.footer .footer-ctn .footer-links .link-group a:hover {
   text-decoration: underline;
 }
 .main .popup-msg {
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
   background-color: rgba(63, 114, 175, 0.3);
+  backdrop-filter: blur(3px);
+  cursor: pointer;
+  z-index: 70;
 }
 .main .popup-msg .modal {
   display: none;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
   position: fixed;
-  z-index: 70;
   overflow: auto;
   background-color: #DBE2EF;
-  border: 1px solid #112D4E;
+  border: 3px solid #112D4E;
   padding: 4rem 7rem;
+  min-width: 20vw;
+  min-height: 20dvh;
+  border-radius: 0.7rem;
+  z-index: 700;
+  cursor: default;
+}
+.main .popup-msg .modal .modal-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
 }
 .main .popup-msg .modal .modal-content .close {
-  color: #FBA834;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-.main .popup-msg .modal .modal-content .close:hover, .main .popup-msg .modal .modal-content .close:focus {
-  color: #3F72AF;
-  text-decoration: none;
+  position: absolute;
+  top: 0.7rem;
+  right: 0.7rem;
+  width: 2.5rem;
+  aspect-ratio: 1;
   cursor: pointer;
+}
+.main .popup-msg .modal .modal-content .close .line {
+  stroke: #FBA834;
+  stroke-width: 1.69904;
+}
+.main .popup-msg .modal .modal-content .close:hover .line, .main .popup-msg .modal .modal-content .close:focus .line {
+  stroke: darkred;
+  stroke-width: 1.69904;
+}
+.main .popup-msg .modal .modal-content .warning-icon {
+  width: 4rem;
+  aspect-ratio: 1;
+}
+.main .popup-msg .modal .modal-content .warning-icon .body {
+  fill: #FBA834;
+}
+.main .popup-msg .modal .modal-content .warning-icon .line {
+  stroke: #FBA834;
+  stroke-width: 1.7;
+}
+.main .popup-msg .modal .modal-content p {
+  font-size: 1.7rem;
+  text-align: justify;
 }
 .main .cart-resume-ctn {
   display: flex;

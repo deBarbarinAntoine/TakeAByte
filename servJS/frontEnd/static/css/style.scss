@@ -995,34 +995,72 @@
   // ###########################################################################################
 
   .popup-msg {
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
     background-color: transparentize($blue, 0.7);
+    backdrop-filter: blur(3px);
+    cursor: pointer;
+    z-index: 70;
 
     .modal {
       display: none;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
       position: fixed;
-      z-index: 70;
       overflow: auto;
       background-color: $lightblue;
-      border: 1px solid $darkblue;
+      border: 3px solid $darkblue;
       padding: 4rem 7rem;
+      min-width: 20vw;
+      min-height: 20dvh;
+      border-radius: .7rem;
+      z-index: 700;
+      cursor: default;
 
       .modal-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
 
         .close {
-          color: $orange;
-          float: right;
-          font-size: 28px;
-          font-weight: bold;
+          position: absolute;
+          top: .7rem;
+          right: .7rem;
+          width: 2.5rem;
+          aspect-ratio: 1;
+          cursor: pointer;
+
+          .line {
+            stroke: $orange;
+            stroke-width: 1.69904;
+          }
 
           &:hover,
           &:focus {
-            color: $blue;
-            text-decoration: none;
-            cursor: pointer;
+            .line {
+              stroke: darkred;
+              stroke-width: 1.69904;
+            }
           }
+        }
+        .warning-icon {
+          width: 4rem;
+          aspect-ratio: 1;
+
+          .body {
+            fill: $orange;
+          }
+          .line {
+            stroke: $orange;
+            stroke-width: 1.7;
+          }
+        }
+        p {
+          font-size: 1.7rem;
+          text-align: justify;
         }
       }
     }
