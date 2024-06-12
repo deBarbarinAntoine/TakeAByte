@@ -1288,6 +1288,32 @@ body footer.footer .footer-ctn .footer-links .link-group a:hover {
   color: #FBA834;
   text-decoration: underline;
 }
+.main .popup-msg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(63, 114, 175, 0.3);
+}
+.main .popup-msg .modal {
+  display: none;
+  position: fixed;
+  z-index: 70;
+  overflow: auto;
+  background-color: #DBE2EF;
+  border: 1px solid #112D4E;
+  padding: 4rem 7rem;
+}
+.main .popup-msg .modal .modal-content .close {
+  color: #FBA834;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+.main .popup-msg .modal .modal-content .close:hover, .main .popup-msg .modal .modal-content .close:focus {
+  color: #3F72AF;
+  text-decoration: none;
+  cursor: pointer;
+}
 .main .cart-resume-ctn {
   display: flex;
   flex-direction: column;

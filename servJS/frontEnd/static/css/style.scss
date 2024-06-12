@@ -991,6 +991,45 @@
   }
 
   // ###########################################################################################
+  // # payment popup error
+  // ###########################################################################################
+
+  .popup-msg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparentize($blue, 0.7);
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 70;
+      overflow: auto;
+      background-color: $lightblue;
+      border: 1px solid $darkblue;
+      padding: 4rem 7rem;
+
+      .modal-content {
+
+        .close {
+          color: $orange;
+          float: right;
+          font-size: 28px;
+          font-weight: bold;
+
+          &:hover,
+          &:focus {
+            color: $blue;
+            text-decoration: none;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+
+
+  // ###########################################################################################
   // # cart resume
   // ###########################################################################################
 
@@ -1128,41 +1167,4 @@
       }
     }
   }
-}
-
-// Modal for partial/payement page, work for the js in order
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgb(0,0,0);
-  background-color: rgba(0,0,0,0.4);
-  padding-top: 60px;
-}
-
-.modal-content {
-  background-color: #fefefe;
-  margin: 5% auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-}
-
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
 }
