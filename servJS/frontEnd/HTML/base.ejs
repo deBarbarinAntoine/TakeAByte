@@ -26,10 +26,21 @@
                 <input type="text" name="search" id="search" placeholder="Search..." />
             </form>
             <nav class="header-nav">
-                <div class="header-link">
+                <div class="header-link relative">
                     <a href="/discovery">Discovery</a>
                     <div class="discovery-expandable">
                         <img src="/static/img/icon/simple-arrow.png" alt="arrow-expand icon" class="expand-icon" />
+                    </div>
+                    <div class="category-drop-menu abs">
+                        <%# check if data.categories exists %>
+                        <% if (!!data.categories) { %>
+                            <% data.categories.forEach(category => { %>
+                                <div class="category-link-ctn relative">
+                                    <%= category.name %>
+                                    <a href="<%= category.link %>" class="category-link abs full"></a>
+                                </div>
+                            <% }); %>
+                        <% } %>
                     </div>
                 </div>
                 <div class="header-link">

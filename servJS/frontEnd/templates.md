@@ -259,7 +259,12 @@ Form names:
     "isFavorite": false
   },
   "filters": {
-    "categories": null,
+    "categories": [
+      {
+        "name": "category-name",
+        "id": "category-id"
+      }
+    ],
     "brands": [
       {
         "id": "brand-id",

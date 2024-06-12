@@ -8,7 +8,7 @@
             <%#         displaying category filters         %>
             <% filters.categories.forEach(category => {  %>
                 <label for="<%= category.id %>" class="category"><%= category.name %></label>
-                <input type="checkbox" name="category" id="<%= category.id %>" hidden />
+                <input type="checkbox" name="category" value="<%= category.id %>" id="<%= category.id %>" hidden />
             <% }); %>
         </div>
     <% } %>
@@ -18,26 +18,26 @@
 
         <%#         displaying prices filters         %>
         <label for="price-15" class="price">15€</label>
-        <input type="radio" name="price" id="price-15" class="price-filter" hidden />
+        <input type="radio" name="price" value="15" id="price-15" class="price-filter" hidden />
         <label for="price-50" class="price">50€</label>
-        <input type="radio" name="price" id="price-50" class="price-filter" hidden />
+        <input type="radio" name="price" value="50" id="price-50" class="price-filter" hidden />
         <label for="price-100" class="price">100€</label>
-        <input type="radio" name="price" id="price-100" class="price-filter" hidden />
+        <input type="radio" name="price" value="100" id="price-100" class="price-filter" hidden />
         <label for="price-250" class="price">250€</label>
-        <input type="radio" name="price" id="price-250" class="price-filter" hidden />
+        <input type="radio" name="price" value="250" id="price-250" class="price-filter" hidden />
         <label for="price-500" class="price">500€</label>
-        <input type="radio" name="price" id="price-500" class="price-filter" hidden />
+        <input type="radio" name="price" value="500" id="price-500" class="price-filter" hidden />
         <label for="price-1000" class="price">1000€</label>
-        <input type="radio" name="price" id="price-1000" class="price-filter" hidden />
+        <input type="radio" name="price" value="1000" id="price-1000" class="price-filter" hidden />
         <label for="price-all" class="price">None</label>
-        <input type="radio" name="price" id="price-all" class="price-filter" hidden />
+        <input type="radio" name="price" value="all" id="price-all" class="price-filter" hidden />
     </div>
     <div class="brands">
 
         <%#         displaying brands filters         %>
         <% filters.brands.forEach(brand => { %>
             <label for="<%= brand.id %>" class="brand"><%= brand.name %></label>
-            <input type="checkbox" name="brand" id="<%= brand.id %>" hidden />
+            <input type="checkbox" name="brand" value="<%= brand.id %>" id="<%= brand.id %>" hidden />
         <% }); %>
     </div>
     <div class="btn-ctn">

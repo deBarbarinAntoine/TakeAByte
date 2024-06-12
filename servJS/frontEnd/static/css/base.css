@@ -304,6 +304,9 @@ body header.header .header-ctn nav.header-nav .header-link .discovery-expandable
   width: 100%;
   height: 100%;
 }
+body header.header .header-ctn nav.header-nav .header-link .category-drop-menu {
+  display: none;
+}
 body header.header .header-ctn .header-btns {
   display: flex;
   flex: 1;

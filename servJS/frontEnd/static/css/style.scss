@@ -723,6 +723,10 @@ form.filters {
         .label-3 {
           flex: 1;
         }
+        .label-4 {
+          text-align: right;
+          width: 9rem;
+        }
       }
       .products-list {
         display: flex;
@@ -791,7 +795,9 @@ form.filters {
             display: flex;
             flex-direction: column;
             justify-content: center;
+            align-items: flex-end;
             font-size: 1.4rem;
+            width: 9rem;
           }
         }
       }
