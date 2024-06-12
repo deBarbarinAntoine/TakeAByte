@@ -90,8 +90,14 @@
                 // Make POST request to /checkout using Axios
                 const response = await axios.post('/checkout', paymentData);
 
-                // Handle response if needed
-                // console.log(response.data); // Assuming the response contains relevant data
+                // Check if the response status is 200
+                if (response.status === 200) {
+                    // Redirect to /paymentOk
+                    window.location.href = '/paymentOk';
+                } else {
+                    // Handle other response statuses if needed
+                }
+
             } catch (error) {
                 // Handle error if request fails
                 errorMessage.innerText = error.response.data.error;

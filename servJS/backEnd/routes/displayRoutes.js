@@ -517,7 +517,6 @@ router.get('/order/address', isAuthenticated, async (req, res) => {
     res.render('base', {data: data});
 });
 
-
 router.post('/cartAdd', isAuthenticated, (req, res) => {
     // Extract data from request body
     const itemId = req.body.itemId;
@@ -604,12 +603,167 @@ router.post('/checkout', isAuthenticated, async (req, res) => {
         if ((err.response.data.message) === "La carte est expirée."){
             res.status(500).json({success: false, error: err.response.data.message});
         }else{
-            console.error(err.response.data.message);
             res.status(500).json({success: false, error: err.response.data.message});
         }
     }
 });
 
+router.get('/payementOk', isAuthenticated, async (req,res) => {
+    // Read the cart cookie
+    const cartCookie = req.cookies.cart;
+    const token = process.env.WEB_TOKEN;
+    // Initialize a map to store the total quantity and price for each unique item
+    const cartItemsMap = new Map();
+    let imagePaths;
+
+    // Iterate through the items in the cart and aggregate quantities and prices
+    if (cartCookie) {
+        cartCookie.forEach(item => {
+            const {itemId, quantity, itemPrice} = item;
+            if (cartItemsMap.has(itemId)) {
+                // If item already exists in map, update its quantity and total price
+                const existingItem = cartItemsMap.get(itemId);
+                existingItem.quantity += quantity;
+                existingItem.totalPrice += quantity * itemPrice;
+            } else {
+                // If item doesn't exist in map, add it
+                cartItemsMap.set(itemId, {itemId, quantity, totalPrice: quantity * itemPrice});
+            }
+        });
+    }
+
+    // Convert the map to an array of objects
+    const cartItemsArray = Array.from(cartItemsMap.values());
+
+    function getImagePaths(allImg) {
+        // Get the length of the allImg.data array
+        const length = allImg.data.length;
+
+        // Create an array to store the image paths
+        const imagePaths = [];
+
+        // Loop through the allImg.data array and push the image paths to the imagePaths array
+        for (let i = 0; i < length; i++) {
+            imagePaths.push(allImg.data[i].image_path);
+        }
+
+        // Add "/static/img/image-not-found.webp" to the array until it has 3 elements
+        while (imagePaths.length < 3) {
+            imagePaths.push("/static/img/image-not-found.webp");
+        }
+
+        // Return the array of image paths
+        return imagePaths;
+    }
+
+    let resultArray = [];// Initialize an empty array to store the results
+    try {
+
+        for (const cartItem of cartItemsArray) {
+            const productId = cartItem.itemId;
+
+            const product = await getProductById(productId);
+
+            if (!product) {
+                console.error(`failed to get item ${productId}`);
+                continue; // Skip to the next iteration
+            }
+
+            const getImagesUrl = `http://localhost:3001/v1/images/product/${productId}`;
+            const allImg = await axios.get(getImagesUrl, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            product.img = allImg.data[0].image_path;
+            const typeId = product.type_id;
+            const brandId = product.brand_id;
+
+            // Fetch type name
+            if (typeId) {
+                const typeUrl = `http://localhost:3001/v1/types/${typeId}`;
+                const typeResponse = await axios.get(typeUrl, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                product.type = typeResponse.data[0].name;
+            }
+            // Fetch brand name
+            if (brandId) {
+                const brandUrl = `http://localhost:3001/v1/brands/${brandId}`;
+                const brandResponse = await axios.get(brandUrl, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                product.brand = brandResponse.data[0].name;
+            }
+            imagePaths = getImagePaths(allImg);
+            const miscellaneous = [];
+
+            for (let key in product) {
+                if (product.hasOwnProperty(key) && key !== 'created_at' && key !== 'updated_at' && key !== 'type_id' && key !== 'product_id' && key !== 'brand_id' && key !== 'image' && key !== 'description' && key !== 'price' && key !== 'sales' && key !== 'name' && product[key] !== null) {
+                    let content = product[key];
+                    if (key === 'quantity_stocked') {
+                        if (content === "0" || content === null || content === undefined) {
+                            key = "Availability"
+                            content = 'Not available';
+                        } else {
+                            content = `Only ${content} left. Order now!`;
+                        }
+                    }
+                    const formattedKey = key.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()); // Capitalize first letter // Replace underscores with spaces
+                    miscellaneous.push({
+                        name: formattedKey,
+                        content: content
+                    });
+                }
+            }
+
+            // Push the product details along with quantity ordered and image paths into the result array
+            resultArray.push({
+                product,
+                quantityOrdered: cartItem.quantity, // Include the quantity ordered
+                imagePaths: imagePaths, // Include the image paths
+                miscellaneous
+            });
+        }
+
+        // Now resultArray contains the results of each iteration
+    } catch (error) {
+        console.error('Error occurred:', error);
+    }
+
+    // Function to calculate the subtotal of the cart
+    function calculateSubtotal(cartItems) {
+        let subtotal = 0;
+        cartItems.forEach(item => {
+            subtotal += item.totalPrice;
+        });
+        return subtotal;
+    }
+
+
+
+    const data = {
+        title: "Home - TakeAByte",
+        isAuthenticated: req.isAuthenticated,
+        template: 'order',
+        slogan: "Your Trusted Tech Partner",
+        templateData: {
+            page: 'payment-confirmed',
+            order: {
+                products: {resultArray},
+                subtotal: calculateSubtotal(cartItemsArray), // Subtotal of the cart
+                shippingCost: "FREE for a limited time"
+            }
+        }
+    };
+    res.render('base', {data: data});
+
+
+});
 
 router.get('/order-confirmation', isAuthenticated, (req, res) => {
     const data = {
