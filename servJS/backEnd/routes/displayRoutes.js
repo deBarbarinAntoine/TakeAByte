@@ -608,7 +608,7 @@ router.post('/checkout', isAuthenticated, async (req, res) => {
     }
 });
 
-router.get('/payementOk', isAuthenticated, async (req,res) => {
+router.get('/paymentOk', isAuthenticated, async (req,res) => {
     // Read the cart cookie
     const cartCookie = req.cookies.cart;
     const token = process.env.WEB_TOKEN;
