@@ -105,21 +105,42 @@ $font-weight: 600;
 // ##############################################################################################
 
 
-.cart-img {
-  object-fit: contain;
-  object-position: center;
-  width: 100%;
-  height: 100%;
-
+.cart-icon {
   .line {
-    stroke-width: 2;
+    stroke-width: 1.7;
     stroke: $darkblue;
   }
   .wheel {
     fill: $darkblue;
   }
 }
-
+.user-icon {
+  path {
+    stroke: $darkblue;
+    fill: transparent;
+  }
+}
+.logout-icon {
+  .line {
+    fill: $darkblue;
+  }
+}
+.login-icon {
+  .st0 {
+    display: none;
+  }
+  .st1 {
+    display: inline;
+  }
+  .st2 {
+    fill:none;
+    stroke: $darkblue;
+    stroke-width: 8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-miterlimit: 10;
+  }
+}
 
 button,
 .button {
@@ -143,6 +164,13 @@ button,
 
     .line, .wheel {
       transition: all 200ms ease-in-out 50ms;
+    }
+    .line {
+      stroke: $darkblue;
+      stroke-width: 2;
+    }
+    .wheel {
+      fill: $darkblue;
     }
   }
   &.blue {
@@ -320,26 +348,43 @@ body {
         align-items: center;
         gap: 2.2rem;
 
-        .account-btn {
-          width: 2.3rem;
-          height: 2.3rem;
-
-          img {
-            object-fit: contain;
-            object-position: center;
-            height: 100%;
-            width: 100%;
-          }
+        svg {
+          object-fit: contain;
+          object-position: center;
+          height: 100%;
+          width: 100%;
         }
+        .account-btn,
+        .login-btn,
+        .logout-btn,
         .cart-btn {
           width: 2.6rem;
           aspect-ratio: 1;
 
-          img {
-            object-fit: contain;
-            object-position: center;
-            height: 100%;
-            width: 100%;
+          &:hover {
+            .login-icon {
+              .st2 {
+                stroke: $orange;
+              }
+            }
+            .cart-icon {
+              .line {
+                stroke: $orange;
+              }
+              .wheel {
+                fill: $orange;
+              }
+            }
+            .user-icon {
+              path {
+                stroke: $orange;
+              }
+            }
+            .logout-icon {
+              .line {
+                fill: $orange;
+              }
+            }
           }
         }
       }

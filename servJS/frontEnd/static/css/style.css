@@ -75,18 +75,36 @@
   box-shadow: rgba(21, 21, 32, 0.1254901961) 0 0.5rem 2.2rem;
 }
 
-.cart-img {
-  object-fit: contain;
-  object-position: center;
-  width: 100%;
-  height: 100%;
-}
-.cart-img .line {
-  stroke-width: 2;
+.cart-icon .line {
+  stroke-width: 1.7;
   stroke: #112D4E;
 }
-.cart-img .wheel {
+.cart-icon .wheel {
   fill: #112D4E;
+}
+
+.user-icon path {
+  stroke: #112D4E;
+  fill: transparent;
+}
+
+.logout-icon .line {
+  fill: #112D4E;
+}
+
+.login-icon .st0 {
+  display: none;
+}
+.login-icon .st1 {
+  display: inline;
+}
+.login-icon .st2 {
+  fill: none;
+  stroke: #112D4E;
+  stroke-width: 8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-miterlimit: 10;
 }
 
 button,
@@ -114,6 +132,15 @@ button svg .line, button svg .wheel,
 .button svg .line,
 .button svg .wheel {
   transition: all 200ms ease-in-out 50ms;
+}
+button svg .line,
+.button svg .line {
+  stroke: #112D4E;
+  stroke-width: 2;
+}
+button svg .wheel,
+.button svg .wheel {
+  fill: #112D4E;
 }
 button.blue,
 .button.blue {
@@ -284,25 +311,48 @@ body header.header .header-ctn .header-btns {
   align-items: center;
   gap: 2.2rem;
 }
-body header.header .header-ctn .header-btns .account-btn {
-  width: 2.3rem;
-  height: 2.3rem;
-}
-body header.header .header-ctn .header-btns .account-btn img {
+body header.header .header-ctn .header-btns svg {
   object-fit: contain;
   object-position: center;
   height: 100%;
   width: 100%;
 }
+body header.header .header-ctn .header-btns .account-btn,
+body header.header .header-ctn .header-btns .login-btn,
+body header.header .header-ctn .header-btns .logout-btn,
 body header.header .header-ctn .header-btns .cart-btn {
   width: 2.6rem;
   aspect-ratio: 1;
 }
-body header.header .header-ctn .header-btns .cart-btn img {
-  object-fit: contain;
-  object-position: center;
-  height: 100%;
-  width: 100%;
+body header.header .header-ctn .header-btns .account-btn:hover .login-icon .st2,
+body header.header .header-ctn .header-btns .login-btn:hover .login-icon .st2,
+body header.header .header-ctn .header-btns .logout-btn:hover .login-icon .st2,
+body header.header .header-ctn .header-btns .cart-btn:hover .login-icon .st2 {
+  stroke: #FBA834;
+}
+body header.header .header-ctn .header-btns .account-btn:hover .cart-icon .line,
+body header.header .header-ctn .header-btns .login-btn:hover .cart-icon .line,
+body header.header .header-ctn .header-btns .logout-btn:hover .cart-icon .line,
+body header.header .header-ctn .header-btns .cart-btn:hover .cart-icon .line {
+  stroke: #FBA834;
+}
+body header.header .header-ctn .header-btns .account-btn:hover .cart-icon .wheel,
+body header.header .header-ctn .header-btns .login-btn:hover .cart-icon .wheel,
+body header.header .header-ctn .header-btns .logout-btn:hover .cart-icon .wheel,
+body header.header .header-ctn .header-btns .cart-btn:hover .cart-icon .wheel {
+  fill: #FBA834;
+}
+body header.header .header-ctn .header-btns .account-btn:hover .user-icon path,
+body header.header .header-ctn .header-btns .login-btn:hover .user-icon path,
+body header.header .header-ctn .header-btns .logout-btn:hover .user-icon path,
+body header.header .header-ctn .header-btns .cart-btn:hover .user-icon path {
+  stroke: #FBA834;
+}
+body header.header .header-ctn .header-btns .account-btn:hover .logout-icon .line,
+body header.header .header-ctn .header-btns .login-btn:hover .logout-icon .line,
+body header.header .header-ctn .header-btns .logout-btn:hover .logout-icon .line,
+body header.header .header-ctn .header-btns .cart-btn:hover .logout-icon .line {
+  fill: #FBA834;
 }
 body .template-page {
   flex: 1;
