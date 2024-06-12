@@ -203,6 +203,8 @@ const creatBrandQuery = "INSERT INTO brands (name) VALUES (?)";
 // GET /api/brands/:id: Get brand by ID.
 const getBrandQuery = "SELECT * FROM brands WHERE brand_id IN (?)";
 
+const getAllBrandsQuery = "SELECT * FROM brands";
+
 // PUT /api/brands/:id: Update brand by ID.
 const updateBrandQuery = "UPDATE brands SET name = ? WHERE brand_id = ?";
 
@@ -277,6 +279,7 @@ const verifyResetTokenQuery = 'SELECT user_id FROM password_reset_tokens WHERE t
 const deleteResetTokenQuery = 'DELETE FROM password_reset_tokens WHERE token = ?'
 
 module.exports = {
+    getAllBrandsQuery,
     getAllUsersQuery,
     deleteResetTokenQuery,
     verifyResetTokenQuery,

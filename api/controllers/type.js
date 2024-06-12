@@ -109,3 +109,13 @@ exports.allTypesIds = async (req, res) => {
         res.status(500).json({ error: "Failed to get all type ids" });
     }
 }
+
+exports.getAllTypesIds = async (req, res) => {
+    try {
+        let results = await connection.query('SELECT * FROM `types`');
+        res.status(200).json(results[0]);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Failed to get all type ids" });
+    }
+}

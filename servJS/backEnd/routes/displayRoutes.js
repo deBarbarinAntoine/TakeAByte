@@ -7,17 +7,18 @@ const {
     fetchRandomCategoryProducts,
     getProductById, getProductByTypeId
 } = require("../controllers/productsController");
-const {getTypeNameById} = require("../controllers/typeController");
+const {getTypeNameById,getAllType} = require("../controllers/typeController");
 const {getBrandByIds} = require("../controllers/brandController");
 const router = express.Router();
 
 router.get('/home', isAuthenticated, async (req, res) => {
+
     try {
         // Call functions to fetch latest, popular, and random products
         const latestProducts = await fetchLatestProducts();
         const popularProducts = await fetchPopularProducts();
         const randomCategoryProducts = await fetchRandomCategoryProducts();
-
+        const type_list = await getAllType();
         // Construct the data object with the fetched products
         const data = {
             title: "Home - TakeAByte",
@@ -47,7 +48,8 @@ router.get('/home', isAuthenticated, async (req, res) => {
                     products: randomCategoryProducts
                 },
             },
-            slogan: "Your Trusted Tech Partner"
+            slogan: "Your Trusted Tech Partner",
+            categories:type_list
         };
 
         // Render the page with the populated data
@@ -59,24 +61,28 @@ router.get('/home', isAuthenticated, async (req, res) => {
     }
 });
 
-router.get('/login', isAuthenticated, (req, res) => {
+router.get('/login', isAuthenticated, async (req, res) => {
+    const type_list = await getAllType();
     const data = {
         title: "Home - TakeAByte",
         isAuthenticated: req.isAuthenticated,
         template: "login",
         templateData: {},
-        slogan: "Your Trusted Tech Partner"
+        slogan: "Your Trusted Tech Partner",
+        categories:type_list
     };
     res.render('base', {data: data});
 })
 
-router.get('/products', isAuthenticated, (req, res) => {
+router.get('/products', isAuthenticated, async (req, res) => {
+    const type_list = await getAllType();
     const data = {
         title: "Products - TakeAByte",
         isAuthenticated: req.isAuthenticated,
         template: "product-list",
         templateData: {},
-        slogan: "Your Trusted Tech Partner"
+        slogan: "Your Trusted Tech Partner",
+        categories: type_list
     };
     res.render('base', {data: data});
 });
@@ -168,7 +174,7 @@ router.get('/product/:productId', isAuthenticated, async (req, res) => {
                 });
             }
         }
-
+        const type_list = await getAllType();
         const data = {
             title: "Products - TakeAByte",
             isAuthenticated: req.isAuthenticated,
@@ -199,6 +205,7 @@ router.get('/product/:productId', isAuthenticated, async (req, res) => {
                 quantityStock: product[0].quantity_stocked
             },
             slogan: "Your Trusted Tech Partner",
+            categories: type_list
 
         };
         res.render('base', {data: data});
@@ -344,13 +351,13 @@ router.get('/cart', isAuthenticated, async (req, res) => {
         });
         return subtotal;
     }
-
-
+    const type_list = await getAllType();
     const data = {
         title: "Home - TakeAByte",
         isAuthenticated: req.isAuthenticated,
         template: 'cart',
         slogan: "Your Trusted Tech Partner",
+        categories: type_list,
         templateData: {
             cart: {
                 products: {resultArray},
@@ -497,12 +504,13 @@ router.get('/order/address', isAuthenticated, async (req, res) => {
         });
         return subtotal;
     }
-
+    const type_list = await getAllType();
     const data = {
         title: "Home - TakeAByte",
         isAuthenticated: req.isAuthenticated,
         template: 'order',
         slogan: "Your Trusted Tech Partner",
+        categories:type_list,
         templateData: {
             page: 'address',
             order: {
@@ -754,12 +762,13 @@ router.get('/paymentOk', isAuthenticated, async (req, res) => {
     } catch (err) {
         console.error(err)
     }
-
+    const type_list = await getAllType();
     const data = {
         title: "Home - TakeAByte",
         isAuthenticated: req.isAuthenticated,
         template: 'order',
         slogan: "Your Trusted Tech Partner",
+        categories:type_list,
         templateData: {
             client: {orderId},
             page: 'payment-confirmed',
@@ -775,45 +784,53 @@ router.get('/paymentOk', isAuthenticated, async (req, res) => {
 
 });
 
-router.get('/contact-us', isAuthenticated, (req, res) => {
+router.get('/contact-us', isAuthenticated, async (req, res) => {
+    const type_list = await getAllType();
     const data = {
         title: "Home - TakeAByte",
         isAuthenticated: req.isAuthenticated,
         template: "contact-us",
         templateData: {},
+        categories:type_list,
         slogan: "Your Trusted Tech Partner"
     };
     res.render('base', {data: data});
 })
 
-router.get('/about', isAuthenticated, (req, res) => {
+router.get('/about', isAuthenticated, async (req, res) => {
+    const type_list = await getAllType();
     const data = {
         title: "Home - TakeAByte",
         isAuthenticated: req.isAuthenticated,
         template: "about",
         templateData: {},
+        categories:type_list,
         slogan: "Your Trusted Tech Partner"
     };
     res.render('base', {data: data});
 })
 
-router.get('/privacy-policy', isAuthenticated, (req, res) => {
+router.get('/privacy-policy', isAuthenticated, async (req, res) => {
+    const type_list = await getAllType();
     const data = {
         title: "Home - TakeAByte",
         isAuthenticated: req.isAuthenticated,
         template: "privacy-policy",
         templateData: {},
+        categories:type_list,
         slogan: "Your Trusted Tech Partner"
     };
     res.render('base', {data: data});
 })
 
-router.get('/terms-conditions', isAuthenticated, (req, res) => {
+router.get('/terms-conditions', isAuthenticated, async (req, res) => {
+    const type_list = await getAllType();
     const data = {
         title: "Home - TakeAByte",
         isAuthenticated: req.isAuthenticated,
         template: "terms-conditions",
         templateData: {},
+        categories:type_list,
         slogan: "Your Trusted Tech Partner"
     };
     res.render('base', {data: data});
@@ -991,11 +1008,12 @@ router.get('/order/shipping/:encodedData', isAuthenticated, async (req, res) => 
         });
         return subtotal;
     }
-
+    const type_list = await getAllType();
     const data = {
         title: "Home - TakeAByte",
         isAuthenticated: req.isAuthenticated,
         template: 'order',
+        categories:type_list,
         slogan: "Your Trusted Tech Partner",
         templateData: {
             client: {
@@ -1151,11 +1169,12 @@ router.get('/order/payment/:encodedData', isAuthenticated, async (req, res) => {
         });
         return subtotal;
     }
-
+    const type_list = await getAllType();
     const data = {
         title: "Home - TakeAByte",
         isAuthenticated: req.isAuthenticated,
         template: 'order',
+        categories:type_list,
         slogan: "Your Trusted Tech Partner",
         templateData: {
             client: {client: {contactEmail, shipToAddress, shippingMethod}},
@@ -1169,11 +1188,13 @@ router.get('/order/payment/:encodedData', isAuthenticated, async (req, res) => {
     };
     res.render('base', {data: data});
 })
-router.get('/about-shipping', (req, res) => {
+router.get('/about-shipping', async (req, res) => {
+    const type_list = await getAllType();
     const data = {
         title: "Home - TakeAByte",
         isAuthenticated: req.isAuthenticated,
         template: "about-shipping",
+        categories:type_list,
         templateData: {
             nearbyPost: {}
         },
@@ -1181,12 +1202,14 @@ router.get('/about-shipping', (req, res) => {
     };
     res.render('base', {data: data});
 })
-router.get('/register', isAuthenticated, (req, res) => {
+router.get('/register', isAuthenticated, async (req, res) => {
+    const type_list = await getAllType();
     const data = {
         title: "Home - TakeAByte",
         isAuthenticated: req.isAuthenticated,
         template: "register",
         templateData: {},
+        categories:type_list,
         slogan: "Your Trusted Tech Partner"
     };
     res.render('base', {data: data});
@@ -1208,11 +1231,12 @@ router.get('/category/:type_id', isAuthenticated, async (req, res) => {
         console.error('Error in router handler:', err);
 
     }
-
+    const type_list = await getAllType();
     const data = {
         title: "Home - TakeAByte",
         isAuthenticated: req.isAuthenticated,
         template: "category",
+        categories:type_list,
         templateData: {
             "navData": [
                 {
@@ -1235,12 +1259,14 @@ router.get('/category/:type_id', isAuthenticated, async (req, res) => {
 })
 
 // Define a route for the 404 page
-router.get('*', (req, res) => {
+router.get('*', async (req, res) => {
+    const type_list = await getAllType();
     const data = {
         title: "Error 404 - TakeAByte",
         isAuthenticated: req.isAuthenticated,
         template: "404",
         templateData: {},
+        categories:type_list,
         slogan: "Your Trusted Tech Partner"
     }
     res.render('base', {data: data});

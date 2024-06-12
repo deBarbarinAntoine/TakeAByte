@@ -25,4 +25,5 @@ async function getBrandByIds(array){
     }
 }
 
+
 module.exports = {getBrandByIds};

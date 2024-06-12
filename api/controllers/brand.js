@@ -5,7 +5,7 @@ const {
     updateBrandQuery,
     getBrandQuery,
     deleteBrandQuery,
-    getBrandIdByNameQuery,
+    getBrandIdByNameQuery, getAllBrandsQuery,
 } = require("../models/db-queries");
 
 // Function to create a new brand
@@ -100,5 +100,15 @@ exports.getBrandIdByName = async (req, res) => {
         }
         console.error("Unexpected error:", error);
         return serverErrorResponse(res, "Failed to get Brand id with given name");
+    }
+}
+
+exports.getAllBrands = async (req,res) =>{
+    try {
+        const results = await connection.query(getAllBrandsQuery);
+        res.status(200).json(results[0]);
+    } catch (error) {
+        console.error("Unexpected error:", error);
+        return serverErrorResponse(res, "Failed to get all brands");
     }
 }
