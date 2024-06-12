@@ -52,6 +52,23 @@
     document.addEventListener('DOMContentLoaded', () => {
         const amount = `<%= data.order.subtotal %>`;
         const form = document.querySelector('.order-form');
+        const modal = document.getElementById('errorModal');
+        const modalContent = document.querySelector('.modal-content');
+        const closeButton = document.querySelector('.close');
+        const errorMessage = document.getElementById('errorMessage');
+
+        closeButton.onclick = function() {
+            modalContent.hidden = true;
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modalContent.hidden = true;
+                modal.style.display = "none";
+            }
+        }
+
         form.addEventListener('submit', async (event) => {
             event.preventDefault(); // Prevent default form submission
 
@@ -74,12 +91,14 @@
                 const response = await axios.post('/checkout', paymentData);
 
                 // Handle response if needed
-                console.log(response.data); // Assuming the response contains relevant data
+                // console.log(response.data); // Assuming the response contains relevant data
             } catch (error) {
                 // Handle error if request fails
-                console.error('Error:', error);
+                errorMessage.innerText = error.response.data.error;
+                modalContent.hidden = false;
+                closeButton.hidden = false;
+                modal.style.display = "block";
             }
         });
     });
 </script>
-
