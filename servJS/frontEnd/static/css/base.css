@@ -392,6 +392,7 @@ body header.header .header-ctn .header-btns .cart-btn:hover .logout-icon .line {
 }
 body .template-page {
   position: relative;
+  min-height: calc(100dvh - 25rem);
   flex: 1;
 }
 body footer.footer {

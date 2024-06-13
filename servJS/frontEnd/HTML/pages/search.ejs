@@ -1,37 +1,84 @@
-<div class="main-column gap5 padding-top3 relative">
 
-    <form action="/search" method="get" class="search-bar">
-        <button type="submit" class="search-logo">
-            <img src="/static/img/icon/search.png" alt="search logo" />
-        </button>
-        <label class="abs hidden" for="search"></label>
-        <input type="text" name="search" id="search" placeholder="Search..." value="<%= data.search || '' %>" autofocus required />
-    </form>
+<% const hasFilters = !!data.filters; %>
 
-    <%# remove the condition when data.filters is fully implemented %>
-    <% if (!!data.filters) { %>
+<%# remove the condition when data.filters is fully implemented %>
+<% if (hasFilters) { %>
+<div class="main">
 
-        <div class="filters-ctn abs">
+
+
+    <div class="filters-ctn">
+        <%######################################################################################%>
+        <%#       Filters Template                                                              %>
+        <%######################################################################################%>
+        <%- include('../partials/filters', {filters: data.filters}); %>
+
+    </div>
+
+    <div class="main-column padding-top3 gap5 flex1">
+
+        <% } else { %>
+            <div class="main-column padding-top3 gap5">
+        <% } %>
+
+        <form action="/search" method="get" class="search-bar">
+            <button type="submit" class="search-logo">
+                <img src="/static/img/icon/search.png" alt="search logo" />
+            </button>
+            <label class="abs hidden" for="search-main"></label>
+            <input type="text" name="search" id="search-main" placeholder="Search..." value="<%= data.search || '' %>" autofocus required />
+        </form>
+
+        <%# remove the condition when data.filters is fully implemented %>
+        <% if (!!data.filters) { %>
+
+            <div class="filters-ctn abs">
+
+                <%######################################################################################%>
+                <%#       Filters Template                                                              %>
+                <%######################################################################################%>
+                <%- include('../partials/filters', {filters: data.filters}); %>
+
+            </div>
+
+        <% } %>
+        <div>
+            <pre><%= console.log((data));%></pre>
+        </div>
+        <div class="search-ctn">
 
             <%######################################################################################%>
-            <%#       Filters Template                                                              %>
+            <%#       Product-Card Template                                                         %>
             <%######################################################################################%>
-            <%- include('../partials/filters', {filters: data.filters}); %>
-
+            <% if (data.category.products !== 'No data found for the searched product') { %>
+                <% data.category.products.forEach(function (product) { %>
+                    <%- include('../partials/product-card', {product: product}); %>
+                <% }); %>
+            <% } else { %>
+                <div class="main-msg">We didn't find what you were looking for...</div>
+            <% } %>
         </div>
 
+    <% if (hasFilters) { %>
+        </div>
     <% } %>
-    <div>
-        <pre><%= console.log((data));%></pre>
-    </div>
-    <div class="search-ctn">
-
-        <%######################################################################################%>
-        <%#       Product-Card Template                                                         %>
-        <%######################################################################################%>
-        <% data.category.products.forEach(function (product) { %>
-            <%- include('../partials/product-card', {product: product}); %>
-        <% }); %>
-
-    </div>
 </div>
+
+
+<script>
+
+    <%######################################################################################%>
+    <%#       Search bar actions                                                            %>
+    <%######################################################################################%>
+
+    <%# remove header search bar %>
+    const searchBarHeader = document.querySelector('.header-ctn .search-bar');
+    searchBarHeader.style.display = 'none';
+
+    <%# fill main search bar with current research value %>
+    const urlParams = new URLSearchParams(window.location.search);
+    const search = urlParams.get('search');
+    console.log(search);
+    const searchBar = document.querySelector('#search-main');
+    searchBar.value = search;
+</script>

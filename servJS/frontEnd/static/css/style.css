@@ -392,6 +392,7 @@ body header.header .header-ctn .header-btns .cart-btn:hover .logout-icon .line {
 }
 body .template-page {
   position: relative;
+  min-height: calc(100dvh - 25rem);
   flex: 1;
 }
 body footer.footer {
@@ -518,6 +519,11 @@ body footer.footer .footer-ctn .footer-links .link-group a:hover {
 .quantity .minus:hover,
 .quantity .plus:hover {
   color: #FBA834;
+}
+
+.main-msg {
+  text-align: center;
+  font-size: 3.5rem;
 }
 
 .favorite-button {
@@ -796,7 +802,7 @@ body footer.footer .footer-ctn .footer-links .link-group a:hover {
   width: 100%;
   height: 100%;
 }
-.main-column form.search-bar input#search {
+.main-column form.search-bar input#search-main {
   flex: 1;
   appearance: none;
   border: none;
@@ -807,7 +813,7 @@ body footer.footer .footer-ctn .footer-links .link-group a:hover {
   font-weight: 600;
   font-size: 1.5rem;
 }
-.main-column form.search-bar input#search:focus {
+.main-column form.search-bar input#search-main:focus {
   outline: none;
   appearance: none;
   border: none;
