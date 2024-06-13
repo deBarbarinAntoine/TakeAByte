@@ -228,14 +228,21 @@ button,
       display: flex;
       flex-direction: column;
       top: 100%;
-      padding-top: 1.5rem;
+      transform: translateX(-25%);
+      padding-top: .5rem;
       width: max-content;
       z-index: 100;
+      border-bottom: 2px solid $blue;
+      border-right: 2px solid $blue;
+      border-left: 2px solid $blue;
+      border-radius: .5rem;
 
       .category-link-ctn {
-        padding: .4rem 1rem;
-        width: 100%;
+        padding: .4rem 1.5rem;
+        width: max-content;
+        min-width: calc(100% - 3rem);
         background-color: $lightblue;
+        border-bottom: 1px dotted $blue;
         cursor: pointer;
         transition: all 300ms ease-out 50ms;
 
@@ -366,11 +373,12 @@ body {
 
         .header-link {
           display: flex;
-          align-items: flex-end;
+          align-items: center;
           line-height: normal;
           gap: .7rem;
 
           a {
+            line-height: 5rem;
             font-size: 1.5rem;
             white-space: nowrap;
           }
@@ -381,7 +389,7 @@ body {
             img.expand-icon {
               object-fit: contain;
               object-position: bottom;
-              transform: translateY(3px);
+              transform: translateY(.6rem);
               width: 100%;
               height: 100%;
             }

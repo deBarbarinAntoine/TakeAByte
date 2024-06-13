@@ -203,14 +203,21 @@ button.big-btn,
   display: flex;
   flex-direction: column;
   top: 100%;
-  padding-top: 1.5rem;
+  transform: translateX(-25%);
+  padding-top: 0.5rem;
   width: max-content;
   z-index: 100;
+  border-bottom: 2px solid #3F72AF;
+  border-right: 2px solid #3F72AF;
+  border-left: 2px solid #3F72AF;
+  border-radius: 0.5rem;
 }
 .drop-down-ctn:hover .category-drop-menu .category-link-ctn {
-  padding: 0.4rem 1rem;
-  width: 100%;
+  padding: 0.4rem 1.5rem;
+  width: max-content;
+  min-width: calc(100% - 3rem);
   background-color: #DBE2EF;
+  border-bottom: 1px dotted #3F72AF;
   cursor: pointer;
   transition: all 300ms ease-out 50ms;
 }
@@ -321,11 +328,12 @@ body header.header .header-ctn nav.header-nav {
 }
 body header.header .header-ctn nav.header-nav .header-link {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   line-height: normal;
   gap: 0.7rem;
 }
 body header.header .header-ctn nav.header-nav .header-link a {
+  line-height: 5rem;
   font-size: 1.5rem;
   white-space: nowrap;
 }
@@ -336,7 +344,7 @@ body header.header .header-ctn nav.header-nav .header-link .discovery-expandable
 body header.header .header-ctn nav.header-nav .header-link .discovery-expandable img.expand-icon {
   object-fit: contain;
   object-position: bottom;
-  transform: translateY(3px);
+  transform: translateY(0.6rem);
   width: 100%;
   height: 100%;
 }
