@@ -1,0 +1,74 @@
+<div class="main">
+    <div class="user-info-ctn">
+        <div class="flippable-card">
+            <div class="flippable-card-front flippable-card-face">
+                <div class="user-info">
+                    <div class="title">Your personal data</div>
+                    <div class="generic">
+                        <div class="labels">
+                            <div class="label">Username</div>
+                            <div class="label">Email</div>
+                        </div>
+                        <div class="values">
+                            <div class="text"><%= data.user.username %></div>
+                            <div class="text"><%= data.user.email %></div>
+                        </div>
+                    </div>
+                    <div class="button flip">Edit</div>
+                    <div class="address">
+                        <div class="labels">
+                            <% if (!!data.user.street) { %>
+                                <div class="label">Street</div>
+                                <% if (!!data.user.complement) { %>
+                                    <div class="label">Complement</div>
+                                <% } %>
+                                <div class="label">City</div>
+                                <div class="label">ZIP code</div>
+                                <% if (!!data.user.province) { %>
+                                    <div class="label">Province</div>
+                                <% } %>
+                                <div class="label">Country</div>
+                            <% } %>
+                        </div>
+                        <div class="values">
+                            <% if (!!data.user.street) { %>
+                                <div class="text"><%= data.user.street %></div>
+                                <% if (!!data.user.complement) { %>
+                                    <div class="text"><%= data.user.complement %></div>
+                                <% } %>
+                                <div class="text"><%= data.user.city %></div>
+                                <div class="text"><%= data.user.zip %></div>
+                                <% if (!!data.user.province) { %>
+                                    <div class="text"><%= data.user.province %></div>
+                                <% } %>
+                                <div class="text"><%= data.user.country %></div>
+                            <% } else { %>
+                                <div class="alert">You need to register an address!</div>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flippable-card-back flippable-card-face">
+                <%# Put the forms here (username & mail form, password form, and address form) %>
+                <button class="return flip"><i class="fa fa-undo"></i></button>
+            </div>
+        </div>
+    </div>
+    <div class="user-favorites-ctn swiper">
+        <div class="favorites-carousel swiper-wrapper">
+
+            <%######################################################################################%>
+            <%#       Product-Card Template                                                         %>
+            <%######################################################################################%>
+            <% data.favorites.forEach(function (product) { %>
+                <%- include('../partials/product-card', {product: product}); %>
+            <% }); %>
+
+        </div>
+        <div class="carousel-nav">
+            <div class="previous"></div>
+            <div class="next"></div>
+        </div>
+    </div>
+</div>

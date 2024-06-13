@@ -23,6 +23,7 @@ partials are models used in the pages: they are always called from a `page` temp
 - [`product.ejs`](#productejs)
 - [`order.ejs`](#orderejs)
 - [`search.ejs`](#searchejs)
+- [`dashboard.ejs`](#dashboardejs)
 - [`login.ejs`](#loginejs)
 - [`register.ejs`](#registerejs)
 - [`confirm.ejs`](#confirmejs)
@@ -247,28 +248,29 @@ Form names:
 
 ````json
 {
-  "product": {
-    "image": "product-image-path",
-    "name": "product-name",
-    "description": "product-description",
-    "price": "product-price-€",
-    "colors": [
-      "css-color-name"
-    ],
-    "brand": "product-brand",
-    "miscellaneous": [
+  "navData": [
+    {
+      "link": "nav-link",
+      "className": "nav-class",
+      "title": "nav-title"
+    }
+  ],
+  "category": {
+    "products": [
       {
-        "name": "spec-name",
-        "content": "spec-content"
+        "link": "product-link",
+        "img": "product-img",
+        "name": "product-name",
+        "price": "product-price",
+        "isFavorite": false
       }
-    ],
-    "isFavorite": false
+    ]
   },
   "filters": {
     "categories": [
       {
-        "name": "category-name",
-        "id": "category-id"
+        "id": "category-id",
+        "name": "category-name"
       }
     ],
     "brands": [
@@ -291,6 +293,64 @@ Filters from names:
 > **price**
 > 
 > **brand**
+> 
+
+---
+
+## `dashboard.ejs`
+
+````json
+{
+  "user": {
+    "id": "user-id",
+    "username": "username",
+    "email": "email",
+    "street": "address-street",
+    "complement": null,
+    "city": "city",
+    "zip": "zip-code",
+    "province": null,
+    "country": "country"
+  },
+  "favorites": {
+    "products": [
+      {
+        "link": "product-link",
+        "img": "product-img",
+        "name": "product-name",
+        "price": "product-price"
+      }
+    ]
+  }
+}
+````
+
+Generic form names:
+> **username**
+>
+> **email**
+> 
+
+Password form names:
+> **password**
+> 
+> **new-password**
+> 
+> **confirm-password**
+> 
+
+Address from names:
+> **street**
+>
+> **complement**
+>
+> **city**
+>
+> **zip**
+> 
+> **province**
+> 
+> **country**
 > 
 
 ---
