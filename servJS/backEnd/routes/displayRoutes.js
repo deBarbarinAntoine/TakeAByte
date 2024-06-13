@@ -31,7 +31,7 @@ router.get('/home', isAuthenticated, async (req, res) => {
                     img: "banner.jpg",
                     title: "Computer Components",
                     text: "All you need to build or power up your computer or even set up your own home lab.",
-                    link: "/type/Computer Components",
+                    link: "/category/11",
                     btnContent: "Discover our collection"
                 },
                 latest: {
