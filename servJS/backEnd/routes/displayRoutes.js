@@ -10,6 +10,7 @@ const {
 const {getTypeNameById,getAllType} = require("../controllers/typeController");
 const {getBrandByIds, getAllBrands} = require("../controllers/brandController");
 const {getSearchData} = require("../controllers/searchController");
+const {addToLikes} = require("../controllers/likeContoller");
 const router = express.Router();
 
 router.get('/home', isAuthenticated, async (req, res) => {
@@ -537,6 +538,24 @@ router.post('/cartAdd', isAuthenticated, (req, res) => {
     res.send({status: 'success'});
 
 })
+
+router.post('/vafAdd', isAuthenticated, async (req, res) => {
+    // Extract productId from request body
+    const { productId } = req.body;
+    let fav = req.cookies.fav || [];
+    fav.push({productId});
+    const oneWeekInMilliseconds = 7 * 24 * 60 * 60 * 1000; // 7 days * 24 hours * 60 minutes * 60 seconds * 1000 milliseconds
+    res.cookie('fav', fav, {maxAge: oneWeekInMilliseconds, httpOnly: true}); // Set cookie expiry time
+    res.send({status: 'success'});
+    try {
+        await addToLikes(productId)
+
+    } catch (error) {
+        console.error("Error fetching products:", error);
+    }
+
+})
+
 
 router.post('/checkout', isAuthenticated, async (req, res) => {
     const {cardNumber, expiration, cvv, amount} = req.body;

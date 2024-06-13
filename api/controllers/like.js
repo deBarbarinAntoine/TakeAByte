@@ -1,22 +1,18 @@
 const {likeProductQuery, unlikeProductQuery, getProductLikesQuery} = require("../models/db-queries");
 const connection = require("../models/db-connect");
-const {serverErrorResponse, conflictErrorResponse} = require("../helpers/responses");
+const {serverErrorResponse} = require("../helpers/responses");
 
-exports.likeProduct = (req, res) => {
-    const { product_id } = req.params;
+exports.likeProduct = async (req, res) => {
+    const {product_id} = req.params;
     const user_id = req.userId
     const created_at = new Date(); // Current timestamp
-    connection.query(likeProductQuery, [user_id, product_id, created_at], (error) => {
-        if (error) {
-            if (error.errno === 1062) {
-                conflictErrorResponse(res, error, "You already unliked this product");
-                return;
-            }
-            return serverErrorResponse(res, "Failed to like product");
-        }
-        res.status(200).json({ message: 'Product liked successfully' });
-    });
-};
+    try {
+        await connection.query(likeProductQuery, [user_id, product_id, created_at],
+            res.status(200).json({message: 'Product liked successfullyy'}))
+    } catch (err) {
+        console.log(err)
+    }
+}
 
 exports.unlikeProduct = (req, res) => {
     const { product_id } = req.params;

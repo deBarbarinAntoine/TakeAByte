@@ -6,7 +6,7 @@ const router = express.Router();
 
 // Like Endpoints:
 // POST /like: Like a product.
-router.post('/like', authenticate,authorizeMod,likeProduct);
+router.post('/:product_id', authenticate,authorizeMod,likeProduct);
 // DELETE /unlike: Unlike a product.
 router.delete('/unlike', authenticate,authorizeMod,unlikeProduct);
 // GET /likes: Retrieve likes and users that liked a specific product.

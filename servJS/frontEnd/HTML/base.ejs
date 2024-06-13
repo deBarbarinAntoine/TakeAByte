@@ -135,6 +135,7 @@
             </div>
         </div>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
         <%####################################################################%>
         <%#                     Add/remove favorites                          %>
@@ -146,6 +147,32 @@
         }
 
         favoriteButtons.forEach(btn => btn.addEventListener('click', favoriteClick));
+
+        const points = document.querySelectorAll('.favorite-button');
+        // Add click event listener to each point
+        points.forEach(point => {
+            point.addEventListener('click', function() {
+                // Retrieve the data-id attribute value
+                const productId = this.getAttribute('data-product-id');
+
+                // Prepare data to send in the POST request
+                const data = {
+                    productId: productId
+                    // Add more data properties as needed
+                };
+
+                // Send a POST request using axios
+                axios.post('/vafAdd', data)
+                    .then(response => {
+                        // Handle response if needed
+                        console.log('Response received:', response.data);
+                    })
+                    .catch(error => {
+                        // Handle errors if any
+                        console.error('Error occurred:', error);
+                    });
+            });
+        });
     </script>
 </div>
 </body>
