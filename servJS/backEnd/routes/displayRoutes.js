@@ -177,6 +177,15 @@ router.get('/product/:productId', isAuthenticated, async (req, res) => {
             }
         }
         const type_list = await getAllType();
+        const productType = product.type;
+
+        const matchingType = type_list.find(type => type.name === productType);
+        let type_id;
+        if (matchingType) {
+            type_id = matchingType.type_id;
+        } else {
+            console.log('Type not found');
+        }
         const data = {
             title: "Products - TakeAByte",
             isAuthenticated: req.isAuthenticated,
@@ -184,7 +193,7 @@ router.get('/product/:productId', isAuthenticated, async (req, res) => {
             templateData: {
                 "navData": [
                     {
-                        "link": `/category/${product.type}`,
+                        "link": `/category/${type_id}`,
                         "className": "previous",
                         "title": product.type
                     },
