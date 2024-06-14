@@ -62,7 +62,7 @@
                     <%######################################################################################%>
                     <%#       Update generic data form                                                      %>
                     <%######################################################################################%>
-                    <form action="/user/update/generic" method="post" class="generic-form">
+                    <form action="/user/<%= data.user.id %>/update/generic" method="post" class="generic-form">
                         <div class="title">Update user data</div>
                         <div class="form-inputs">
                             <label for="username-form" class="abs hidden"></label>
@@ -71,15 +71,15 @@
                             <input type="text" id="email-form" name="email" value="<%= data.user.email %>" placeholder="Email" required />
                         </div>
                         <div class="form-btns">
-                            <div class="button orange return flip">Return</div>
-                            <button type="submit" class="blue return flip">Update</button>
+                            <div class="button return orange flip">Return</div>
+                            <button type="submit" class="blue">Update</button>
                         </div>
                     </form>
 
                     <%######################################################################################%>
                     <%#       Update password form                                                          %>
                     <%######################################################################################%>
-                    <form action="/user/update/password" method="post" class="password-form">
+                    <form action="/user/<%= data.user.id %>/update/password" method="post" class="pass-form">
                         <div class="title">Update password</div>
                         <div class="form-inputs">
                             <label for="password-form" class="abs hidden"></label>
@@ -90,15 +90,15 @@
                             <input type="password" name="confirm-password" id="confirm-password-form" placeholder="Confirm password" required />
                         </div>
                         <div class="form-btns">
-                            <div class="button orange return flip">Return</div>
-                            <button type="submit" class="blue return flip">Update</button>
+                            <div class="button return orange flip">Return</div>
+                            <button type="submit" class="blue">Update</button>
                         </div>
                     </form>
 
                     <%######################################################################################%>
                     <%#       Update address form                                                           %>
                     <%######################################################################################%>
-                    <form action="/user/update/address" method="post" class="address-form">
+                    <form action="/user/<%= data.user.id %>/update/address" method="post" class="address-form">
                         <div class="title">Update address</div>
                         <div class="form-inputs">
                             <div class="address-name">
@@ -130,8 +130,8 @@
                             </div>
                         </div>
                         <div class="form-btns">
-                            <div class="button orange return flip">Return</div>
-                            <button type="submit" class="blue return flip">Update</button>
+                            <div class="button return orange flip">Return</div>
+                            <button type="submit" class="blue">Update</button>
                         </div>
                     </form>
                 </div>
@@ -155,3 +155,45 @@
         </div>
     </div>
 </div>
+<script>
+    <%# selecting the flippable card element %>
+    const card = document.querySelector('.flippable-card');
+
+    <%# selecting all the forms on the back of the card %>
+    const forms = document.querySelectorAll('.form-ctn form');
+
+    <%# selecting every button to flip the card and its corresponding form to display %>
+    const passFormBtn = document.querySelector('.button.pass-form');
+    const passForm = document.querySelector('.form-ctn form.pass-form');
+
+    const genericFormBtn = document.querySelector('.button.generic-form');
+    const genericForm = document.querySelector('.form-ctn form.generic-form');
+
+    const addressFormBtn = document.querySelector('.button.address-form');
+    const addressForm = document.querySelector('.form-ctn form.address-form');
+
+    <%# selecting every button to flip back the card %>
+    const backButtons = document.querySelectorAll('.form-btns .button.return');
+
+    <%# action when clicking on button from front card %>
+    passFormBtn.addEventListener('click', () => {
+        forms.forEach(form => form.style.display = 'none');
+        passForm.style.display = 'flex';
+        card.classList.toggle('flipped');
+    });
+
+    passFormBtn.addEventListener('click', () => {
+        forms.forEach(form => form.style.display = 'none');
+        passForm.style.display = 'flex';
+        card.classList.toggle('flipped');
+    });
+
+    passFormBtn.addEventListener('click', () => {
+        forms.forEach(form => form.style.display = 'none');
+        passForm.style.display = 'flex';
+        card.classList.toggle('flipped');
+    });
+
+    <%# action when clicking on return button from back card %>
+    backButtons.forEach((backBtn) => backBtn.addEventListener('click', () => card.classList.toggle('flipped')));
+</script>
