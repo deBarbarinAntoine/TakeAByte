@@ -1361,7 +1361,7 @@ router.get('/user', requireAuth, async (req, res) => {
             isAuthenticated: req.isAuthenticated,
             template: "dashboard",
             templateData: {
-                user: userInfo,
+                user: userInfo[0],
                 favorites: {
                     products: userFav
                 }
