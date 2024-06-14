@@ -28,6 +28,23 @@ router.get('/logoutUser', requireAuth,logoutUser)
 // Route to register user
 router.post('/registerUser', registerUser)
 
+router.get('/favStatus/:product_id', requireAuth, async (req, res) => {
+    const fav = req.cookies.fav;
+    const { product_id } = req.params;
 
+    if (!fav) {
+        return res.json({ isFavorite: false });
+    }
+
+    let favList;
+    try {
+        favList = JSON.parse(fav);
+    } catch (error) {
+        return res.status(400).json({ error: 'Invalid fav cookie format' });
+    }
+
+    const isFavorite = favList.some(item => item.productId === product_id);
+    return res.json({ isFavorite });
+});
 
 module.exports = router;
