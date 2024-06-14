@@ -34,6 +34,9 @@ const unlikeProductQuery = 'DELETE FROM likes WHERE user_id = ? AND product_id =
 // GET /api/products/:product_id/likes: Retrieve likes for a specific product.
 const getProductLikesQuery = 'SELECT user_id, created_at FROM likes WHERE product_id = ?';
 
+// Get /userLike/:user_id Retrieve user fav
+const getUserFavQuery = 'SELECT product_id FROM likes WHERE user_id = ?';
+
 // Define the query to create a new order
 const createNewOrderQuery = 'INSERT INTO orders (user_id, date_ordered_at, status) VALUES (?, ?, ?)';
 
@@ -279,6 +282,7 @@ const verifyResetTokenQuery = 'SELECT user_id FROM password_reset_tokens WHERE t
 const deleteResetTokenQuery = 'DELETE FROM password_reset_tokens WHERE token = ?'
 
 module.exports = {
+    getUserFavQuery,
     getAllBrandsQuery,
     getAllUsersQuery,
     deleteResetTokenQuery,
