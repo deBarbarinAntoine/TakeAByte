@@ -12,9 +12,6 @@ const authorizeUser = (req, res, next) => {
         return unauthorizedErrorResponse(res, "Not authorized user isn't token owner / mod");
     }
 
-// If the user is authorized, continue with the next steps
-    console.log("User is authorized");
-
     next(); // Call next() to proceed to the next middleware/route handler
 };
 
