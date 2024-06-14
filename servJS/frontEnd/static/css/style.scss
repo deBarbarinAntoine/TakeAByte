@@ -230,31 +230,36 @@ input {
 // # two sided card (flip clicking on the button)
 // ###########################################################################################
 
-.flippable-card{
-  width:100%;
-  height:100%;
+.flippable-card {
+  width: 100%;
+  height: calc(15rem + 35vw);
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
   -webkit-transition: all .5s linear;
   transition: all .5s linear;
-  border-radius:10px;
+  border-radius: .5rem;
 }
 .flippable-card-face {
   position: absolute;
-  width: 100%;
-  height: 100%;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  padding: 1.5rem;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   background-color: $lightblue;
   border-radius: .5rem;
 }
 .flippable-card-back {
-  overflow:hidden;
-  z-index:-1;
-  display: block;
+  overflow: hidden;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
   -webkit-transform: rotateY(180deg);
   transform: rotateY(180deg);
   box-sizing: border-box;
+
   &:before{
     content: "";
     position: absolute;
@@ -274,20 +279,98 @@ input {
 }
 .flippable-card-front{
   z-index:1;
-  box-shadow: 5px 5px 5px #aaa;
 }
-.flippable-card-back{
-  box-shadow: 0 0 0 #aaa;
-}
-.flipped, .hovercard:hover{
+.flipped {
   -webkit-transform: rotateY(180deg);
   transform: rotateY(180deg);
-  .flippable-card-front{
-    box-shadow:0 0 0 #aaa;
+}
+
+
+// ###########################################################################################
+// # product card
+// ###########################################################################################
+
+.product-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: clamp(15rem, 12vw, 35rem);
+  height: clamp(25rem, 20vw, calc(calc(35rem / 3) * 5));
+  aspect-ratio: 3/5;
+
+  .product-card-link {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
   }
-  .flippable-card-back{
-    box-shadow: 5px 5px 5px #aaa;
+
+  .product-card-img {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1;
+
+    img {
+      object-fit: contain;
+      object-position: center;
+      width: 100%;
+      height: 100%;
+    }
+    .favorite-button {
+      top: .5rem;
+      right: .5rem;
+
+      .favorite-icon {
+        width: 2.5rem;
+      }
+    }
   }
+  .product-card-description {
+    width: calc(100% - 2rem);
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: .5rem;
+    height: 7ch;
+    padding: 1.5rem 1rem;
+    background-color: $lightblue;
+
+    .title {
+      font-size: 1.2rem;
+      line-clamp: 2 auto;
+    }
+    .price {
+      font-size: 1.3rem;
+      color: $blue;
+      text-align: right;
+    }
+  }
+}
+
+// ###########################################################################################
+// # address suggestion component
+// ###########################################################################################
+
+.suggestions {
+  border: 1px solid $darkblue;
+  padding: 1rem .1rem 1rem 1.5rem;
+  background-color: $white;
+  max-height: 150px;
+  overflow-y: auto;
+  display: none;
+  position: absolute;
+  z-index: 1000;
+  width: calc(100% - 1.6rem);
+  top: 100%;
+}
+.suggestions .suggestion {
+  padding: 8px;
+  cursor: pointer;
+}
+.suggestions .suggestion:hover {
+  background-color: $lightblue;
 }
 
 // ###########################################################################################
@@ -422,7 +505,7 @@ input {
     gap: 3.5rem;
     width: 70%;
 
-    .title {
+    .carousel-title {
       font-size: 2.2rem;
     }
     .products-list {
@@ -497,69 +580,6 @@ input {
         appearance: none;
         border: none;
         background: none;
-      }
-    }
-  }
-
-  // ###########################################################################################
-  // # product card
-  // ###########################################################################################
-
-  .product-card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: clamp(15rem, 12vw, 35rem);
-    height: clamp(25rem, 20vw, calc(calc(35rem / 3) * 5));
-    aspect-ratio: 3/5;
-
-    .product-card-link {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      z-index: 2;
-    }
-
-    .product-card-img {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 1;
-
-      img {
-        object-fit: contain;
-        object-position: center;
-        width: 100%;
-        height: 100%;
-      }
-      .favorite-button {
-        top: .5rem;
-        right: .5rem;
-
-        .favorite-icon {
-          width: 2.5rem;
-        }
-      }
-    }
-    .product-card-description {
-      width: calc(100% - 2rem);
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: .5rem;
-      height: 7ch;
-      padding: 1.5rem 1rem;
-      background-color: $lightblue;
-
-      .title {
-        font-size: 1.2rem;
-        line-clamp: 2 auto;
-      }
-      .price {
-        font-size: 1.5rem;
-        color: $blue;
-        text-align: right;
       }
     }
   }
@@ -744,26 +764,52 @@ input {
   // # dashboard
   // ###########################################################################################
 
-  .user-info-ctn,
-  .form-ctn {
+.form-ctn {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.user-info-ctn {
     display: flex;
     justify-content: center;
     width: calc(40% - 3rem);
     padding: 1.5rem;
 
     .title {
-      font-size: 2rem;
+      width: fit-content;
+      font-size: 2.5rem;
     }
     .user-info {
+      width: 100%;
       display: flex;
       flex-direction: column;
-      gap: 2rem;
+      align-items: flex-end;
+      gap: 6rem;
+
+      .title-ctn {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+
+        .subtitle {
+          font-size: 1.7rem;
+          width: fit-content;
+        }
+      }
+      .generic-ctn,
+      .address-ctn {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
 
       .generic,
       .address {
         display: flex;
-        flex-direction: column;
-        align-items: flex-end;
+        justify-content: space-between;
         gap: 1rem;
         width: 100%;
 
@@ -771,7 +817,7 @@ input {
           display: flex;
           flex-direction: column;
           gap: 1rem;
-          width: 12ch;
+          width: 18ch;
 
           .label {
             font-size: 1.3rem;
@@ -790,50 +836,84 @@ input {
             color: $blue;
           }
           .alert {
+            width: 100%;
+            line-height: 3rem;
+            font-size: 1.4rem;
             text-align: center;
-            font-size: 1.3rem;
-            color: $orange;
+            color: $blue;
+            background-color: $orange;
+            border-radius: .5rem;
           }
         }
       }
     }
 
     form.generic-form,
-    form.password-form,
+    form.pass-form,
     form.address-form {
       display: none;
       flex-direction: column;
-      gap: 1rem;
+      justify-content: space-evenly;
+      gap: 5rem;
       width: 100%;
+      height: 100%;
 
       .form-inputs {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 1.5rem;
 
+        .address-name,
+        .address-street,
+        .address-optional,
+        .address-city-region,
+        .address-country {
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+          gap: 1.5rem;
+        }
       }
       .form-btns {
         display: flex;
-
+        justify-content: space-around;
+        width: 100%;
       }
       input#address-zip {
-        flex-shrink: 5;
+        flex-shrink: 1;
       }
     }
   }
-  .user-favorites-ctn.swiper {
-    width: 40%;
+  .user-favorites-ctn {
+    width: 50%;
+    margin-right: 3rem;
 
-    .favorites-carousel.swiper-wrapper {
-
+    .carousel-title {
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
     }
-    .carousel-nav {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
+    .user-favorites-carousel-ctn.swiper {
+      padding: 1.8rem 1.2rem;
+      aspect-ratio: 12/10;
 
-      .previous {
+      .favorites-carousel.swiper-wrapper {
 
+        .swiper-slide {
+          height: auto;
+        }
       }
-      .next {
+      .carousel-nav {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
 
+        .previous {
+
+        }
+        .next {
+
+        }
       }
     }
   }
@@ -1087,25 +1167,6 @@ input {
         }
         span.title {
           font-size: 2rem;
-        }
-        .suggestions {
-          border: 1px solid $darkblue;
-          padding: 1rem .1rem 1rem 1.5rem;
-          background-color: $white;
-          max-height: 150px;
-          overflow-y: auto;
-          display: none;
-          position: absolute;
-          z-index: 1000;
-          width: calc(100% - 1.6rem);
-          top: 100%;
-        }
-        .suggestions .suggestion {
-          padding: 8px;
-          cursor: pointer;
-        }
-        .suggestions .suggestion:hover {
-          background-color: $lightblue;
         }
         .contact {
           display: flex;
