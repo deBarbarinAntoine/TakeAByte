@@ -309,6 +309,7 @@ Filters from names:
       "name": "name",
       "lastName": "last-name",
       "street": "street",
+      "streetNb": "street-number",
       "complement": "address-complement",
       "city": "city",
       "zip": "zip-code",
