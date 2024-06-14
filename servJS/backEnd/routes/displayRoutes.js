@@ -1344,7 +1344,10 @@ router.get('/user', requireAuth, async (req, res) => {
             title: "Home - TakeAByte",
             isAuthenticated: req.isAuthenticated,
             template: "dashboard",
-            templateData: { userInfo },
+            templateData: { user :  userInfo,
+            favorites:{
+                products:[]
+            }},
             slogan: "Your Trusted Tech Partner",
             categories: type_list
         };
