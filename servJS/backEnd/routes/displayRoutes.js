@@ -10,7 +10,7 @@ const {
 const {getTypeNameById, getAllType} = require("../controllers/typeController");
 const {getBrandByIds, getAllBrands} = require("../controllers/brandController");
 const {getSearchData} = require("../controllers/searchController");
-const {addToLikes} = require("../controllers/likeContoller");
+const {addToLikes, takeOffLikes} = require("../controllers/likeContoller");
 const {getUserInfoById, getUserIdFromToken} = require("../controllers/userController");
 const {getUserFavByUserId} = require("../controllers/favController");
 const router = express.Router();
@@ -552,22 +552,36 @@ router.post('/cartAdd', isAuthenticated, (req, res) => {
 
 })
 
-router.post('/vafAdd', isAuthenticated, async (req, res) => {
+router.post('/favAdd', isAuthenticated, async (req, res) => {
     // Extract productId from request body
-    const {productId} = req.body;
+    const { productId } = req.body;
     let fav = req.cookies.fav || [];
-    fav.push({productId});
-    const oneWeekInMilliseconds = 7 * 24 * 60 * 60 * 1000; // 7 days * 24 hours * 60 minutes * 60 seconds * 1000 milliseconds
-    res.cookie('fav', fav, {maxAge: oneWeekInMilliseconds, httpOnly: true}); // Set cookie expiry time
-    res.send({status: 'success'});
-    try {
-        await addToLikes(productId)
+    let token = req.cookies.token;
 
-    } catch (error) {
-        console.error("Error fetching products:", error);
+    // Check if the productId already exists
+    const productIndex = fav.findIndex(item => item.productId === productId);
+    if (productIndex !== -1) {
+        // If it exists, remove it from the array
+        fav.splice(productIndex, 1);
+    } else {
+        // If it doesn't exist, add it to the array
+        fav.push({ productId });
     }
 
-})
+    const oneWeekInMilliseconds = 7 * 24 * 60 * 60 * 1000; // 7 days * 24 hours * 60 minutes * 60 seconds * 1000 milliseconds
+    res.cookie('fav', fav, { maxAge: oneWeekInMilliseconds, httpOnly: true }); // Set cookie expiry time
+    res.send({ status: 'success' });
+
+    try {
+        if (productIndex === -1) {
+            await addToLikes(productId,token);
+        }else{
+            await takeOffLikes(productId,token)
+        }
+    } catch (error) {
+        console.error("Error adding to likes:", error);
+    }
+});
 
 router.post('/checkout', isAuthenticated, async (req, res) => {
     const {cardNumber, expiration, cvv, amount} = req.body;

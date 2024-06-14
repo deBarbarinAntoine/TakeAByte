@@ -7,7 +7,7 @@ async function getUserFavByUserId(user_id){
     let array_of_products_id = [];
     let array_of_products =[];
     try {
-        const url = `http://localhost:3001/v1/product/like/userLikes/${user_id.user_id}`;
+        const url = `http://localhost:3001/v1/product/userLikes/${user_id.user_id}`;
         const token = process.env.WEB_TOKEN;
         const response = await axios.get(url, {
             headers: {
