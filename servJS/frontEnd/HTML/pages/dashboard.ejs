@@ -1,64 +1,77 @@
-<div class="main">
+<div class="main padding-top3 padding-bottom9">
     <div class="user-info-ctn">
         <div class="flippable-card">
-            <div class="flippable-card-front flippable-card-face">
+            <div class="flippable-card-front flippable-card-face huge-shadow">
                 <div class="user-info">
-                    <div class="title">Your personal data</div>
-                    <div class="button blue flip pass-form">Update password</div>
-                    <div class="generic">
-                        <div class="labels">
-                            <div class="label">Username</div>
-                            <div class="label">Email</div>
+                    <div class="title-ctn">
+                        <div class="title">Your personal data</div>
+                        <div class="button blue flip pass-form">Update password</div>
+                    </div>
+                    <div class="generic-ctn">
+                        <div class="title-ctn">
+                            <div class="subtitle">Generic information</div>
+                            <div class="button blue flip generic-form">Edit</div>
                         </div>
-                        <div class="values">
-                            <div class="text"><%= data.user.username %></div>
-                            <div class="text"><%= data.user.email %></div>
+                        <div class="generic">
+                            <div class="labels">
+                                <div class="label">Username</div>
+                                <div class="label">Email</div>
+                            </div>
+                            <div class="values">
+                                <div class="text"><%= data.user.username %></div>
+                                <div class="text"><%= data.user.email %></div>
+                            </div>
                         </div>
                     </div>
-                    <div class="button blue flip generic-form">Edit</div>
-                    <div class="address">
-                        <div class="labels">
-                            <% if (!!data.user.name) { %>
-                                <div class="label">Name</div>
-                            <% } %>
-                            <% if (!!data.user.street_name) { %>
-                                <div class="label">Address</div>
-                                <% if (!!data.user.address_complements) { %>
-                                    <div class="label">Complement</div>
-                                <% } %>
-                                <div class="label">City</div>
-                                <div class="label">ZIP code</div>
-                                <% if (!!data.user.province) { %>
-                                    <div class="label">Province</div>
-                                <% } %>
-                                <div class="label">Country</div>
-                            <% } %>
+                    <div class="address-ctn">
+                        <div class="title-ctn">
+                            <div class="subtitle">Address</div>
+                            <div class="button blue flip address-form">Edit</div>
                         </div>
-                        <div class="values">
-                            <% if (!!data.user.name) { %>
-                                <div class="text"><%= data.user.name + ' ' %><%= data.user.lastname.toUpperCase() %></div>
-                            <% } %>
-                            <% if (!!data.user.street) { %>
-                                <div class="text"><%= data.user.street_number || '' %> <%= data.user.street %></div>
-                                <% if (!!data.user. address_complements) { %>
-                                    <div class="text"><%= data.user.address_complements %></div>
+                        <div class="address">
+                            <div class="labels">
+                                <% if (!!data.user.name) { %>
+                                    <div class="label">Name</div>
                                 <% } %>
-                                <div class="text"><%= data.user.city.toUpperCase() %></div>
-                                <div class="text"><%= data.user.zip %></div>
-                                <% if (!!data.user.province) { %>
-                                    <div class="text"><%= data.user.province.toUpperCase() %></div>
+                                <% if (!!data.user.street_name) { %>
+                                    <div class="label">Address</div>
+                                    <% if (!!data.user.address_complements) { %>
+                                        <div class="label">Complement</div>
+                                    <% } %>
+                                    <div class="label">City</div>
+                                    <div class="label">ZIP code</div>
+                                    <% if (!!data.user.province) { %>
+                                        <div class="label">Province</div>
+                                    <% } %>
+                                    <div class="label">Country</div>
                                 <% } %>
-                                <div class="text"><%= data.user.country.toUpperCase() %></div>
-                            <% } else { %>
-                                <div class="alert">You need to register an address!</div>
-                            <% } %>
+                            </div>
+                            <div class="values">
+                                <% if (!!data.user.name) { %>
+                                    <div class="text"><%= data.user.name + ' ' %><%= data.user.lastname.toUpperCase() %></div>
+                                <% } %>
+                                <% if (!!data.user.street) { %>
+                                    <div class="text"><%= data.user.street_number || '' %> <%= data.user.street %></div>
+                                    <% if (!!data.user. address_complements) { %>
+                                        <div class="text"><%= data.user.address_complements %></div>
+                                    <% } %>
+                                    <div class="text"><%= data.user.city.toUpperCase() %></div>
+                                    <div class="text"><%= data.user.zip %></div>
+                                    <% if (!!data.user.province) { %>
+                                        <div class="text"><%= data.user.province.toUpperCase() %></div>
+                                    <% } %>
+                                    <div class="text"><%= data.user.country.toUpperCase() %></div>
+                                <% } else { %>
+                                    <div class="alert">You need to register an address!</div>
+                                <% } %>
+                            </div>
                         </div>
                     </div>
-                    <div class="button blue flip address-form">Edit</div>
                 </div>
             </div>
-            <div class="flippable-card-back flippable-card-face">
+            <div class="flippable-card-back flippable-card-face big-shadow">
                 <div class="form-ctn">
+
                     <%######################################################################################%>
                     <%#       Update generic data form                                                      %>
                     <%######################################################################################%>
@@ -66,7 +79,7 @@
                         <div class="title">Update user data</div>
                         <div class="form-inputs">
                             <label for="username-form" class="abs hidden"></label>
-                            <input type="text" id="username-form" name="username" value="<%= data.user.username %>" placeholder="Username" autofocus required />
+                            <input type="text" id="username-form" name="username" value="<%= data.user.username %>" placeholder="Username" required />
                             <label for="email-form" class="abs hidden"></label>
                             <input type="text" id="email-form" name="email" value="<%= data.user.email %>" placeholder="Email" required />
                         </div>
@@ -83,7 +96,7 @@
                         <div class="title">Update password</div>
                         <div class="form-inputs">
                             <label for="password-form" class="abs hidden"></label>
-                            <input type="password" name="password" id="password-form" placeholder="Password" autofocus required />
+                            <input type="password" name="password" id="password-form" placeholder="Password" required />
                             <label for="new-password-form" class="abs hidden"></label>
                             <input type="password" name="new-password" id="new-password-form" placeholder="New password" required />
                             <label for="confirm-password-form" class="abs hidden"></label>
@@ -103,14 +116,16 @@
                         <div class="form-inputs">
                             <div class="address-name">
                                 <label class="abs hidden" for="address-name"></label>
-                                <input type="text" name="name" id="address-name" placeholder="Name" required autofocus value="<%= data.user.name || '' %>" />
+                                <input type="text" name="name" id="address-name" placeholder="Name" required value="<%= data.user.name || '' %>" />
                                 <label class="abs hidden" for="address-lastname"></label>
                                 <input type="text" name="lastname" id="address-lastname" placeholder="Last Name" required value="<%= data.user.lastname ? data.user.lastname.toUpperCase() : '' %>" />
 
                             </div>
                             <div class="address-street">
                                 <label class="abs hidden" for="address-street"></label>
-                                <input type="text" name="street" id="address-street" placeholder="Address" required value="<%= data.user.street || '' %>" />
+                                <% let street = data.user.street_number ? data.user.street_number : '' + ' ' + data.user.street ? data.user.street : '';
+                                   if (street === ' ') street = undefined; %>
+                                <input type="text" name="street" id="address-street" placeholder="Address" required value="<%= street || '' %>" />
                                 <div id="address-suggestions" class="suggestions"></div>
                             </div>
                             <div class="address-optional">
@@ -139,26 +154,42 @@
             </div>
         </div>
     </div>
-    <div class="user-favorites-ctn swiper">
-        <div class="favorites-carousel swiper-wrapper">
+    <div class="user-favorites-ctn">
+        <div class="carousel-title">Your favorites:</div>
 
-            <%######################################################################################%>
-            <%#       Product-Card Template                                                         %>
-            <%######################################################################################%>
-            <% data.favorites.products.forEach(function (product) { %>
-                <%- include('../partials/product-card', {product: product}); %>
-            <% }); %>
+        <%######################################################################################%>
+        <%#       Favorites carousel                                                            %>
+        <%######################################################################################%>
+        <%# check if there are favorites %>
+        <% if (data.favorites.products.length > 0) { %>
+            <div class="user-favorites-carousel-ctn swiper">
+                <div class="favorites-carousel swiper-wrapper">
 
-        </div>
-        <div class="carousel-nav">
-            <div class="previous"></div>
-            <div class="next"></div>
-        </div>
+                    <%######################################################################################%>
+                    <%#       Product-Card Template                                                         %>
+                    <%######################################################################################%>
+                    <% data.favorites.products.forEach(function (product) { %>
+                        <%- include('../partials/product-card', {product: product}); %>
+                    <% }); %>
+
+                </div>
+                <div class="carousel-nav">
+                    <div class="previous"></div>
+                    <div class="next"></div>
+                </div>
+            </div>
+        <% } else { %>
+            <div class="alert">You don't have any favorite yet :(</div>
+        <% } %>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
     <%# selecting the flippable card element %>
     const card = document.querySelector('.flippable-card');
+
+    <%# selecting the flippable card front element %>
+    const cardFront = document.querySelector('.flippable-card-front');
 
     <%# selecting all the forms on the back of the card %>
     const forms = document.querySelectorAll('.form-ctn form');
@@ -181,20 +212,78 @@
         forms.forEach(form => form.style.display = 'none');
         passForm.style.display = 'flex';
         card.classList.toggle('flipped');
+        setTimeout(() => {
+            cardFront.style.display = 'none';
+        }, 200);
     });
 
-    passFormBtn.addEventListener('click', () => {
+    genericFormBtn.addEventListener('click', () => {
         forms.forEach(form => form.style.display = 'none');
-        passForm.style.display = 'flex';
+        genericForm.style.display = 'flex';
         card.classList.toggle('flipped');
+        setTimeout(() => {
+            cardFront.style.display = 'none';
+        }, 200);
     });
 
-    passFormBtn.addEventListener('click', () => {
+    addressFormBtn.addEventListener('click', () => {
         forms.forEach(form => form.style.display = 'none');
-        passForm.style.display = 'flex';
+        addressForm.style.display = 'flex';
         card.classList.toggle('flipped');
+        setTimeout(() => {
+            cardFront.style.display = 'none';
+        }, 200);
     });
 
     <%# action when clicking on return button from back card %>
-    backButtons.forEach((backBtn) => backBtn.addEventListener('click', () => card.classList.toggle('flipped')));
+    backButtons.forEach((backBtn) => backBtn.addEventListener('click', () => {
+        card.classList.toggle('flipped');
+        setTimeout(() => {
+            cardFront.style.display = 'flex';
+        }, 200);
+    }));
+
+    <%# create swiper carousel for favorites %>
+    favoriteCarousel = new Swiper('.user-favorites-carousel-ctn.swiper', {
+        spaceBetween: 20,
+        loop: true,
+        navigation: {
+            nextEl: '.next',
+            prevEl: '.previous'
+        },
+        autoplay: {
+            delay: 8_000, // 8 seconds tempo for autoplay
+            enabled: true,
+            pauseOnMouseEnter: true,
+        },
+        effect: 'pagination',
+        mousewheel: {
+            enabled: true,
+            releaseOnEdges: true,
+        },
+        keyboard: {
+            enabled: true,
+            onlyInViewport: true,
+        },
+        breakpoints: {
+            // 0px <= window width < 768px (phones)
+            0: {
+                slidesPerView: 2,
+                spaceBetween: 10,
+            },
+            // 768px <= window width < 1024px (tablets)
+            768: {
+                slidesPerView: 3,
+                spaceBetween: 15
+            },
+            // 1024px <= window width (desktop)
+            1024: {
+                slidesPerView: 4,
+                spaceBetween: 25,
+                grid: {
+                    rows: 2
+                },
+            },
+        }
+    });
 </script>

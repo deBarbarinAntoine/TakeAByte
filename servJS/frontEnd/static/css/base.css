@@ -67,12 +67,20 @@
   padding-top: 3rem;
 }
 
+.padding-bottom9 {
+  padding-bottom: 9rem;
+}
+
 .small-shadow {
   box-shadow: rgba(21, 21, 32, 0.1254901961) 0 0.2rem 1.6rem;
 }
 
 .big-shadow {
   box-shadow: rgba(21, 21, 32, 0.1254901961) 0 0.5rem 2.2rem;
+}
+
+.huge-shadow {
+  box-shadow: rgba(21, 21, 32, 0.3137254902) 0 0.5rem 2.2rem;
 }
 
 .cart-icon .line {
@@ -120,7 +128,7 @@ button,
   cursor: pointer;
   transition: all 200ms ease-in-out 50ms;
   height: fit-content;
-  width: fit-content;
+  width: max-content;
 }
 button svg,
 .button svg {
@@ -183,7 +191,6 @@ button.white:hover:not(.disabled, button.white[disabled],
 }
 button.orange,
 .button.orange {
-  border: 2px solid #3F72AF;
   background-color: #FBA834;
   color: #3F72AF;
 }
