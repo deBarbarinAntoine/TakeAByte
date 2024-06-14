@@ -40,7 +40,7 @@ async function getUserFavByUserId(user_id){
                 });
 
                 // Assuming response.data contains the product information
-                array_of_products.push(response.data);
+                array_of_products.push(response.data[0]);
             } catch (error) {
                 console.error(`Error fetching product ${product_id}:`, error.message);
                 return array_of_products
