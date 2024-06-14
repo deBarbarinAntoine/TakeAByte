@@ -1,4 +1,4 @@
-const {likeProductQuery, unlikeProductQuery, getProductLikesQuery} = require("../models/db-queries");
+const {likeProductQuery, unlikeProductQuery, getProductLikesQuery, getUserFavQuery} = require("../models/db-queries");
 const connection = require("../models/db-connect");
 const {serverErrorResponse} = require("../helpers/responses");
 
@@ -33,4 +33,17 @@ exports.getProductLikes = (req, res) => {
         }
         res.status(200).json(results);
     });
+};
+
+exports.getUserFav = async (req, res) => {
+    const {user_id} = req.params;
+    try {
+        const results = await connection.query(getUserFavQuery, [user_id]);
+        if (!results) {
+            res.status(400).json("no favorite found for this user")
+        }
+        res.status(200).json(results[0]);
+    } catch (err) {
+        return serverErrorResponse(res, "Failed to get user fav");
+    }
 };

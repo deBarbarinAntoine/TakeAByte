@@ -7,11 +7,12 @@ const {
     fetchRandomCategoryProducts,
     getProductById, getProductByTypeId
 } = require("../controllers/productsController");
-const {getTypeNameById,getAllType} = require("../controllers/typeController");
+const {getTypeNameById, getAllType} = require("../controllers/typeController");
 const {getBrandByIds, getAllBrands} = require("../controllers/brandController");
 const {getSearchData} = require("../controllers/searchController");
 const {addToLikes} = require("../controllers/likeContoller");
 const {getUserInfoById, getUserIdFromToken} = require("../controllers/userController");
+const {getUserFavByUserId} = require("../controllers/favController");
 const router = express.Router();
 
 router.get('/home', isAuthenticated, async (req, res) => {
@@ -52,7 +53,7 @@ router.get('/home', isAuthenticated, async (req, res) => {
                 },
             },
             slogan: "Your Trusted Tech Partner",
-            categories:type_list
+            categories: type_list
         };
 
         // Render the page with the populated data
@@ -72,7 +73,7 @@ router.get('/login', isAuthenticated, async (req, res) => {
         template: "login",
         templateData: {},
         slogan: "Your Trusted Tech Partner",
-        categories:type_list
+        categories: type_list
     };
     res.render('base', {data: data});
 })
@@ -363,6 +364,7 @@ router.get('/cart', isAuthenticated, async (req, res) => {
         });
         return subtotal;
     }
+
     const type_list = await getAllType();
     const data = {
         title: "Home - TakeAByte",
@@ -516,13 +518,14 @@ router.get('/order/address', isAuthenticated, async (req, res) => {
         });
         return subtotal;
     }
+
     const type_list = await getAllType();
     const data = {
         title: "Home - TakeAByte",
         isAuthenticated: req.isAuthenticated,
         template: 'order',
         slogan: "Your Trusted Tech Partner",
-        categories:type_list,
+        categories: type_list,
         templateData: {
             page: 'address',
             order: {
@@ -551,7 +554,7 @@ router.post('/cartAdd', isAuthenticated, (req, res) => {
 
 router.post('/vafAdd', isAuthenticated, async (req, res) => {
     // Extract productId from request body
-    const { productId } = req.body;
+    const {productId} = req.body;
     let fav = req.cookies.fav || [];
     fav.push({productId});
     const oneWeekInMilliseconds = 7 * 24 * 60 * 60 * 1000; // 7 days * 24 hours * 60 minutes * 60 seconds * 1000 milliseconds
@@ -797,7 +800,7 @@ router.get('/paymentOk', isAuthenticated, async (req, res) => {
         isAuthenticated: req.isAuthenticated,
         template: 'order',
         slogan: "Your Trusted Tech Partner",
-        categories:type_list,
+        categories: type_list,
         templateData: {
             client: {orderId},
             page: 'payment-confirmed',
@@ -820,7 +823,7 @@ router.get('/contact-us', isAuthenticated, async (req, res) => {
         isAuthenticated: req.isAuthenticated,
         template: "contact-us",
         templateData: {},
-        categories:type_list,
+        categories: type_list,
         slogan: "Your Trusted Tech Partner"
     };
     res.render('base', {data: data});
@@ -833,7 +836,7 @@ router.get('/about', isAuthenticated, async (req, res) => {
         isAuthenticated: req.isAuthenticated,
         template: "about",
         templateData: {},
-        categories:type_list,
+        categories: type_list,
         slogan: "Your Trusted Tech Partner"
     };
     res.render('base', {data: data});
@@ -846,7 +849,7 @@ router.get('/privacy-policy', isAuthenticated, async (req, res) => {
         isAuthenticated: req.isAuthenticated,
         template: "privacy-policy",
         templateData: {},
-        categories:type_list,
+        categories: type_list,
         slogan: "Your Trusted Tech Partner"
     };
     res.render('base', {data: data});
@@ -859,7 +862,7 @@ router.get('/terms-conditions', isAuthenticated, async (req, res) => {
         isAuthenticated: req.isAuthenticated,
         template: "terms-conditions",
         templateData: {},
-        categories:type_list,
+        categories: type_list,
         slogan: "Your Trusted Tech Partner"
     };
     res.render('base', {data: data});
@@ -1037,12 +1040,13 @@ router.get('/order/shipping/:encodedData', isAuthenticated, async (req, res) => 
         });
         return subtotal;
     }
+
     const type_list = await getAllType();
     const data = {
         title: "Home - TakeAByte",
         isAuthenticated: req.isAuthenticated,
         template: 'order',
-        categories:type_list,
+        categories: type_list,
         slogan: "Your Trusted Tech Partner",
         templateData: {
             client: {
@@ -1198,12 +1202,13 @@ router.get('/order/payment/:encodedData', isAuthenticated, async (req, res) => {
         });
         return subtotal;
     }
+
     const type_list = await getAllType();
     const data = {
         title: "Home - TakeAByte",
         isAuthenticated: req.isAuthenticated,
         template: 'order',
-        categories:type_list,
+        categories: type_list,
         slogan: "Your Trusted Tech Partner",
         templateData: {
             client: {client: {contactEmail, shipToAddress, shippingMethod}},
@@ -1223,7 +1228,7 @@ router.get('/about-shipping', async (req, res) => {
         title: "Home - TakeAByte",
         isAuthenticated: req.isAuthenticated,
         template: "about-shipping",
-        categories:type_list,
+        categories: type_list,
         templateData: {
             nearbyPost: {}
         },
@@ -1238,7 +1243,7 @@ router.get('/register', isAuthenticated, async (req, res) => {
         isAuthenticated: req.isAuthenticated,
         template: "register",
         templateData: {},
-        categories:type_list,
+        categories: type_list,
         slogan: "Your Trusted Tech Partner"
     };
     res.render('base', {data: data});
@@ -1265,12 +1270,12 @@ router.get('/category/:type_id', isAuthenticated, async (req, res) => {
         title: "Home - TakeAByte",
         isAuthenticated: req.isAuthenticated,
         template: "category",
-        categories:type_list,
+        categories: type_list,
         templateData: {
             "navData": [
                 {
                     "link": "/category/2",
-                    "className":  " current",
+                    "className": " current",
                     "title": type_name
                 }
             ],
@@ -1279,7 +1284,7 @@ router.get('/category/:type_id', isAuthenticated, async (req, res) => {
             },
             "filters": {
                 "categories": null,
-                "brands":brand_list
+                "brands": brand_list
             }
         },
         slogan: "Your Trusted Tech Partner"
@@ -1293,26 +1298,26 @@ router.get('/search', isAuthenticated, async (req, res) => {
     const type_list = await getAllType();
     const brand_list = await getAllBrands()
     try {
-        searchData = await getSearchData(req.query.search,type_list,brand_list)
+        searchData = await getSearchData(req.query.search, type_list, brand_list)
     } catch (err) {
         console.error('Error in router handler:', err);
 
     }
 
-if(searchData === null ){
-    searchData = "No data found for the searched product"
-}
+    if (searchData === null) {
+        searchData = "No data found for the searched product"
+    }
     const data = {
         title: "Home - TakeAByte",
         isAuthenticated: req.isAuthenticated,
         template: "search",
         templateData: {
-            category : {
-                products : searchData
+            category: {
+                products: searchData
             }
         },
         slogan: "Your Trusted Tech Partner",
-        categories:type_list
+        categories: type_list
     };
     res.render('base', {data: data});
 })
@@ -1320,22 +1325,33 @@ if(searchData === null ){
 router.get('/user', requireAuth, async (req, res) => {
     const token = req.cookies.token;
     let userInfo = null;
+    let userFav = null;
+    let userId = null;
     if (!token) {
         return res.status(401).send('Unauthorized: No token provided');
     }
 
     try {
-
-        const userId = await getUserIdFromToken(token);
+        userId = await getUserIdFromToken(token);
         if (!userId) {
             return res.status(404).send('User not found');
         }
-
         userInfo = await getUserInfoById(userId.user_id);
-        console.log(userInfo)
+        if (!userInfo) {
+            return res.status(404).send('No info found for user')
+        }
     } catch (err) {
         console.error('Error fetching user info:', err);
         return res.status(500).send('Internal Server Error');
+    }
+
+    try {
+        userFav = await getUserFavByUserId(userId)
+        if (!userFav) {
+            return res.status(404).send('No fav found for this user')
+        }
+    } catch (err) {
+        console.error(err, "failed to get user fav")
     }
 
     try {
@@ -1344,15 +1360,17 @@ router.get('/user', requireAuth, async (req, res) => {
             title: "Home - TakeAByte",
             isAuthenticated: req.isAuthenticated,
             template: "dashboard",
-            templateData: { user :  userInfo,
-            favorites:{
-                products:[]
-            }},
+            templateData: {
+                user: userInfo,
+                favorites: {
+                    products: userFav
+                }
+            },
             slogan: "Your Trusted Tech Partner",
             categories: type_list
         };
 
-        res.render('base', { data: data });
+        res.render('base', {data: data});
     } catch (err) {
         console.error('Error fetching types:', err);
         return res.status(500).send('Internal Server Error');
@@ -1366,7 +1384,7 @@ router.get('*', async (req, res) => {
         isAuthenticated: req.isAuthenticated,
         template: "404",
         templateData: {},
-        categories:type_list,
+        categories: type_list,
         slogan: "Your Trusted Tech Partner"
     }
     res.render('base', {data: data});
