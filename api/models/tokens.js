@@ -136,6 +136,26 @@ async function getTokenFromUserId(userId) {
     }
 }
 
+async function getUserIdFromUserToken(req, res) {
+    const token = req.params.token;
 
+    try {
+        // Query the database for the user ID associated with the token
+        const [rows] = await connection.execute(
+            'SELECT user_id FROM tokens WHERE token = ? AND end_date > NOW()',
+            [token]
+        );
 
-module.exports = { Token, getToken, getUserIdFromToken, checkIfMod,getTokenFromUserId };
+        if (rows.length === 0) {
+            return res.status(404).json({ error: 'Token not found or expired' });
+        }
+
+        const userId = rows[0].user_id;
+        res.json({ user_id: userId });
+    } catch (error) {
+        console.error('Database query failed:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+}
+
+module.exports = { Token, getToken, getUserIdFromToken, checkIfMod,getTokenFromUserId ,getUserIdFromUserToken};
