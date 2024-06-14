@@ -25,9 +25,8 @@ async function getUserIdFromToken(user_token){
     }
 }
 
-async function getUserInfoById(userId){
+async function getUserInfoById(userId,token){
     const url = `http://localhost:3001/v1/users/${userId}`;
-    const token = process.env.WEB_TOKEN;
     try{
         const response = await axios.get(url, {
             headers: {

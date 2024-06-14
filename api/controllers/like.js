@@ -8,7 +8,7 @@ exports.likeProduct = async (req, res) => {
     const created_at = new Date(); // Current timestamp
     try {
         await connection.query(likeProductQuery, [user_id, product_id, created_at],
-            res.status(200).json({message: 'Product liked successfullyy'}))
+            res.status(200).json({message: 'Product liked successfully'}))
     } catch (err) {
         console.log(err)
     }

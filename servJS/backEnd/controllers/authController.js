@@ -8,7 +8,6 @@ async function checkUserLogs(req, res) {
             email,
             password
         });
-
         // Extract token and expiration date from the response
         const {token, ExpirationDate} = response.data.user;
 

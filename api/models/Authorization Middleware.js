@@ -8,7 +8,7 @@ const authorizeUser = (req, res, next) => {
     const userIdString = String(userId);
 
 // Check if the user is authorized
-    if (user_id !== userIdString || is_mod === 0) {
+    if (user_id !== userIdString && is_mod === 0) {
         return unauthorizedErrorResponse(res, "Not authorized user isn't token owner / mod");
     }
 
