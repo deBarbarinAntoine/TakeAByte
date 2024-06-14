@@ -6,11 +6,17 @@ const authorizeUser = (req, res, next) => {
     const is_mod = req.is_mod;
     const {user_id} = req.params;
     const userIdString = String(userId);
+    console.log("typeof userId:", typeof userId , userId);
+    console.log("typeof user_id:", typeof user_id, user_id) ;
+    console.log("typeof is_mod:", typeof is_mod, is_mod);
 
 // Check if the user is authorized
-    if (user_id !== userIdString || is_mod === 0) {
+    if (user_id !== userIdString && is_mod === 0) {
         return unauthorizedErrorResponse(res, "Not authorized user isn't token owner / mod");
     }
+
+// If the user is authorized, continue with the next steps
+    console.log("User is authorized");
 
     next(); // Call next() to proceed to the next middleware/route handler
 };

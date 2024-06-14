@@ -1336,7 +1336,7 @@ router.get('/user', requireAuth, async (req, res) => {
         if (!userId) {
             return res.status(404).send('User not found');
         }
-        userInfo = await getUserInfoById(userId.user_id);
+        userInfo = await getUserInfoById(userId.user_id,token);
         if (!userInfo) {
             return res.status(404).send('No info found for user')
         }
