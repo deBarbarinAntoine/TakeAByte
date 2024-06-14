@@ -181,6 +181,19 @@ button.white:hover:not(.disabled, button.white[disabled],
   background-color: #3F72AF;
   color: #F9F7F7;
 }
+button.orange,
+.button.orange {
+  border: 2px solid #3F72AF;
+  background-color: #FBA834;
+  color: #3F72AF;
+}
+button.orange:hover:not(.disabled, button.orange[disabled],
+.button.orange[disabled]),
+.button.orange:hover:not(.disabled, button.orange[disabled],
+.button.orange[disabled]) {
+  background-color: #3F72AF;
+  color: #FBA834;
+}
 button.disabled, button[disabled],
 .button.disabled,
 .button[disabled] {

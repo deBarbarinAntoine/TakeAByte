@@ -189,7 +189,7 @@ Data format:
 
 Data format:
 
-````json
+```json
 {
   "page": "details OR shipping OR payment",
   "order": {
@@ -221,7 +221,7 @@ Data format:
     "shippingMethod": "Standard Shipping - FREE"
   }
 }
-````
+```
 
 Form names:
 > **email**
@@ -299,31 +299,36 @@ Filters from names:
 
 ## `dashboard.ejs`
 
-````json
+```json
 {
   "user": {
     "id": "user-id",
     "username": "username",
-    "email": "email",
-    "street": "address-street",
-    "complement": null,
-    "city": "city",
-    "zip": "zip-code",
-    "province": null,
-    "country": "country"
-  },
-  "favorites": {
-    "products": [
-      {
-        "link": "product-link",
-        "img": "product-img",
-        "name": "product-name",
-        "price": "product-price"
-      }
-    ]
+    "email": "email@example.com",
+    "address": {
+      "name": "name",
+      "lastName": "last-name",
+      "street": "street",
+      "streetNb": "street-number",
+      "complement": "address-complement",
+      "city": "city",
+      "zip": "zip-code",
+      "province": "province",
+      "country": "country"
+    },
+    "favorites": {
+      "products": [
+        {
+          "link": "product-link",
+          "img": "product-img",
+          "name": "product-name",
+          "price": "product-price"
+        }
+      ]
+    }
   }
 }
-````
+```
 
 Generic form names:
 > **username**

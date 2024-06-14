@@ -4,6 +4,7 @@
             <div class="flippable-card-front flippable-card-face">
                 <div class="user-info">
                     <div class="title">Your personal data</div>
+                    <div class="button blue flip pass-form">Update password</div>
                     <div class="generic">
                         <div class="labels">
                             <div class="label">Username</div>
@@ -14,44 +15,126 @@
                             <div class="text"><%= data.user.email %></div>
                         </div>
                     </div>
-                    <div class="button flip">Edit</div>
+                    <div class="button blue flip generic-form">Edit</div>
                     <div class="address">
                         <div class="labels">
-                            <% if (!!data.user.street) { %>
-                                <div class="label">Street</div>
-                                <% if (!!data.user.complement) { %>
+                            <% if (!!data.user.address.name) { %>
+                                <div class="label">Name</div>
+                            <% } %>
+                            <% if (!!data.user.address.street) { %>
+                                <div class="label">Address</div>
+                                <% if (!!data.user.address.complement) { %>
                                     <div class="label">Complement</div>
                                 <% } %>
                                 <div class="label">City</div>
                                 <div class="label">ZIP code</div>
-                                <% if (!!data.user.province) { %>
+                                <% if (!!data.user.address.province) { %>
                                     <div class="label">Province</div>
                                 <% } %>
                                 <div class="label">Country</div>
                             <% } %>
                         </div>
                         <div class="values">
-                            <% if (!!data.user.street) { %>
-                                <div class="text"><%= data.user.street %></div>
-                                <% if (!!data.user.complement) { %>
-                                    <div class="text"><%= data.user.complement %></div>
+                            <% if (!!data.user.address.name) { %>
+                                <div class="text"><%= data.user.address.name + ' ' %><%= data.user.address.lastName.toUpperCase() %></div>
+                            <% } %>
+                            <% if (!!data.user.address.street) { %>
+                                <div class="text"><%= data.user.address.streetNb || '' %> <%= data.user.address.street %></div>
+                                <% if (!!data.user.address.complement) { %>
+                                    <div class="text"><%= data.user.address.complement %></div>
                                 <% } %>
-                                <div class="text"><%= data.user.city %></div>
-                                <div class="text"><%= data.user.zip %></div>
-                                <% if (!!data.user.province) { %>
-                                    <div class="text"><%= data.user.province %></div>
+                                <div class="text"><%= data.user.address.city.toUpperCase() %></div>
+                                <div class="text"><%= data.user.address.zip %></div>
+                                <% if (!!data.user.address.province) { %>
+                                    <div class="text"><%= data.user.address.province.toUpperCase() %></div>
                                 <% } %>
-                                <div class="text"><%= data.user.country %></div>
+                                <div class="text"><%= data.user.address.country.toUpperCase() %></div>
                             <% } else { %>
                                 <div class="alert">You need to register an address!</div>
                             <% } %>
                         </div>
                     </div>
+                    <div class="button blue flip address-form">Edit</div>
                 </div>
             </div>
             <div class="flippable-card-back flippable-card-face">
-                <%# Put the forms here (username & mail form, password form, and address form) %>
-                <button class="return flip"><i class="fa fa-undo"></i></button>
+                <div class="form-ctn">
+                    <%######################################################################################%>
+                    <%#       Update generic data form                                                      %>
+                    <%######################################################################################%>
+                    <form action="/user/update/generic" method="post" class="generic-form">
+                        <div class="title">Update user data</div>
+                        <div class="form-inputs">
+                            <label for="username-form" class="abs hidden"></label>
+                            <input type="text" id="username-form" name="username" value="<%= data.user.username %>" placeholder="Username" autofocus required />
+                            <label for="email-form" class="abs hidden"></label>
+                            <input type="text" id="email-form" name="email" value="<%= data.user.email %>" placeholder="Email" required />
+                        </div>
+                        <div class="form-btns">
+                            <div class="button orange return flip">Return</div>
+                            <button type="submit" class="blue return flip">Update</button>
+                        </div>
+                    </form>
+
+                    <%######################################################################################%>
+                    <%#       Update password form                                                          %>
+                    <%######################################################################################%>
+                    <form action="/user/update/password" method="post" class="password-form">
+                        <div class="title">Update password</div>
+                        <div class="form-inputs">
+                            <label for="password-form" class="abs hidden"></label>
+                            <input type="password" name="password" id="password-form" placeholder="Password" autofocus required />
+                            <label for="new-password-form" class="abs hidden"></label>
+                            <input type="password" name="new-password" id="new-password-form" placeholder="New password" required />
+                            <label for="confirm-password-form" class="abs hidden"></label>
+                            <input type="password" name="confirm-password" id="confirm-password-form" placeholder="Confirm password" required />
+                        </div>
+                        <div class="form-btns">
+                            <div class="button orange return flip">Return</div>
+                            <button type="submit" class="blue return flip">Update</button>
+                        </div>
+                    </form>
+
+                    <%######################################################################################%>
+                    <%#       Update address form                                                           %>
+                    <%######################################################################################%>
+                    <form action="/user/update/address" method="post" class="address-form">
+                        <div class="title">Update address</div>
+                        <div class="form-inputs">
+                            <div class="address-name">
+                                <label class="abs hidden" for="address-name"></label>
+                                <input type="text" name="name" id="address-name" placeholder="Name" required autofocus value="<%= data.user.address.name || '' %>" />
+                                <label class="abs hidden" for="address-lastname"></label>
+                                <input type="text" name="lastname" id="address-lastname" placeholder="Last Name" required value="<%= data.user.address.lastName.toUpperCase() || '' %>" />
+                            </div>
+                            <div class="address-street">
+                                <label class="abs hidden" for="address-street"></label>
+                                <input type="text" name="street" id="address-street" placeholder="Address" required value="<%= data.user.address.street || '' %>" />
+                                <div id="address-suggestions" class="suggestions"></div>
+                            </div>
+                            <div class="address-optional">
+                                <label class="abs hidden" for="address-optional"></label>
+                                <input type="text" name="optional" id="address-optional" placeholder="Address Complement (optional)" value="<%= data.user.address.complement || '' %>" />
+                            </div>
+                            <div class="address-city-region">
+                                <label class="abs hidden" for="address-city"></label>
+                                <input type="text" name="city" id="address-city" placeholder="City" required value="<%= data.user.address.city.toUpperCase() || '' %>" />
+                                <label class="abs hidden" for="address-zip"></label>
+                                <input type="text" name="zip" id="address-zip" placeholder="ZIP Code" required value="<%= data.user.address.zip || '' %>" />
+                                <label class="abs hidden" for="address-region"></label>
+                                <input type="text" name="region" id="address-region" placeholder="Province" value="<%= data.user.address.province.toUpperCase() || '' %>" />
+                            </div>
+                            <div class="address-country">
+                                <label class="abs hidden" for="address-country"></label>
+                                <input type="text" name="country" id="address-country" placeholder="Country" required value="<%= data.user.address.country.toUpperCase() || '' %>" />
+                            </div>
+                        </div>
+                        <div class="form-btns">
+                            <div class="button orange return flip">Return</div>
+                            <button type="submit" class="blue return flip">Update</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
