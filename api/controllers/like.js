@@ -37,7 +37,6 @@ exports.getProductLikes = (req, res) => {
 
 exports.getUserFav = async (req, res) => {
     const {user_id} = req.params;
-    console.log("da")
     try {
         const results = await connection.query(getUserFavQuery, [user_id]);
         if (!results) {
