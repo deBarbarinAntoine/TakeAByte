@@ -16,7 +16,7 @@ const {getUserFavByUserId} = require("../controllers/favController");
 const router = express.Router();
 
 router.get('/home', isAuthenticated, async (req, res) => {
-
+console
     try {
         // Call functions to fetch latest, popular, and random products
         const latestProducts = await fetchLatestProducts();
