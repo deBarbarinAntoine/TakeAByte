@@ -10,6 +10,7 @@ const requireAuth = (req, res, next) => {
     if (!token) {
         return res.redirect('/login');
     }
+    req.isAuthenticated = !!token
     next();
 };
 

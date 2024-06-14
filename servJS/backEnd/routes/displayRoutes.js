@@ -1,6 +1,6 @@
 const express = require('express');
 const axios = require('axios');
-const {isAuthenticated} = require("../middleware/auth");
+const {isAuthenticated, requireAuth} = require("../middleware/auth");
 const {
     fetchLatestProducts,
     fetchPopularProducts,
@@ -11,6 +11,7 @@ const {getTypeNameById,getAllType} = require("../controllers/typeController");
 const {getBrandByIds, getAllBrands} = require("../controllers/brandController");
 const {getSearchData} = require("../controllers/searchController");
 const {addToLikes} = require("../controllers/likeContoller");
+const {getUserInfoById, getUserIdFromToken} = require("../controllers/userController");
 const router = express.Router();
 
 router.get('/home', isAuthenticated, async (req, res) => {
@@ -564,7 +565,6 @@ router.post('/vafAdd', isAuthenticated, async (req, res) => {
     }
 
 })
-
 
 router.post('/checkout', isAuthenticated, async (req, res) => {
     const {cardNumber, expiration, cvv, amount} = req.body;
@@ -1317,6 +1317,44 @@ if(searchData === null ){
     res.render('base', {data: data});
 })
 
+router.get('/user', requireAuth, async (req, res) => {
+    const token = req.cookies.token;
+    let userInfo = null;
+    if (!token) {
+        return res.status(401).send('Unauthorized: No token provided');
+    }
+
+    try {
+
+        const userId = await getUserIdFromToken(token);
+        if (!userId) {
+            return res.status(404).send('User not found');
+        }
+
+        userInfo = await getUserInfoById(userId.user_id);
+        console.log(userInfo)
+    } catch (err) {
+        console.error('Error fetching user info:', err);
+        return res.status(500).send('Internal Server Error');
+    }
+
+    try {
+        const type_list = await getAllType();
+        const data = {
+            title: "Home - TakeAByte",
+            isAuthenticated: req.isAuthenticated,
+            template: "dashboard",
+            templateData: { userInfo },
+            slogan: "Your Trusted Tech Partner",
+            categories: type_list
+        };
+
+        res.render('base', { data: data });
+    } catch (err) {
+        console.error('Error fetching types:', err);
+        return res.status(500).send('Internal Server Error');
+    }
+});
 // Define a route for the 404 page
 router.get('*', async (req, res) => {
     const type_list = await getAllType();

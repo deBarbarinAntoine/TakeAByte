@@ -5,9 +5,11 @@ const authorizeUser = (req, res, next) => {
     const userId = req.userId;
     const is_mod = req.is_mod;
     const {user_id} = req.params;
+    const userIdString = String(userId);
 
-    if (user_id !== userId || is_mod === 0) {
-        return unauthorizedErrorResponse(res, "Not authorized");
+// Check if the user is authorized
+    if (user_id !== userIdString || is_mod === 0) {
+        return unauthorizedErrorResponse(res, "Not authorized user isn't token owner / mod");
     }
 
     next(); // Call next() to proceed to the next middleware/route handler
