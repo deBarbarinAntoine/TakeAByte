@@ -1103,10 +1103,108 @@ input:focus {
   display: flex;
   justify-content: space-between;
 }
+.main .user-info-ctn,
+.main .form-ctn {
+  display: flex;
+  justify-content: center;
+  width: calc(40% - 3rem);
+  padding: 1.5rem;
+}
+.main .user-info-ctn .title,
+.main .form-ctn .title {
+  font-size: 2rem;
+}
+.main .user-info-ctn .user-info,
+.main .form-ctn .user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.main .user-info-ctn .user-info .generic,
+.main .user-info-ctn .user-info .address,
+.main .form-ctn .user-info .generic,
+.main .form-ctn .user-info .address {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1rem;
+  width: 100%;
+}
+.main .user-info-ctn .user-info .generic .labels,
+.main .user-info-ctn .user-info .address .labels,
+.main .form-ctn .user-info .generic .labels,
+.main .form-ctn .user-info .address .labels {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 12ch;
+}
+.main .user-info-ctn .user-info .generic .labels .label,
+.main .user-info-ctn .user-info .address .labels .label,
+.main .form-ctn .user-info .generic .labels .label,
+.main .form-ctn .user-info .address .labels .label {
+  font-size: 1.3rem;
+  color: #112D4E;
+}
+.main .user-info-ctn .user-info .generic .values,
+.main .user-info-ctn .user-info .address .values,
+.main .form-ctn .user-info .generic .values,
+.main .form-ctn .user-info .address .values {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.main .user-info-ctn .user-info .generic .values .text,
+.main .user-info-ctn .user-info .address .values .text,
+.main .form-ctn .user-info .generic .values .text,
+.main .form-ctn .user-info .address .values .text {
+  text-align: justify;
+  font-size: 1.3rem;
+  color: #3F72AF;
+}
+.main .user-info-ctn .user-info .generic .values .alert,
+.main .user-info-ctn .user-info .address .values .alert,
+.main .form-ctn .user-info .generic .values .alert,
+.main .form-ctn .user-info .address .values .alert {
+  text-align: center;
+  font-size: 1.3rem;
+  color: #FBA834;
+}
+.main .user-info-ctn form.generic-form,
+.main .user-info-ctn form.password-form,
+.main .user-info-ctn form.address-form,
+.main .form-ctn form.generic-form,
+.main .form-ctn form.password-form,
+.main .form-ctn form.address-form {
+  display: none;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+.main .user-info-ctn form.generic-form .form-btns,
+.main .user-info-ctn form.password-form .form-btns,
+.main .user-info-ctn form.address-form .form-btns,
+.main .form-ctn form.generic-form .form-btns,
+.main .form-ctn form.password-form .form-btns,
+.main .form-ctn form.address-form .form-btns {
+  display: flex;
+}
+.main .user-info-ctn form.generic-form input#address-zip,
+.main .user-info-ctn form.password-form input#address-zip,
+.main .user-info-ctn form.address-form input#address-zip,
 .main .form-ctn form.generic-form input#address-zip,
 .main .form-ctn form.password-form input#address-zip,
 .main .form-ctn form.address-form input#address-zip {
   flex-shrink: 5;
+}
+.main .user-favorites-ctn.swiper {
+  width: 40%;
+}
+.main .user-favorites-ctn.swiper .carousel-nav {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 .main .cart {
   display: flex;

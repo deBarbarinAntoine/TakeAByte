@@ -316,16 +316,14 @@ Filters from names:
       "province": "province",
       "country": "country"
     },
-    "favorites": {
-      "products": [
-        {
-          "link": "product-link",
-          "img": "product-img",
-          "name": "product-name",
-          "price": "product-price"
-        }
-      ]
-    }
+    "favorites": [
+      {
+        "link": "product-link",
+        "img": "product-img",
+        "name": "product-name",
+        "price": "product-price"
+      }
+    ]
   }
 }
 ```
