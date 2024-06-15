@@ -529,7 +529,6 @@ router.get('/order/address', isAuthenticated, async (req, res) => {
         console.error("problem getting userid or userdata",err)
         }
     }
-    console.log(userData)
     const type_list = await getAllType();
     const data = {
         title: "Home - TakeAByte",
@@ -554,7 +553,7 @@ router.get('/order/address', isAuthenticated, async (req, res) => {
             },
             page: 'address',
             order: {
-                products: {resultArray},
+                products: resultArray,
                 subtotal: calculateSubtotal(cartItemsArray), // Subtotal of the cart
                 shippingCost: "FREE for a limited time"
             }
@@ -781,7 +780,7 @@ router.get('/paymentOk', isAuthenticated, async (req, res) => {
             const response = await fetch(reduceStockUrl, {
                 method: 'PUT',
                 headers: {
-                    'Content-Type': 'application/json'
+                    authorization : `Bearer ${token}`
                 },
                 body: JSON.stringify({quantity: item.quantity})
             });
@@ -1063,7 +1062,7 @@ router.get('/order/shipping/:encodedData', isAuthenticated, async (req, res) => 
             },
             page: 'shipping',
             order: {
-                products: {resultArray},
+                products: resultArray,
                 subtotal: calculateSubtotal(cartItemsArray), // Subtotal of the cart
                 shippingCost: "FREE for a limited time"
             }
