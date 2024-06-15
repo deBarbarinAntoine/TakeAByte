@@ -4,7 +4,7 @@
             <%################################################################################%>
             <%#     order-product templates                                                   %>
             <%################################################################################%>
-            <% data.order.products.resultArray.forEach(function (product) { %>
+            <% data.order.products.forEach(function (product) { %>
                 <%- include('order-product', {product: product}); %>
             <% }); %>
 
