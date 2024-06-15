@@ -1432,6 +1432,11 @@ router.post('/update-cart', (req, res) => {
     res.sendStatus(200);
 });
 
+router.post('/user/:user_id/update/address', (req,res)=>{
+    console.log(req.params)
+    console.log(req.from)
+})
+
 router.get('*', async (req, res) => {
     const type_list = await getAllType();
     const data = {
