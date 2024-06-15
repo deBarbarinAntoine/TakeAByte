@@ -169,6 +169,8 @@
                     <%#       Product-Card Template                                                         %>
                     <%######################################################################################%>
                     <% data.favorites.products.forEach(function (product) { %>
+                        <% if (!!product.product_id && (!product.id || product.id === 0)) product.id = product.product_id; %>
+                        <% product.isDashboard = true; %>
                         <%- include('../partials/product-card', {product: product}); %>
                     <% }); %>
 

@@ -91,8 +91,15 @@
   fill: #112D4E;
 }
 
+.user-icon {
+  object-fit: contain;
+  object-position: center;
+  width: 100%;
+  height: 100%;
+}
 .user-icon path {
   stroke: #112D4E;
+  stroke-width: 1.55;
   fill: transparent;
 }
 
@@ -587,6 +594,14 @@ input:focus {
   width: 100%;
   height: 100%;
 }
+.favorite-button svg.favorite-icon .path-delete-icon {
+  stroke: #3F72AF;
+  fill: #F9F7F7;
+  stroke-width: 1.7;
+}
+.favorite-button svg.favorite-icon:hover .path-delete-icon {
+  stroke: #FBA834;
+}
 .favorite-button svg.favorite-icon .st0 {
   display: none;
 }
@@ -609,17 +624,6 @@ input:focus {
 }
 .favorite-button svg.favorite-icon.favorite .st2 {
   fill: #FBA834;
-}
-
-.user-icon {
-  object-fit: contain;
-  object-position: center;
-  width: 100%;
-  height: 100%;
-}
-.user-icon path {
-  stroke: #112D4E;
-  stroke-width: 2.1;
 }
 
 .title-nav {
@@ -1133,6 +1137,7 @@ input:focus {
   height: 100%;
 }
 .main .alert {
+  margin-top: 4rem;
   width: 100%;
   line-height: 4rem;
   font-size: 1.4rem;
