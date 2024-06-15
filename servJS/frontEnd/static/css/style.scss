@@ -775,8 +775,9 @@ input {
     line-height: 4rem;
     font-size: 1.4rem;
     text-align: center;
-    color: $blue;
-    background-color: $orange;
+    color: $darkblue;
+    background-color: $cream;
+    border: 2px solid $orange;
     border-radius: .5rem;
   }
   .user-info-ctn {
@@ -891,7 +892,7 @@ input {
       margin-bottom: 1.5rem;
     }
     .user-favorites-carousel-ctn.swiper {
-      padding: 1.8rem 1.2rem;
+      /*padding: 1.8rem 1.2rem;*/
       aspect-ratio: 12/10;
 
       .favorites-carousel.swiper-wrapper {

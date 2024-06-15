@@ -1137,8 +1137,9 @@ input:focus {
   line-height: 4rem;
   font-size: 1.4rem;
   text-align: center;
-  color: #3F72AF;
-  background-color: #FBA834;
+  color: #112D4E;
+  background-color: #F7EFE6;
+  border: 2px solid #FBA834;
   border-radius: 0.5rem;
 }
 .main .user-info-ctn {
@@ -1265,7 +1266,7 @@ input:focus {
   margin-bottom: 1.5rem;
 }
 .main .user-favorites-ctn .user-favorites-carousel-ctn.swiper {
-  padding: 1.8rem 1.2rem;
+  /*padding: 1.8rem 1.2rem;*/
   aspect-ratio: 12/10;
 }
 .main .user-favorites-ctn .user-favorites-carousel-ctn.swiper .favorites-carousel.swiper-wrapper .swiper-slide {
