@@ -780,9 +780,10 @@ router.get('/paymentOk', isAuthenticated, async (req, res) => {
             const response = await fetch(reduceStockUrl, {
                 method: 'PUT',
                 headers: {
-                    authorization : `Bearer ${token}`
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({quantity: item.quantity})
+                body: JSON.stringify({ quantity: item.quantity })
             });
 
             if (!response.ok) {
@@ -1221,7 +1222,7 @@ router.get('/order/payment/:encodedData', isAuthenticated, async (req, res) => {
             client: {client: {contactEmail, shipToAddress, shippingMethod}},
             page: 'payment',
             order: {
-                products: {resultArray},
+                products: resultArray,
                 subtotal: calculateSubtotal(cartItemsArray), // Subtotal of the cart
                 shippingCost: "FREE for a limited time"
             }
