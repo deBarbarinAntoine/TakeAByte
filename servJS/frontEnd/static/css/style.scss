@@ -1158,7 +1158,8 @@ input:not([type="checkbox"]) {
         flex-direction: column;
         gap: 3.5rem;
 
-        input:not([type="radio"]), {
+        input:not([type="radio"]),
+        input:not([type="checkbox"]) {
           flex: 1 1 auto;
           padding: 1rem .1rem 1rem 1.5rem;
           appearance: none;

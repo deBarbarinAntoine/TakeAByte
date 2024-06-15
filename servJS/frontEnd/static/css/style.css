@@ -1650,7 +1650,8 @@ input:not([type=checkbox]):focus {
   flex-direction: column;
   gap: 3.5rem;
 }
-.main .order-ctn .order-left form.order-form input:not([type=radio]) {
+.main .order-ctn .order-left form.order-form input:not([type=radio]),
+.main .order-ctn .order-left form.order-form input:not([type=checkbox]) {
   flex: 1 1 auto;
   padding: 1rem 0.1rem 1rem 1.5rem;
   appearance: none;
@@ -1663,7 +1664,8 @@ input:not([type=checkbox]):focus {
   font-size: 1.3rem;
   min-width: 50px;
 }
-.main .order-ctn .order-left form.order-form input:not([type=radio]):focus {
+.main .order-ctn .order-left form.order-form input:not([type=radio]):focus,
+.main .order-ctn .order-left form.order-form input:not([type=checkbox]):focus {
   outline: none;
   appearance: none;
   border: 2px solid rgba(63, 114, 175, 0.6);
