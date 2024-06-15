@@ -37,12 +37,17 @@
     </div>
 </div>
 <script>
+    // Select all elements with class "quantity"
+    let quantityInputs = document.querySelectorAll('.quantity');
     // Select all div elements with class "product-total"
     let productTotalDivs = document.querySelectorAll('.product-total');
+    // Select the div with class "subtotal-nb"
+    let subtotalDiv = document.querySelector('.subtotal-nb');
 
-    // Initialize sum variable
-    let sum = 0;
 
+    function updateSubtotal() {
+        // Initialize sum variable
+        let sum = 0;
     // Loop through each div element
     productTotalDivs.forEach(div => {
         // Get the content of the div and extract the number
@@ -56,10 +61,21 @@
         }
     });
 
-    // Select the div with class "subtotal-nb"
-    let subtotalDiv = document.querySelector('.subtotal-nb');
-
     // Update the content of subtotalDiv with the calculated sum
     subtotalDiv.textContent = sum.toFixed(2) + ' €';
+    }
+    // Initial update
+    updateSubtotal();
+
+    // Function to handle click on quantity inputs
+    function handleQuantityClick(event) {
+        // Update subtotal whenever a quantity input is clicked
+        updateSubtotal();
+    }
+
+    // Add click event listener to each quantity input
+    quantityInputs.forEach(input => {
+        input.addEventListener('click', handleQuantityClick);
+    });
 </script>
 
