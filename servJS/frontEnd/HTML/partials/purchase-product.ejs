@@ -1,0 +1,14 @@
+<div class="purchase-product">
+    <div class="product-img-info">
+        <div class="product-img">
+            <img src="<%= product.product[0].image %>"
+                 onerror="this.onerror=null;this.src='/static/img/image-not-found.webp'" alt="<%= product.product[0].name %> image" />
+        </div>
+        <div class="product-info">
+            <div class="product-name"><%= product.product[0].name %></div>
+        </div>
+    </div>
+    <div class="product-price"><%= product.product[0].price %></div>
+    <div class="purchase-quantity"><%= product.quantityOrdered %></div>
+    <div class="product-total"><%= product.product[0].price * product.quantityOrdered %> €</div>
+</div>

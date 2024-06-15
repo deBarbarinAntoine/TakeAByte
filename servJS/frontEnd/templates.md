@@ -22,6 +22,7 @@ partials are models used in the pages: they are always called from a `page` temp
 - [`category.ejs`](#categoryejs)
 - [`product.ejs`](#productejs)
 - [`order.ejs`](#orderejs)
+- [`purchase.ejs`](#purchaseejs)
 - [`search.ejs`](#searchejs)
 - [`dashboard.ejs`](#dashboardejs)
 - [`login.ejs`](#loginejs)
@@ -241,6 +242,33 @@ Form names:
 > **region**
 > 
 > **country**
+
+---
+
+## `purchase.ejs`
+
+Data format:
+
+```json
+{
+  "purchase": {
+    "id": "purchase-id",
+    "status": "purchase-status",
+    "expectedDate": "expected-delivery-date",
+    "products": [
+      {
+        "link": "product-link",
+        "img": "product-img",
+        "name": "product-name",
+        "quantity": "quantity-ordered",
+        "price": "product-price-€"
+      }
+    ],
+    "subtotal": "sub-total-price-€",
+    "shippingFee": "shipping-fee-€"
+  }
+}
+```
 
 ---
 

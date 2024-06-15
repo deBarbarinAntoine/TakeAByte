@@ -87,6 +87,18 @@ input {
   }
 }
 
+.alert {
+  margin-top: 4rem;
+  width: 100%;
+  line-height: 4rem;
+  font-size: 1.4rem;
+  text-align: center;
+  color: $darkblue;
+  background-color: $cream;
+  border: 2px solid $orange;
+  border-radius: .5rem;
+}
+
 // ###########################################################################################
 // # svg elements
 // ###########################################################################################
@@ -768,17 +780,6 @@ input {
     width: 100%;
     height: 100%;
   }
-  .alert {
-    margin-top: 4rem;
-    width: 100%;
-    line-height: 4rem;
-    font-size: 1.4rem;
-    text-align: center;
-    color: $darkblue;
-    background-color: $cream;
-    border: 2px solid $orange;
-    border-radius: .5rem;
-  }
   .user-info-ctn {
     display: flex;
     justify-content: center;
@@ -917,10 +918,11 @@ input {
 
 
   // ###########################################################################################
-  // # cart
+  // # cart & purchase templates
   // ###########################################################################################
 
-  .cart {
+  .cart,
+  .purchase {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -929,11 +931,20 @@ input {
     gap: 3rem;
 
     .cart-header {
-      display: flex;
       flex-direction: column;
       align-items: center;
-      width: 100%;
       gap: 1.5rem;
+    }
+    .purchase-header {
+      flex-direction: row;
+      justify-content: center;
+      gap: 15%;
+    }
+
+    .cart-header,
+    .purchase-header {
+      display: flex;
+      width: 100%;
 
       .title {
         font-size: 2.5rem;
@@ -948,7 +959,8 @@ input {
         }
       }
     }
-    .cart-list {
+    .cart-list,
+    .purchase-list {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -982,7 +994,8 @@ input {
         width: 100%;
         gap: 1.5rem;
 
-        .cart-product {
+        .cart-product,
+        .purchase-product {
           display: flex;
           justify-content: space-between;
           width: 95%;
@@ -1024,7 +1037,8 @@ input {
               }
             }
           }
-          .product-price {
+          .product-price,
+          .purchase-quantity {
             flex: 1;
             display: flex;
             flex-direction: column;
@@ -1054,7 +1068,8 @@ input {
         width: 100%;
         gap: 10rem;
 
-        .cart-info {
+        .cart-info,
+        .purchase-info {
           display: flex;
           flex-direction: column;
           align-items: flex-end;

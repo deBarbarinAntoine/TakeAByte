@@ -1,0 +1,60 @@
+<div class="main">
+    <div class="purchase">
+        <div class="purchase-header">
+            <div class="title">Order #<%= data.purchase.id %></div>
+            <% const hasPurchase = !!data.purchase.status;
+               if (hasPurchase) {
+                   switch (data.purchase.status) {
+                       case 'waiting': %>
+            <div class="alert"><p>Your order is being prepared.</p><p>It should arrive in 5-6 working days.</p></div>
+                           <% break;
+                       case 'ordered': %>
+            <div class="alert"><p>Your order is about to be sent.</p><p>It should arrive in 5-6 working days.</p></div>
+                           <% break;
+                       case 'on_the_way': %>
+            <div class="alert"><p>Your order is on the way.</p><p>It should arrive around the <%= data.purchase.expectedDate %>.</p></div>
+                           <% break;
+                       case 'delivered': %>
+            <div class="alert">Your order has already been delivered.</div>
+                           <% break;
+                       default:
+                           console.error('an error occured: unexpected purchase status (%v)', data.purchase.status);
+                           break;
+                   } %>
+            <% } %>
+        </div>
+        <div class="purchase-list">
+            <div class="list-header">
+                <span class="label-1">Products</span>
+                <span class="label-2">Price</span>
+                <span class="label-3">Quantity</span>
+                <span class="label-4">Total</span>
+            </div>
+            <div class="separator"></div>
+            <div class="products-list">
+
+                <%################################################################################%>
+                <%#     purchase-product templates                                                %>
+                <%################################################################################%>
+                <% data.purchase.products.resultArray.forEach(function (product) { %>
+                    <%- include('../partials/purchase-product', {product: product}); %>
+                <% }); %>
+            </div>
+            <div class="separator"></div>
+            <div class="list-footer">
+                <div class="purchase-info">
+                    <div class="subtotal">
+                        <div class="title">Sub-total</div>
+                        <div class="subtotal-nb"><%= data.purchase.subtotal %> €</div>
+                    </div>
+                    <div class="subtotal">
+                        <div class="title">Total</div>
+                        <div class="subtotal-nb"><%= data.purchase.subtotal + data.purchase.shippingFee %> €</div>
+                    </div>
+                </div>
+                <a href="/user" class="button blue">Return</a>
+            </div>
+        </div>
+    </div>
+</div>
+
