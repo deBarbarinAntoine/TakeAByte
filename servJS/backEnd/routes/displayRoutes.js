@@ -554,9 +554,10 @@ router.post('/cartAdd', isAuthenticated, (req, res) => {
 
 router.post('/favAdd', isAuthenticated, async (req, res) => {
     // Extract productId from request body
-    const { productId } = req.body;
-    let fav = req.cookies.fav || [];
-    let token = req.cookies.token;
+    const { productId} = req.body;
+    const  token = req.cookies.token ;
+
+    let fav = req.cookies.fav ? JSON.parse(req.cookies.fav) : [];
 
     // Check if the productId already exists
     const productIndex = fav.findIndex(item => item.productId === productId);
@@ -569,17 +570,17 @@ router.post('/favAdd', isAuthenticated, async (req, res) => {
     }
 
     const oneWeekInMilliseconds = 7 * 24 * 60 * 60 * 1000; // 7 days * 24 hours * 60 minutes * 60 seconds * 1000 milliseconds
-    res.cookie('fav', fav, { maxAge: oneWeekInMilliseconds, httpOnly: true }); // Set cookie expiry time
+    res.cookie('fav', JSON.stringify(fav), { maxAge: oneWeekInMilliseconds, httpOnly: true }); // Set cookie expiry time
     res.send({ status: 'success' });
 
     try {
         if (productIndex === -1) {
-            await addToLikes(productId,token);
-        }else{
-            await takeOffLikes(productId,token)
+            await addToLikes(productId, token);
+        } else {
+            await takeOffLikes(productId, token);
         }
     } catch (error) {
-        console.error("Error adding to likes:", error);
+        console.error("Error updating likes:", error);
     }
 });
 
@@ -1391,6 +1392,8 @@ router.get('/user', requireAuth, async (req, res) => {
     }
 });
 // Define a route for the 404 page
+
+
 router.get('*', async (req, res) => {
     const type_list = await getAllType();
     const data = {
