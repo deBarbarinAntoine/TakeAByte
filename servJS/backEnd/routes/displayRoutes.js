@@ -16,7 +16,7 @@ const {getUserFavByUserId} = require("../controllers/favController");
 const router = express.Router();
 
 router.get('/home', isAuthenticated, async (req, res) => {
-console
+    console
     try {
         // Call functions to fetch latest, popular, and random products
         const latestProducts = await fetchLatestProducts();
@@ -386,6 +386,7 @@ router.get('/order/address', isAuthenticated, async (req, res) => {
     // Read the cart cookie
     const cartCookie = req.cookies.cart;
     const token = process.env.WEB_TOKEN;
+    const userToken = req.cookies.token;
     // Initialize a map to store the total quantity and price for each unique item
     const cartItemsMap = new Map();
     let imagePaths;
@@ -518,7 +519,17 @@ router.get('/order/address', isAuthenticated, async (req, res) => {
         });
         return subtotal;
     }
+    let userData;
+    if(req.isAuthenticated){
+        try {
+            const userId = await getUserIdFromToken(userToken)
+            userData = await getUserInfoById(userId.user_id ,token)
 
+        }catch (err){
+        console.error("problem getting userid or userdata",err)
+        }
+    }
+    console.log(userData)
     const type_list = await getAllType();
     const data = {
         title: "Home - TakeAByte",
@@ -527,6 +538,20 @@ router.get('/order/address', isAuthenticated, async (req, res) => {
         slogan: "Your Trusted Tech Partner",
         categories: type_list,
         templateData: {
+            client: {
+                email: userData[0].email,
+                name: userData[0].name,
+                lastName: userData[0].lastName,
+                address: {
+                    street: userData[0].street_name,
+                    complement: userData[0].address_complements,
+                    city: userData[0].city,
+                    zip: userData[0].zip_code,
+                    province: userData[0].province,
+                    country: userData[0].country
+                },
+                shippingMethod: "Standard Shipping - FREE"
+            },
             page: 'address',
             order: {
                 products: {resultArray},
@@ -554,8 +579,8 @@ router.post('/cartAdd', isAuthenticated, (req, res) => {
 
 router.post('/favAdd', isAuthenticated, async (req, res) => {
     // Extract productId from request body
-    const { productId} = req.body;
-    const  token = req.cookies.token ;
+    const {productId} = req.body;
+    const token = req.cookies.token;
 
     let fav = req.cookies.fav ? JSON.parse(req.cookies.fav) : [];
 
@@ -566,12 +591,12 @@ router.post('/favAdd', isAuthenticated, async (req, res) => {
         fav.splice(productIndex, 1);
     } else {
         // If it doesn't exist, add it to the array
-        fav.push({ productId });
+        fav.push({productId});
     }
 
     const oneWeekInMilliseconds = 7 * 24 * 60 * 60 * 1000; // 7 days * 24 hours * 60 minutes * 60 seconds * 1000 milliseconds
-    res.cookie('fav', JSON.stringify(fav), { maxAge: oneWeekInMilliseconds, httpOnly: true }); // Set cookie expiry time
-    res.send({ status: 'success' });
+    res.cookie('fav', JSON.stringify(fav), {maxAge: oneWeekInMilliseconds, httpOnly: true}); // Set cookie expiry time
+    res.send({status: 'success'});
 
     try {
         if (productIndex === -1) {
@@ -653,182 +678,150 @@ router.post('/checkout', isAuthenticated, async (req, res) => {
 });
 
 router.get('/paymentOk', isAuthenticated, async (req, res) => {
-    // Read the cart cookie
     const cartCookie = req.cookies.cart;
     const token = process.env.WEB_TOKEN;
-    const createOrderUrl = "http://localhost:3001/v1/orders"
-    // Initialize a map to store the total quantity and price for each unique item
+    const createOrderUrl = "http://localhost:3001/v1/orders";
     const cartItemsMap = new Map();
-    let imagePaths;
+
     let orderId;
 
-    // Iterate through the items in the cart and aggregate quantities and prices
+    // Aggregate quantities and prices
     if (cartCookie) {
         cartCookie.forEach(item => {
             const {itemId, quantity, itemPrice} = item;
             if (cartItemsMap.has(itemId)) {
-                // If item already exists in map, update its quantity and total price
                 const existingItem = cartItemsMap.get(itemId);
                 existingItem.quantity += quantity;
                 existingItem.totalPrice += quantity * itemPrice;
             } else {
-                // If item doesn't exist in map, add it
                 cartItemsMap.set(itemId, {itemId, quantity, totalPrice: quantity * itemPrice});
             }
         });
     }
 
-    // Convert the map to an array of objects
     const cartItemsArray = Array.from(cartItemsMap.values());
 
     function getImagePaths(allImg) {
-        // Get the length of the allImg.data array
-        const length = allImg.data.length;
-
-        // Create an array to store the image paths
-        const imagePaths = [];
-
-        // Loop through the allImg.data array and push the image paths to the imagePaths array
-        for (let i = 0; i < length; i++) {
-            imagePaths.push(allImg.data[i].image_path);
-        }
-
-        // Add "/static/img/image-not-found.webp" to the array until it has 3 elements
+        const imagePaths = allImg.data.map(img => img.image_path);
         while (imagePaths.length < 3) {
             imagePaths.push("/static/img/image-not-found.webp");
         }
-
-        // Return the array of image paths
         return imagePaths;
     }
 
-    let resultArray = [];// Initialize an empty array to store the results
-    try {
+    async function fetchProductDetails(productId) {
+        const product = await getProductById(productId);
+        if (!product) throw new Error(`Failed to get item ${productId}`);
 
-        for (const cartItem of cartItemsArray) {
-            const productId = cartItem.itemId;
+        const getImagesUrl = `http://localhost:3001/v1/images/product/${productId}`;
+        const allImg = await axios.get(getImagesUrl, {headers: {Authorization: `Bearer ${token}`}});
+        product.img = allImg.data[0].image_path;
 
-            const product = await getProductById(productId);
-
-            if (!product) {
-                console.error(`failed to get item ${productId}`);
-                continue; // Skip to the next iteration
-            }
-
-            const getImagesUrl = `http://localhost:3001/v1/images/product/${productId}`;
-            const allImg = await axios.get(getImagesUrl, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-            product.img = allImg.data[0].image_path;
-            const typeId = product.type_id;
-            const brandId = product.brand_id;
-
-            // Fetch type name
-            if (typeId) {
-                const typeUrl = `http://localhost:3001/v1/types/${typeId}`;
-                const typeResponse = await axios.get(typeUrl, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-                product.type = typeResponse.data[0].name;
-            }
-            // Fetch brand name
-            if (brandId) {
-                const brandUrl = `http://localhost:3001/v1/brands/${brandId}`;
-                const brandResponse = await axios.get(brandUrl, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-                product.brand = brandResponse.data[0].name;
-            }
-            imagePaths = getImagePaths(allImg);
-            const miscellaneous = [];
-
-            for (let key in product) {
-                if (product.hasOwnProperty(key) && key !== 'created_at' && key !== 'updated_at' && key !== 'type_id' && key !== 'product_id' && key !== 'brand_id' && key !== 'image' && key !== 'description' && key !== 'price' && key !== 'sales' && key !== 'name' && product[key] !== null) {
-                    let content = product[key];
-                    if (key === 'quantity_stocked') {
-                        if (content === "0" || content === null || content === undefined) {
-                            key = "Availability"
-                            content = 'Not available';
-                        } else {
-                            content = `Only ${content} left. Order now!`;
-                        }
-                    }
-                    const formattedKey = key.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()); // Capitalize first letter // Replace underscores with spaces
-                    miscellaneous.push({
-                        name: formattedKey,
-                        content: content
-                    });
-                }
-            }
-
-            // Push the product details along with quantity ordered and image paths into the result array
-            resultArray.push({
-                product,
-                quantityOrdered: cartItem.quantity, // Include the quantity ordered
-                imagePaths: imagePaths, // Include the image paths
-                miscellaneous
-            });
+        if (product.type_id) {
+            const typeUrl = `http://localhost:3001/v1/types/${product.type_id}`;
+            const typeResponse = await axios.get(typeUrl, {headers: {Authorization: `Bearer ${token}`}});
+            product.type = typeResponse.data[0].name;
         }
 
-        // Now resultArray contains the results of each iteration
-    } catch (error) {
-        console.error('Error occurred:', error);
+        if (product.brand_id) {
+            const brandUrl = `http://localhost:3001/v1/brands/${product.brand_id}`;
+            const brandResponse = await axios.get(brandUrl, {headers: {Authorization: `Bearer ${token}`}});
+            product.brand = brandResponse.data[0].name;
+        }
+
+        const imagePaths = getImagePaths(allImg);
+        const miscellaneous = Object.keys(product)
+            .filter(key => product[key] && !['created_at', 'updated_at', 'type_id', 'product_id', 'brand_id', 'image', 'description', 'price', 'sales', 'name'].includes(key))
+            .map(key => ({
+                name: key.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
+                content: key === 'quantity_stocked' ? (product[key] ? `Only ${product[key]} left. Order now!` : 'Not available') : product[key]
+            }));
+
+        return {product, imagePaths, miscellaneous};
     }
 
-    // Function to calculate the subtotal of the cart
+    async function processCartItems(cartItems) {
+        const resultArray = [];
+        for (const cartItem of cartItems) {
+            try {
+                const productDetails = await fetchProductDetails(cartItem.itemId);
+                resultArray.push({
+                    ...productDetails,
+                    quantityOrdered: cartItem.quantity,
+                });
+            } catch (error) {
+                console.error(error.message);
+            }
+        }
+        return resultArray;
+    }
+
     function calculateSubtotal(cartItems) {
-        let subtotal = 0;
-        cartItems.forEach(item => {
-            subtotal += item.totalPrice;
-        });
-        return subtotal;
+        return cartItems.reduce((subtotal, item) => subtotal += item.totalPrice, 0);
     }
 
-    const formattedItems = resultArray.map(item => ({
-        product_id: item.product[0].product_id, // Assuming product_id is stored under id property of product
-        quantity: item.quantityOrdered
+    const formattedItems = cartItemsArray.map(item => ({
+        product_id: item.itemId,
+        quantity: item.quantity
     }));
 
     try {
-        const response = await axios.post(createOrderUrl, {
-            items: formattedItems
-        }, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        });
-
-        orderId = response.data.order_id
-
-    } catch (err) {
-        console.error(err)
+        const response = await axios.post(createOrderUrl, {items: formattedItems}, {headers: {Authorization: `Bearer ${token}`}});
+        orderId = response.data.order_id;
+    } catch (error) {
+        console.error('Error creating order:', error.message);
+        return res.status(500).send('Internal Server Error');
     }
-    const type_list = await getAllType();
-    const data = {
-        title: "Home - TakeAByte",
-        isAuthenticated: req.isAuthenticated,
-        template: 'order',
-        slogan: "Your Trusted Tech Partner",
-        categories: type_list,
-        templateData: {
-            client: {orderId},
-            page: 'payment-confirmed',
-            order: {
-                products: {resultArray},
-                subtotal: calculateSubtotal(cartItemsArray), // Subtotal of the cart
-                shippingCost: "FREE for a limited time"
+
+    for (const item of formattedItems) {
+        const productId = item.product_id;
+        const reduceStockUrl = `http://localhost:3001/v1/products/${productId}`;
+
+        try {
+            const response = await fetch(reduceStockUrl, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({quantity: item.quantity})
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
             }
+
+            const data = await response.json();
+            console.log(`Successfully reduced stock for product ${productId}`, data);
+        } catch (err) {
+            console.error(`Failed to reduce stock for product ${productId}`, err);
         }
-    };
-    res.render('base', {data: data});
+    }
 
 
+    try {
+        const resultArray = await processCartItems(cartItemsArray);
+        const typeList = await getAllType();
+        const data = {
+            title: "Home - TakeAByte",
+            isAuthenticated: req.isAuthenticated,
+            template: 'order',
+            slogan: "Your Trusted Tech Partner",
+            categories: typeList,
+            templateData: {
+                client: {orderId},
+                page: 'payment-confirmed',
+                order: {
+                    products: resultArray,
+                    subtotal: calculateSubtotal(cartItemsArray),
+                    shippingCost: "FREE for a limited time"
+                }
+            }
+        };
+        res.render('base', {data});
+    } catch (error) {
+        console.error('Error processing cart items:', error.message);
+        res.status(500).send('Internal Server Error');
+    }
 });
 
 router.get('/contact-us', isAuthenticated, async (req, res) => {
@@ -1351,7 +1344,7 @@ router.get('/user', requireAuth, async (req, res) => {
         if (!userId) {
             return res.status(404).send('User not found');
         }
-        userInfo = await getUserInfoById(userId.user_id,token);
+        userInfo = await getUserInfoById(userId.user_id, token);
         if (!userInfo) {
             return res.status(404).send('No info found for user')
         }

@@ -1,7 +1,6 @@
 const {
     createNewProductQuery,
     getProductByIdQuery,
-    updateProductDataQuery,
     deleteProductQuery,
 } = require("../models/db-queries");
 const connection = require("../models/db-connect");
@@ -10,7 +9,6 @@ const {newProductArray, getProductByNameAndBrand} = require("../models/products"
 const {getTypeIdByName} = require("./type");
 const {getBrandIdByName} = require("./brand");
 const {saveImagePath} = require("./image");
-const {query} = require("express");
 
 exports.createNewProduct = async (req, res) => {
     const products = Array.isArray(req.body) ? req.body : [req.body];
@@ -242,21 +240,51 @@ exports.getProductById = async (req, res) => {
 };
 
 exports.updateProductData = (req, res) => {
-    const {product_id} = req.params;
+    const { product_id } = req.params;
     const {
         name, description, quantity_stocked, price, processor, ram, size, captor, weight, socket_cpu, dimension,
         others, connectivity, resolution, screen_type, vram, battery_power_time, type_id, storage, brand_id
     } = req.body;
-    const values = [
-        name, description, quantity_stocked, price, processor, ram, size, captor, weight, socket_cpu, dimension,
-        others, connectivity, resolution, screen_type, vram, battery_power_time, type_id, storage, brand_id, product_id
-    ];
-    connection.query(updateProductDataQuery, values, (error) => {
-        if (error) {
-            return serverErrorResponse(res, "Failed to update product with given id and values");
+
+    // Collect fields to be updated in an object
+    const fields = {
+        name, description, price, processor, ram, size, captor, weight, socket_cpu, dimension,
+        others, connectivity, resolution, screen_type, vram, battery_power_time, type_id, storage, brand_id
+    };
+
+    let query = 'UPDATE products SET ';
+    const values = [];
+
+    // Construct query and values array dynamically
+    Object.keys(fields).forEach((key) => {
+        if (fields[key] !== null && fields[key] !== undefined && key !== 'quantity_stocked') {
+            query += `${key} = ?, `;
+            values.push(fields[key]);
         }
-        res.status(200).json({message: 'Product updated successfully'});
     });
+
+    // Handle quantity_stocked separately
+    if (quantity_stocked !== null && quantity_stocked !== undefined) {
+        query += `quantity_stocked = quantity_stocked - ?, `;
+        values.push(quantity_stocked);
+    }
+
+    // Remove the trailing comma and space
+    if (values.length > 0) {
+        query = query.slice(0, -2); // Remove the last ', '
+        query += ' WHERE product_id = ?';
+        values.push(product_id);
+
+        connection.query(query, values, (error) => {
+            if (error) {
+                console.error(`Error updating product with ID ${product_id}:`, error);
+                return serverErrorResponse(res, "Failed to update product with given id and values");
+            }
+            res.status(200).json({ message: 'Product updated successfully' });
+        });
+    } else {
+        res.status(400).json({ message: 'No valid fields provided for update' });
+    }
 };
 
 exports.deleteProduct = (req, res) => {
