@@ -11,7 +11,7 @@ const {getTypeNameById, getAllType} = require("../controllers/typeController");
 const {getBrandByIds, getAllBrands} = require("../controllers/brandController");
 const {getSearchData} = require("../controllers/searchController");
 const {addToLikes, takeOffLikes} = require("../controllers/likeContoller");
-const {getUserInfoById, getUserIdFromToken} = require("../controllers/userController");
+const {getUserInfoById, getUserIdFromToken, updateUserData, updateUserPassword} = require("../controllers/userController");
 const {getUserFavByUserId} = require("../controllers/favController");
 const router = express.Router();
 
@@ -1432,10 +1432,49 @@ router.post('/update-cart', (req, res) => {
     res.sendStatus(200);
 });
 
-router.post('/user/:user_id/update/address', (req,res)=>{
-    console.log(req.params)
-    console.log(req.from)
+router.post('/user/:user_id/update/address', async (req, res) => {
+    const user_id = req.params;
+    const form = req.body
+    try {
+        await updateUserData(user_id, form)
+
+        res.redirect("/user")
+    } catch (err) {
+        console.error(err)
+
+    }
+
 })
+
+router.post('/user/:user_id/update/password', async (req, res) => {
+    const { user_id } = req.params;
+    const token = req.cookies.token;
+    const { password, 'new-password': newPassword, 'confirm-password': confirmPassword } = req.body;
+
+    // Basic validation
+    if (!user_id || !password || !newPassword || !confirmPassword) {
+        return res.status(400).json({ error: 'All fields are required' });
+    }
+
+    // Additional validation if needed (e.g., password strength, format checks)
+
+    // Check if new passwords match
+    if (newPassword !== confirmPassword) {
+        return res.status(400).json({ error: 'New password and confirm password do not match' });
+    }
+
+    try {
+        // Perform password update operation
+        await updateUserPassword(user_id, password, newPassword, confirmPassword);
+
+        // Password updated successfully
+        return res.redirect('/user')
+
+    } catch (error) {
+        console.error('Error updating password:', error);
+        return res.status(500).json({ error: 'Failed to update password' });
+    }
+});
 
 router.get('*', async (req, res) => {
     const type_list = await getAllType();

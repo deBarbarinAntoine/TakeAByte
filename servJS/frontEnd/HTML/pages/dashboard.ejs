@@ -1,4 +1,7 @@
 <div class="main padding-top3 padding-bottom9">
+    <div>
+        <pre><%= console.log((data));%></pre>
+    </div>
     <div class="user-info-ctn">
         <div class="flippable-card">
             <div class="flippable-card-front flippable-card-face huge-shadow">
@@ -50,13 +53,13 @@
                                 <% if (!!data.user.name) { %>
                                     <div class="text"><%= data.user.name + ' ' %><%= data.user.lastname.toUpperCase() %></div>
                                 <% } %>
-                                <% if (!!data.user.street) { %>
-                                    <div class="text"><%= data.user.street_number || '' %> <%= data.user.street %></div>
+                                <% if (!!data.user.street_name) { %>
+                                    <div class="text"><%= data.user.street_number || '' %> <%= data.user.street_name %></div>
                                     <% if (!!data.user. address_complements) { %>
                                         <div class="text"><%= data.user.address_complements %></div>
                                     <% } %>
                                     <div class="text"><%= data.user.city.toUpperCase() %></div>
-                                    <div class="text"><%= data.user.zip %></div>
+                                    <div class="text"><%= data.user.zip_code %></div>
                                     <% if (!!data.user.province) { %>
                                         <div class="text"><%= data.user.province.toUpperCase() %></div>
                                     <% } %>
@@ -75,7 +78,7 @@
                     <%######################################################################################%>
                     <%#       Update generic data form                                                      %>
                     <%######################################################################################%>
-                    <form action="/user/<%= data.user.id %>/update/generic" method="post" class="generic-form">
+                    <form action="/user/<%= data.user.user_id %>/update/address" method="post" class="generic-form">
                         <div class="title">Update user data</div>
                         <div class="form-inputs">
                             <label for="username-form" class="abs hidden"></label>
@@ -123,7 +126,7 @@
                             </div>
                             <div class="address-street">
                                 <label class="abs hidden" for="address-street"></label>
-                                <% let street = data.user.street_number ? data.user.street_number : '' + ' ' + data.user.street ? data.user.street : '';
+                                <% let street = data.user.street_number ? data.user.street_number : '' + ' ' + data.user.street_name ? data.user.street_name : '';
                                    if (street === ' ') street = undefined; %>
                                 <input type="text" name="street" id="address-street" placeholder="Address" required value="<%= street || '' %>" />
                                 <div id="address-suggestions" class="suggestions"></div>
@@ -136,7 +139,7 @@
                                 <label class="abs hidden" for="address-city"></label>
                                 <input type="text" name="city" id="address-city" placeholder="City" required value="<%= data.user.city ? data.user.city.toUpperCase() : '' %>" />
                                 <label class="abs hidden" for="address-zip"></label>
-                                <input type="text" name="zip" id="address-zip" placeholder="ZIP Code" required value="<%= data.user.zip || '' %>" />
+                                <input type="text" name="zip" id="address-zip" placeholder="ZIP Code" required value="<%= data.user.zip_code || '' %>" />
                                 <label class="abs hidden" for="address-region"></label>
                                 <input type="text" name="region" id="address-region" placeholder="Province" value="<%= data.user.province ? data.user.province.toUpperCase() : '' %>" />
                             </div>
