@@ -37,45 +37,102 @@
     </div>
 </div>
 <script>
-    // Select all elements with class "quantity"
-    let quantityInputs = document.querySelectorAll('.quantity');
-    // Select all div elements with class "product-total"
-    let productTotalDivs = document.querySelectorAll('.product-total');
-    // Select the div with class "subtotal-nb"
-    let subtotalDiv = document.querySelector('.subtotal-nb');
+    document.addEventListener("DOMContentLoaded", function () {
+        const quantityInputs = document.querySelectorAll('.quantity'); // Select all quantity containers
+        const productTotalDivs = document.querySelectorAll('.product-total'); // Select all product total elements
+        const subtotalDiv = document.querySelector('.subtotal-nb'); // Select the subtotal element
 
+        function updateSubtotal() {
+            let sum = 0;
+            productTotalDivs.forEach(div => {
+                let textContent = div.textContent.trim();
+                let numberStr = textContent.split(' ')[0]; // Get the number part before '€'
+                let number = parseFloat(numberStr);
+                if (!isNaN(number)) {
+                    sum += number;
+                }
+            });
+            subtotalDiv.textContent = sum.toFixed(2) + ' €';
+        }
 
-    function updateSubtotal() {
-        // Initialize sum variable
-        let sum = 0;
-    // Loop through each div element
-    productTotalDivs.forEach(div => {
-        // Get the content of the div and extract the number
-        let textContent = div.textContent.trim();
-        let numberStr = textContent.split(' ')[0]; // Get the number part before '€'
-        let number = parseFloat(numberStr);
+        function handleQuantityClick() {
+            updateSubtotal();
+            // You can also update the server here using updateCartOnServer function
+        }
 
-        // Check if the conversion was successful and add to sum
-        if (!isNaN(number)) {
-            sum += number;
+        quantityInputs.forEach(input => {
+            input.addEventListener('click', handleQuantityClick);
+        });
+
+        // Function to update quantity and total price
+        function updateQuantityAndTotal(parent, quantity, maxQuantity) {
+
+            const itemId = parent.dataset.itemid; // Get item ID from data attribute
+            parent.querySelector('.product-quantity .text').textContent = quantity; // Update displayed quantity
+
+            // Update total price in UI
+            const priceValue = parseFloat(parent.querySelector('.product-price').textContent.replace(/[^\d.-]/g, ''));
+            const totalPrice = quantity * priceValue;
+            parent.querySelector('.product-total').textContent = totalPrice.toFixed(2) + ' €';
+
+            // Update cart on server
+            updateCartOnServer(itemId, quantity);
+
+            // Update subtotal
+            updateSubtotal();
+        }
+
+        // Event listeners for plus and minus buttons
+        const plusButtons = document.querySelectorAll('.plus');
+        plusButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const parent = button.closest('.cart-product');
+                let quantity = parseInt(parent.querySelector('.product-quantity .text').textContent.trim());
+                let maxquantity = parseInt(parent.dataset.maxquantity); // Get max quantity from data attribute
+                if (!isNaN(maxquantity)) { // Check if maxQuantity is defined
+                    if (quantity < maxquantity) {
+                        quantity++;
+                        updateQuantityAndTotal(parent, quantity, maxquantity);
+                    }
+                } else {
+                    console.error('Max quantity not defined for item:', parent.dataset.itemid);
+                }
+            });
+        });
+
+        const minusButtons = document.querySelectorAll('.minus');
+        minusButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const parent = button.closest('.cart-product');
+                let quantity = parseInt(parent.querySelector('.product-quantity .text').textContent.trim());
+                if (quantity > 1) {
+                    quantity--;
+                    updateQuantityAndTotal(parent, quantity);
+                }
+            });
+        });
+
+        // Function to update cart on server
+        async function updateCartOnServer(itemId, newQuantity) {
+            console.log(itemId,newQuantity)
+            try {
+                const response = await fetch('/update-cart', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ itemId: itemId, quantity: newQuantity }),
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to update cart on server.');
+                }
+
+                // Handle successful update if needed
+                // You may want to fetch updated cart data here or update UI accordingly
+            } catch (error) {
+                console.error('Error updating cart:', error.message);
+            }
         }
     });
-
-    // Update the content of subtotalDiv with the calculated sum
-    subtotalDiv.textContent = sum.toFixed(2) + ' €';
-    }
-    // Initial update
-    updateSubtotal();
-
-    // Function to handle click on quantity inputs
-    function handleQuantityClick(event) {
-        // Update subtotal whenever a quantity input is clicked
-        updateSubtotal();
-    }
-
-    // Add click event listener to each quantity input
-    quantityInputs.forEach(input => {
-        input.addEventListener('click', handleQuantityClick);
-    });
 </script>
-

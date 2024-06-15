@@ -1,4 +1,4 @@
-<div class="cart-product">
+<div class="cart-product" data-itemId="<%= product.product[0].product_id %>" data-maxQuantity="<%= product.product[0].quantity_stocked %>">
     <div class="product-img-info">
         <div class="product-img">
             <img src="<%= product.product[0].image %>"
@@ -17,75 +17,5 @@
             <div class="plus"><div class="text">+</div></div>
         </div>
     </div>
-    <div class="product-total"><%= product.product[0].price * product.quantityOrdered %> €</div>
+    <div class="product-total"><%= (product.product[0].price * product.quantityOrdered).toFixed(2) %> €</div>
 </div>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // Get elements
-        const quantityDisplay = document.querySelector('.product-quantity .text');
-        const minusButton = document.querySelector('.minus');
-        const minusTextElement = minusButton.querySelector('.text');
-        const plusButton = document.querySelector('.plus');
-        const plusTextElement = plusButton.querySelector('.text');
-
-        const price = document.querySelector('.product-total');
-        const addToCartButton = document.querySelector('.button.blue');
-
-        // Initial quantity
-        let quantity = <%= product.quantityOrdered %>;
-        const maxQuantity = <%= product.product[0].quantity_stocked %>;
-        const itemId = '365'; // Replace with your actual item ID
-
-        updateQuantityDisplay();
-
-        // Event listeners for plus and minus buttons
-        minusTextElement.addEventListener('click', decreaseQuantity);
-        plusTextElement.addEventListener('click', increaseQuantity);
-
-        function decreaseQuantity() {
-            if (quantity > 0) {
-                quantity--;
-                updateQuantityDisplay();
-                updateCartOnServer(quantity);
-            }
-        }
-
-        function increaseQuantity() {
-            if (quantity < maxQuantity) {
-                quantity++;
-                updateQuantityDisplay();
-                updateCartOnServer(quantity);
-            }
-        }
-
-        function updateQuantityDisplay() {
-            quantityDisplay.textContent = quantity;
-            const priceValue = parseFloat('<%= product.product[0].price.replace(/[^\d.-]/g, "") %>');
-            const totalPrice = quantity * priceValue;
-            price.textContent = totalPrice.toFixed(2) + '€';
-
-            // Disable add to cart button if quantity stock is 0
-            addToCartButton.disabled = (quantity === 0);
-        }
-
-        async function updateCartOnServer(newQuantity) {
-            try {
-                const response = await fetch('/update-cart', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ itemId: itemId, quantity: newQuantity }),
-                });
-
-                if (!response.ok) {
-                    throw new Error('Failed to update cart on server.');
-                }
-
-                // Handle successful update if needed
-            } catch (error) {
-                console.error('Error updating cart:', error.message);
-            }
-        }
-    });
-</script>
