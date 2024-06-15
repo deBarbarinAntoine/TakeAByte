@@ -262,27 +262,24 @@ exports.updateProductData = (req, res) => {
             values.push(fields[key]);
         }
     });
-
     // Handle quantity_stocked separately
     if (quantity_stocked !== null && quantity_stocked !== undefined) {
         query += `quantity_stocked = quantity_stocked - ?, `;
         values.push(quantity_stocked);
     }
-
     // Remove the trailing comma and space
-    if (values.length > 0) {
-        query = query.slice(0, -2); // Remove the last ', '
-        query += ' WHERE product_id = ?';
-        values.push(product_id);
-
-        connection.query(query, values, (error) => {
-            if (error) {
-                console.error(`Error updating product with ID ${product_id}:`, error);
-                return serverErrorResponse(res, "Failed to update product with given id and values");
-            }
+    try{
+        if (values.length > 0) {
+            query = query.slice(0, -2); // Remove the last ', '
+            query += ' WHERE product_id = ?';
+            values.push(product_id);
+            connection.query(query, values);
             res.status(200).json({ message: 'Product updated successfully' });
-        });
-    } else {
+        }
+
+    }catch(err){
+        console.log(err)
+        console.error(`Error updating product with ID ${product_id}:`, err);
         res.status(400).json({ message: 'No valid fields provided for update' });
     }
 };

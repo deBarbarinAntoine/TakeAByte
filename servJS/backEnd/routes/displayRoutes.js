@@ -777,25 +777,20 @@ router.get('/paymentOk', isAuthenticated, async (req, res) => {
         const reduceStockUrl = `http://localhost:3001/v1/products/${productId}`;
 
         try {
-            const response = await fetch(reduceStockUrl, {
-                method: 'PUT',
+            const response = await axios.put(reduceStockUrl, {
+                quantity_stocked: item.quantity
+            }, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ quantity: item.quantity })
+                }
             });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-
-            const data = await response.json();
-            console.log(`Successfully reduced stock for product ${productId}`, data);
+            console.log(`Successfully reduced stock for product ${productId}`, response.data);
         } catch (err) {
             console.error(`Failed to reduce stock for product ${productId}`, err);
         }
     }
+
 
 
     try {
@@ -817,6 +812,7 @@ router.get('/paymentOk', isAuthenticated, async (req, res) => {
                 }
             }
         };
+        res.clearCookie('cart');
         res.render('base', {data});
     } catch (error) {
         console.error('Error processing cart items:', error.message);
