@@ -1415,6 +1415,22 @@ router.get('/user', requireAuth, async (req, res) => {
 });
 // Define a route for the 404 page
 
+router.post('/update-cart', (req, res) => {
+    const { itemId, quantity } = req.body;
+
+    // Update cart logic here
+    // Example: Update cart stored in cookies
+    let cart = req.cookies.cart || [];
+    const itemIndex = cart.findIndex(item => item.itemId === itemId);
+
+    if (itemIndex !== -1) {
+        cart[itemIndex].quantity = quantity;
+    }
+
+    // Set updated cart back to cookies
+    res.cookie('cart', cart, { maxAge: 900000, httpOnly: true });
+    res.sendStatus(200);
+});
 
 router.get('*', async (req, res) => {
     const type_list = await getAllType();

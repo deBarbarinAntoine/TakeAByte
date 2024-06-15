@@ -24,19 +24,17 @@
         // Get elements
         const quantityDisplay = document.querySelector('.product-quantity .text');
         const minusButton = document.querySelector('.minus');
-        const minusTextElement = minusButton.querySelector('.text')
+        const minusTextElement = minusButton.querySelector('.text');
         const plusButton = document.querySelector('.plus');
         const plusTextElement = plusButton.querySelector('.text');
 
         const price = document.querySelector('.product-total');
         const addToCartButton = document.querySelector('.button.blue');
-        let quantity;
+
         // Initial quantity
-        if(<%= product.product[0].quantity_stocked %> === "0"){
-            quantity = 0;
-        }else{
-            quantity = <%= product.quantityOrdered %>;
-        };
+        let quantity = <%= product.quantityOrdered %>;
+        const maxQuantity = <%= product.product[0].quantity_stocked %>;
+        const itemId = '365'; // Replace with your actual item ID
 
         updateQuantityDisplay();
 
@@ -45,33 +43,49 @@
         plusTextElement.addEventListener('click', increaseQuantity);
 
         function decreaseQuantity() {
-        console.log('panda')
             if (quantity > 0) {
                 quantity--;
                 updateQuantityDisplay();
+                updateCartOnServer(quantity);
             }
         }
 
         function increaseQuantity() {
-            if (quantity < <%= product.product[0].quantity_stocked %>) {
+            if (quantity < maxQuantity) {
                 quantity++;
                 updateQuantityDisplay();
+                updateCartOnServer(quantity);
             }
         }
 
         function updateQuantityDisplay() {
             quantityDisplay.textContent = quantity;
-            // Extracting numerical value from data.product.price
             const priceValue = parseFloat('<%= product.product[0].price.replace(/[^\d.-]/g, "") %>');
-            const totPrice = quantity * priceValue;
-            price.textContent = totPrice + '€';
+            const totalPrice = quantity * priceValue;
+            price.textContent = totalPrice.toFixed(2) + '€';
 
             // Disable add to cart button if quantity stock is 0
-            if (<%= product.product[0].quantity_stocked %> === 0){
-                addToCartButton.disabled = true;
-            }else{
-                addToCartButton.disabled = false;
+            addToCartButton.disabled = (quantity === 0);
+        }
+
+        async function updateCartOnServer(newQuantity) {
+            try {
+                const response = await fetch('/update-cart', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ itemId: itemId, quantity: newQuantity }),
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to update cart on server.');
+                }
+
+                // Handle successful update if needed
+            } catch (error) {
+                console.error('Error updating cart:', error.message);
             }
         }
-    })
+    });
 </script>
