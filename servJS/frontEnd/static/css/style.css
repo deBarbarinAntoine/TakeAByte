@@ -561,7 +561,8 @@ body footer.footer .footer-ctn .footer-links .link-group a:hover {
   font-size: 3.5rem;
 }
 
-input {
+input:not([type=radio]),
+input:not([type=checkbox]) {
   width: calc(100% - 1.6rem);
   padding: 1rem 0.1rem 1rem 1.5rem;
   appearance: none;
@@ -573,7 +574,8 @@ input {
   font-weight: 600;
   font-size: 1.3rem;
 }
-input:focus {
+input:not([type=radio]):focus,
+input:not([type=checkbox]):focus {
   outline: none;
   appearance: none;
   border: 2px solid rgba(63, 114, 175, 0.6);
