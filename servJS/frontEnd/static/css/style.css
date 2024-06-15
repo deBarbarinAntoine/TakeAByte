@@ -561,8 +561,7 @@ body footer.footer .footer-ctn .footer-links .link-group a:hover {
   font-size: 3.5rem;
 }
 
-input:not([type=radio]),
-input:not([type=checkbox]) {
+input:not([type=checkbox]):not([type=radio]) {
   width: calc(100% - 1.6rem);
   padding: 1rem 0.1rem 1rem 1.5rem;
   appearance: none;
@@ -574,8 +573,7 @@ input:not([type=checkbox]) {
   font-weight: 600;
   font-size: 1.3rem;
 }
-input:not([type=radio]):focus,
-input:not([type=checkbox]):focus {
+input:not([type=checkbox]):not([type=radio]):focus {
   outline: none;
   appearance: none;
   border: 2px solid rgba(63, 114, 175, 0.6);
@@ -1650,8 +1648,7 @@ input:not([type=checkbox]):focus {
   flex-direction: column;
   gap: 3.5rem;
 }
-.main .order-ctn .order-left form.order-form input:not([type=radio]),
-.main .order-ctn .order-left form.order-form input:not([type=checkbox]) {
+.main .order-ctn .order-left form.order-form input:not([type=checkbox]):not([type=radio]) {
   flex: 1 1 auto;
   padding: 1rem 0.1rem 1rem 1.5rem;
   appearance: none;
@@ -1664,8 +1661,7 @@ input:not([type=checkbox]):focus {
   font-size: 1.3rem;
   min-width: 50px;
 }
-.main .order-ctn .order-left form.order-form input:not([type=radio]):focus,
-.main .order-ctn .order-left form.order-form input:not([type=checkbox]):focus {
+.main .order-ctn .order-left form.order-form input:not([type=checkbox]):not([type=radio]):focus {
   outline: none;
   appearance: none;
   border: 2px solid rgba(63, 114, 175, 0.6);

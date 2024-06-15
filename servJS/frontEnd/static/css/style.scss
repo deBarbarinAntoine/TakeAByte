@@ -67,8 +67,7 @@
   font-size: 3.5rem;
 }
 
-input:not([type="radio"]),
-input:not([type="checkbox"]) {
+input:not([type=checkbox]):not([type=radio]) {
   width: calc(100% - 1.6rem);
   padding: 1rem .1rem 1rem 1.5rem;
   appearance: none;
@@ -1158,8 +1157,7 @@ input:not([type="checkbox"]) {
         flex-direction: column;
         gap: 3.5rem;
 
-        input:not([type="radio"]),
-        input:not([type="checkbox"]) {
+        input:not([type=checkbox]):not([type=radio]) {
           flex: 1 1 auto;
           padding: 1rem .1rem 1rem 1.5rem;
           appearance: none;
