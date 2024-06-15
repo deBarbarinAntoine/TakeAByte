@@ -1,5 +1,5 @@
 const axios = require('axios');
-const {addToLikes, takeOffLikes} = require("./likeContoller");
+const {addToLikes} = require("./likeContoller");
 
 async function checkUserLogs(req, res) {
     try {
