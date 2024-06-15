@@ -9,7 +9,7 @@
             <a class="remove-link">Remove</a>
         </div>
     </div>
-    <div class="product-price"><%= product.product[0].price %></div>
+    <div class="product-price"><%= product.product[0].price %> €</div>
     <div class="quantity-ctn">
         <div class="quantity">
             <div class="minus"><div class="text">-</div></div>
@@ -19,3 +19,59 @@
     </div>
     <div class="product-total"><%= product.product[0].price * product.quantityOrdered %> €</div>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Get elements
+        const quantityDisplay = document.querySelector('.product-quantity .text');
+        const minusButton = document.querySelector('.minus');
+        const minusTextElement = minusButton.querySelector('.text')
+        const plusButton = document.querySelector('.plus');
+        const plusTextElement = plusButton.querySelector('.text');
+
+        const price = document.querySelector('.product-total');
+        const addToCartButton = document.querySelector('.button.blue');
+        let quantity;
+        // Initial quantity
+        if(<%= product.product[0].quantity_stocked %> === "0"){
+            quantity = 0;
+        }else{
+            quantity = <%= product.quantityOrdered %>;
+        };
+
+        updateQuantityDisplay();
+
+        // Event listeners for plus and minus buttons
+        minusTextElement.addEventListener('click', decreaseQuantity);
+        plusTextElement.addEventListener('click', increaseQuantity);
+
+        function decreaseQuantity() {
+        console.log('panda')
+            if (quantity > 0) {
+                quantity--;
+                updateQuantityDisplay();
+            }
+        }
+
+        function increaseQuantity() {
+            if (quantity < <%= product.product[0].quantity_stocked %>) {
+                quantity++;
+                updateQuantityDisplay();
+            }
+        }
+
+        function updateQuantityDisplay() {
+            quantityDisplay.textContent = quantity;
+            // Extracting numerical value from data.product.price
+            const priceValue = parseFloat('<%= product.product[0].price.replace(/[^\d.-]/g, "") %>');
+            const totPrice = quantity * priceValue;
+            price.textContent = totPrice + '€';
+
+            // Disable add to cart button if quantity stock is 0
+            if (<%= product.product[0].quantity_stocked %> === 0){
+                addToCartButton.disabled = true;
+            }else{
+                addToCartButton.disabled = false;
+            }
+        }
+    })
+</script>

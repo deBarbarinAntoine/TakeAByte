@@ -27,7 +27,7 @@
                 <div class="cart-info">
                     <div class="subtotal">
                         <div class="title">Sub-total</div>
-                        <div class="subtotal-nb"><%= data.cart.subtotal %> €</div>
+                        <div class="subtotal-nb"></div>
                     </div>
                     <div class="message">Shipping will be calculated later</div>
                 </div>
@@ -36,4 +36,30 @@
         </div>
     </div>
 </div>
+<script>
+    // Select all div elements with class "product-total"
+    let productTotalDivs = document.querySelectorAll('.product-total');
+
+    // Initialize sum variable
+    let sum = 0;
+
+    // Loop through each div element
+    productTotalDivs.forEach(div => {
+        // Get the content of the div and extract the number
+        let textContent = div.textContent.trim();
+        let numberStr = textContent.split(' ')[0]; // Get the number part before '€'
+        let number = parseFloat(numberStr);
+
+        // Check if the conversion was successful and add to sum
+        if (!isNaN(number)) {
+            sum += number;
+        }
+    });
+
+    // Select the div with class "subtotal-nb"
+    let subtotalDiv = document.querySelector('.subtotal-nb');
+
+    // Update the content of subtotalDiv with the calculated sum
+    subtotalDiv.textContent = sum.toFixed(2) + ' €';
+</script>
 

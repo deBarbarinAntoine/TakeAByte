@@ -340,14 +340,47 @@ router.get('/cart', isAuthenticated, async (req, res) => {
                     });
                 }
             }
+            let item_Quantity;
 
-            // Push the product details along with quantity ordered and image paths into the result array
-            resultArray.push({
-                product,
-                quantityOrdered: cartItem.quantity, // Include the quantity ordered
-                imagePaths: imagePaths, // Include the image paths
-                miscellaneous
-            });
+            try {
+                const item = await getProductById(productId);
+                item_Quantity = item[0].quantity_stocked;
+
+                // Check if cartItem.quantity is less than or equal to item_Quantity
+                if (cartItem.quantity <= item_Quantity) {
+                    // If yes, push cartItem with its details
+                    resultArray.push({
+                        product,
+                        quantityOrdered: cartItem.quantity,
+                        imagePaths: imagePaths,
+                        miscellaneous
+                    });
+                } else {
+                    const itemToUpdate = cartCookie.find(item => item.itemId === productId);
+
+                    if (itemToUpdate) {
+                        // Update the quantity of the found item
+                        itemToUpdate.quantity = item_Quantity;
+
+                        // Set the updated cookie
+                        res.cookie('cart', cartCookie, { maxAge: 900000, httpOnly: true }); // Example options
+
+                        // Optionally, send a response indicating success
+                        res.send('Cart updated successfully');
+                    } else {
+                        console.log(`Item with itemId ${productId} not found in the cart.`);
+                    }
+                    // If no, push item_Quantity instead of cartItem.quantity
+                    resultArray.push({
+                        product,
+                        quantityOrdered: item_Quantity, // Push item_Quantity instead
+                        imagePaths: imagePaths,
+                        miscellaneous
+                    });
+                }
+            } catch (err) {
+                console.log("Failed to get item quantity available", err);
+            }
         }
 
         // Now resultArray contains the results of each iteration
