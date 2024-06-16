@@ -11,7 +11,12 @@ const {getTypeNameById, getAllType} = require("../controllers/typeController");
 const {getBrandByIds, getAllBrands} = require("../controllers/brandController");
 const {getSearchData} = require("../controllers/searchController");
 const {addToLikes, takeOffLikes} = require("../controllers/likeContoller");
-const {getUserInfoById, getUserIdFromToken, updateUserData, updateUserPassword} = require("../controllers/userController");
+const {
+    getUserInfoById,
+    getUserIdFromToken,
+    updateUserData,
+    updateUserPassword
+} = require("../controllers/userController");
 const {getUserFavByUserId} = require("../controllers/favController");
 const router = express.Router();
 
@@ -77,19 +82,6 @@ router.get('/login', isAuthenticated, async (req, res) => {
     };
     res.render('base', {data: data});
 })
-
-router.get('/products', isAuthenticated, async (req, res) => {
-    const type_list = await getAllType();
-    const data = {
-        title: "Products - TakeAByte",
-        isAuthenticated: req.isAuthenticated,
-        template: "product-list",
-        templateData: {},
-        slogan: "Your Trusted Tech Partner",
-        categories: type_list
-    };
-    res.render('base', {data: data});
-});
 
 router.get('/product/:productId', isAuthenticated, async (req, res) => {
     const productId = req.params.productId;
@@ -171,6 +163,7 @@ router.get('/product/:productId', isAuthenticated, async (req, res) => {
                         content = `Only ${content} left. Order now!`;
                     }
                 }
+
                 const formattedKey = key.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()); // Capitalize first letter // Replace underscores with spaces
                 miscellaneous.push({
                     name: formattedKey,
@@ -188,6 +181,19 @@ router.get('/product/:productId', isAuthenticated, async (req, res) => {
         } else {
             console.log('Type not found');
         }
+        let saleData
+        try {
+            const saleUrl = `http://localhost:3001/v1/sales/product/${productId}`
+            saleData = await axios.get(saleUrl, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+        } catch (err) {
+            console.log("error retrieving sales data:", err)
+        }
+
+        console.log(saleData.data.sales[0])
         const data = {
             title: "Products - TakeAByte",
             isAuthenticated: req.isAuthenticated,
@@ -213,7 +219,11 @@ router.get('/product/:productId', isAuthenticated, async (req, res) => {
                         "css-color-name"
                     ],
                     "brand": product.brand,
-                    "miscellaneous": miscellaneous
+                    "miscellaneous": miscellaneous,
+                    "promotion": {
+                        "reduction": saleData.data.sales[0].reduction_percentage,
+                        "end_at": saleData.data.sales[0].end_date
+                    }
                 },
                 quantityStock: product[0].quantity_stocked
             },
@@ -363,7 +373,7 @@ router.get('/cart', isAuthenticated, async (req, res) => {
                         itemToUpdate.quantity = item_Quantity;
 
                         // Set the updated cookie
-                        res.cookie('cart', cartCookie, { maxAge: 900000, httpOnly: true }); // Example options
+                        res.cookie('cart', cartCookie, {maxAge: 900000, httpOnly: true}); // Example options
 
                         // Optionally, send a response indicating success
                         res.send('Cart updated successfully');
@@ -552,14 +562,15 @@ router.get('/order/address', isAuthenticated, async (req, res) => {
         });
         return subtotal;
     }
+
     let userData;
-    if(req.isAuthenticated){
+    if (req.isAuthenticated) {
         try {
             const userId = await getUserIdFromToken(userToken)
-            userData = await getUserInfoById(userId.user_id ,token)
+            userData = await getUserInfoById(userId.user_id, token)
 
-        }catch (err){
-        console.error("problem getting userid or userdata",err)
+        } catch (err) {
+            console.error("problem getting userid or userdata", err)
         }
     }
     const type_list = await getAllType();
@@ -823,7 +834,6 @@ router.get('/paymentOk', isAuthenticated, async (req, res) => {
             console.error(`Failed to reduce stock for product ${productId}`, err);
         }
     }
-
 
 
     try {
@@ -1288,7 +1298,7 @@ router.get('/register', isAuthenticated, async (req, res) => {
 
 router.get('/category/:type_id', isAuthenticated, async (req, res) => {
     const type_id = req.params.type_id;
-    const { brand, price_max, category } = req.query; // Destructure the filters from query parameters
+    const {brand, price_max, category} = req.query; // Destructure the filters from query parameters
     let type_name;
     let product_list;
     let brand_list;
@@ -1314,9 +1324,9 @@ router.get('/category/:type_id', isAuthenticated, async (req, res) => {
         brand_list = await getBrandByIds(brandIds);
 
     } catch (err) {
-        if (err === "ReferenceError: id is not defined"){
+        if (err === "ReferenceError: id is not defined") {
             console.log(err)
-        }else {
+        } else {
             console.error('Error in router handler:', err);
             return res.status(500).send('Internal Server Error');
         }
@@ -1437,7 +1447,7 @@ router.get('/user', requireAuth, async (req, res) => {
 // Define a route for the 404 page
 
 router.post('/update-cart', (req, res) => {
-    const { itemId, quantity } = req.body;
+    const {itemId, quantity} = req.body;
 
     // Update cart logic here
     // Example: Update cart stored in cookies
@@ -1449,7 +1459,7 @@ router.post('/update-cart', (req, res) => {
     }
 
     // Set updated cart back to cookies
-    res.cookie('cart', cart, { maxAge: 900000, httpOnly: true });
+    res.cookie('cart', cart, {maxAge: 900000, httpOnly: true});
     res.sendStatus(200);
 });
 
@@ -1468,20 +1478,20 @@ router.post('/user/:user_id/update/address', async (req, res) => {
 })
 
 router.post('/user/:user_id/update/password', async (req, res) => {
-    const { user_id } = req.params;
+    const {user_id} = req.params;
     const token = req.cookies.token;
-    const { password, 'new-password': newPassword, 'confirm-password': confirmPassword } = req.body;
+    const {password, 'new-password': newPassword, 'confirm-password': confirmPassword} = req.body;
 
     // Basic validation
     if (!user_id || !password || !newPassword || !confirmPassword) {
-        return res.status(400).json({ error: 'All fields are required' });
+        return res.status(400).json({error: 'All fields are required'});
     }
 
     // Additional validation if needed (e.g., password strength, format checks)
 
     // Check if new passwords match
     if (newPassword !== confirmPassword) {
-        return res.status(400).json({ error: 'New password and confirm password do not match' });
+        return res.status(400).json({error: 'New password and confirm password do not match'});
     }
 
     try {
@@ -1493,7 +1503,7 @@ router.post('/user/:user_id/update/password', async (req, res) => {
 
     } catch (error) {
         console.error('Error updating password:', error);
-        return res.status(500).json({ error: 'Failed to update password' });
+        return res.status(500).json({error: 'Failed to update password'});
     }
 });
 
