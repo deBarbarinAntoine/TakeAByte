@@ -25,7 +25,7 @@ This project was made in collaboration with **Nicolas Moyon**, who made most of 
         expiration date : 12/28
         cvc : 123
 
-    Exipred card :
+    Expired card :
         number : 2020 2020 2020 2020
         expiration date : 12/20
         cvc : 256
