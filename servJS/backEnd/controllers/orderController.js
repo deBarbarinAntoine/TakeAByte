@@ -25,7 +25,27 @@ async function getUserOrdersByUserId(user_id){
     }
 }
 
+async function getOrderDetail(order_id, token){
+    console.log(order_id, token)
+    try {
+        const url = `http://localhost:3001/v1/orders/${order_id}`;
+        const response = await axios.get(url, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        if (response.data) {
+            console.log(response.data)
+            //return   response.data
+        } else {
+            console.error("No data found userId with given token");
+            return null;
+        }
+    } catch (err) {
+        console.error(`Error fetching user fev ids:`, err);
+        return null;
+    }
+}
 
 
-
-module.exports = {getUserOrdersByUserId}
+module.exports = {getUserOrdersByUserId,getOrderDetail}

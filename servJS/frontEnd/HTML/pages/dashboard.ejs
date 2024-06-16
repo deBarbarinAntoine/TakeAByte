@@ -22,15 +22,15 @@
                     <% if (data.purchases && data.purchases.length > 0) { %>
                         <% data.purchases.forEach((purchase) => { %>
                             <div>
-                                <pre><%= console.log((purchase));%></pre>
+                                <pre><%= console.log((purchase.details[0][0]));%></pre>
                             </div>
                             <div class="purchase relative">
                                 <a href="/purchase/<%= purchase.order_id %>" class="purchase-link abs"></a>
                                 <div class="purchase-date"><%= purchase.date_ordered_at %></div>
                                 <div class="purchase-status"><%= purchase.status %></div>
                                 <div class="purchase-delivery-date"><%= purchase.deliveryDate %></div>
-                                <div class=" purchase-items-quantity"><%= purchase.itemsQuantity %></div>
-                                <div class="purchase-total-price"><%= purchase.totalPrice %>€</div>
+                                <div class=" purchase-items-quantity"><%= purchase.details[0][0].quantity %></div>
+                                <div class="purchase-total-price"><%= purchase.full_price %>€</div>
                             </div>
                         <% }); %>
                     <% } %>
@@ -337,32 +337,59 @@
         }
     });
 
-    const purchaseDateElements = document.querySelectorAll('.purchase-date');
+    // Select all elements with class '.purchase'
+    const purchaseElements = document.querySelectorAll('.purchase');
 
-    // Iterate through each element
-    purchaseDateElements.forEach(element => {
-        // Get the date string from the element's text content
-        const dateString = element.textContent.trim();
+    // Iterate through each purchase element
+    purchaseElements.forEach(purchaseElement => {
+        // Find the purchase date element within the current purchase element
+        const purchaseDateElement = purchaseElement.querySelector('.purchase-date');
 
-        // Convert the date string to a Date object
-        const date = new Date(dateString);
+        // Ensure purchase date element exists
+        if (purchaseDateElement) {
+            // Get the date string from the element's text content
+            const dateString = purchaseDateElement.textContent.trim();
 
-        // Options for formatting the date
-        const options = {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-        };
+            // Convert the date string to a Date object
+            const date = new Date(dateString);
 
-        // Format the date using toLocaleDateString
-        const formattedDate = date.toLocaleDateString('fr-FR', options);
+            // // Calculate a random delivery date between 3 to 5 days after the order date
+            // const minDaysToAdd = 3;
+            // const maxDaysToAdd = 5;
+            // const randomDaysToAdd = Math.floor(Math.random() * (maxDaysToAdd - minDaysToAdd + 1)) + minDaysToAdd;
 
-        // Update the element's text content with the formatted date
-        element.textContent = `${formattedDate}`;
+            // Clone the ordered date and add the random days
+            const deliveryDate = new Date(date);
+            deliveryDate.setDate(date.getDate() + 5);
+
+            // Format the delivery date as a string (e.g., "MM/DD/YYYY")
+            const formattedDeliveryDate = deliveryDate.toLocaleDateString('fr-FR', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit'
+            });
+
+            // Options for formatting the date
+            const options = {
+                year: 'numeric',
+                month: '2-digit',
+                day: 'numeric',
+            };
+
+            // Format the date using toLocaleDateString
+            const formattedDate = date.toLocaleDateString('fr-FR', options);
+
+            // Update the element's text content with the formatted date
+            purchaseDateElement.textContent = `${formattedDate}`;
+            // Find the delivery date element within the current purchase element
+            const deliveryDateElement = purchaseElement.querySelector('.purchase-delivery-date');
+
+            // Ensure delivery date element exists
+            if (deliveryDateElement) {
+                // Update the delivery date element's text content with the formatted delivery date
+                deliveryDateElement.textContent = formattedDeliveryDate;
+            }
+        }
     });
-
 
 </script>

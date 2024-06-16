@@ -165,6 +165,7 @@ CREATE TABLE orders
 (
     order_id        INT AUTO_INCREMENT,
     user_id         INT,
+    full_price      INT NOT NULL,
     date_ordered_at DATETIME                                               NOT NULL DEFAULT CURRENT_TIMESTAMP,
     status          ENUM ('waiting', 'ordered', 'on_the_way', 'delivered') NOT NULL DEFAULT 'waiting',
     PRIMARY KEY (order_id),
@@ -178,6 +179,7 @@ CREATE TABLE order_items
     order_id      INT,
     product_id    INT,
     quantity      SMALLINT NOT NULL,
+    price_when_bought      INT NOT NULL,
     PRIMARY KEY (order_item_id),
     FOREIGN KEY (order_id) REFERENCES orders (order_id) ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES products (product_id) ON DELETE CASCADE,

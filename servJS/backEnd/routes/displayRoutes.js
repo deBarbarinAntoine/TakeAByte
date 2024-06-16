@@ -18,7 +18,7 @@ const {
     updateUserPassword
 } = require("../controllers/userController");
 const {getUserFavByUserId} = require("../controllers/favController");
-const {getUserOrdersByUserId} = require("../controllers/orderController");
+const {getUserOrdersByUserId, getOrderDetail} = require("../controllers/orderController");
 const router = express.Router();
 
 router.get('/home', isAuthenticated, async (req, res) => {
@@ -816,10 +816,11 @@ router.get('/paymentOk', isAuthenticated, async (req, res) => {
     }
 
     const formattedItems = cartItemsArray.map(item => ({
-        product_id: item.itemId,
-        quantity: item.quantity
-    }));
 
+        product_id: item.itemId,
+        quantity: item.quantity,
+        price : item.totalPrice
+    }));
     try {
         const response = await axios.post(createOrderUrl, {items: formattedItems}, {headers: {Authorization: `Bearer ${userToken}`}});
         orderId = response.data.order_id;
@@ -1530,6 +1531,17 @@ router.post('/user/:user_id/update/password', async (req, res) => {
         return res.status(500).json({error: 'Failed to update password'});
     }
 });
+
+router.get('/purchase/:order_id', async (req,res) =>{
+    const {order_id} = req.params;
+    const token = req.cookies.token;
+    let ordersDetail
+    try{
+        ordersDetail = await getOrderDetail(order_id,token)
+    }catch(err){
+
+    }
+})
 
 router.get('*', async (req, res) => {
     const type_list = await getAllType();

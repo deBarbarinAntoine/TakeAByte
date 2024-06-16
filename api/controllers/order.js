@@ -7,24 +7,25 @@ const {serverErrorResponse, notFoundErrorResponse} = require("../helpers/respons
 // Function to handle creating a new order
 exports.createNewOrder = async (req, res) => {
     const  user_id = req.userId;
-    const { items }  = req.body; // items should be an array of { product_id, quantity }
+    const { items }  = req.body; // items should be an array of { product_id, quantity , price}
     const date_ordered_at = new Date(); // Current timestamp
     const status = 'waiting'; // Default status
 
     // Validate request body
-    if (!Array.isArray(items) || items.some(item => !item.product_id || !item.quantity)) {
+    if (!Array.isArray(items) || items.some(item => !item.product_id || !item.quantity || !item.price)) {
         return res.status(400).json({error: "Invalid request body"});
     }
-
+    const full_price = items.reduce((total, item) => total + item.price, 0);
     try {
 
         // Step 1: Insert into orders table
-        const orderResult = await connection.execute(createNewOrderQuery, [user_id, date_ordered_at, status]);
+        const orderResult = await connection.execute(createNewOrderQuery, [user_id, full_price ,date_ordered_at, status]);
         const order_id = orderResult[0].insertId
 
         // Step 2: Insert each item into order_items table
         for (const item of items) {
-            await connection.execute(createNewOrderItemQuery, [order_id, item.product_id, item.quantity]);
+            const price=  item.price / item.quantity
+            await connection.execute(createNewOrderItemQuery, [order_id, item.product_id, item.quantity , price]);
         }
 
         res.status(201).json({message: 'Order created successfully', order_id});
