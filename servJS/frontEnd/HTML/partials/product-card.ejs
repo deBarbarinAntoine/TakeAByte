@@ -27,7 +27,10 @@
     <div class="product-card-description">
         <div class="title"><%= product.name %></div>
         <div class="price-ctn">
-            <div class="alert">ON SALE</div>
+            <% const reduction = parseInt(product.sales);
+               if (reduction !== undefined && reduction > 0) { %>
+                <div class="alert">-<%= reduction%>%</div>
+            <% } %>
             <div class="price"><%= product.price %>€</div>
         </div>
     </div>

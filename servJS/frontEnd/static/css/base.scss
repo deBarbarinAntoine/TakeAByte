@@ -394,10 +394,14 @@ body {
           line-height: normal;
           gap: .7rem;
 
-          a {
+          a,
+          span.discovery {
             line-height: 5rem;
             font-size: 1.5rem;
             white-space: nowrap;
+          }
+          span.discovery {
+            cursor: default;
           }
           .discovery-expandable {
             width: 1rem;

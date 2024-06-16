@@ -354,12 +354,17 @@ input:not([type=checkbox]):not([type=radio]) {
     .price-ctn {
       width: 100%;
       display: flex;
-      justify-content: space-between;
+      flex-direction: row;
+      justify-content: flex-end;
+      align-items: flex-end;
 
       .alert {
+        margin-top: 0;
+        line-height: 2rem;
         width: 50%;
       }
       .price {
+        flex: 1;
         font-size: 1.3rem;
         color: $blue;
         text-align: right;

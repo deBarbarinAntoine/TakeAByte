@@ -365,10 +365,14 @@ body header.header .header-ctn nav.header-nav .header-link {
   line-height: normal;
   gap: 0.7rem;
 }
-body header.header .header-ctn nav.header-nav .header-link a {
+body header.header .header-ctn nav.header-nav .header-link a,
+body header.header .header-ctn nav.header-nav .header-link span.discovery {
   line-height: 5rem;
   font-size: 1.5rem;
   white-space: nowrap;
+}
+body header.header .header-ctn nav.header-nav .header-link span.discovery {
+  cursor: default;
 }
 body header.header .header-ctn nav.header-nav .header-link .discovery-expandable {
   width: 1rem;
