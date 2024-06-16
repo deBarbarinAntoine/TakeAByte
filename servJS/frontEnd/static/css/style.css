@@ -819,7 +819,15 @@ input:not([type=checkbox]):not([type=radio]):focus {
   font-size: 1.2rem;
   line-clamp: 2 auto;
 }
-.product-card .product-card-description .price {
+.product-card .product-card-description .price-ctn {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.product-card .product-card-description .price-ctn .alert {
+  width: 50%;
+}
+.product-card .product-card-description .price-ctn .price {
   font-size: 1.3rem;
   color: #3F72AF;
   text-align: right;

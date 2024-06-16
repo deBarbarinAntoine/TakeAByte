@@ -351,10 +351,19 @@ input:not([type=checkbox]):not([type=radio]) {
       font-size: 1.2rem;
       line-clamp: 2 auto;
     }
-    .price {
-      font-size: 1.3rem;
-      color: $blue;
-      text-align: right;
+    .price-ctn {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+
+      .alert {
+        width: 50%;
+      }
+      .price {
+        font-size: 1.3rem;
+        color: $blue;
+        text-align: right;
+      }
     }
   }
 }
