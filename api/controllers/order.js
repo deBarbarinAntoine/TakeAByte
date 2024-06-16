@@ -51,16 +51,16 @@ exports.getOrderData = (req, res) => {
 exports.getUserOrdersData = async (req, res) => {
     const { user_id } = req.params;
     try {
-        const results = await connection.query(getUserOrdersDataQuery, [user_id]);
+        const queryResults = await connection.query(getUserOrdersDataQuery, [user_id]);
+        const results = queryResults[0]; // Extract the first element which contains the order data
 
-        // Ensure results is an array
         if (!Array.isArray(results) || results.length === 0) {
             return res.status(404).json({ message: "No orders found for this user" });
         }
 
-
         // Map over the orders to create an array of promises
-        const allDetailsPromises = results[0].map(async order => connection.query(getOrderDetailsQuery, [order.order_id]));
+        const allDetailsPromises = results.map(order => connection.query(getOrderDetailsQuery, [order.order_id]));
+
         // Await all promises to resolve
         const allDetailsArray = await Promise.all(allDetailsPromises);
 
@@ -70,14 +70,14 @@ exports.getUserOrdersData = async (req, res) => {
             details: allDetailsArray[index]
         }));
 
-        console.log(combinedResults);
 
-        // res.status(200).json(combinedResults);
+        res.status(200).json(combinedResults);
     } catch (err) {
         console.log(err);
         return serverErrorResponse(res, "Failed to get user order");
     }
 };
+
 
 exports.getOrdersOfProduct = (req, res) => {
     const { product_id } = req.params;
