@@ -1004,15 +1004,16 @@ router.get('/order/shipping/:encodedData', isAuthenticated, async (req, res) => 
     try {
 
         for (const cartItem of cartItemsArray) {
+            const productId = cartItem.itemId;
 
-            product[0].price = cartItem.totalPrice / cartItem.quantity
             const product = await getProductById(productId);
 
             if (!product) {
                 console.error(`failed to get item ${productId}`);
                 continue; // Skip to the next iteration
             }
-            const productId = cartItem.itemId;
+            product[0].price = cartItem.totalPrice / cartItem.quantity
+
             const getImagesUrl = `http://localhost:3001/v1/images/product/${productId}`;
             const allImg = await axios.get(getImagesUrl, {
                 headers: {
