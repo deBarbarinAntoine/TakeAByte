@@ -21,6 +21,16 @@ async function getProductById(productId) {
 
         // Iterate over each product item in the response array
         for (const product of response.data) {
+            const saleUrl = `http://localhost:3001/v1/sales/product/${product.id}`
+            const saleDetails =  await axios.get(saleUrl,{
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            if (saleDetails.data.sales[0].length > 0){
+                product.price = product.price - (product.price * saleDetails.data.sales[0][0].reduction_percentage / 100)
+            }
+
             const typeId = product.type;
             const brandId = product.brand;
 
@@ -73,6 +83,7 @@ async function fetchLatestProducts(){
         });
         // Iterate over each product item in the response array
         for (const product of response.data) {
+
             const saleUrl = `http://localhost:3001/v1/sales/product/${product.id}`
             const saleDetails =  await axios.get(saleUrl,{
                 headers: {
@@ -142,6 +153,16 @@ async function fetchPopularProducts(){
         });
         // Iterate over each product item in the response array
         for (const product of response.data) {
+            const saleUrl = `http://localhost:3001/v1/sales/product/${product.id}`
+            const saleDetails =  await axios.get(saleUrl,{
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            if (saleDetails.data.sales[0].length > 0){
+                product.price = product.price - (product.price * saleDetails.data.sales[0][0].reduction_percentage / 100)
+            }
+
             product.link = `/product/${product.id}`;
             const getImagesUrl = `http://localhost:3001/v1/images/product/${product.id}`;
             allImg = await axios.get(getImagesUrl, {
@@ -211,6 +232,16 @@ async function fetchRandomCategoryProducts(){
 
         // Iterate over each product item in the response array
         for (const product of response.data) {
+            const saleUrl = `http://localhost:3001/v1/sales/product/${product.id}`
+            const saleDetails =  await axios.get(saleUrl,{
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            if (saleDetails.data.sales[0].length > 0){
+                product.price = product.price - (product.price * saleDetails.data.sales[0][0].reduction_percentage / 100)
+            }
+
             product.link = `/product/${product.id}`;
             const getImagesUrl = `http://localhost:3001/v1/images/product/${product.id}`;
             allImg = await axios.get(getImagesUrl,{
