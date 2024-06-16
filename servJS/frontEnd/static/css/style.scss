@@ -235,6 +235,31 @@ input:not([type=checkbox]):not([type=radio]) {
   }
 }
 
+.sorting-ctn {
+  width: 65%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  gap: 2rem;
+
+  .label {
+    font-size: 1.3rem;
+    color: $blue;
+  }
+  .sorting {
+    padding: .5rem 1rem;
+    background-color: $blue;
+    border-radius: .5rem;
+    font-size: 1.2rem;
+    color: $white;
+    cursor: pointer;
+
+    &.selected {
+      background-color: $orange;
+      color: $blue;
+    }
+  }
+}
 
 // ###########################################################################################
 // # two sided card (flip clicking on the button)

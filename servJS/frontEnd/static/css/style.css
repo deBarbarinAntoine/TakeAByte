@@ -716,6 +716,30 @@ input:not([type=checkbox]):not([type=radio]):focus {
   margin: 0 auto;
 }
 
+.sorting-ctn {
+  width: 65%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  gap: 2rem;
+}
+.sorting-ctn .label {
+  font-size: 1.3rem;
+  color: #3F72AF;
+}
+.sorting-ctn .sorting {
+  padding: 0.5rem 1rem;
+  background-color: #3F72AF;
+  border-radius: 0.5rem;
+  font-size: 1.2rem;
+  color: #F9F7F7;
+  cursor: pointer;
+}
+.sorting-ctn .sorting.selected {
+  background-color: #FBA834;
+  color: #3F72AF;
+}
+
 .flippable-card {
   width: 100%;
   height: calc(15rem + 35vw);
