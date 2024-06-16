@@ -26,17 +26,15 @@ async function getUserOrdersByUserId(user_id){
 }
 
 async function getOrderDetail(order_id, token){
-    console.log(order_id, token)
     try {
-        const url = `http://localhost:3001/v1/orders/${order_id}`;
+        const url = `http://localhost:3001/v1/ordersDetail/${order_id}`;
         const response = await axios.get(url, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
         });
         if (response.data) {
-            console.log(response.data)
-            //return   response.data
+            return response.data
         } else {
             console.error("No data found userId with given token");
             return null;
