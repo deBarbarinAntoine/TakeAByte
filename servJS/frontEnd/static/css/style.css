@@ -1030,6 +1030,18 @@ input:not([type=checkbox]):not([type=radio]):focus {
 .main-column .product-ctn .product .product-carousel-ctn .product-carousel .favorite-button {
   width: 3rem;
 }
+.main-column .product-ctn .product .product-carousel-ctn .product-carousel .navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.main-column .product-ctn .product .product-carousel-ctn .product-carousel .navigation .previous,
+.main-column .product-ctn .product .product-carousel-ctn .product-carousel .navigation .next {
+  z-index: 20;
+  margin: 0 0.5rem;
+  cursor: pointer;
+  font-size: 2rem;
+}
 .main-column .product-ctn .product .product-carousel-ctn .product-carousel .product-img {
   aspect-ratio: 1;
 }
@@ -1076,14 +1088,40 @@ input:not([type=checkbox]):not([type=radio]):focus {
   line-height: 1.9rem;
   color: #3F72AF;
 }
-.main-column .product-ctn .product .product-info .quantity-price {
+.main-column .product-ctn .product .product-info .product-price-ctn {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.main-column .product-ctn .product .product-info .product-price-ctn .alert {
+  margin-top: 1rem;
+}
+.main-column .product-ctn .product .product-info .product-price-ctn .quantity-price {
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
 }
-.main-column .product-ctn .product .product-info .quantity-price .price {
+.main-column .product-ctn .product .product-info .product-price-ctn .quantity-price .price {
   font-size: 1.6rem;
+}
+.main-column .product-ctn .product .product-info .product-price-ctn .sales {
+  width: 100%;
+}
+.main-column .product-ctn .product .product-info .product-price-ctn .sales .base-price-ctn {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+.main-column .product-ctn .product .product-info .product-price-ctn .sales .base-price-ctn .label {
+  font-size: 1.2rem;
+  color: #3F72AF;
+}
+.main-column .product-ctn .product .product-info .product-price-ctn .sales .base-price-ctn .base-price {
+  text-decoration: line-through darkred solid;
+  font-size: 1.3rem;
+  color: #FBA834;
 }
 .main-column .product-ctn .product .product-info .colors {
   width: 100%;

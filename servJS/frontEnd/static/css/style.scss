@@ -624,6 +624,19 @@ input:not([type=checkbox]):not([type=radio]) {
           .favorite-button {
             width: 3rem;
           }
+          .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .previous,
+            .next {
+              z-index: 20;
+              margin: 0 .5rem;
+              cursor: pointer;
+              font-size: 2rem;
+            }
+          }
           .product-img {
             aspect-ratio: 1;
 
@@ -676,14 +689,43 @@ input:not([type=checkbox]):not([type=radio]) {
             color: $blue;
           }
         }
-        .quantity-price {
+        .product-price-ctn {
           width: 100%;
           display: flex;
-          justify-content: space-between;
-          align-items: flex-end;
+          flex-direction: column;
+          gap: 1rem;
 
-          .price {
-            font-size: 1.6rem;
+          .alert {
+           margin-top: 1rem;
+          }
+          .quantity-price {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+
+            .price {
+              font-size: 1.6rem;
+            }
+          }
+          .sales {
+            width: 100%;
+
+            .base-price-ctn {
+              display: flex;
+              justify-content: flex-end;
+              gap: 1rem;
+
+              .label {
+                font-size: 1.2rem;
+                color: $blue;
+              }
+              .base-price {
+                text-decoration: line-through darkred solid;
+                font-size: 1.3rem;
+                color: $orange;
+              }
+            }
           }
         }
         .colors {

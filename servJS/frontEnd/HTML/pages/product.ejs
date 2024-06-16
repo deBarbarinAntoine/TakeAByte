@@ -14,12 +14,17 @@
                                 <path class="st2" d="M29.1,49.1c0-6.9,5.6-12.4,12.4-12.4"/></g>
                         </svg>
                     </div>
+                    <div class="navigation abs full">
+                        <div class="previous"><</div>
+                        <div class="next">></div>
+                    </div>
                     <div class="product-img swiper-wrapper">
                         <% data.product.images.forEach(function (img) { %>
                             <img class="swiper-slide" src="<%= img %>"
                                  onerror="this.onerror=null;this.src='/static/img/image-not-found.webp'"
                                  alt="<%= data.product.name %> image"/>
                         <% }); %>
+
                     </div>
                 </div>
                 <div class="previews swiper-container">
@@ -37,28 +42,39 @@
                     <div class="name"><%= data.product.name %></div>
                     <div class="description"><%= data.product.description %></div>
                 </div>
-                <div class="quantity-price">
-                    <div class="title">Quantity</div>
-                    <div class="quantity">
-                        <div class="minus">
-                            <div class="text">-</div>
+                <div class="product-price-ctn">
+                    <div class="quantity-price">
+                        <div class="title">Quantity</div>
+                        <div class="quantity">
+                            <div class="minus">
+                                <div class="text">-</div>
+                            </div>
+                            <div class="product-quantity">
+                                <div class="text">1</div>
+                            </div>
+                            <div class="plus">
+                                <div class="text">+</div>
+                            </div>
                         </div>
-                        <div class="product-quantity">
-                            <div class="text">1</div>
-                        </div>
-                        <div class="plus">
-                            <div class="text">+</div>
-                        </div>
-                    </div>
-                    <div class="price">
+                        <div class="price">
                             <%= data.product.price %>
+                        </div>
                     </div>
+                    <% if (data.product.promotion.reduction > 0 || new Date(data.product.promotion.end_at) >= Date.now() ) { %>
+                        <div class="sales">
+                            <div class="base-price-ctn">
+                                <div class="label">Base price</div>
+                                <div class="base-price"><%= data.product.price %></div>
+                            </div>
+                            <div class="alert">SALES -<%= data.product.promotion.reduction %>%</div>
+                        </div>
+                    <% } %>
                 </div>
                 <div class="colors">
                     <div class="title">Color</div>
                     <div class="color-list">
                         <% data.product.colors.forEach(function (color) { %>
-                            <div class="color" style="background-color: <%= color %>>"></div>
+                            <div class="color" style="background-color: <%= color %>"></div>
                         <% }); %>
                     </div>
                 </div>
@@ -104,6 +120,10 @@
             enabled: true,
             pauseOnMouseEnter: true,
         },
+        navigation: {
+          prevEl: '.previous',
+          nextEl: '.next'
+        },
         mousewheel: {
             enabled: true,
             releaseOnEdges: true,
@@ -133,7 +153,7 @@
         if('<%= data.quantityStock %>' === "0"){
             quantity = 0;
         }else{
-            quantity =1;
+            quantity = 1;
         }
 
         if ('<%= data.product.promotion %>' && '<%= data.product.promotion.reduction %>' && '<%= data.product.promotion.reduction %>' > 0) {
@@ -175,7 +195,7 @@
             if (discountedPrice){
                 priceValue = discountedPrice
                 const totPrice = quantity * priceValue;
-                price.textContent = 'Sales ! -'+ reduction + ' % '  + totPrice + '€';
+                price.textContent = totPrice + '€';
             }else {
                 priceValue = parseFloat('<%= data.product.price.replace(/[^\d.-]/g, "") %>');
                 const totPrice = quantity * priceValue;
