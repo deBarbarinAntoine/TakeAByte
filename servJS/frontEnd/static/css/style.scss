@@ -735,7 +735,7 @@ input:not([type=checkbox]):not([type=radio]) {
                 color: $blue;
               }
               .base-price {
-                text-decoration: line-through darkred solid;
+                text-decoration: line-through 2px $blue solid;
                 font-size: 1.3rem;
                 color: $orange;
               }
@@ -929,6 +929,9 @@ input:not([type=checkbox]):not([type=radio]) {
   // # dashboard
   // ###########################################################################################
 
+  &.space-around {
+    justify-content: space-around;
+  }
   .form-ctn {
     display: flex;
     justify-content: center;
