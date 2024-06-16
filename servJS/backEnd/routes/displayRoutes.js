@@ -1565,7 +1565,6 @@ router.get('/purchase/:order_id', async (req,res) =>{
         // Handle errors
         console.log('Error getting user orders', err);
     }
-    console.log(userOrders[0])
     const type_list = await getAllType();
     const data = {
         title: "Home - TakeAByte",
