@@ -57,6 +57,7 @@ async function getProductById(productId) {
 
 async function fetchLatestProducts(){
     const url = `http://localhost:3001/v1/products?filters[updated_at]=DESC`;
+
     const token = process.env.WEB_TOKEN;
     if (!token) {
         console.error('WEB_TOKEN is not set in environment variables');
@@ -72,6 +73,17 @@ async function fetchLatestProducts(){
         });
         // Iterate over each product item in the response array
         for (const product of response.data) {
+            const saleUrl = `http://localhost:3001/v1/sales/product/${product.id}`
+            const saleDetails =  await axios.get(saleUrl,{
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            if (saleDetails.data.sales[0].length > 0){
+                product.price = product.price - (product.price * saleDetails.data.sales[0][0].reduction_percentage / 100)
+            }
+
+
             product.link = `/product/${product.id}`;
             const getImagesUrl = `http://localhost:3001/v1/images/product/${product.id}`;
             allImg = await axios.get(getImagesUrl,{
