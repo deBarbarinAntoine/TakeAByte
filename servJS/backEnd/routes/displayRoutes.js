@@ -1436,14 +1436,15 @@ router.get('/search', isAuthenticated, async (req, res) => {
         templateData: {
             category: {
                 products: searchData
+            },
+            filters: {
+                "categories": null,
+                "brands": brand_list
             }
         },
         slogan: "Your Trusted Tech Partner",
         categories: type_list,
-        "filters": {
-            "categories": null,
-            "brands": brand_list
-        }
+
     };
     res.render('base', {data: data});
 })
