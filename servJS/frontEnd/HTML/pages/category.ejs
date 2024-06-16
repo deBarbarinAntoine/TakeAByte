@@ -20,7 +20,10 @@
         <%######################################################################################%>
         <%- include('../partials/stroll-nav', {data: data.navData}); %>
 
-
+        <%######################################################################################%>
+        <%#       Sorting Template                                                              %>
+        <%######################################################################################%>
+        <%- include('../partials/sorting'); %>
 
         <div class="category-ctn">
             <%######################################################################################%>
@@ -33,3 +36,12 @@
         </div>
     </div>
 </div>
+<script>
+    <%# Sorting handling %>
+    const products = document.querySelectorAll('.product-card');
+    const ascendingSortBtn = document.querySelector('.sorting-ctn .sorting.asc');
+    const descendingSortBtn = document.querySelector('.sorting-ctn .sorting.desc');
+
+
+
+</script>
