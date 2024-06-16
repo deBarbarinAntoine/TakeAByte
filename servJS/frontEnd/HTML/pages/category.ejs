@@ -38,10 +38,43 @@
 </div>
 <script>
     <%# Sorting handling %>
-    const products = document.querySelectorAll('.product-card');
+    const productCtn = document.querySelector('.category-ctn');
+    const products = [...document.querySelectorAll('.product-card')];
     const ascendingSortBtn = document.querySelector('.sorting-ctn .sorting.asc');
     const descendingSortBtn = document.querySelector('.sorting-ctn .sorting.desc');
 
+    <%# comparison function for product-cards' array %>
+    function compare(a, b) {
+        <%# product A %>
+        const priceTextA = a.querySelector('.price-ctn .price');
+        const priceA = parseFloat(priceTextA.innerText.substring(0, priceTextA.innerText.length - 1));
 
+        <%# product B %>
+        const priceTextB = b.querySelector('.price-ctn .price');
+        const priceB = parseFloat(priceTextB.innerText.substring(0, priceTextB.innerText.length - 1));
+
+        return (priceA * 100) - (priceB * 100);
+    }
+
+    ascendingSortBtn.addEventListener('click', () => {
+        products.sort(compare);
+        productCtn.innerHTML = '';
+        products.forEach(product => {
+            productCtn.appendChild(product);
+        });
+        ascendingSortBtn.classList.toggle('selected');
+        descendingSortBtn.classList.remove('selected');
+    });
+
+    descendingSortBtn.addEventListener('click', () => {
+        products.sort(compare);
+        products.reverse();
+        productCtn.innerHTML = '';
+        products.forEach(product => {
+           productCtn.appendChild(product);
+        });
+        ascendingSortBtn.classList.remove('selected');
+        descendingSortBtn.classList.toggle('selected');
+    });
 
 </script>
