@@ -70,14 +70,15 @@
                         </div>
                     <% } %>
                 </div>
-                <div class="colors">
+                <%# toggle colors when adding it to the database %>
+                <!--<div class="colors">
                     <div class="title">Color</div>
                     <div class="color-list">
-                        <% data.product.colors.forEach(function (color) { %>
-                            <div class="color" style="background-color: <%= color %>"></div>
-                        <% }); %>
+                        <%# data.product.colors.forEach(function (color) { %>
+                            <div class="color" style="background-color: <%#= color %>"></div>
+                        <%# }); %>
                     </div>
-                </div>
+                </div>-->
                 <div class="miscellaneous">
                     <div class="specification">
                         <div class="title">Brand</div>
