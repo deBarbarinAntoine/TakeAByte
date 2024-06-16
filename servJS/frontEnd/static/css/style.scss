@@ -1133,7 +1133,16 @@ input:not([type=checkbox]):not([type=radio]) {
     .purchase-header {
       flex-direction: row;
       justify-content: center;
+      align-items: center;
       gap: 15%;
+
+      .alert,
+      .title {
+        width: 30%;
+        p {
+          font-size: 1.4rem;
+        }
+      }
     }
 
     .cart-header,

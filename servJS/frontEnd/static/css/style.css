@@ -1488,7 +1488,20 @@ input:not([type=checkbox]):not([type=radio]):focus {
 .main .purchase .purchase-header {
   flex-direction: row;
   justify-content: center;
+  align-items: center;
   gap: 15%;
+}
+.main .cart .purchase-header .alert,
+.main .cart .purchase-header .title,
+.main .purchase .purchase-header .alert,
+.main .purchase .purchase-header .title {
+  width: 30%;
+}
+.main .cart .purchase-header .alert p,
+.main .cart .purchase-header .title p,
+.main .purchase .purchase-header .alert p,
+.main .purchase .purchase-header .title p {
+  font-size: 1.4rem;
 }
 .main .cart .cart-header,
 .main .cart .purchase-header,

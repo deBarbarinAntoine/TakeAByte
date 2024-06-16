@@ -49,7 +49,7 @@
                     </div>
                     <div class="subtotal">
                         <div class="title">Total</div>
-                        <div class="subtotal-nb"><%= data.purchase.subtotal + data.purchase.shippingFee %> €</div>
+                        <div class="subtotal-nb"><%= parseFloat(data.purchase.subtotal + data.purchase.shippingFee).toFixed(2) %> €</div>
                     </div>
                 </div>
                 <a href="/user" class="button blue">Return</a>
