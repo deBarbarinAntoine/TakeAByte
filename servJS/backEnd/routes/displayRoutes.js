@@ -1375,7 +1375,6 @@ router.get('/category/:type_id', isAuthenticated, async (req, res) => {
 });
 
 router.get('/search', isAuthenticated, async (req, res) => {
-    console.log(req.query.search);
     let searchData
     const type_list = await getAllType();
     const brand_list = await getAllBrands()
@@ -1445,7 +1444,6 @@ router.get('/user', requireAuth, async (req, res) => {
     }catch(err){
         console.log('error getting user orders',err)
     }
-console.log(userOrders)
     try {
         const type_list = await getAllType();
         const data = {
@@ -1535,13 +1533,58 @@ router.post('/user/:user_id/update/password', async (req, res) => {
 router.get('/purchase/:order_id', async (req,res) =>{
     const {order_id} = req.params;
     const token = process.env.WEB_TOKEN;
-    let ordersDetail
-    try{
-        ordersDetail = await getOrderDetail(order_id,token)
- console.log(ordersDetail)
-    }catch(err){
+    const userToken = req.cookies.token
+    const userId = await getUserIdFromToken(userToken)
+    let userOrders
+    let productsInfo = [];
+    try {
+        // Assuming getUserOrdersByUserId and getProductById are asynchronous functions returning promises
 
+        // Fetch user orders by user ID
+        userOrders = await getUserOrdersByUserId(userId);
+
+        // Check if userOrders array is empty or undefined
+        if (!userOrders || userOrders.length === 0) {
+            return res.status(404).send('No order found for this user');
+        }
+
+        // Iterate over details of the first order (userOrders[0].details[0])
+        for (const product of userOrders[0].details[0]) {
+
+            // Fetch product information using product_id
+            const productInfo = await getProductById(product.product_id);
+
+            productInfo.quantity_brought = product.quantity;
+            productInfo.price_when_bought = product.price_when_bought;
+            // Append productInfo to productsInfo array
+
+            productsInfo.push(productInfo);
+        }
+
+    } catch (err) {
+        // Handle errors
+        console.log('Error getting user orders', err);
     }
+    console.log(userOrders[0])
+    const type_list = await getAllType();
+    const data = {
+        title: "Home - TakeAByte",
+        isAuthenticated: req.isAuthenticated,
+        template: "purchase",
+        templateData: {
+                purchase: {
+                    id: userOrders[0].order_id,
+                    status: userOrders[0].status,
+                    expectedDate: "expected-delivery-date",
+                    products: productsInfo,
+                    subtotal:userOrders[0].full_price,
+                    shippingFee: 0
+                },
+        },
+        slogan: "Your Trusted Tech Partner",
+        categories: type_list
+    };
+    res.render('base', {data: data});
 })
 
 router.get('*', async (req, res) => {

@@ -36,7 +36,7 @@
                 <%################################################################################%>
                 <%#     purchase-product templates                                                %>
                 <%################################################################################%>
-                <% data.purchase.products.resultArray.forEach(function (product) { %>
+                <% data.purchase.products.forEach(function (product) { %>
                     <%- include('../partials/purchase-product', {product: product}); %>
                 <% }); %>
             </div>
