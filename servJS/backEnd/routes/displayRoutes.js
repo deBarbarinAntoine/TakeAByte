@@ -1397,10 +1397,27 @@ router.get('/search', isAuthenticated, async (req, res) => {
         console.error('Error in router handler:', err);
 
     }
-
     if (searchData === null) {
         searchData = "No data found for the searched product"
     }
+
+    for (const product of searchData) {
+        const token = process.env.WEB_TOKEN;
+        const saleUrl = `http://localhost:3001/v1/sales/product/${product.id}`
+        const saleDetails =  await axios.get(saleUrl,{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        if (saleDetails.data.sales[0].length > 0){
+            product.price = product.price - (product.price * saleDetails.data.sales[0][0].reduction_percentage / 100)
+            product.sales = saleDetails.data.sales[0][0].reduction_percentage
+        }else{
+            product.sales = "0"
+        }
+    }
+
+
     const data = {
         title: "Home - TakeAByte",
         isAuthenticated: req.isAuthenticated,
