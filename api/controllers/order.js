@@ -36,17 +36,18 @@ exports.createNewOrder = async (req, res) => {
 };
 
 
-exports.getOrderData = (req, res) => {
-    const { order_id } = req.params;
-    connection.query(getOrderDataQuery, [order_id], (error, results) => {
-        if (error) {
-            return serverErrorResponse (res, "Failed to get order data");
-        }
+exports.getOrderData = async (req, res) => {
+    const {order_id} = req.params;
+    try {
+        const results = await connection.query(getOrderDataQuery, [order_id])
+
         if (results.length === 0) {
-            return notFoundErrorResponse (res, "no order data");
+            return notFoundErrorResponse(res, "no order data");
         }
         res.status(200).json(results[0]);
-    });
+    } catch (err) {
+        return serverErrorResponse(res, "Failed to get order data");
+    }
 };
 
 exports.getUserOrdersData = async (req, res) => {
@@ -100,3 +101,17 @@ exports.getOrderByStatus = (req, res) => {
         res.status(200).json(results);
     })
 }
+
+exports.getOrderDetails = async (req, res) => {
+    const {order_id} = req.params;
+
+    try {
+        const results = await connection.query(getOrderDetailsQuery, [order_id])
+        if (results.length === 0) {
+            return notFoundErrorResponse(res, "no order data");
+        }
+        res.status(200).json(results[0]);
+    } catch (err) {
+        return serverErrorResponse(res, "Failed to get order data");
+    }
+};

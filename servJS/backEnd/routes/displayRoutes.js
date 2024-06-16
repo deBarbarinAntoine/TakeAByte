@@ -1534,10 +1534,11 @@ router.post('/user/:user_id/update/password', async (req, res) => {
 
 router.get('/purchase/:order_id', async (req,res) =>{
     const {order_id} = req.params;
-    const token = req.cookies.token;
+    const token = process.env.WEB_TOKEN;
     let ordersDetail
     try{
         ordersDetail = await getOrderDetail(order_id,token)
+ console.log(ordersDetail)
     }catch(err){
 
     }
