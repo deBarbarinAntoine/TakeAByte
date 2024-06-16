@@ -18,7 +18,7 @@ const {
     updateUserPassword
 } = require("../controllers/userController");
 const {getUserFavByUserId} = require("../controllers/favController");
-const {getUserOrdersByUserId, getOrderDetail} = require("../controllers/orderController");
+const {getUserOrdersByUserId} = require("../controllers/orderController");
 const router = express.Router();
 
 router.get('/home', isAuthenticated, async (req, res) => {
@@ -811,7 +811,7 @@ router.get('/paymentOk', isAuthenticated, async (req, res) => {
     }
 
     function calculateSubtotal(cartItems) {
-        return cartItems.reduce((subtotal, item) => subtotal += item.totalPrice, 0);
+        return cartItems.reduce((subtotal, item) => subtotal + item.totalPrice, 0);
     }
 
     const formattedItems = cartItemsArray.map(item => ({
@@ -1549,7 +1549,6 @@ router.post('/user/:user_id/update/address', async (req, res) => {
 
 router.post('/user/:user_id/update/password', async (req, res) => {
     const {user_id} = req.params;
-    const token = req.cookies.token;
     const {password, 'new-password': newPassword, 'confirm-password': confirmPassword} = req.body;
 
     // Basic validation
@@ -1578,8 +1577,6 @@ router.post('/user/:user_id/update/password', async (req, res) => {
 });
 
 router.get('/purchase/:order_id', async (req,res) =>{
-    const {order_id} = req.params;
-    const token = process.env.WEB_TOKEN;
     const userToken = req.cookies.token
     const userId = await getUserIdFromToken(userToken)
     let userOrders
