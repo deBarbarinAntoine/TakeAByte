@@ -365,10 +365,14 @@ body header.header .header-ctn nav.header-nav .header-link {
   line-height: normal;
   gap: 0.7rem;
 }
-body header.header .header-ctn nav.header-nav .header-link a {
+body header.header .header-ctn nav.header-nav .header-link a,
+body header.header .header-ctn nav.header-nav .header-link span.discovery {
   line-height: 5rem;
   font-size: 1.5rem;
   white-space: nowrap;
+}
+body header.header .header-ctn nav.header-nav .header-link span.discovery {
+  cursor: default;
 }
 body header.header .header-ctn nav.header-nav .header-link .discovery-expandable {
   width: 1rem;
@@ -822,12 +826,17 @@ input:not([type=checkbox]):not([type=radio]):focus {
 .product-card .product-card-description .price-ctn {
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-end;
 }
 .product-card .product-card-description .price-ctn .alert {
+  margin-top: 0;
+  line-height: 2rem;
   width: 50%;
 }
 .product-card .product-card-description .price-ctn .price {
+  flex: 1;
   font-size: 1.3rem;
   color: #3F72AF;
   text-align: right;
