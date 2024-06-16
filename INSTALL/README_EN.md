@@ -12,13 +12,13 @@ To set up the project, follow these steps:
 2. **TakeaByte Doc Path Preparation:** Obtain the full path to the TakeaByte doc. The path should look like `C:///path/to/TakeAByte`.
 
 
-3. **Initialization SQL File:** The initialization SQL file (`init.sql`) is crucial for setting up the initial database schema and configurations. Ensure you have the full path to this file, which should look like `C://path/to/init.sql`.
+3. **Initialization SQL File:** The initialization SQL file (`init.sql`) is crucial for setting up the initial database schema and configurations. Ensure you have the full path to this file, which should look like `C://path/to/TakeAByte/INSTALL/init.sql`.
 
 
-4. **Master Log SQL File:** The master log SQL file (`master_log.sql`) is used for tracking database changes and updates. Have the full path to this file ready, which should look like `C://path/to/master_log.sql`.
+4. **Master Log SQL File:** The master log SQL file (`master_log.sql`) is used for tracking database changes and updates. Have the full path to this file ready, which should look like `C://path/to/TakeAByte/INSTALL/master_log.sql`.
 
 
-5. **Web Market File:** The Web Market file is the sql file in which the script used to create the database is located. Obtain the full path to this file, which should look like `C://path/to/web_market_file`.
+5. **Web Market File:** The Web Market file is the sql file in which the script used to create the database is located. Obtain the full path to this file, which should look like `C://path/to/TakeAByte/INSTALL/web_market_file`.
 
 
 6. **Cookies:** Please assure that your cookies for `localhost:4000` are cleared for test purpose as it's still not implemented in the script.
