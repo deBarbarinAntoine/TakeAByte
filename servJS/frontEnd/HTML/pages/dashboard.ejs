@@ -1,45 +1,48 @@
 
-<%######################################################################################%>
-<%#       List of orders (purchases)                                                    %>
-<%######################################################################################%>
-<div class="main-column padding-top3">
-    <div class="purchase-list-title">Your orders:</div>
-    <div class="user-purchase-list-ctn">
-            <div class="user-purchase-list">
-                <div class="list-header">
-                    <span class="label-1">Order date</span>
-                    <span class="label-2">Status</span>
-                    <span class="label-3">Delivery date</span>
-                    <span class="label-4">Product quantity</span>
-                    <span class="label-5">Total</span>
-                </div>
-                <div class="separator"></div>
-                <div class="list">
+<% if (!!data.purchases && data.purchases.length > 0) { %>
 
-                    <%#################################################################%>
-                    <%#       User purchase (order)                                    %>
-                    <%#################################################################%>
-                    <% if (data.purchases && data.purchases.length > 0) { %>
-                        <% data.purchases.forEach((purchase) => { %>
-                            <div>
-                                <pre><%= console.log((purchase.details[0][0]));%></pre>
-                            </div>
-                            <div class="purchase relative">
-                                <a href="/purchase/<%= purchase.order_id %>" class="purchase-link abs"></a>
-                                <div class="purchase-date"><%= purchase.date_ordered_at %></div>
-                                <div class="purchase-status"><%= purchase.status %></div>
-                                <div class="purchase-delivery-date"><%= purchase.deliveryDate %></div>
-                                <div class=" purchase-items-quantity"><%= purchase.details[0][0].quantity %></div>
-                                <div class="purchase-total-price"><%= purchase.full_price %>€</div>
-                            </div>
-                        <% }); %>
-                    <% } %>
+    <%######################################################################################%>
+    <%#       List of orders (purchases)                                                    %>
+    <%######################################################################################%>
+    <div class="main-column padding-top3">
+        <div class="purchase-list-title">Your orders:</div>
+        <div class="user-purchase-list-ctn">
+                <div class="user-purchase-list">
+                    <div class="list-header">
+                        <span class="label-1">Order date</span>
+                        <span class="label-2">Status</span>
+                        <span class="label-3">Delivery date</span>
+                        <span class="label-4">Product quantity</span>
+                        <span class="label-5">Total</span>
+                    </div>
+                    <div class="separator"></div>
+                    <div class="list">
+
+                        <%#################################################################%>
+                        <%#       User purchase (order)                                    %>
+                        <%#################################################################%>
+                            <% data.purchases.forEach((purchase) => { %>
+                                <div>
+                                    <pre><%= console.log((purchase.details[0][0]));%></pre>
+                                </div>
+                                <div class="purchase relative">
+                                    <a href="/purchase/<%= purchase.order_id %>" class="purchase-link abs"></a>
+                                    <div class="purchase-date"><%= purchase.date_ordered_at %></div>
+                                    <div class="purchase-status"><%= purchase.status %></div>
+                                    <div class="purchase-delivery-date"><%= purchase.deliveryDate %></div>
+                                    <div class=" purchase-items-quantity"><%= purchase.details[0][0].quantity %></div>
+                                    <div class="purchase-total-price"><%= purchase.full_price %>€</div>
+                                </div>
+                            <% }); %>
+                    </div>
                 </div>
-            </div>
+        </div>
     </div>
-</div>
-<div class="main translateY7 padding-bottom9">
 
+    <div class="main translateY7 padding-bottom9 space-around">
+<% } else { %>
+    <div class="main padding-top3 padding-bottom9 space-around">
+<% } %>
     <%######################################################################################%>
     <%#       User info and update forms                                                    %>
     <%######################################################################################%>

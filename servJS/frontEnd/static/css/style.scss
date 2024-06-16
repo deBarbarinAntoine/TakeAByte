@@ -689,6 +689,7 @@ input:not([type=checkbox]):not([type=radio]) {
         }
 
         .generic {
+          width: 100%;
           display: flex;
           flex-direction: column;
           gap: 2rem;
@@ -701,6 +702,17 @@ input:not([type=checkbox]):not([type=radio]) {
             text-align: justify;
             line-height: 1.9rem;
             color: $blue;
+
+            span.description-expand-link {
+              margin-left: 1rem;
+              font-size: 1.2rem;
+              color: $blue;
+              cursor: pointer;
+
+              &:hover {
+                color: $orange;
+              }
+            }
           }
         }
         .product-price-ctn {

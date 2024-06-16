@@ -245,5 +245,18 @@
                     console.error('Error adding item to cart:', error);
                 });
         });
+
+        <%# Handle product description expansion %>
+        const descriptionHTML = document.querySelector('.product-info .generic .description');
+        const descriptionContent = descriptionHTML.innerText;
+
+        if (descriptionContent.length >= 150) {
+            descriptionHTML.innerHTML = descriptionContent.substring(0, 150) + '...' + `<span class="description-expand-link">Read more</span>`;
+        }
+        const expandLink = document.querySelector('.description-expand-link');
+        expandLink.addEventListener('click', () => {
+            descriptionHTML.innerHTML = descriptionContent;
+        });
     });
+
 </script>
