@@ -139,10 +139,16 @@
 
             } catch (error) {
                 // Handle error if request fails
-                errorMessage.innerText = error.response.data.error;
+                if (error.response && error.response.data && error.response.data.error) {
+                    errorMessage.innerText = error.response.data.error;
+                } else {
+                    errorMessage.innerText = 'An unexpected error occurred. Please try again later.';
+                    console.log(error)
+                }
+
                 modalContent.hidden = false;
                 closeButton.hidden = false;
-                modal.style.display = "flex";
+                modal.style.display = 'flex';
                 popup.style.display = 'flex';
             }
         });
