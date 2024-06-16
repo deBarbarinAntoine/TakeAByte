@@ -19,6 +19,22 @@ This project was made in collaboration with **Nicolas Moyon**, who made most of 
 
 ---
 
+## Test card for payment
+    Allow successfull payments :
+        number : 2525 2525 2525 2525
+        expiration date : 12/28
+        cvc : 123
+
+    Exipred card :
+        number : 2020 2020 2020 2020
+        expiration date : 12/20
+        cvc : 256
+
+    Card balance is not enought :
+        number : 2121 2121 2121 2121
+        expiration date : 12/28
+        cvc : 512
+
 ## Contributors
 
 - [Antoine de Barbarin](https://github.com/deBarbarinAntoine)

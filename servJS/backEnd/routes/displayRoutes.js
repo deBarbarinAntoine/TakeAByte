@@ -1578,7 +1578,6 @@ router.post('/user/:user_id/update/password', async (req, res) => {
 
 router.get('/purchase/:order_id', async (req,res) =>{
     const {order_id} = req.params;
-    const token = process.env.WEB_TOKEN;
     const userToken = req.cookies.token
     const userId = await getUserIdFromToken(userToken)
     let userOrders

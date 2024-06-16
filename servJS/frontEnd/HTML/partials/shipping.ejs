@@ -10,13 +10,13 @@
             <div class="contact">
                 <div class="title">Contact</div>
                 <div class="content"><%= data.client.email %></div>
-                <a class="edit-link" href="/address">Edit</a>
+                <a class="edit-link" href="#" data-role="edit">Edit</a>
             </div>
             <div class="separator"></div>
             <div class="shipping-address">
                 <div class="title">Ship to</div>
                 <div class="content"><%= `${data.client.street}, ${data.client.optional}, ${data.client.zip}, ${data.client.region}, ${data.client.city}, ${data.client.country}` %></div>
-                <a class="edit-link" href="/address">Edit</a>
+                <a class="edit-link" href="#" data-role="edit">Edit</a>
             </div>
         </div>
         <div class="shipping">
@@ -24,21 +24,21 @@
                 <span class="title">Shipping method</span>
             </div>
             <div class="shipping-method">
-                <input type="radio" name="shipping-method" id="shipping-method" value="standard" checked required />
-                <label for="shipping-method">Standart shipping</label>
+                <input type="radio" name="shipping-method" id="shipping-method-standard" value="standard" checked required />
+                <label for="shipping-method-standard">Standard shipping</label>
                 <span class="shipping-cost">FREE</span>
             </div>
             <div class="recap">
                 <div class="contact">
-                    <input type="radio" name="shipping-method" id="shipping-method" value="standard" checked required />
-                    <label for="shipping-method">Shipping to nearby post office</label>
+                    <input type="radio" name="shipping-method" id="shipping-method-post-office" value="post-office" required />
+                    <label for="shipping-method-post-office">Shipping to nearby post office</label>
                     <span class="shipping-cost">FREE</span>
                 </div>
                 <div class="separator"></div>
                 <div class="shipping-address">
                     <div class="title">Ship to</div>
-                    <div class="content"><%= `${data.nearestPost.postData.address}`%>,</div>
-                    <a class="edit-link" href="/address">Edit</a>
+                    <div class="content"><%= `${data.nearestPost.postData.address}`%></div>
+                    <a class="edit-link" href="#" data-role="edit">Edit</a>
                 </div>
             </div>
         </div>
@@ -48,5 +48,14 @@
         </div>
     </form>
 </div>
+<script>
+    // Attach event listener to all edit links
+    document.querySelectorAll('a[data-role="edit"]').forEach(link => {
+        link.addEventListener('click', function (event) {
+            event.preventDefault(); // Prevent the default anchor behavior
+            history.back(); // Navigate to the previous page
+        });
+    });
+</script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="/static/js/shipping.js"></script>
