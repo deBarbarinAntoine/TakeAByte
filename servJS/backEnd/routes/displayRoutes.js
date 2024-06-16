@@ -1439,12 +1439,12 @@ router.get('/user', requireAuth, async (req, res) => {
     try{
         userOrders = await getUserOrdersByUserId(userId)
         if (!userOrders) {
-            return res.status(404).send('No fav found for this user')
+            return res.status(404).send('No order found for this user')
         }
     }catch(err){
-
+        console.log('error getting user orders',err)
     }
-
+console.log(userOrders)
     try {
         const type_list = await getAllType();
         const data = {
@@ -1456,7 +1456,7 @@ router.get('/user', requireAuth, async (req, res) => {
                 favorites: {
                     products: userFav
                 },
-                purchases :{}
+                purchases :userOrders
             },
             slogan: "Your Trusted Tech Partner",
             categories: type_list

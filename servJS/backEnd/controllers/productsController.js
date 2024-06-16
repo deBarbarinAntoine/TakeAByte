@@ -92,6 +92,9 @@ async function fetchLatestProducts(){
             });
             if (saleDetails.data.sales[0].length > 0){
                 product.price = product.price - (product.price * saleDetails.data.sales[0][0].reduction_percentage / 100)
+                product.sales = saleDetails.data.sales[0][0].reduction_percentage
+            }else{
+                product.sales = "0"
             }
 
 

@@ -1,5 +1,5 @@
 const { createNewOrderQuery, getOrderDataQuery,getUserOrdersDataQuery, getOrdersOfProductQuery, getOrderByStatusQuery,
-    createNewOrderItemQuery
+    createNewOrderItemQuery, getOrderDetailsQuery
 } = require("../models/db-queries");
 const connection = require("../models/db-connect");
 const {serverErrorResponse, notFoundErrorResponse} = require("../helpers/responses");
@@ -49,13 +49,32 @@ exports.getOrderData = (req, res) => {
 };
 
 exports.getUserOrdersData = async (req, res) => {
-    const {user_id} = req.params;
+    const { user_id } = req.params;
     try {
-        const results = await connection.query(getUserOrdersDataQuery, [user_id])
-        console.log(results[0])
-        res.status(200).json(results[0]);
+        const results = await connection.query(getUserOrdersDataQuery, [user_id]);
+
+        // Ensure results is an array
+        if (!Array.isArray(results) || results.length === 0) {
+            return res.status(404).json({ message: "No orders found for this user" });
+        }
+
+
+        // Map over the orders to create an array of promises
+        const allDetailsPromises = results[0].map(async order => connection.query(getOrderDetailsQuery, [order.order_id]));
+        // Await all promises to resolve
+        const allDetailsArray = await Promise.all(allDetailsPromises);
+
+        // Combine results with their corresponding details
+        const combinedResults = results.map((order, index) => ({
+            ...order,
+            details: allDetailsArray[index]
+        }));
+
+        console.log(combinedResults);
+
+        // res.status(200).json(combinedResults);
     } catch (err) {
-        console.log(err)
+        console.log(err);
         return serverErrorResponse(res, "Failed to get user order");
     }
 };
