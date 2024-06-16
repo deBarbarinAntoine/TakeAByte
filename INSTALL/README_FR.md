@@ -12,13 +12,13 @@ Pour configurer le projet, suivez ces étapes :
 2. **Préparation du Chemin du Document TakeaByte:** Obtenez le chemin complet vers le document TakeaByte. Le chemin devrait ressembler à `C:///chemin/vers/TakeAByte`.
 
 
-3. **Fichier SQL d'Initialisation:** Le fichier SQL d'initialisation (`init.sql`) est crucial pour configurer le schéma de base de données initial et les configurations. Assurez-vous d'avoir le chemin complet vers ce fichier, qui devrait ressembler à `C://chemin/vers/init.sql`.
+3. **Fichier SQL d'Initialisation:** Le fichier SQL d'initialisation (`init.sql`) est crucial pour configurer le schéma de base de données initial et les configurations. Assurez-vous d'avoir le chemin complet vers ce fichier, qui devrait ressembler à `C://chemin/vers/TakeAByte/INSTALL/init.sql`.
 
 
-4. **Fichier SQL du Journal Principal:** Le fichier SQL du journal principal (`master_log.sql`) est utilisé pour suivre les changements et les mises à jour de la base de données. Ayez le chemin complet vers ce fichier prêt, qui devrait ressembler à `C://chemin/vers/master_log.sql`.
+4. **Fichier SQL du Journal Principal:** Le fichier SQL du journal principal (`master_log.sql`) est utilisé pour suivre les changements et les mises à jour de la base de données. Ayez le chemin complet vers ce fichier prêt, qui devrait ressembler à `C://chemin/vers/TakeAByte/INSTALL/master_log.sql`.
 
 
-5. **Fichier Web Market:** Le fichier Web Market est le fichier `sql` dans lequel se trouve le script de création de la base de données. Obtenez le chemin complet vers ce fichier, qui devrait ressembler à `C://chemin/vers/fichier_web_market`.
+5. **Fichier Web Market:** Le fichier Web Market est le fichier `sql` dans lequel se trouve le script de création de la base de données. Obtenez le chemin complet vers ce fichier, qui devrait ressembler à `C://chemin/vers/TakeAByte/INSTALL/fichier_web_market`.
 
 
 6. **Cookies:** Assurez-vous que les cookies pour `localhost:4000` soient effacés à des fins de test, car cette fonctionnalité n'est pas encore implémentée dans le script.
