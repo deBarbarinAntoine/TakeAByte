@@ -698,6 +698,7 @@ router.post('/checkout', isAuthenticated, async (req, res) => {
             }
         }
     };
+
     try {
         const response = await axios.post('https://challenge-js.ynovaix.com/payment', {
                 card: {
