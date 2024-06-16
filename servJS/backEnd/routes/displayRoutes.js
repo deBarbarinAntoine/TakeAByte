@@ -929,7 +929,6 @@ router.get('/terms-conditions', isAuthenticated, async (req, res) => {
 
 router.get('/order/shipping/:encodedData', isAuthenticated, async (req, res) => {
     // Decode the encoded data from the URL path
-    console.log("hello")
     const decodedData = Buffer.from(req.params.encodedData, 'base64').toString('latin1');
     const {lon, lat, email, name, lastname, street, optional, city, zip, region, country} = JSON.parse(decodedData);
 
