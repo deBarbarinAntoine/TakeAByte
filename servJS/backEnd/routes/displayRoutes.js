@@ -18,6 +18,7 @@ const {
     updateUserPassword
 } = require("../controllers/userController");
 const {getUserFavByUserId} = require("../controllers/favController");
+const {getUserOrdersByUserId} = require("../controllers/orderController");
 const router = express.Router();
 
 router.get('/home', isAuthenticated, async (req, res) => {
@@ -723,9 +724,20 @@ router.post('/checkout', isAuthenticated, async (req, res) => {
 router.get('/paymentOk', isAuthenticated, async (req, res) => {
     const cartCookie = req.cookies.cart;
     const token = process.env.WEB_TOKEN;
-    const createOrderUrl = "http://localhost:3001/v1/orders";
-    const cartItemsMap = new Map();
+    const userToken = req.cookies.token;
+    let userId = null;
+    try {
+        userId = await getUserIdFromToken(userToken);
+        if (!userId) {
+            return res.status(404).send('User not found');
+        }
+    } catch (err) {
+        console.error('Error fetching user info:', err);
+        return res.status(500).send('Internal Server Error');
+    }
 
+    const createOrderUrl = `http://localhost:3001/v1/orders/${userId.user_id}`;
+    const cartItemsMap = new Map();
     let orderId;
 
     // Aggregate quantities and prices
@@ -809,7 +821,7 @@ router.get('/paymentOk', isAuthenticated, async (req, res) => {
     }));
 
     try {
-        const response = await axios.post(createOrderUrl, {items: formattedItems}, {headers: {Authorization: `Bearer ${token}`}});
+        const response = await axios.post(createOrderUrl, {items: formattedItems}, {headers: {Authorization: `Bearer ${userToken}`}});
         orderId = response.data.order_id;
     } catch (error) {
         console.error('Error creating order:', error.message);
@@ -1396,6 +1408,7 @@ router.get('/user', requireAuth, async (req, res) => {
     let userInfo = null;
     let userFav = null;
     let userId = null;
+    let userOrders = null;
     if (!token) {
         return res.status(401).send('Unauthorized: No token provided');
     }
@@ -1423,6 +1436,15 @@ router.get('/user', requireAuth, async (req, res) => {
         console.error(err, "failed to get user fav")
     }
 
+    try{
+        userOrders = await getUserOrdersByUserId(userId)
+        if (!userOrders) {
+            return res.status(404).send('No fav found for this user')
+        }
+    }catch(err){
+
+    }
+
     try {
         const type_list = await getAllType();
         const data = {
@@ -1433,7 +1455,8 @@ router.get('/user', requireAuth, async (req, res) => {
                 user: userInfo[0],
                 favorites: {
                     products: userFav
-                }
+                },
+                purchases :{}
             },
             slogan: "Your Trusted Tech Partner",
             categories: type_list

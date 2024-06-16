@@ -1,12 +1,12 @@
 const express = require('express');
 const { createNewOrder, getOrderData, getUserOrdersData, getOrdersOfProduct, getOrderByStatus} = require('../controllers/order');
 const authenticate = require("../controllers/tokens");
-const {authorizeMod} = require("../models/Authorization Middleware");
+const {authorizeMod, authorizeUser} = require("../models/Authorization Middleware");
 const router = express.Router();
 
 // Order Endpoints:
 // POST /orders: Create a new order.
-router.post('/orders', authenticate,authorizeMod,createNewOrder);
+router.post('/orders/:user_id', authenticate,authorizeUser,createNewOrder);
 // GET /orders/:order_id: Retrieve order details by order ID.
 router.get('/orders/:order_id', authenticate,authorizeMod,getOrderData);
 // GET /users/:user_id/orders: Retrieve orders for a specific user.

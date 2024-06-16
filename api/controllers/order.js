@@ -48,14 +48,16 @@ exports.getOrderData = (req, res) => {
     });
 };
 
-exports.getUserOrdersData = (req, res) => {
-    const { user_id } = req.params;
-    connection.query(getUserOrdersDataQuery, [user_id], (error, results) => {
-        if (error) {
-            return serverErrorResponse (res, "Failed to get user order");
-        }
-        res.status(200).json(results);
-    });
+exports.getUserOrdersData = async (req, res) => {
+    const {user_id} = req.params;
+    try {
+        const results = await connection.query(getUserOrdersDataQuery, [user_id])
+        console.log(results[0])
+        res.status(200).json(results[0]);
+    } catch (err) {
+        console.log(err)
+        return serverErrorResponse(res, "Failed to get user order");
+    }
 };
 
 exports.getOrdersOfProduct = (req, res) => {
