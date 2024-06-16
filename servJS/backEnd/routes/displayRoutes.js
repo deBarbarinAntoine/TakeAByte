@@ -1577,10 +1577,13 @@ router.post('/user/:user_id/update/password', async (req, res) => {
 });
 
 router.get('/purchase/:order_id', async (req,res) =>{
+    const {order_id} = req.params;
+    const token = process.env.WEB_TOKEN;
     const userToken = req.cookies.token
     const userId = await getUserIdFromToken(userToken)
     let userOrders
     let productsInfo = [];
+    let index;
     try {
         // Assuming getUserOrdersByUserId and getProductById are asynchronous functions returning promises
 
@@ -1591,9 +1594,9 @@ router.get('/purchase/:order_id', async (req,res) =>{
         if (!userOrders || userOrders.length === 0) {
             return res.status(404).send('No order found for this user');
         }
-
+        index = userOrders.findIndex(order => order.order_id === parseInt(order_id, 10));
         // Iterate over details of the first order (userOrders[0].details[0])
-        for (const product of userOrders[0].details[0]) {
+        for (const product of userOrders[index].details[0]) {
 
             // Fetch product information using product_id
             const productInfo = await getProductById(product.product_id);
@@ -1616,11 +1619,11 @@ router.get('/purchase/:order_id', async (req,res) =>{
         template: "purchase",
         templateData: {
                 purchase: {
-                    id: userOrders[0].order_id,
-                    status: userOrders[0].status,
+                    id: userOrders[index].order_id,
+                    status: userOrders[index].status,
                     expectedDate: "expected-delivery-date",
                     products: productsInfo,
-                    subtotal:userOrders[0].full_price,
+                    subtotal:userOrders[index].full_price,
                     shippingFee: 0
                 },
         },
