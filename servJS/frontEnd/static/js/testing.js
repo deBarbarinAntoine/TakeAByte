@@ -33,20 +33,20 @@ document.addEventListener('DOMContentLoaded', function () {
                             suggestion.textContent = item.address;
                             suggestion.addEventListener('click', function () {
                                 const addressParts = item.address.split(',').map(part => part.trim());
-                                let firstPart = addressParts[0];
-                                if (!isNaN(firstPart)) {
-                                    firstPart = addressParts[0] + ' ' + addressParts[1];
-                                }
-                                const city = addressParts[addressParts.length - 6] || '';
+
+                                // Combine the first parts to form the street address
+                                let firstPart = addressParts.slice(0, addressParts.length - 5).join(' ');
+
+                                const city = addressParts[addressParts.length - 5] || '';
                                 const province = addressParts[addressParts.length - 4] || '';
+                                const zipcode = addressParts[addressParts.length - 3] || '';
                                 const country = addressParts[addressParts.length - 1] || '';
-                                const zipcode = addressParts[addressParts.length - 2] || '';
 
                                 addressInput.value = firstPart;
                                 cityInput.value = city;
                                 provinceInput.value = province;
-                                countryInput.value = country;
                                 zipcodeInput.value = zipcode;
+                                countryInput.value = country;
 
                                 suggestionsContainer.innerHTML = '';
                                 suggestionsContainer.style.display = 'none';
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function () {
         event.preventDefault(); // Prevent the default form submission
 
         // Check if both longitude and latitude are not null
-        if (clickedAddressLon === null || clickedAddressLat === null || clickedAddressLon === undefined || clickedAddressLat === undefined) {
+        if (clickedAddressLon === null || clickedAddressLat === null) {
             // If either longitude or latitude is null, show a warning message
             console.warn("Please select an address before proceeding.");
         } else {

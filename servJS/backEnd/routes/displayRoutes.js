@@ -929,6 +929,7 @@ router.get('/terms-conditions', isAuthenticated, async (req, res) => {
 
 router.get('/order/shipping/:encodedData', isAuthenticated, async (req, res) => {
     // Decode the encoded data from the URL path
+    console.log("hello")
     const decodedData = Buffer.from(req.params.encodedData, 'base64').toString('latin1');
     const {lon, lat, email, name, lastname, street, optional, city, zip, region, country} = JSON.parse(decodedData);
 
@@ -1578,7 +1579,6 @@ router.post('/user/:user_id/update/password', async (req, res) => {
 
 router.get('/purchase/:order_id', async (req,res) =>{
     const {order_id} = req.params;
-    const token = process.env.WEB_TOKEN;
     const userToken = req.cookies.token
     const userId = await getUserIdFromToken(userToken)
     let userOrders
