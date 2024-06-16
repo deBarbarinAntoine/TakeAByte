@@ -292,14 +292,14 @@ router.get('/cart', isAuthenticated, async (req, res) => {
 
         for (const cartItem of cartItemsArray) {
             const productId = cartItem.itemId;
-            const newPrice = cartItem.itemPrice;
+
             const product = await getProductById(productId);
 
             if (!product) {
                 console.error(`failed to get item ${productId}`);
                 continue; // Skip to the next iteration
             }
-
+            product[0].price = cartItem.totalPrice / cartItem.quantity
             const getImagesUrl = `http://localhost:3001/v1/images/product/${productId}`;
             const allImg = await axios.get(getImagesUrl, {
                 headers: {
@@ -332,9 +332,8 @@ router.get('/cart', isAuthenticated, async (req, res) => {
             }
             imagePaths = getImagePaths(allImg);
             const miscellaneous = [];
-
             for (let key in product) {
-                if (product.hasOwnProperty(key) && key !== 'created_at' && key !== 'updated_at' && key !== 'type_id' && key !== 'product_id' && key !== 'brand_id' && key !== 'image' && key !== 'description' && key !== 'sales' && key !== 'name' && product[key] !== null) {
+                if (product.hasOwnProperty(key) && key !== 'created_at' && key !== 'updated_at' && key !== 'type_id' && key !== 'product_id' && key !== 'brand_id' && key !== 'image' && key !== 'description' && key !== 'price' && key !== 'sales' && key !== 'name' && product[key] !== null) {
                     let content = product[key];
                     if (key === 'quantity_stocked') {
                         if (content === "0" || content === null || content === undefined) {
@@ -342,11 +341,6 @@ router.get('/cart', isAuthenticated, async (req, res) => {
                             content = 'Not available';
                         } else {
                             content = `Only ${content} left. Order now!`;
-                        }
-                    }
-                    if (key === 'price') {
-                        if (content === "0" || content === null || content === undefined) {
-                            content = newPrice;
                         }
                     }
                     const formattedKey = key.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()); // Capitalize first letter // Replace underscores with spaces
@@ -492,7 +486,7 @@ router.get('/order/address', isAuthenticated, async (req, res) => {
                 console.error(`failed to get item ${productId}`);
                 continue; // Skip to the next iteration
             }
-
+            product[0].price = cartItem.totalPrice / cartItem.quantity
             const getImagesUrl = `http://localhost:3001/v1/images/product/${productId}`;
             const allImg = await axios.get(getImagesUrl, {
                 headers: {
@@ -1010,15 +1004,15 @@ router.get('/order/shipping/:encodedData', isAuthenticated, async (req, res) => 
     try {
 
         for (const cartItem of cartItemsArray) {
-            const productId = cartItem.itemId;
 
+            product[0].price = cartItem.totalPrice / cartItem.quantity
             const product = await getProductById(productId);
 
             if (!product) {
                 console.error(`failed to get item ${productId}`);
                 continue; // Skip to the next iteration
             }
-
+            const productId = cartItem.itemId;
             const getImagesUrl = `http://localhost:3001/v1/images/product/${productId}`;
             const allImg = await axios.get(getImagesUrl, {
                 headers: {
@@ -1180,7 +1174,7 @@ router.get('/order/payment/:encodedData', isAuthenticated, async (req, res) => {
                 console.error(`failed to get item ${productId}`);
                 continue; // Skip to the next iteration
             }
-
+            product[0].price = cartItem.totalPrice / cartItem.quantity
             const getImagesUrl = `http://localhost:3001/v1/images/product/${productId}`;
             const allImg = await axios.get(getImagesUrl, {
                 headers: {
