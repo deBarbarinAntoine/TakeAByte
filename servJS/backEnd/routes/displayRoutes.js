@@ -18,11 +18,10 @@ const {
     updateUserPassword
 } = require("../controllers/userController");
 const {getUserFavByUserId} = require("../controllers/favController");
-const {getUserOrdersByUserId, getOrderDetail} = require("../controllers/orderController");
+const {getUserOrdersByUserId} = require("../controllers/orderController");
 const router = express.Router();
 
 router.get('/home', isAuthenticated, async (req, res) => {
-    console
     try {
         // Call functions to fetch latest, popular, and random products
         const latestProducts = await fetchLatestProducts();
@@ -812,7 +811,7 @@ router.get('/paymentOk', isAuthenticated, async (req, res) => {
     }
 
     function calculateSubtotal(cartItems) {
-        return cartItems.reduce((subtotal, item) => subtotal += item.totalPrice, 0);
+        return cartItems.reduce((subtotal, item) => subtotal + item.totalPrice, 0);
     }
 
     const formattedItems = cartItemsArray.map(item => ({
@@ -1320,7 +1319,21 @@ router.get('/category/:type_id', isAuthenticated, async (req, res) => {
     try {
         type_name = await getTypeNameById(type_id);
         product_list = await getProductByTypeId(type_id);
-
+        for (const product of product_list) {
+            const token = process.env.WEB_TOKEN;
+            const saleUrl = `http://localhost:3001/v1/sales/product/${product.id}`
+            const saleDetails =  await axios.get(saleUrl,{
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            if (saleDetails.data.sales[0].length > 0){
+                product.price = product.price - (product.price * saleDetails.data.sales[0][0].reduction_percentage / 100)
+                product.sales = saleDetails.data.sales[0][0].reduction_percentage
+            }else{
+                product.sales = "0"
+            }
+            }
         // Filter the product list based on the query parameters
         if (brand) {
             const brandsFilter = brand.split(',');
@@ -1376,18 +1389,47 @@ router.get('/category/:type_id', isAuthenticated, async (req, res) => {
 
 router.get('/search', isAuthenticated, async (req, res) => {
     let searchData
+    const {brand, price_max, category} = req.query;
     const type_list = await getAllType();
-    const brand_list = await getAllBrands()
+    const full_brand_list = await getAllBrands()
     try {
-        searchData = await getSearchData(req.query.search, type_list, brand_list)
+        searchData = await getSearchData(req.query.search, type_list, full_brand_list)
     } catch (err) {
         console.error('Error in router handler:', err);
 
     }
-
     if (searchData === null) {
         searchData = "No data found for the searched product"
     }
+
+    for (const product of searchData) {
+        const token = process.env.WEB_TOKEN;
+        const saleUrl = `http://localhost:3001/v1/sales/product/${product.id}`
+        const saleDetails =  await axios.get(saleUrl,{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        if (saleDetails.data.sales[0].length > 0){
+            product.price = product.price - (product.price * saleDetails.data.sales[0][0].reduction_percentage / 100)
+            product.sales = saleDetails.data.sales[0][0].reduction_percentage
+        }else{
+            product.sales = "0"
+        }
+    }
+    if (brand) {
+        const brandsFilter = brand.split(',');
+        searchData = searchData.filter(product => brandsFilter.includes(product.brand));
+    }
+    if (price_max) {
+        searchData = searchData.filter(product => product.price <= parseFloat(price_max));
+    }
+    if (category) {
+        const categoriesFilter = category.split(',');
+        searchData = searchData.filter(product => categoriesFilter.includes(product.category));
+    }
+    const brandIds = searchData.map(product => product.brand);
+    const brand_list = await getBrandByIds(brandIds);
     const data = {
         title: "Home - TakeAByte",
         isAuthenticated: req.isAuthenticated,
@@ -1395,10 +1437,15 @@ router.get('/search', isAuthenticated, async (req, res) => {
         templateData: {
             category: {
                 products: searchData
+            },
+            filters: {
+                "categories": null,
+                "brands": brand_list
             }
         },
         slogan: "Your Trusted Tech Partner",
-        categories: type_list
+        categories: type_list,
+
     };
     res.render('base', {data: data});
 })
@@ -1502,7 +1549,6 @@ router.post('/user/:user_id/update/address', async (req, res) => {
 
 router.post('/user/:user_id/update/password', async (req, res) => {
     const {user_id} = req.params;
-    const token = req.cookies.token;
     const {password, 'new-password': newPassword, 'confirm-password': confirmPassword} = req.body;
 
     // Basic validation
@@ -1537,6 +1583,7 @@ router.get('/purchase/:order_id', async (req,res) =>{
     const userId = await getUserIdFromToken(userToken)
     let userOrders
     let productsInfo = [];
+    let index;
     try {
         // Assuming getUserOrdersByUserId and getProductById are asynchronous functions returning promises
 
@@ -1547,9 +1594,9 @@ router.get('/purchase/:order_id', async (req,res) =>{
         if (!userOrders || userOrders.length === 0) {
             return res.status(404).send('No order found for this user');
         }
-
+        index = userOrders.findIndex(order => order.order_id === parseInt(order_id, 10));
         // Iterate over details of the first order (userOrders[0].details[0])
-        for (const product of userOrders[0].details[0]) {
+        for (const product of userOrders[index].details[0]) {
 
             // Fetch product information using product_id
             const productInfo = await getProductById(product.product_id);
@@ -1572,11 +1619,11 @@ router.get('/purchase/:order_id', async (req,res) =>{
         template: "purchase",
         templateData: {
                 purchase: {
-                    id: userOrders[0].order_id,
-                    status: userOrders[0].status,
+                    id: userOrders[index].order_id,
+                    status: userOrders[index].status,
                     expectedDate: "expected-delivery-date",
                     products: productsInfo,
-                    subtotal:userOrders[0].full_price,
+                    subtotal:userOrders[index].full_price,
                     shippingFee: 0
                 },
         },

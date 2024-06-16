@@ -28,23 +28,6 @@
             <label class="abs hidden" for="search-main"></label>
             <input type="text" name="search" id="search-main" placeholder="Search..." value="<%= data.search || '' %>" autofocus required />
         </form>
-
-        <%# remove the condition when data.filters is fully implemented %>
-        <% if (!!data.filters) { %>
-
-            <div class="filters-ctn abs">
-
-                <%######################################################################################%>
-                <%#       Filters Template                                                              %>
-                <%######################################################################################%>
-                <%- include('../partials/filters', {filters: data.filters}); %>
-
-            </div>
-
-        <% } %>
-        <div>
-            <pre><%= console.log((data));%></pre>
-        </div>
         <div class="search-ctn">
 
             <%######################################################################################%>
