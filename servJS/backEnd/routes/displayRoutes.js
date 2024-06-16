@@ -689,7 +689,13 @@ router.post('/checkout', isAuthenticated, async (req, res) => {
         if (match) {
             return parseFloat(amount).toFixed(2); // Format to 0.00 if not already
         } else {
-            throw new Error('Invalid amount format. It should be a number in 0.00 format.');
+            // If amount doesn't match, attempt to round to two decimal places
+            const parsedAmount = parseFloat(amount);
+            if (!isNaN(parsedAmount)) {
+                return parsedAmount.toFixed(2);
+            } else {
+                throw new Error('Invalid amount format. It should be a number.');
+            }
         }
     };
     try {

@@ -141,9 +141,10 @@
                 // Handle error if request fails
                 if (error.response && error.response.data && error.response.data.error) {
                     errorMessage.innerText = error.response.data.error;
+                } else if (error.response && error.response.data) {
+                    errorMessage.innerText = 'An error occurred with the request.';
                 } else {
                     errorMessage.innerText = 'An unexpected error occurred. Please try again later.';
-                    console.log(error)
                 }
 
                 modalContent.hidden = false;
