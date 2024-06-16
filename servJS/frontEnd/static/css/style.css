@@ -1136,7 +1136,7 @@ input:not([type=checkbox]):not([type=radio]):focus {
   color: #3F72AF;
 }
 .main-column .product-ctn .product .product-info .product-price-ctn .sales .base-price-ctn .base-price {
-  text-decoration: line-through darkred solid;
+  text-decoration: line-through 2px #3F72AF solid;
   font-size: 1.3rem;
   color: #FBA834;
 }
@@ -1290,6 +1290,9 @@ input:not([type=checkbox]):not([type=radio]):focus {
 .main {
   display: flex;
   justify-content: space-between;
+}
+.main.space-around {
+  justify-content: space-around;
 }
 .main .form-ctn {
   display: flex;
