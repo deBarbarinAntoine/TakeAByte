@@ -1389,6 +1389,7 @@ router.get('/category/:type_id', isAuthenticated, async (req, res) => {
 
 router.get('/search', isAuthenticated, async (req, res) => {
     let searchData
+    const {brand, price_max, category} = req.query;
     const type_list = await getAllType();
     const brand_list = await getAllBrands()
     try {
@@ -1416,7 +1417,17 @@ router.get('/search', isAuthenticated, async (req, res) => {
             product.sales = "0"
         }
     }
-
+    if (brand) {
+        const brandsFilter = brand.split(',');
+        searchData = searchData.filter(product => brandsFilter.includes(product.brand));
+    }
+    if (price_max) {
+        searchData = searchData.filter(product => product.price <= parseFloat(price_max));
+    }
+    if (category) {
+        const categoriesFilter = category.split(',');
+        searchData = searchData.filter(product => categoriesFilter.includes(product.category));
+    }
 
     const data = {
         title: "Home - TakeAByte",
@@ -1428,7 +1439,11 @@ router.get('/search', isAuthenticated, async (req, res) => {
             }
         },
         slogan: "Your Trusted Tech Partner",
-        categories: type_list
+        categories: type_list,
+        "filters": {
+            "categories": null,
+            "brands": brand_list
+        }
     };
     res.render('base', {data: data});
 })
