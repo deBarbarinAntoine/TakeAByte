@@ -193,7 +193,6 @@ router.get('/product/:productId', isAuthenticated, async (req, res) => {
             console.log("error retrieving sales data:", err)
         }
 
-        console.log(saleData.data.sales[0])
         const data = {
             title: "Products - TakeAByte",
             isAuthenticated: req.isAuthenticated,
@@ -221,8 +220,8 @@ router.get('/product/:productId', isAuthenticated, async (req, res) => {
                     "brand": product.brand,
                     "miscellaneous": miscellaneous,
                     "promotion": {
-                        "reduction": saleData.data.sales[0].reduction_percentage,
-                        "end_at": saleData.data.sales[0].end_date
+                        "reduction": saleData.data.sales[0][0].reduction_percentage,
+                        "end_at": saleData.data.sales[0][0].end_date
                     }
                 },
                 quantityStock: product[0].quantity_stocked
