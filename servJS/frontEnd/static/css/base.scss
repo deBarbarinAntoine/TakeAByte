@@ -80,6 +80,9 @@ $font-weight: 600;
 .gap5 {
   gap: 5rem;
 }
+.translateY7 {
+  transform: translateY(-7rem);
+}
 .padding-top3 {
   padding-top: 3rem;
 }
@@ -206,18 +209,20 @@ button,
     }
   }
   &.orange {
-    background-color: $orange;
-    color: $blue;
+    border: 2px solid darkred;
+    background-color: $cream;
+    color: darkred;
 
     &:hover:not(.disabled, &[disabled]) {
-      background-color: $blue;
-      color: $orange;
+      border: 2px solid darkred;
+      background-color: $orange;
+      color: darkred;
     }
   }
   &.disabled, &[disabled] {
     background-color: $lightblue;
     color: $darkblue;
-    border: none;
+    border: 2px solid $blue;
     cursor: not-allowed;
   }
   &.big-btn {

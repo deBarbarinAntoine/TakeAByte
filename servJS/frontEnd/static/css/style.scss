@@ -758,6 +758,105 @@ input:not([type=checkbox]):not([type=radio]) {
       color: $darkblue;
     }
   }
+
+  // ###########################################################################################
+  // # purchase list (dasboard template)
+  // ###########################################################################################
+
+  .purchase-list-title {
+    width: 100%;
+    text-align: center;
+    font-size: 2.5rem;
+    color: $darkblue;
+  }
+  .user-purchase-list-ctn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+    .user-purchase-list {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 85%;
+      padding: 5rem 7.5%;
+      gap: 3rem;
+
+      .list-header {
+        display: flex;
+        justify-content: space-between;
+        width: 95%;
+
+        span {
+          font-size: 1.5rem;
+        }
+        .label-1,
+        .label-2,
+        .label-3,
+        .label-4 {
+          flex: 1;
+        }
+        .label-5 {
+          text-align: right;
+          width: 9rem;
+        }
+      }
+      .list {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        gap: 1rem;
+
+        .purchase {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          width: 95%;
+          height: 4rem;
+          padding: 0 2.5%;
+
+          a.purchase-link {
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+          }
+          &:hover {
+            color: $orange;
+          }
+
+          .purchase-date {
+            font-size: 1.4rem;
+            flex: 1;
+          }
+          .purchase-status {
+            font-size: 1.4rem;
+            flex: 1;
+          }
+          .purchase-delivery-date {
+            font-size: 1.4rem;
+            flex: 1;
+          }
+          .purchase-items-quantity {
+            text-align: center;
+            font-size: 1.4rem;
+            width: 9rem;
+          }
+          .purchase-total-price {
+            font-size: 1.4rem;
+            text-align: right;
+            flex: 1;
+          }
+          &:nth-child(even) {
+            background-color: transparentize($cream, 0.3);
+          }
+        }
+      }
+    }
+  }
 }
 
 

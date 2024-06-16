@@ -352,7 +352,17 @@ Filters from names:
         "price": "product-price"
       }
     ]
-  }
+  },
+  "purchases": [
+    {
+      "id": 1,
+      "date": "purchase-date",
+      "status": "purchase-status",
+      "deliveryDate": "delivery-date",
+      "itemsQuantity": "items-quantity",
+      "totalPrice": "purchase-total-price"
+    }
+  ]
 }
 ```
 

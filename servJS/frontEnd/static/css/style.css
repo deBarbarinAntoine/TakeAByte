@@ -63,6 +63,10 @@
   gap: 5rem;
 }
 
+.translateY7 {
+  transform: translateY(-7rem);
+}
+
 .padding-top3 {
   padding-top: 3rem;
 }
@@ -198,22 +202,24 @@ button.white:hover:not(.disabled, button.white[disabled],
 }
 button.orange,
 .button.orange {
-  background-color: #FBA834;
-  color: #3F72AF;
+  border: 2px solid darkred;
+  background-color: #F7EFE6;
+  color: darkred;
 }
 button.orange:hover:not(.disabled, button.orange[disabled],
 .button.orange[disabled]),
 .button.orange:hover:not(.disabled, button.orange[disabled],
 .button.orange[disabled]) {
-  background-color: #3F72AF;
-  color: #FBA834;
+  border: 2px solid darkred;
+  background-color: #FBA834;
+  color: darkred;
 }
 button.disabled, button[disabled],
 .button.disabled,
 .button[disabled] {
   background-color: #DBE2EF;
   color: #112D4E;
-  border: none;
+  border: 2px solid #3F72AF;
   cursor: not-allowed;
 }
 button.big-btn,
@@ -1136,6 +1142,94 @@ input:not([type=checkbox]):not([type=radio]):focus {
 .main-column .text-page .label {
   font-size: 2rem;
   color: #112D4E;
+}
+.main-column .purchase-list-title {
+  width: 100%;
+  text-align: center;
+  font-size: 2.5rem;
+  color: #112D4E;
+}
+.main-column .user-purchase-list-ctn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.main-column .user-purchase-list-ctn .user-purchase-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 85%;
+  padding: 5rem 7.5%;
+  gap: 3rem;
+}
+.main-column .user-purchase-list-ctn .user-purchase-list .list-header {
+  display: flex;
+  justify-content: space-between;
+  width: 95%;
+}
+.main-column .user-purchase-list-ctn .user-purchase-list .list-header span {
+  font-size: 1.5rem;
+}
+.main-column .user-purchase-list-ctn .user-purchase-list .list-header .label-1,
+.main-column .user-purchase-list-ctn .user-purchase-list .list-header .label-2,
+.main-column .user-purchase-list-ctn .user-purchase-list .list-header .label-3,
+.main-column .user-purchase-list-ctn .user-purchase-list .list-header .label-4 {
+  flex: 1;
+}
+.main-column .user-purchase-list-ctn .user-purchase-list .list-header .label-5 {
+  text-align: right;
+  width: 9rem;
+}
+.main-column .user-purchase-list-ctn .user-purchase-list .list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 1rem;
+}
+.main-column .user-purchase-list-ctn .user-purchase-list .list .purchase {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 95%;
+  height: 4rem;
+  padding: 0 2.5%;
+}
+.main-column .user-purchase-list-ctn .user-purchase-list .list .purchase a.purchase-link {
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+.main-column .user-purchase-list-ctn .user-purchase-list .list .purchase:hover {
+  color: #FBA834;
+}
+.main-column .user-purchase-list-ctn .user-purchase-list .list .purchase .purchase-date {
+  font-size: 1.4rem;
+  flex: 1;
+}
+.main-column .user-purchase-list-ctn .user-purchase-list .list .purchase .purchase-status {
+  font-size: 1.4rem;
+  flex: 1;
+}
+.main-column .user-purchase-list-ctn .user-purchase-list .list .purchase .purchase-delivery-date {
+  font-size: 1.4rem;
+  flex: 1;
+}
+.main-column .user-purchase-list-ctn .user-purchase-list .list .purchase .purchase-items-quantity {
+  text-align: center;
+  font-size: 1.4rem;
+  width: 9rem;
+}
+.main-column .user-purchase-list-ctn .user-purchase-list .list .purchase .purchase-total-price {
+  font-size: 1.4rem;
+  text-align: right;
+  flex: 1;
+}
+.main-column .user-purchase-list-ctn .user-purchase-list .list .purchase:nth-child(even) {
+  background-color: rgba(247, 239, 230, 0.7);
 }
 
 .main {
