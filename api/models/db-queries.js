@@ -38,10 +38,10 @@ const getProductLikesQuery = 'SELECT user_id, created_at FROM likes WHERE produc
 const getUserFavQuery = 'SELECT product_id FROM likes WHERE user_id = ?';
 
 // Define the query to create a new order
-const createNewOrderQuery = 'INSERT INTO orders (user_id, date_ordered_at, status) VALUES (?, ?, ?)';
+const createNewOrderQuery = 'INSERT INTO orders (user_id, full_price ,date_ordered_at, status) VALUES (?, ?, ?,?)';
 
 // Define the query to create new order items
-const createNewOrderItemQuery = 'INSERT INTO order_items (order_id, product_id, quantity) VALUES (?, ?, ?)';
+const createNewOrderItemQuery = 'INSERT INTO order_items (order_id, product_id, quantity, price_when_bought) VALUES (?, ?, ?,?)';
 
 // GET /api/orders/:order_id: Retrieve order details by order ID.
 const getOrderDataQuery = 'SELECT * FROM orders WHERE order_id = ?';
@@ -161,7 +161,7 @@ const deleteProductQuery = 'DELETE FROM products WHERE product_id = ?';
 
 // POST /api/sales: Create a new sale - promotion.
 const createNewSalesQuery = `
-    INSERT INTO sales (product_id, sale_price, start_date, end_date)
+    INSERT INTO sales (product_id, reduction_percentage, start_date, end_date)
     VALUES (?, ?, ?, ?)
 `;
 

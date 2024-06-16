@@ -8,7 +8,7 @@ const router = express.Router();
 // POST /orders: Create a new order.
 router.post('/orders/:user_id', authenticate,authorizeUser,createNewOrder);
 // GET /orders/:order_id: Retrieve order details by order ID.
-router.get('/orders/:order_id', authenticate,authorizeMod,getOrderData);
+router.get('/orders/:order_id', authenticate,authorizeUser,getOrderData);
 // GET /users/:user_id/orders: Retrieve orders for a specific user.
 router.get('/users/:user_id/orders', authenticate,authorizeMod,getUserOrdersData);
 // GET /products/:product_id/orders: Retrieve orders for a specific product.
