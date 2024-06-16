@@ -49,6 +49,8 @@ const getOrderDataQuery = 'SELECT * FROM orders WHERE order_id = ?';
 // GET /api/users/:user_id/orders: Retrieve orders for a specific user.
 const getUserOrdersDataQuery = 'SELECT * FROM orders WHERE user_id = ?';
 
+const getOrderDetailsQuery ='SELECT * FROM order_items WHERE order_id = ?'
+
 // GET /api/products/:product_id/orders: Retrieve orders for a specific product.
 const getOrdersOfProductQuery = 'SELECT order_id FROM order_items WHERE product_id = ?';
 
@@ -347,6 +349,7 @@ module.exports = {
     deleteUserQuery,
     getOrderByStatusQuery,
     newPasswordQuery,
-    createNewOrderItemQuery
+    createNewOrderItemQuery,
+    getOrderDetailsQuery
 };
 

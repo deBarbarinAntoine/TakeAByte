@@ -12,12 +12,13 @@ async function getUserOrdersByUserId(user_id){
                 Authorization: `Bearer ${token}`
             }
         });
-        // if (response.data) {
-        //     array_of_orders =  response.data
-        // } else {
-        //     console.error("No data found userId with given token");
-        //     return null;
-        // }
+        if (response.data) {
+            array_of_orders =  response.data
+            return  array_of_orders
+        } else {
+            console.error("No data found userId with given token");
+            return null;
+        }
     } catch (err) {
         console.error(`Error fetching user fev ids:`, err);
         return null;
