@@ -81,7 +81,7 @@
             // Update subtotal
             updateSubtotal();
         }
-
+            updateSubtotal();
         // Event listeners for plus and minus buttons
         const plusButtons = document.querySelectorAll('.plus');
         plusButtons.forEach(button => {
@@ -114,7 +114,6 @@
 
         // Function to update cart on server
         async function updateCartOnServer(itemId, newQuantity) {
-            console.log(itemId,newQuantity)
             try {
                 const response = await fetch('/update-cart', {
                     method: 'POST',

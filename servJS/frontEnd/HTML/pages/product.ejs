@@ -120,7 +120,6 @@
 
     document.addEventListener("DOMContentLoaded", function () {
         // Get elements
-        const quantityContainer = document.querySelector('.quantity');
         const quantityDisplay = document.querySelector('.product-quantity .text');
         const minusButton = document.querySelector('.minus');
         const plusButton = document.querySelector('.plus');
@@ -131,12 +130,13 @@
         let priceValue
         let reduction
         // Initial quantity
-        if(<%= data.quantityStock %> === "0"){
+        if('<%= data.quantityStock %>' === "0"){
             quantity = 0;
         }else{
             quantity =1;
         }
-        if ('<%= data.product.promotion %>' && '<%= data.product.promotion.reduction %>') {
+
+        if ('<%= data.product.promotion %>' && '<%= data.product.promotion.reduction %>' && '<%= data.product.promotion.reduction %>' > 0) {
             // Calculate the discounted price if promotion and reduction are defined
             let originalPrice = parseFloat('<%= data.product.price %>'); // Convert price to a float
             reduction = parseFloat('<%= data.product.promotion.reduction %>'); // Convert reduction to a float
@@ -162,13 +162,12 @@
         }
 
         function increaseQuantity() {
-            if (quantity < <%= data.quantityStock %>) {
+            if (quantity < '<%= data.quantityStock %>') {
                 quantity++;
                 updateQuantityDisplay();
             }
         }
 
-        console.log(discountedPrice)
 
         function updateQuantityDisplay() {
             quantityDisplay.textContent = quantity;
@@ -185,21 +184,19 @@
 
 
             // Disable add to cart button if quantity stock is 0
-            if (<%= data.quantityStock %> === 0)
-            {
-                addToCartButton.disabled = true;
-            }
-        else
-            {
-                addToCartButton.disabled = false;
-            }
+            addToCartButton.disabled = '<%= data.quantityStock %>' === 0;
         }
 
 
         // Event listener for "Add to cart" button
         addToCartButton.addEventListener('click', function () {
             const itemId = window.location.pathname.split('/').pop();
-            const itemPrice = parseFloat('<%= data.product.price.replace(/[^\d.-]/g, "") %>');
+            let itemPrice;
+            if (discountedPrice) {
+                itemPrice = discountedPrice
+            } else {
+                itemPrice = parseFloat('<%= data.product.price.replace(/[^\d.-]/g, "") %>');
+            }
             // Create data object for the POST request body
             const data = {
                 itemId: itemId,

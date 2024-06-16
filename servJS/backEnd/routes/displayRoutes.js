@@ -192,7 +192,6 @@ router.get('/product/:productId', isAuthenticated, async (req, res) => {
         } catch (err) {
             console.log("error retrieving sales data:", err)
         }
-
         const data = {
             title: "Products - TakeAByte",
             isAuthenticated: req.isAuthenticated,
@@ -219,9 +218,12 @@ router.get('/product/:productId', isAuthenticated, async (req, res) => {
                     ],
                     "brand": product.brand,
                     "miscellaneous": miscellaneous,
-                    "promotion": {
+                    "promotion": saleData.data.sales[0].length > 0 ?{
                         "reduction": saleData.data.sales[0][0].reduction_percentage,
                         "end_at": saleData.data.sales[0][0].end_date
+                    }: {
+                        "reduction": 0,
+                        "end_at": "none",
                     }
                 },
                 quantityStock: product[0].quantity_stocked
@@ -290,7 +292,7 @@ router.get('/cart', isAuthenticated, async (req, res) => {
 
         for (const cartItem of cartItemsArray) {
             const productId = cartItem.itemId;
-
+            const newPrice = cartItem.itemPrice;
             const product = await getProductById(productId);
 
             if (!product) {
@@ -332,7 +334,7 @@ router.get('/cart', isAuthenticated, async (req, res) => {
             const miscellaneous = [];
 
             for (let key in product) {
-                if (product.hasOwnProperty(key) && key !== 'created_at' && key !== 'updated_at' && key !== 'type_id' && key !== 'product_id' && key !== 'brand_id' && key !== 'image' && key !== 'description' && key !== 'price' && key !== 'sales' && key !== 'name' && product[key] !== null) {
+                if (product.hasOwnProperty(key) && key !== 'created_at' && key !== 'updated_at' && key !== 'type_id' && key !== 'product_id' && key !== 'brand_id' && key !== 'image' && key !== 'description' && key !== 'sales' && key !== 'name' && product[key] !== null) {
                     let content = product[key];
                     if (key === 'quantity_stocked') {
                         if (content === "0" || content === null || content === undefined) {
@@ -340,6 +342,11 @@ router.get('/cart', isAuthenticated, async (req, res) => {
                             content = 'Not available';
                         } else {
                             content = `Only ${content} left. Order now!`;
+                        }
+                    }
+                    if (key === 'price') {
+                        if (content === "0" || content === null || content === undefined) {
+                            content = newPrice;
                         }
                     }
                     const formattedKey = key.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()); // Capitalize first letter // Replace underscores with spaces
