@@ -19,16 +19,21 @@
                     <%#################################################################%>
                     <%#       User purchase (order)                                    %>
                     <%#################################################################%>
-                    <% data.purchases.forEach((purchase) => { %>
-                    <div class="purchase relative">
-                        <a href="/order/<%= purchase.id %>" class="purchase-link abs"></a>
-                        <div class="purchase-date"><%= purchase.date %></div>
-                        <div class="purchase-status"><%= purchase.status %></div>
-                        <div class="purchase-delivery-date"><%= purchase.deliveryDate %></div>
-                        <div class="purchase-items-quantity"><%= purchase.itemsQuantity %></div>
-                        <div class="purchase-total-price"><%= purchase.totalPrice %>€</div>
-                    </div>
-                    <% }); %>
+                    <% if (data.purchases && data.purchases.length > 0) { %>
+                        <% data.purchases.forEach((purchase) => { %>
+                            <div>
+                                <pre><%= console.log((purchase));%></pre>
+                            </div>
+                            <div class="purchase relative">
+                                <a href="/purchase/<%= purchase.order_id %>" class="purchase-link abs"></a>
+                                <div class="purchase-date"><%= purchase.date_ordered_at %></div>
+                                <div class="purchase-status"><%= purchase.status %></div>
+                                <div class="purchase-delivery-date"><%= purchase.deliveryDate %></div>
+                                <div class=" purchase-items-quantity"><%= purchase.itemsQuantity %></div>
+                                <div class="purchase-total-price"><%= purchase.totalPrice %>€</div>
+                            </div>
+                        <% }); %>
+                    <% } %>
                 </div>
             </div>
     </div>
@@ -331,4 +336,33 @@
             },
         }
     });
+
+    const purchaseDateElements = document.querySelectorAll('.purchase-date');
+
+    // Iterate through each element
+    purchaseDateElements.forEach(element => {
+        // Get the date string from the element's text content
+        const dateString = element.textContent.trim();
+
+        // Convert the date string to a Date object
+        const date = new Date(dateString);
+
+        // Options for formatting the date
+        const options = {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+        };
+
+        // Format the date using toLocaleDateString
+        const formattedDate = date.toLocaleDateString('fr-FR', options);
+
+        // Update the element's text content with the formatted date
+        element.textContent = `${formattedDate}`;
+    });
+
+
 </script>

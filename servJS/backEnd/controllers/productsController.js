@@ -29,6 +29,9 @@ async function getProductById(productId) {
             });
             if (saleDetails.data.sales[0].length > 0){
                 product.price = product.price - (product.price * saleDetails.data.sales[0][0].reduction_percentage / 100)
+                product.sales = saleDetails.data.sales[0][0].reduction_percentage
+            }else{
+                product.sales = "0"
             }
 
             const typeId = product.type;
@@ -164,6 +167,9 @@ async function fetchPopularProducts(){
             });
             if (saleDetails.data.sales[0].length > 0){
                 product.price = product.price - (product.price * saleDetails.data.sales[0][0].reduction_percentage / 100)
+                product.sales = saleDetails.data.sales[0][0].reduction_percentage
+            }else{
+                product.sales = "0"
             }
 
             product.link = `/product/${product.id}`;
@@ -243,6 +249,9 @@ async function fetchRandomCategoryProducts(){
             });
             if (saleDetails.data.sales[0].length > 0){
                 product.price = product.price - (product.price * saleDetails.data.sales[0][0].reduction_percentage / 100)
+                product.sales = saleDetails.data.sales[0][0].reduction_percentage
+            }else{
+                product.sales = "0"
             }
 
             product.link = `/product/${product.id}`;
