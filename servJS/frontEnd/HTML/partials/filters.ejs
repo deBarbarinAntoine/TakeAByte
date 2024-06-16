@@ -124,10 +124,20 @@
 
         // Get the current type_id from the URL
         const currentUrl = new URL(window.location.href);
-        const typeId = currentUrl.pathname.split('/').pop();
+        // Check the path to determine the redirection logic
+        if (currentUrl.pathname.startsWith('/category/')) {
+            // Get the current type_id from the URL
+            const typeId = currentUrl.pathname.split('/').pop();
 
-        // Redirect to the filtered URL
-        window.location.href = `/category/${typeId}?${queryParams.toString()}`;
+            // Redirect to the filtered URL
+            window.location.href = `/category/${typeId}?${queryParams.toString()}`;
+        } else if (currentUrl.pathname.startsWith('/search')) {
+            // Extract the search parameter from the URL
+            const searchParam = currentUrl.searchParams.get('search');
+
+            // Redirect to the filtered search URL
+            window.location.href = `/search?search=${searchParam}&${queryParams.toString()}`;
+        }
     };
 
 </script>

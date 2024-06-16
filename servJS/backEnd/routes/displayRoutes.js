@@ -1391,9 +1391,9 @@ router.get('/search', isAuthenticated, async (req, res) => {
     let searchData
     const {brand, price_max, category} = req.query;
     const type_list = await getAllType();
-    const brand_list = await getAllBrands()
+    const full_brand_list = await getAllBrands()
     try {
-        searchData = await getSearchData(req.query.search, type_list, brand_list)
+        searchData = await getSearchData(req.query.search, type_list, full_brand_list)
     } catch (err) {
         console.error('Error in router handler:', err);
 
@@ -1428,7 +1428,8 @@ router.get('/search', isAuthenticated, async (req, res) => {
         const categoriesFilter = category.split(',');
         searchData = searchData.filter(product => categoriesFilter.includes(product.category));
     }
-
+    const brandIds = searchData.map(product => product.brand);
+    const brand_list = await getBrandByIds(brandIds);
     const data = {
         title: "Home - TakeAByte",
         isAuthenticated: req.isAuthenticated,
