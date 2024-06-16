@@ -22,7 +22,6 @@ const {getUserOrdersByUserId, getOrderDetail} = require("../controllers/orderCon
 const router = express.Router();
 
 router.get('/home', isAuthenticated, async (req, res) => {
-    console
     try {
         // Call functions to fetch latest, popular, and random products
         const latestProducts = await fetchLatestProducts();
@@ -1320,7 +1319,21 @@ router.get('/category/:type_id', isAuthenticated, async (req, res) => {
     try {
         type_name = await getTypeNameById(type_id);
         product_list = await getProductByTypeId(type_id);
-
+        for (const product of product_list) {
+            const token = process.env.WEB_TOKEN;
+            const saleUrl = `http://localhost:3001/v1/sales/product/${product.id}`
+            const saleDetails =  await axios.get(saleUrl,{
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            if (saleDetails.data.sales[0].length > 0){
+                product.price = product.price - (product.price * saleDetails.data.sales[0][0].reduction_percentage / 100)
+                product.sales = saleDetails.data.sales[0][0].reduction_percentage
+            }else{
+                product.sales = "0"
+            }
+            }
         // Filter the product list based on the query parameters
         if (brand) {
             const brandsFilter = brand.split(',');
