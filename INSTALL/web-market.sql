@@ -201,7 +201,7 @@ CREATE TABLE sales
 (
     sale_id    INT AUTO_INCREMENT,
     product_id INT,
-    sale_price DECIMAL(9, 2) NOT NULL,
+    reduction_percentage DECIMAL(5, 2) NOT NULL,  -- Percentage reduction (e.g., 10.50%)
     start_date DATETIME      NOT NULL,
     end_date   DATETIME      NOT NULL,
     created_at DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP,

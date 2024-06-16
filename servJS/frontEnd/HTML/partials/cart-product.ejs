@@ -1,4 +1,4 @@
-<div class="cart-product">
+<div class="cart-product" data-itemId="<%= product.product[0].product_id %>" data-maxQuantity="<%= product.product[0].quantity_stocked %>">
     <div class="product-img-info">
         <div class="product-img">
             <img src="<%= product.product[0].image %>"
@@ -9,7 +9,7 @@
             <a class="remove-link">Remove</a>
         </div>
     </div>
-    <div class="product-price"><%= product.product[0].price %></div>
+    <div class="product-price"><%= product.product[0].price %> €</div>
     <div class="quantity-ctn">
         <div class="quantity">
             <div class="minus"><div class="text">-</div></div>
@@ -17,5 +17,5 @@
             <div class="plus"><div class="text">+</div></div>
         </div>
     </div>
-    <div class="product-total"><%= product.product[0].price * product.quantityOrdered %> €</div>
+    <div class="product-total"><%= (product.product[0].price * product.quantityOrdered).toFixed(2) %> €</div>
 </div>

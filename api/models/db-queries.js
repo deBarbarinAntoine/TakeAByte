@@ -173,21 +173,28 @@ const getUserOngoingSalesQuery = `
       AND s.end_date >= NOW()
 `;
 
+const getProductSales = 'SELECT * FROM sales WHERE product_id = ? AND end_date > NOW()';
+
+
 // GET /api/users/:user_id: Retrieve user details by user ID.
 const getUserDataQuery = 'SELECT user_id, username, email, created_at, updated_at, country, city, zip_code, street_name, street_number, address_complements , name, lastname, province FROM users WHERE user_id = ?';
 
+const getUserPasswordQuery = 'SELECT password_hash FROM users WHERE user_id = ?'
 // PUT /api/users/:user_id: Update user details.
 const changeUserDataQuery = `
     UPDATE users
-    SET username            = ?,
-        email               = ?,
-        country             = ?,
-        city                = ?,
-        zip_code            = ?,
-        street_name         = ?,
-        street_number       = ?,
+    SET username = ?,
+        email = ?,
+        country = ?,
+        city = ?,
+        zip_code = ?,
+        street_name = ?,
+        street_number = ?,
         address_complements = ?,
-        updated_at          = CURRENT_TIMESTAMP
+        province = ?,
+        name = ?,
+        lastname = ?,
+        updated_at = CURRENT_TIMESTAMP
     WHERE user_id = ?
 `;
 
@@ -282,6 +289,8 @@ const verifyResetTokenQuery = 'SELECT user_id FROM password_reset_tokens WHERE t
 const deleteResetTokenQuery = 'DELETE FROM password_reset_tokens WHERE token = ?'
 
 module.exports = {
+    getProductSales,
+    getUserPasswordQuery,
     getUserFavQuery,
     getAllBrandsQuery,
     getAllUsersQuery,

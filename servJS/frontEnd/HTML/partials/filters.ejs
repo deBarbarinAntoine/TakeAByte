@@ -1,4 +1,4 @@
-<form class="filters full" action="javascript:void(0);" onsubmit="filterSubmit">
+<form class="filters full" action="javascript:void(0);" onsubmit="filterSubmit()">
 
     <%############################################################%>
     <%#             Check if there are categories sent            %>
@@ -7,12 +7,12 @@
         <div class="label">Categories:</div>
         <div class="categories">
 
-        <%#############################################################%>
-        <%#                displaying categories filters               %>
-        <%#############################################################%>
-            <% filters.categories.forEach(category => {  %>
+            <%#############################################################%>
+            <%#                displaying categories filters               %>
+            <%#############################################################%>
+            <% filters.categories.forEach(category => { %>
                 <label for="<%= category.id %>" class="category"><%= category.name %></label>
-                <input type="checkbox" name="category" value="<%= category.id %>" id="<%= category.id %>" hidden />
+                <input type="checkbox" name="category" value="<%= category.id %>" id="<%= category.id %>" hidden/>
             <% }); %>
         </div>
     <% } %>
@@ -24,31 +24,40 @@
         <%#                displaying prices filters               %>
         <%#########################################################%>
         <label for="price-15" class="price">15€</label>
-        <input type="radio" name="price" value="15" id="price-15" class="price-filter" hidden />
+        <input type="radio" name="price" value="15" id="price-15" class="price-filter" hidden/>
         <label for="price-50" class="price">50€</label>
-        <input type="radio" name="price" value="50" id="price-50" class="price-filter" hidden />
+        <input type="radio" name="price" value="50" id="price-50" class="price-filter" hidden/>
         <label for="price-100" class="price">100€</label>
-        <input type="radio" name="price" value="100" id="price-100" class="price-filter" hidden />
+        <input type="radio" name="price" value="100" id="price-100" class="price-filter" hidden/>
         <label for="price-250" class="price">250€</label>
-        <input type="radio" name="price" value="250" id="price-250" class="price-filter" hidden />
+        <input type="radio" name="price" value="250" id="price-250" class="price-filter" hidden/>
         <label for="price-500" class="price">500€</label>
-        <input type="radio" name="price" value="500" id="price-500" class="price-filter" hidden />
+        <input type="radio" name="price" value="500" id="price-500" class="price-filter" hidden/>
         <label for="price-1000" class="price">1000€</label>
-        <input type="radio" name="price" value="1000" id="price-1000" class="price-filter" hidden />
-        <label for="price-all" class="price">None</label>
-        <input type="radio" name="price" value="all" id="price-all" class="price-filter" hidden />
+        <input type="radio" name="price" value="1000" id="price-1000" class="price-filter" hidden/>
+        <label for="price-1000" class="price">1500€</label>
+        <input type="radio" name="price" value="1500" id="price-1000" class="price-filter" hidden/>
+        <label for="price-1000" class="price">2000€</label>
+        <input type="radio" name="price" value="2000" id="price-1000" class="price-filter" hidden/>
+        <label for="price-1000" class="price">2500€</label>
+        <input type="radio" name="price" value="2500" id="price-1000" class="price-filter" hidden/>
     </div>
 
     <div class="label">Brands:</div>
     <div class="brands">
-
         <%#########################################################%>
         <%#                displaying brands filters               %>
         <%#########################################################%>
-        <% filters.brands.forEach(brand => { %>
+        <% if (Array.isArray(filters.brands)) { %>
+            <% filters.brands.forEach(brand => { %>
+                <label for="<%= brand.brand_id %>" class="brand"><%= brand.name %></label>
+                <input type="checkbox" name="brand" value="<%= brand.brand_id %>" id="<%= brand.brand_id %>" hidden/>
+            <% }); %>
+        <% } else if (filters.brands) { %>
+            <% const brand = filters.brands; %>
             <label for="<%= brand.brand_id %>" class="brand"><%= brand.name %></label>
-            <input type="checkbox" name="brand" value="<%= brand.brand_id %>" id="<%= brand.brand_id %>" hidden />
-        <% }); %>
+            <input type="checkbox" name="brand" value="<%= brand.brand_id %>" id="<%= brand.brand_id %>" hidden/>
+        <% } %>
     </div>
     <div class="btn-ctn">
         <button type="submit" class="blue" id="filter-submit">Filter</button>
@@ -60,12 +69,12 @@
     <%###################################################################%>
     const labelsRadio = document.querySelectorAll('.prices label');
     labelsRadio.forEach(label => {
-       label.addEventListener('click', event => {
-           labelsRadio.forEach(label => {
-               if (label !== event.target) label.classList.remove('selected');
-           });
-           event.target.classList.toggle('selected');
-       });
+        label.addEventListener('click', event => {
+            labelsRadio.forEach(label => {
+                if (label !== event.target) label.classList.remove('selected');
+            });
+            event.target.classList.toggle('selected');
+        });
     });
 
     <%######################################################################%>
@@ -82,13 +91,43 @@
     <%#  filter request  DO NOT TRESPASS - DEBUG - WORK IN PROGRESS - FIXME %>
     <%######################################################################%>
     const filterSubmit = () => {
-        console.log('panda');
         const filterForm = document.querySelector('form.filters');
-        const filterSubmitBtn = document.querySelector('#filter-submit');
         const formData = new FormData(filterForm);
-        const formProps = Object.fromEntries(formData);
-        console.log('form values: ');
-        console.log(formProps);
+        const filters = {};
+
+        // Collect selected categories
+        filters.categories = [];
+        formData.getAll('category').forEach(value => filters.categories.push(value));
+
+        // Collect selected price
+        const price_max = formData.get('price');
+
+        if (price_max) {
+            filters.price_max = price_max;
+        }
+
+        // Collect selected brands
+        filters.brands = [];
+        formData.getAll('brand').forEach(value => filters.brands.push(value));
+
+        // Build the query string
+        const queryParams = new URLSearchParams();
+        if (filters.categories.length > 0) {
+            queryParams.append('category', filters.categories.join(','));
+        }
+        if (filters.price_max) {
+            queryParams.append('price_max', filters.price_max);
+        }
+        if (filters.brands.length > 0) {
+            queryParams.append('brand', filters.brands.join(','));
+        }
+
+        // Get the current type_id from the URL
+        const currentUrl = new URL(window.location.href);
+        const typeId = currentUrl.pathname.split('/').pop();
+
+        // Redirect to the filtered URL
+        window.location.href = `/category/${typeId}?${queryParams.toString()}`;
     };
 
 </script>

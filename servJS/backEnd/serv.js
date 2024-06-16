@@ -4,6 +4,7 @@ require('dotenv').config({path: path.resolve(__dirname, 'data.env')});
 const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 // Import routes
 const apiRoutes = require('./routes/apiRoutes');
 const displayRoutes = require('./routes/displayRoutes');
@@ -16,7 +17,8 @@ app.use('/static', express.static(path.resolve(__dirname, '../frontEnd/static'))
 
 // Set EJS as the view engine
 app.set('view engine', 'ejs');
-
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 // Specify the directory where your EJS templates are located
 
 // Specify the directories where your EJS templates are located

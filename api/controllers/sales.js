@@ -1,4 +1,4 @@
-const {createNewSalesQuery,getUserOngoingSalesQuery} = require("../models/db-queries");
+const {createNewSalesQuery,getUserOngoingSalesQuery, getProductSales} = require("../models/db-queries");
 const connection = require("../models/db-connect");
 const {serverErrorResponse} = require("../helpers/responses");
 exports.createNewSales = (req, res) => {
@@ -21,4 +21,19 @@ exports.getUserOngoingSales = (req, res) => {
         }
         res.status(200).json(results);
     });
+};
+
+exports.GetSaleForProduct = async (req, res) => {
+    const { product_id } = req.params;
+
+    try {
+        // Execute the query asynchronously
+        const sales = await connection.query(getProductSales, [product_id]);
+
+        // Return the result to the client
+        res.json({ sales });
+    } catch (error) {
+        console.error('Error retrieving sale:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
 };

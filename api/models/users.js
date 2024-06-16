@@ -23,7 +23,7 @@ class User {
         this.id = Id_users;
         this.username = Username;
         this.email = Email;
-        this.hash = Hash;
+        this.password_hash = Hash;
         this.createdAt = Created_at;
         this.updatedAt = Updated_at;
         this.country = Country;
@@ -115,10 +115,9 @@ async function getUserByEmail(email) {
 
 async function updatePassword(user_id,hash){
     try {
-        await connection.query(newPasswordQuery, [user_id, hash]);
+        await connection.query(newPasswordQuery, [user_id.user_id, hash]);
     } catch (err){
         console.error('Error updating password:', err);
-
     }
 }
 

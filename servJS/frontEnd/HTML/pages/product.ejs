@@ -4,7 +4,6 @@
     <%#       Title Nav Template                                                            %>
     <%######################################################################################%>
     <%- include('../partials/stroll-nav', {data: data.navData}); %>
-
     <div class="product-ctn">
         <div class="product">
             <div class="product-carousel-ctn">
@@ -51,7 +50,9 @@
                             <div class="text">+</div>
                         </div>
                     </div>
-                    <div class="price"><%= data.product.price %> €</div>
+                    <div class="price">
+                            <%= data.product.price %>
+                    </div>
                 </div>
                 <div class="colors">
                     <div class="title">Color</div>
@@ -119,19 +120,33 @@
 
     document.addEventListener("DOMContentLoaded", function () {
         // Get elements
-        const quantityContainer = document.querySelector('.quantity');
         const quantityDisplay = document.querySelector('.product-quantity .text');
         const minusButton = document.querySelector('.minus');
         const plusButton = document.querySelector('.plus');
-        const price = document.querySelector('.price');
+        let price = document.querySelector('.price');
         const addToCartButton = document.querySelector('.button.white');
         let quantity;
+        let discountedPrice
+        let priceValue
+        let reduction
         // Initial quantity
-        if(<%= data.quantityStock %> === "0"){
+        if('<%= data.quantityStock %>' === "0"){
             quantity = 0;
         }else{
             quantity =1;
-        };
+        }
+
+        if ('<%= data.product.promotion %>' && '<%= data.product.promotion.reduction %>' && '<%= data.product.promotion.reduction %>' > 0) {
+            // Calculate the discounted price if promotion and reduction are defined
+            let originalPrice = parseFloat('<%= data.product.price %>'); // Convert price to a float
+            reduction = parseFloat('<%= data.product.promotion.reduction %>'); // Convert reduction to a float
+            discountedPrice = originalPrice - (originalPrice * (reduction / 100));
+            price.textContent = discountedPrice.toFixed(2) + ' €'; // Update textContent with formatted discounted price
+        } else {
+            // If no promotion or reduction, display the original price
+            let originalPrice = parseFloat('<%= data.product.price %>');
+            price.textContent = originalPrice.toFixed(2) + ' €'; // Update textContent with formatted original price
+        }
 
         updateQuantityDisplay();
 
@@ -147,35 +162,41 @@
         }
 
         function increaseQuantity() {
-            if (quantity < <%= data.quantityStock %>) {
+            if (quantity < '<%= data.quantityStock %>') {
                 quantity++;
                 updateQuantityDisplay();
             }
         }
 
+
         function updateQuantityDisplay() {
             quantityDisplay.textContent = quantity;
             // Extracting numerical value from data.product.price
-            const priceValue = parseFloat('<%= data.product.price.replace(/[^\d.-]/g, "") %>');
-            const totPrice = quantity * priceValue;
-            price.textContent = totPrice + '€';
+            if (discountedPrice){
+                priceValue = discountedPrice
+                const totPrice = quantity * priceValue;
+                price.textContent = 'Sales ! -'+ reduction + ' % '  + totPrice + '€';
+            }else {
+                priceValue = parseFloat('<%= data.product.price.replace(/[^\d.-]/g, "") %>');
+                const totPrice = quantity * priceValue;
+                price.textContent = totPrice + '€';
+            }
+
 
             // Disable add to cart button if quantity stock is 0
-            if (<%= data.quantityStock %> === 0)
-            {
-                addToCartButton.disabled = true;
-            }
-        else
-            {
-                addToCartButton.disabled = false;
-            }
+            addToCartButton.disabled = '<%= data.quantityStock %>' === 0;
         }
 
 
         // Event listener for "Add to cart" button
         addToCartButton.addEventListener('click', function () {
             const itemId = window.location.pathname.split('/').pop();
-            const itemPrice = parseFloat('<%= data.product.price.replace(/[^\d.-]/g, "") %>');
+            let itemPrice;
+            if (discountedPrice) {
+                itemPrice = discountedPrice
+            } else {
+                itemPrice = parseFloat('<%= data.product.price.replace(/[^\d.-]/g, "") %>');
+            }
             // Create data object for the POST request body
             const data = {
                 itemId: itemId,
