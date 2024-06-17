@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .catch(error => {
                 console.log(data);
-                msgCtn.innerHTML = `<div class="alert">Invalid credentials</div>`;
+                setTimeout(() => msgCtn.innerHTML = `<div class="alert">Invalid credentials</div>`, 1500);
                 console.error('Error:', error);
             });
     });

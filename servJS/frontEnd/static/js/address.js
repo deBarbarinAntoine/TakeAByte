@@ -1,7 +1,3 @@
-// Define a variable to store the clicked address suggestion temporarily
-let clickedAddressLon = null;
-let clickedAddressLat = null;
-
 // Add event listener when the DOM content is loaded
 document.addEventListener('DOMContentLoaded', function () {
     // Retrieve DOM elements
@@ -67,30 +63,6 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             suggestionsContainer.innerHTML = '';
             suggestionsContainer.style.display = 'none';
-        }
-    });
-
-    const goToShippingButton = document.querySelector('.blue.toShipping[type="submit"]');
-    goToShippingButton.addEventListener('click', function (event) {
-        event.preventDefault(); // Prevent the default form submission
-
-        // Check if both longitude and latitude are not null
-        if (clickedAddressLon === null || clickedAddressLat === null) {
-            // If either longitude or latitude is null, show a warning message
-            console.warn("Please select an address before proceeding.");
-        } else {
-            // Serialize the form data
-            const form = document.querySelector('.order-form');
-            const formData = new FormData(form);
-            const data = Object.fromEntries(formData.entries());
-
-            // Add the coordinates to the data object
-            data.lon = clickedAddressLon;
-            data.lat = clickedAddressLat;
-
-            // Encode the data object in the URL path
-            const encodedData = btoa(JSON.stringify(data)); // Encoding data to Base64 for URL safety
-            window.location.href = `/order/shipping/${encodedData}`;
         }
     });
 
