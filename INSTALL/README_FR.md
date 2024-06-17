@@ -29,9 +29,13 @@ Pour configurer le projet, suivez ces étapes :
 
 8. **Prêt ?:** Si tous est correct, lancez le `setup_databse.bat` dans le dossier `INSTALL` et suivez les instructions.
 
+---
+
 ## Utilisation
 
 Une fois que vous avez préparé les chemins mentionnés ci-dessus, vous pouvez procéder à la configuration du projet.
+
+---
 
 ## Support
 

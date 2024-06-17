@@ -29,9 +29,13 @@ To set up the project, follow these steps:
 
 8. **Ready ?:** Once you're all ready , start the `setup_database.bat` in the `INSTALL` folder and follow the instructions.
 
+---
+
 ## Usage
 
 Once you have prepared the paths mentioned above, you can proceed with the setup and configuration of the project.
+
+---
 
 ## Support
 
