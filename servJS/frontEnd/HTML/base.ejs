@@ -111,9 +111,10 @@
             <div class="footer-links">
                 <div class="link-group">
                     <span class="title">Discovery</span>
-                    <a href="/offers">Offers</a>
-                    <a href="/popular">Popular</a>
-                    <a href="/latest">New</a>
+                    <a href="/home">Home</a>
+                    <% if (!!data.categories) { %>
+                    <a href="/category/<%= data.categories[Math.floor(Math.random() * data.categories.length)].type_id %>">Random</a>
+                    <% } %>
                 </div>
                 <div class="link-group">
                     <span class="title">Info</span>

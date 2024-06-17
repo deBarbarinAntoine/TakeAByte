@@ -1000,6 +1000,7 @@ input:not([type=checkbox]):not([type=radio]):focus {
 .main-column .category-ctn,
 .main-column .search-ctn {
   width: 80%;
+  min-height: calc(100dvh - 30rem);
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -1108,6 +1109,9 @@ input:not([type=checkbox]):not([type=radio]):focus {
 .main-column .product-ctn .product .product-carousel-ctn .previews img {
   width: 30%;
   aspect-ratio: 1;
+}
+.main-column .product-ctn .product .product-carousel-ctn .previews .swiper-slide {
+  cursor: pointer;
 }
 .main-column .product-ctn .product .product-info {
   width: 25%;
