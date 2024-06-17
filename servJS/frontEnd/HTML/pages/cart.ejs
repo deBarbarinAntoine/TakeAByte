@@ -1,9 +1,20 @@
 <div class="main">
     <div class="cart">
+        <% const isEmpty = !data.cart.products.resultArray || data.cart.products.resultArray.length < 1;%>
         <div class="cart-header">
             <div class="title">Your cart items</div>
+            <% if (!isEmpty) { %>
             <a href="/home">Back to shopping</a>
+            <% } %>
         </div>
+
+        <%# display a message if the cart is empty %>
+        <% if (isEmpty) { %>
+        <div class="cart-empty">
+            <div class="alert">You don't have anything in your cart!</div>
+            <a href="/home" class="button big-btn blue">Go shopping</a>
+        </div>
+        <% } else { %>
 
         <div class="cart-list">
             <div class="list-header">
@@ -34,6 +45,7 @@
                 <a href="/order/address" class="button blue">Check-out</a>
             </div>
         </div>
+        <% } %>
     </div>
 </div>
 <script>
