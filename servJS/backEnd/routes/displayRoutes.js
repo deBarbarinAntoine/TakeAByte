@@ -1426,16 +1426,14 @@ router.get('/search', isAuthenticated, async (req, res) => {
     const {brand, price_max, category} = req.query;
     const type_list = await getAllType();
     const full_brand_list = await getAllBrands()
+    let brand_list
     try {
         searchData = await getSearchData(req.query.search, type_list, full_brand_list)
     } catch (err) {
         console.error('Error in router handler:', err);
 
     }
-    if (searchData === null) {
-        searchData = "No data found for the searched product"
-    }
-
+    if (searchData !== null && searchData !== undefined) {
     for (const product of searchData) {
         const token = process.env.WEB_TOKEN;
         const saleUrl = `http://localhost:3001/v1/sales/product/${product.id}`
@@ -1462,8 +1460,12 @@ router.get('/search', isAuthenticated, async (req, res) => {
         const categoriesFilter = category.split(',');
         searchData = searchData.filter(product => categoriesFilter.includes(product.category));
     }
-    const brandIds = searchData.map(product => product.brand);
-    const brand_list = await getBrandByIds(brandIds);
+    const brandIds = Array.isArray(searchData)
+        ? searchData.map(product => product.brand)
+        : [];
+
+    brand_list = await getBrandByIds(brandIds);
+    }
     const data = {
         title: "Home - TakeAByte",
         isAuthenticated: req.isAuthenticated,
