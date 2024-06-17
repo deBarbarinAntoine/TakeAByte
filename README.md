@@ -21,7 +21,7 @@ This project was made in collaboration with **Nicolas Moyon**, who made most of 
 ## Installation
 
 1. Clone the repository or download it.
-2. Run `npm i` in `TakeAByte/api/` and `TakeAByte/ServJS/` from the terminal.
+2. Run `npm i` in `TakeAByte/api` and `TakeAByte/ServJS` from the terminal.
 3. Follow the **installation procedure**:
 
 [How to install TakeAByte (EN)](INSTALL/README_EN.md)

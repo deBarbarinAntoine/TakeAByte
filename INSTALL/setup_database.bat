@@ -36,13 +36,41 @@ if not exist "%MYSQL_PATH%\mysql.exe" (
 echo MySQL found at %MYSQL_PATH%
 
 REM Prompt user for MySQL credentials
-set /p MYSQL_USER=Enter MySQL username: 
+set /p MYSQL_USER=Enter MySQL username:
 
-REM Use PowerShell to securely prompt for password
-powershell -Command "$password = Read-Host 'Enter MySQL password' -AsSecureString; $BSTR = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($password); [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($BSTR)"
+REM Use PowerShell to securely prompt for password and store it in a temporary file
+powershell -Command ^
+    "$password = Read-Host 'Enter MySQL password' -AsSecureString; " ^
+    "$plaintextPassword = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($password)); " ^
+    "[System.Runtime.InteropServices.Marshal]::ZeroFreeBSTR([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($password)); " ^
+    "[System.IO.File]::WriteAllText('mysql_password.tmp', $plaintextPassword); " ^
+    "exit"
+
+REM Read the password from the temporary file
+set /p MYSQL_PASSWORD=<mysql_password.tmp
+
+REM Delete the temporary password file
+del mysql_password.tmp
 
 REM Prompt user for MySQL database details
-set /p MYSQL_DATABASE=Enter database name: 
+set /p MYSQL_DATABASE=Enter database name:
+
+REM Prompt user for new MySQL username
+set /p NEW_MYSQL_USER=Enter new MySQL username:
+
+REM Prompt user for new MySQL user password securely
+powershell -Command ^
+    "$password = Read-Host 'Enter new MySQL user password' -AsSecureString; " ^
+    "$plaintextPassword = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($password)); " ^
+    "[System.Runtime.InteropServices.Marshal]::ZeroFreeBSTR([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($password)); " ^
+    "[System.IO.File]::WriteAllText('new_mysql_user_password.tmp', $plaintextPassword); " ^
+    "exit"
+
+REM Read the new user password from the temporary file
+set /p NEW_MYSQL_USER_PASSWORD=<new_mysql_user_password.tmp
+
+REM Delete the temporary new user password file
+del new_mysql_user_password.tmp
 
 REM Check if SQL files exist
 if not exist "%SQL_FILE%" (
@@ -58,11 +86,17 @@ if not exist "%MASTER_SQL_FILE%" (
 
 REM Create database if it does not exist with Latin-1 encoding
 echo Creating database if it does not exist with Latin-1 encoding...
-"%MYSQL_PATH%\mysql" -u%MYSQL_USER% -p"%MYSQL_PASSWORD%" -e "CREATE DATABASE IF NOT EXISTS %MYSQL_DATABASE% DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci"
+"%MYSQL_PATH%\mysql" -u%MYSQL_USER% -p%MYSQL_PASSWORD% -e "CREATE DATABASE IF NOT EXISTS %MYSQL_DATABASE% DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci"
+
+REM Create new MySQL user and grant privileges
+echo Creating new MySQL user and granting privileges...
+"%MYSQL_PATH%\mysql" -u%MYSQL_USER% -p%MYSQL_PASSWORD% -e "CREATE USER '%NEW_MYSQL_USER%'@'localhost' IDENTIFIED BY '%NEW_MYSQL_USER_PASSWORD%';"
+"%MYSQL_PATH%\mysql" -u%MYSQL_USER% -p%MYSQL_PASSWORD% -e "GRANT ALL PRIVILEGES ON %MYSQL_DATABASE%.* TO '%NEW_MYSQL_USER%'@'localhost';"
+"%MYSQL_PATH%\mysql" -u%MYSQL_USER% -p%MYSQL_PASSWORD% -e "FLUSH PRIVILEGES;"
 
 REM Execute the initial SQL file with Latin-1 encoding
 echo Executing SQL file with Latin-1 encoding...
-"%MYSQL_PATH%\mysql" -u%MYSQL_USER% -p"%MYSQL_PASSWORD%" --default-character-set=latin1 %MYSQL_DATABASE% < "%SQL_FILE%"
+"%MYSQL_PATH%\mysql" -u%MYSQL_USER% -p%MYSQL_PASSWORD% --default-character-set=latin1 %MYSQL_DATABASE% < "%SQL_FILE%"
 
 REM Check if the command was successful
 if %ERRORLEVEL% NEQ 0 (
@@ -75,7 +109,7 @@ if %ERRORLEVEL% NEQ 0 (
 
 REM Execute the master log SQL file with Latin-1 encoding
 echo Executing master log SQL file with Latin-1 encoding...
-"%MYSQL_PATH%\mysql" -u%MYSQL_USER% -p"%MYSQL_PASSWORD%" --default-character-set=latin1 %MYSQL_DATABASE% < "%MASTER_SQL_FILE%"
+"%MYSQL_PATH%\mysql" -u%MYSQL_USER% -p%MYSQL_PASSWORD% --default-character-set=latin1 %MYSQL_DATABASE% < "%MASTER_SQL_FILE%"
 
 set TOKENMOD=9NM6BNOKkU_19LPimOQkKEifZxcIXQyDhKftMOAZrckVcU_RzP-969q7DhIEedf4DStVpy9xSNKZ7QIal1uUCQ
 
@@ -111,8 +145,8 @@ del /q "%API_PATH%\.env" >nul
 
 REM Create .env file with required environment variables for API
 echo DB_HOST=localhost>> "%API_PATH%\.env"
-echo DB_USER=%MYSQL_USER%>> "%API_PATH%\.env"
-echo DB_PASSWORD=%MYSQL_PASSWORD%>> "%API_PATH%\.env"
+echo DB_USER=%NEW_MYSQL_USER%>> "%API_PATH%\.env"
+echo DB_PASSWORD=%NEW_MYSQL_USER_PASSWORD%>> "%API_PATH%\.env"
 echo DB_DATABASE=%MYSQL_DATABASE%>> "%API_PATH%\.env"
 echo PORT=3001>> "%API_PATH%\.env"
 echo TOKEN_EXPIRY_HOURS=24>> "%API_PATH%\.env"
@@ -165,7 +199,7 @@ powershell -ExecutionPolicy Bypass -Command ^
 
 REM Execute the init SQL file with Latin-1 encoding
 echo Executing init SQL file with Latin-1 encoding...
-"%MYSQL_PATH%\mysql" -u%MYSQL_USER% -p"%MYSQL_PASSWORD%" --default-character-set=latin1 %MYSQL_DATABASE% < "%INIT_SQL_FILE%"
+"%MYSQL_PATH%\mysql" -u%MYSQL_USER% -p%MYSQL_PASSWORD% --default-character-set=latin1 %MYSQL_DATABASE% < "%INIT_SQL_FILE%"
 
 start http://localhost:4000/home
 
