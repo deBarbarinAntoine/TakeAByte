@@ -86,6 +86,8 @@ router.get('/login', isAuthenticated, async (req, res) => {
 router.get('/product/:productId', isAuthenticated, async (req, res) => {
     const productId = req.params.productId;
     const token = process.env.WEB_TOKEN;
+    const userToken = req.cookies.token;
+    const userFav = req.cookies.fav;
     // Validate the productId
     if (isNaN(productId)) {
         return res.status(400).render('400', {title: "Invalid Product ID"});
@@ -151,6 +153,24 @@ router.get('/product/:productId', isAuthenticated, async (req, res) => {
         }
         const imagePaths = getImagePaths(allImg);
         const miscellaneous = [];
+        let isFav
+        if (userToken) {
+            try {
+                const userId = await getUserIdFromToken(userToken);
+                const userLikedItems = await getUserFavByUserId(userId);
+
+                // Iterate through userLikedItems and check for matching product IDs
+                const likedProductIds = userLikedItems.map(item => item.product_id); // Extract product IDs
+                isFav = likedProductIds.includes(productId); // Check if current product ID is liked
+
+            } catch (err) {
+
+            }
+        }else if (userFav){
+            const likedProductIds = userFav.map(item=>item.productId);
+            isFav = likedProductIds.includes(productId)
+        }
+
 
         for (let key in product[0]) {
             if (product[0].hasOwnProperty(key) && key !== 'created_at' && key !== 'updated_at' && key !== 'type_id' && key !== 'product_id' && key !== 'brand_id' && key !== 'image' && key !== 'description' && key !== 'price' && key !== 'sales' && key !== 'name' && product[0][key] !== null) {
@@ -209,6 +229,8 @@ router.get('/product/:productId', isAuthenticated, async (req, res) => {
                     }
                 ],
                 "product": {
+                    "isFavorite" : isFav,
+                    "id": productId,
                     "images": imagePaths,
                     "name": product[0].name,
                     "description": product[0].description,
