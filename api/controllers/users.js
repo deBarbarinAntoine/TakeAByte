@@ -50,7 +50,6 @@ async function register(req, res) {
         return;
     }
     let user = await User.New(username, email, hash);
-    console.log(user);
     try {
         const query = await user.create();
         user.id = query[0].insertId;
