@@ -35,7 +35,6 @@
         </div>
     </div>
 </div>
-
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         // Retrieve all favorite buttons
@@ -45,15 +44,16 @@
         function updateFavoriteStatus() {
             favoriteButtons.forEach(button => {
                 <% if (!!product.isDashboard && product.isDashboard) { %>
-                    button.addEventListener('click', ()=> {
-                        setTimeout(() => location.reload(), 400);
-                    });
+                button.addEventListener('click', ()=> {
+                    setTimeout(() => location.reload(), 400);
+                });
                 <% } %>
                 const productId = button.getAttribute('data-product-id');
 
                 // Make an AJAX call to get the favorite status
                 axios.get(`/api/favStatus/${productId}`)
                     .then(response => {
+                        console.log(response)
                         if (response.data.isFavorite) {
                             button.querySelector('.favorite-icon').classList.add('favorite');
                         } else {
@@ -61,7 +61,18 @@
                         }
                     })
                     .catch(error => {
-                        console.error('Error occurred:', error);
+                        if (error.response) {
+                            // The request was made and the server responded with a status code
+                            // that falls out of the range of 2xx
+                            console.error("data",error.response.data);
+                            console.error("status",error.response.status);
+                            console.error("header",error.response.headers);
+                        } else if (error.request) {
+
+                        } else {
+                            // Something happened in setting up the request that triggered an Error
+                            console.error('Error', error.message);
+                        }
                     });
             });
         }
