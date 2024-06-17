@@ -94,6 +94,7 @@
         return (priceA * 100) - (priceB * 100);
     }
 
+    <%# ascending order %>
     ascendingSortBtn.addEventListener('click', () => {
         products.sort(compare);
         productCtn.innerHTML = '';
@@ -104,6 +105,7 @@
         descendingSortBtn.classList.remove('selected');
     });
 
+    <%# descending order %>
     descendingSortBtn.addEventListener('click', () => {
         products.sort(compare);
         products.reverse();
