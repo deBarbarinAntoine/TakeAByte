@@ -28,7 +28,7 @@ Pour configurer le projet, suivez ces étapes :
 
 8. **SQL ON:** N'oubliez pas de lancer votre system SQL , wamp ou autre .
 
-9. **Prêt ?:** Si tous est correct, lancez le `setup_databse.bat` dans le dossier `INSTALL` et suivez les instructions.
+9. **Prêt ?:** Si tout est correct, lancez le `setup_databse.bat` pour les systems WINDOWS ou `setup_database_Linux.sh` après lui avoir donné les droits d'exécution (`chmod +x setup_database_Linux.sh`), dans le dossier `INSTALL` et suivez les instructions.
 
 ---
 
