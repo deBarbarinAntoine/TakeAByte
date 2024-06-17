@@ -67,7 +67,6 @@
     <%# fill main search bar with current research value %>
     const urlParams = new URLSearchParams(window.location.search);
     const search = urlParams.get('search');
-    console.log(search);
     const searchBar = document.querySelector('#search-main');
     searchBar.value = search;
 
