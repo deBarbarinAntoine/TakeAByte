@@ -906,9 +906,9 @@
     "type": "Computer Components",
     "description": "Unleash powerful performance with the Intel Core i5-12400 CPU. Featuring six cores and excellent multitasking capabilities, this mid-range CPU delivers impressive performance for gaming, productivity, and content creation tasks. With its reliability and efficiency, it's the perfect choice for desktop users seeking a balance of performance and value.",
     "price": 189,
-    "image": "/static/img/computer/components/intel-core-i5-12400-CPU.jpg",
+    "image": "/static/img/computer/components/intel-core-i5-12400-processor.jpg",
     "cores": "6 cores",
-    "socket_cpu": "likely LGA1200 (check specifications)",
+    "socket_cpu": "LGA1200",
     "brand": "Intel",
     "sales": 0
   },
