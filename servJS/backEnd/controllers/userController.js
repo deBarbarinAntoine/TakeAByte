@@ -49,7 +49,7 @@ async function updateUserData(user_id, form) {
     const url = `http://localhost:3001/v1/users/${user_id.user_id}`;
     const token = process.env.WEB_TOKEN;
     try {
-        const response = await axios.put(url, form, {
+        await axios.put(url, form, {
             headers: {
                 authorization: `Bearer ${token}`
             }
