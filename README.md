@@ -11,11 +11,27 @@ This project was made in collaboration with **Nicolas Moyon**, who made most of 
 
 ---
 
+## Requirements
+
+> - Nodejs `v20.14.0` or superior
+> - WampServer `v3.3.2` or superior or MySQL `v8.2.0` or superior
+
+---
+
 ## Installation
+
+1. Clone the repository or download it.
+2. Run `npm i` in `TakeAByte/api/` and `TakeAByte/ServJS/` from the terminal.
+3. Follow the **installation procedure**:
 
 [How to install TakeAByte (EN)](INSTALL/README_EN.md)
 
 [Comment installer TakeAByte (FR)](INSTALL/README_FR.md)
+
+> ℹ️ If you need to change any environment variable, there are located in `api/.env` and `ServJS/data.env`.
+> 
+> ⚠️ Modifying these files may crash the server (at your own risk)!
+> 
 
 ---
 
@@ -34,6 +50,8 @@ This project was made in collaboration with **Nicolas Moyon**, who made most of 
         number : 2121 2121 2121 2121
         expiration date : 12/28
         cvc : 512
+
+---
 
 ## Contributors
 
