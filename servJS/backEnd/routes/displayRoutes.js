@@ -167,7 +167,8 @@ router.get('/product/:productId', isAuthenticated, async (req, res) => {
 
             }
         }else if (userFav){
-            const likedProductIds = userFav.map(item=>item.productId);
+            const userFavArray = JSON.parse(userFav);
+            const likedProductIds = userFavArray.map(item=>item.productId);
             isFav = likedProductIds.includes(productId)
         }
 
