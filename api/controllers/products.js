@@ -296,7 +296,7 @@ exports.deleteProduct = (req, res) => {
 
 exports.getProducts = async (req, res) => {
     const { filters = {}, page = 1 } = req.query;
-    const limit = 10;
+    const limit = 50;
     const offset = (page - 1) * limit;
 
     let getProductsQuery = 'SELECT * FROM products';

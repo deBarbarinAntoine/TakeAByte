@@ -312,8 +312,9 @@ async function getProductByTypeId(id){
         });
 
         if (response.data && response.data.length > 0) {
-
+            console.log(response.data)
              return response.data;
+
         } else {
             console.error("No data found for the given ID:", id);
             return null; // Or handle the case where no data is found as needed
