@@ -26,10 +26,13 @@ Pour configurer le projet, suivez ces étapes :
 
 7. **Nom de la base de données:** Faites attention au nom que vous donnez à votre base de données qu'il ne soit pas déja existant.
 
-8. **SQL ON:** N'oubliez pas de lancer votre system SQL , wamp ou autre .
+8. **SQL ON:** N'oubliez pas de lancer votre system SQL, WampServer ou autre.
 
-9. **Prêt ?:** Si tout est correct, lancez le `setup_databse.bat` pour les systems WINDOWS ou `setup_database_Linux.sh` après lui avoir donné les droits d'exécution (`chmod +x setup_database_Linux.sh`), dans le dossier `INSTALL` et suivez les instructions.
-
+9. **Prêt ?:** Si tout est correct, lancez le `setup_databse.bat` pour les systèmes WINDOWS ou exécutez les commandes suivantes dans le dossier `INSTALL` et suivez les instructions :
+    ```bash
+   chmod +x setup_database_Linux.sh
+   bash ./setup_database_Linux.sh
+    ```
 ---
 
 ## Utilisation

@@ -26,9 +26,13 @@ To set up the project, follow these steps:
 
 7. **Database Name:** Please assure that you don't type a database name already in use.
 
-8. **SQL ON ?:** Remember to start your SQL system, whether it's Wamp or another service.
+8. **SQL ON?:** Remember to start your SQL system, whether it's Wamp or another service.
 
-9. **Ready ?:** Once you're all ready , start the `setup_database.bat` for WINDOWS based system or `setup_database_Linux.sh`for LINUX based system (don't forget to run command `chmod +x setup_database_Linux.sh` to make it executable), in the `INSTALL` folder and follow the instructions.
+9. **Ready?:** Once you're all ready, start the `setup_database.bat` for WINDOWS based system or run the following in LINUX based systems in the `INSTALL` folder and follow the instructions:
+    ```bash
+   chmod +x setup_database_Linux.sh
+   bash ./setup_database_Linux.sh
+    ```
 
 ---
 
