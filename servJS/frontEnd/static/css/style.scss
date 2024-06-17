@@ -464,6 +464,13 @@ input:not([type=checkbox]):not([type=radio]) {
       text-align: center;
       font-size: 2.7rem;
     }
+    .msg-ctn {
+      width: 100%;
+
+      .alert {
+        margin-top: 0;
+      }
+    }
     .content-text {
       font-size: 1.5rem;
       text-align: justify;

@@ -916,6 +916,12 @@ input:not([type=checkbox]):not([type=radio]):focus {
   text-align: center;
   font-size: 2.7rem;
 }
+.main-column form.auth-form .msg-ctn {
+  width: 100%;
+}
+.main-column form.auth-form .msg-ctn .alert {
+  margin-top: 0;
+}
 .main-column form.auth-form .content-text {
   font-size: 1.5rem;
   text-align: justify;
