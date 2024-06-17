@@ -27,13 +27,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.log(response.data); // Return response data
                 }
             })
-            .then(data => {
-                // Display error message in a JSON popup
-                alert(data.message);
-            })
             .catch(error => {
-                console.log(data);
-                setTimeout(() => msgCtn.innerHTML = `<div class="alert">Invalid credentials</div>`, 1500);
+                msgCtn.innerHTML = `<div class="alert">Invalid credentials</div>`
                 console.error('Error:', error);
             });
     });
