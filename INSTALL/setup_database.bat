@@ -35,9 +35,13 @@ if not exist "%MYSQL_PATH%\mysql.exe" (
 
 echo MySQL found at %MYSQL_PATH%
 
-REM Prompt user for MySQL credentials and database details
+REM Prompt user for MySQL credentials
 set /p MYSQL_USER=Enter MySQL username: 
-set /p MYSQL_PASSWORD=Enter MySQL password: 
+
+REM Use PowerShell to securely prompt for password
+powershell -Command "$password = Read-Host 'Enter MySQL password' -AsSecureString; $BSTR = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($password); [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($BSTR)"
+
+REM Prompt user for MySQL database details
 set /p MYSQL_DATABASE=Enter database name: 
 
 REM Check if SQL files exist

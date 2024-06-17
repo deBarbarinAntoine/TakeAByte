@@ -8,9 +8,24 @@ VALUES
 
 UPDATE products SET quantity_stocked = 10;
 
-UPDATE sales SET reduction_percentage = 20 WHERE product_id = 1;
-UPDATE sales SET reduction_percentage = 12 WHERE product_id = 2;
-UPDATE sales SET reduction_percentage = 50 WHERE product_id = 17;
-UPDATE sales SET reduction_percentage = 75 WHERE product_id = 100;
-UPDATE sales SET reduction_percentage = 2 WHERE product_id = 86;
-UPDATE sales SET reduction_percentage = 50 WHERE product_id = 25;
+INSERT INTO sales (product_id, reduction_percentage, start_date, end_date)
+VALUES (1, 20.00, NOW(), DATE_ADD(NOW(), INTERVAL 1 MONTH));
+
+INSERT INTO sales (product_id, reduction_percentage, start_date, end_date)
+VALUES (10, 2.00, NOW(), DATE_ADD(NOW(), INTERVAL 1 MONTH));
+
+INSERT INTO sales (product_id, reduction_percentage, start_date, end_date)
+VALUES (100, 25.00, NOW(), DATE_ADD(NOW(), INTERVAL 1 MONTH));
+
+INSERT INTO sales (product_id, reduction_percentage, start_date, end_date)
+VALUES (72, 75.00, NOW(), DATE_ADD(NOW(), INTERVAL 1 MONTH));
+
+INSERT INTO sales (product_id, reduction_percentage, start_date, end_date)
+VALUES (18, 32.00, NOW(), DATE_ADD(NOW(), INTERVAL 1 MONTH));
+
+INSERT INTO sales (product_id, reduction_percentage, start_date, end_date)
+VALUES (52, 25.00, NOW(), DATE_ADD(NOW(), INTERVAL 1 MONTH));
+
+INSERT INTO sales (product_id, reduction_percentage, start_date, end_date)
+VALUES (80, 18.00, NOW(), DATE_ADD(NOW(), INTERVAL 1 MONTH));
+

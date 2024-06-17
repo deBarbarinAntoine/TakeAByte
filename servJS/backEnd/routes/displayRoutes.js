@@ -1492,9 +1492,6 @@ router.get('/user', requireAuth, async (req, res) => {
 
     try{
         userOrders = await getUserOrdersByUserId(userId)
-        if (!userOrders) {
-            return res.status(404).send('No order found for this user')
-        }
     }catch(err){
         console.log('error getting user orders',err)
     }
