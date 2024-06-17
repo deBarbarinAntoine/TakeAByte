@@ -1487,6 +1487,8 @@ router.get('/search', isAuthenticated, async (req, res) => {
         : [];
 
     brand_list = await getBrandByIds(brandIds);
+    }else {
+        searchData = "No data found for the searched product"
     }
     const data = {
         title: "Home - TakeAByte",
