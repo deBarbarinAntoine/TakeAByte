@@ -6,7 +6,7 @@
         </div>
         <div class="product-info">
             <div class="product-name"><%= product.product[0].name %></div>
-            <a class="remove-link">Remove</a>
+            <a class="remove-link" data-item-id="<%= product.product[0].product_id %>">Remove</a>
         </div>
     </div>
     <div class="product-price"><%= product.product[0].price %> €</div>
@@ -19,3 +19,38 @@
     </div>
     <div class="product-total"><%= (product.product[0].price * product.quantityOrdered).toFixed(2) %> €</div>
 </div>
+<!-- Include Axios library -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script>
+    // Wait for the DOM to be fully loaded
+    document.addEventListener('DOMContentLoaded', () => {
+        // Select all elements with class 'remove-link'
+        const removeLinks = document.querySelectorAll('.remove-link');
+
+        // Add event listener for each 'Remove' link
+        removeLinks.forEach(link => {
+            link.addEventListener('click', async (event) => {
+                event.preventDefault(); // Prevent default link behavior (e.g., navigating)
+
+                // Get itemId from 'data-item-id' attribute
+                const itemId = link.getAttribute('data-item-id');
+
+                try {
+                    // Send DELETE request using Axios
+                    const response = await axios.delete('/cartDelete', {
+                        data: { itemId }, // Send itemId in the request body
+                    });
+
+                    // Reload the page to reflect updated cart
+                    window.location.reload();
+                    // Optionally, you can update the UI or display a message here
+                } catch (error) {
+                    // Handle error
+                    console.error('Error removing item:', error);
+                    // Optionally, update UI to show error message
+                }
+            });
+        });
+    });
+</script>

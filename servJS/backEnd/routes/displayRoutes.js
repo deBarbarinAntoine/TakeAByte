@@ -620,6 +620,33 @@ router.post('/cartAdd', isAuthenticated, (req, res) => {
 
 })
 
+router.delete('/cartDelete', isAuthenticated, (req, res) => {
+    // Extract data from request body
+    const itemIdToDelete = req.body.itemId;
+
+    // Retrieve cart from cookies or initialize as an empty array
+    let cart = req.cookies.cart || [];
+
+    // Find index of item to delete in the cart array
+    const indexToDelete = cart.findIndex(item => item.itemId === itemIdToDelete);
+
+    if (indexToDelete !== -1) {
+        // Remove item from cart array
+        cart.splice(indexToDelete, 1);
+
+        // Set cookie with updated cart and expiry time
+        const oneWeekInMilliseconds = 7 * 24 * 60 * 60 * 1000; // 7 days * 24 hours * 60 minutes * 60 seconds * 1000 milliseconds
+        res.cookie('cart', cart, { maxAge: oneWeekInMilliseconds, httpOnly: true });
+
+        // Respond with success status
+        res.send({ status: 'success' });
+    } else {
+        // If item with itemIdToDelete is not found in cart
+        console.log('Item not found in cart');
+    }
+});
+
+
 router.post('/favAdd', isAuthenticated, async (req, res) => {
     // Extract productId from request body
     const {productId} = req.body;
