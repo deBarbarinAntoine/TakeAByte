@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
+
+    const msgCtn = document.querySelector('.msg-ctn');
     const form = document.querySelector('.auth-form');
     form.addEventListener('submit', function(event) {
         event.preventDefault(); // Prevent default form submission
@@ -30,6 +32,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 alert(data.message);
             })
             .catch(error => {
+                console.log(data);
+                msgCtn.innerHTML = `<div class="alert">Invalid credentials</div>`;
                 console.error('Error:', error);
             });
     });
