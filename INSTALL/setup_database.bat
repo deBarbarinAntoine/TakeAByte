@@ -1,8 +1,30 @@
 @echo off
 setlocal enabledelayedexpansion
 
+REM Prompt user for TakeAByte directory path
+set /p TAKEABYTE_PATH=Enter the full path to TakeAByte directory (e.g., C:\Users\nicol\OneDrive\Bureau\TakeAByte): 
+
+REM Check if the specified directory exists
+if not exist "%TAKEABYTE_PATH%" (
+    echo The specified directory does not exist. Please check the path and try again.
+    pause
+    exit /b 1
+)
+
+REM Set fixed paths relative to TakeAByte directory
+set "TAKEABYTE_INSTALL_PATH=%TAKEABYTE_PATH%\INSTALL"
+
+set "SQL_FILE=%TAKEABYTE_INSTALL_PATH%\web-market-table.sql"
+set "MASTER_SQL_FILE=%TAKEABYTE_INSTALL_PATH%\master_log.sql"
+set "INIT_SQL_FILE=%TAKEABYTE_INSTALL_PATH%\init.sql"
+
+REM Echo the SQL files being used
+echo Reading SQL file: %SQL_FILE%
+echo Reading master log SQL file: %MASTER_SQL_FILE%
+echo Reading init SQL file: %INIT_SQL_FILE%
+
 REM Prompt user for MySQL bin directory
-set /p MYSQL_PATH=Enter the full path to your MySQL bin directory (e.g., C:\wamp64\bin\mysql\mysql5.7.24\bin): 
+set /p MYSQL_PATH=Enter the full path to your MySQL bin directory (e.g., C:\wamp64\bin\mysql\mysql8.3.0\bin): 
 
 REM Check if the specified MySQL bin directory exists
 if not exist "%MYSQL_PATH%\mysql.exe" (
@@ -17,10 +39,6 @@ REM Prompt user for MySQL credentials and database details
 set /p MYSQL_USER=Enter MySQL username: 
 set /p MYSQL_PASSWORD=Enter MySQL password: 
 set /p MYSQL_DATABASE=Enter database name: 
-set /p SQL_FILE=Enter the full path to your tables SQL file: 
-set /p MASTER_SQL_FILE=Enter the full path to your master log SQL file:
-set /p INIT_SQL_FILE=Enter the full path to your init SQL file:
-set /p TAKEABYTE_PATH=Enter the full path to your TakeAByte folder: 
 
 REM Check if SQL files exist
 if not exist "%SQL_FILE%" (
@@ -68,58 +86,59 @@ if %ERRORLEVEL% NEQ 0 (
     echo Master log SQL file executed successfully
 )
 
-REM Check if the TakeAByte path exists
-if not exist "%TAKEABYTE_PATH%\servJS" (
+REM Set paths relative to servJS and api directories under TakeAByte
+set "SERVJS_PATH=%TAKEABYTE_PATH%\servJS"
+set "API_PATH=%TAKEABYTE_PATH%\api"
+
+REM Check if the servJS and api directories exist
+if not exist "%SERVJS_PATH%" (
     echo The specified TakeAByte\servJS folder does not exist. Please check the path and try again.
     pause
     exit /b 1
 )
-if not exist "%TAKEABYTE_PATH%\api" (
+if not exist "%API_PATH%" (
     echo The specified TakeAByte\api folder does not exist. Please check the path and try again.
     pause
     exit /b 1
 )
 
 REM Delete existing .env file if it exists
-del /q "%TAKEABYTE_PATH%\api\.env" >nul
+del /q "%API_PATH%\.env" >nul
 
-REM Create .env file with required environment variables
-echo DB_HOST=localhost>> "%TAKEABYTE_PATH%\api\.env"
-echo DB_USER=%MYSQL_USER%>> "%TAKEABYTE_PATH%\api\.env"
-echo DB_PASSWORD=%MYSQL_PASSWORD%>> "%TAKEABYTE_PATH%\api\.env"
-echo DB_DATABASE=%MYSQL_DATABASE%>> "%TAKEABYTE_PATH%\api\.env"
-echo PORT=3001>> "%TAKEABYTE_PATH%\api\.env"
-echo TOKEN_EXPIRY_HOURS=24>> "%TAKEABYTE_PATH%\api\.env"
-
+REM Create .env file with required environment variables for API
+echo DB_HOST=localhost>> "%API_PATH%\.env"
+echo DB_USER=%MYSQL_USER%>> "%API_PATH%\.env"
+echo DB_PASSWORD=%MYSQL_PASSWORD%>> "%API_PATH%\.env"
+echo DB_DATABASE=%MYSQL_DATABASE%>> "%API_PATH%\.env"
+echo PORT=3001>> "%API_PATH%\.env"
+echo TOKEN_EXPIRY_HOURS=24>> "%API_PATH%\.env"
 
 REM Delete existing data.env file if it exists
-del /q "%TAKEABYTE_PATH%\servJS\backEnd\data.env" >nul
+del /q "%SERVJS_PATH%\backEnd\data.env" >nul
 
-REM Create data.env file with required environment variables
-echo # Yelp API Key>> "%TAKEABYTE_PATH%\servJS\backEnd\data.env"
-echo YELP_API_KEY=oKVpja6MbYoVopKZDk81RsC4QMerf_ZTuYE1VIcKD9P1Im91oDAZPOs8fiuE5WIEsbRkreeSxkac7UqHaEjzvXOlYGP5qBI-IgjJfuZGtao3xPkp3jROETpgSiFHZnYx>> "%TAKEABYTE_PATH%\servJS\backEnd\data.env"
-echo.>> "%TAKEABYTE_PATH%\servJS\backEnd\data.env"
-echo # Port number for the server>> "%TAKEABYTE_PATH%\servJS\backEnd\data.env"
-echo PORT=4000>> "%TAKEABYTE_PATH%\servJS\backEnd\data.env"
-echo.>> "%TAKEABYTE_PATH%\servJS\backEnd\data.env"
-echo # Web Site admin token>> "%TAKEABYTE_PATH%\servJS\backEnd\data.env"
-echo WEB_TOKEN=%TOKENMOD%>> "%TAKEABYTE_PATH%\servJS\backEnd\data.env"
-echo.>> "%TAKEABYTE_PATH%\servJS\backEnd\data.env"
-echo # Allan API TOKEN>> "%TAKEABYTE_PATH%\servJS\backEnd\data.env"
-echo ALLAN_TOKEN=05fe835b-ec44-47b3-8a7f-795c089119e2>> "%TAKEABYTE_PATH%\servJS\backEnd\data.env"
-
-
+REM Create data.env file with required environment variables for servJS
+echo # Yelp API Key>> "%SERVJS_PATH%\backEnd\data.env"
+echo YELP_API_KEY=oKVpja6MbYoVopKZDk81RsC4QMerf_ZTuYE1VIcKD9P1Im91oDAZPOs8fiuE5WIEsbRkreeSxkac7UqHaEjzvXOlYGP5qBI-IgjJfuZGtao3xPkp3jROETpgSiFHZnYx>> "%SERVJS_PATH%\backEnd\data.env"
+echo.>> "%SERVJS_PATH%\backEnd\data.env"
+echo # Port number for the server>> "%SERVJS_PATH%\backEnd\data.env"
+echo PORT=4000>> "%SERVJS_PATH%\backEnd\data.env"
+echo.>> "%SERVJS_PATH%\backEnd\data.env"
+echo # Web Site admin token>> "%SERVJS_PATH%\backEnd\data.env"
+echo WEB_TOKEN=%TOKENMOD%>> "%SERVJS_PATH%\backEnd\data.env"
+echo.>> "%SERVJS_PATH%\backEnd\data.env"
+echo # Allan API TOKEN>> "%SERVJS_PATH%\backEnd\data.env"
+echo ALLAN_TOKEN=05fe835b-ec44-47b3-8a7f-795c089119e2>> "%SERVJS_PATH%\backEnd\data.env"
 
 REM Call the script to start npm in servJS in a separate console window
 echo Calling script to start npm in servJS...
-start cmd /k "%TAKEABYTE_PATH%\servJS\start_servJS.bat"
+start cmd /k "%SERVJS_PATH%\start_servJS.bat"
 
 REM Call the script to start npm in api in a separate console window
 echo Calling script to start npm in api...
-start cmd /k "%TAKEABYTE_PATH%\api\start_api.bat"
+start cmd /k "%API_PATH%\start_api.bat"
 
-REM Prompt user for the product data file
-set /p PRODUCT_DATA_FILE=Enter the full path to the product data JSON file: 
+REM product data file
+set "PRODUCT_DATA_FILE=%TAKEABYTE_PATH%\INSTALL\products.json"
 
 REM Check if the specified product data file exists
 if not exist "%PRODUCT_DATA_FILE%" (
@@ -132,6 +151,7 @@ REM Echo the generated token
 echo The generated token is: %TOKENMOD%
 
 REM Call PowerShell to make the HTTP POST request
+echo Making HTTP POST request to add products...
 powershell -ExecutionPolicy Bypass -Command ^
     "$token = '%TOKENMOD%';" ^
     "$uri = 'http://localhost:3001/v1/products';" ^
@@ -139,12 +159,10 @@ powershell -ExecutionPolicy Bypass -Command ^
     "$headers = @{ 'Authorization' = 'Bearer ' + $token; 'Content-Type' = 'application/json' };" ^
     "Invoke-RestMethod -Uri $uri -Method Post -Body $body -Headers $headers"
 
-REM Execute the master log SQL file with Latin-1 encoding
+REM Execute the init SQL file with Latin-1 encoding
 echo Executing init SQL file with Latin-1 encoding...
 "%MYSQL_PATH%\mysql" -u%MYSQL_USER% -p"%MYSQL_PASSWORD%" --default-character-set=latin1 %MYSQL_DATABASE% < "%INIT_SQL_FILE%"
 
-
 start http://localhost:4000/home
-
 
 pause
