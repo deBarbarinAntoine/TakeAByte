@@ -129,11 +129,11 @@ rm -f "$SERVJS_PATH/backEnd/data.env"
 
 # Call the script to start npm in servJS in a separate console window
 echo "Calling script to start npm in servJS..."
-gnome-terminal -- bash -c "$SERVJS_PATH/start_servJS.sh; exec bash"
+gnome-terminal -- bash -c 'make --directory='$SERVJS_PATH' start; exec bash'
 
 # Call the script to start npm in api in a separate console window
 echo "Calling script to start npm in api..."
-gnome-terminal -- bash -c "$API_PATH/start_api.sh; exec bash"
+gnome-terminal -- bash -c "make --directory='$API_PATH' start; exec bash"
 
 # product data file
 PRODUCT_DATA_FILE="$TAKEABYTE_PATH/INSTALL/products.json"
@@ -146,6 +146,11 @@ fi
 
 # Echo the generated token
 echo "The generated token is: $TOKENMOD"
+
+# Wait for the servers to start
+echo
+echo 'Waiting for the server to start...'
+sleep 5
 
 # Make the HTTP POST request to add products
 echo "Making HTTP POST request to add products..."
