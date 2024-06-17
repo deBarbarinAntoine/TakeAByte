@@ -31,9 +31,9 @@ router.post('/registerUser', registerUser)
 router.get('/favStatus/:product_id', requireAuth, async (req, res) => {
     const fav = req.cookies.fav;
     const { product_id } = req.params;
-
+    let isFavorite = false
     if (!fav) {
-        return res.json({ isFavorite: false });
+        return res.json({ isFavorite });
     }
 
     let favList;
@@ -43,7 +43,7 @@ router.get('/favStatus/:product_id', requireAuth, async (req, res) => {
         return res.status(400).json({ error: 'Invalid fav cookie format' });
     }
 
-    const isFavorite = favList.some(item => item.productId === product_id);
+    isFavorite = favList.some(item => item.productId === product_id);
     return res.json({ isFavorite });
 });
 
