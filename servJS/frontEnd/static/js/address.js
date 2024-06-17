@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 cityInput.value = city;
                                 provinceInput.value = province;
                                 zipcodeInput.value = zipcode;
-                                countryInput.value = country;
+                                countryInput.value = country.substring(0, 3);
 
                                 suggestionsContainer.innerHTML = '';
                                 suggestionsContainer.style.display = 'none';

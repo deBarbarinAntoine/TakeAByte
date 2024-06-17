@@ -1073,6 +1073,7 @@ input:not([type=checkbox]):not([type=radio]) {
         .address-optional,
         .address-city-region,
         .address-country {
+          position: relative;
           width: 100%;
           display: flex;
           justify-content: space-between;

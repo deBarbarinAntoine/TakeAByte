@@ -1442,6 +1442,7 @@ input:not([type=checkbox]):not([type=radio]):focus {
 .main .user-info-ctn form.address-form .form-inputs .address-optional,
 .main .user-info-ctn form.address-form .form-inputs .address-city-region,
 .main .user-info-ctn form.address-form .form-inputs .address-country {
+  position: relative;
   width: 100%;
   display: flex;
   justify-content: space-between;
