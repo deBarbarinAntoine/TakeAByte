@@ -1,7 +1,7 @@
 -- Insert a new user with is_mod set to 1
 INSERT INTO users (username, email, password_hash, country, city, zip_code, street_name, street_number,
                    address_complements, is_mod)
-VALUES ('moderator_user', 'moderator@example.com', 'hashed_password', 'God_Land', 'Ynov-AIX', '13100', 'TakeAByte', 1,
+VALUES ('moderator_user', 'moderator@example.com', 'hashed_password', 'GOD', 'Ynov-AIX', '13100', 'TakeAByte', 1,
         'Apt 402', 1);
 
 -- Get the user_id of the newly inserted user

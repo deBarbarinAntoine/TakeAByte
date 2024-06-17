@@ -15,6 +15,9 @@ document.addEventListener('DOMContentLoaded', function() {
             confirm_password: confirm_password
         };
 
+        console.log('panda');
+        console.log(data);
+
         // Perform AJAX request using Axios
         axios.post('http://localhost:4000/api/registerUser', data, {
             headers: {

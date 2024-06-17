@@ -14,12 +14,13 @@ const nodemailer = require('nodemailer');
 
 async function register(req, res) {
     const data = req.body;
+
 // Sanitize input using parameterized queries
     const username = data.username;
     const email = data.email;
     const password = data.password;
     const confirm_password = data.confirm_password;
-    console.log(password)
+
     if (!validateNewUser(data)) {
         badRequestErrorResponse(res, new Error('users/register bad request'), validateNewUser.errors);
         return;
@@ -49,6 +50,7 @@ async function register(req, res) {
         return;
     }
     let user = await User.New(username, email, hash);
+    console.log(user);
     try {
         const query = await user.create();
         user.id = query[0].insertId;

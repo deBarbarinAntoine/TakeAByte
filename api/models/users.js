@@ -47,8 +47,8 @@ class User {
     }
 
     async create() {
-        console.log (`email: ${this.email}; hash: ${this.hash}`);
-        return connection.execute(createUserQuery, [this.username, this.email, this.hash]);
+        console.log (`email: ${this.email}; hash: ${this.password_hash}`);
+        return connection.execute(createUserQuery, [this.username, this.email, this.password_hash]);
     }
 
     toJson() {
