@@ -324,9 +324,7 @@ async function changeUserData(req, res) {
     }
 
     const user = existingUserData[0][0];
-    console.log("Existing user data:", user);
     updateUserFields(user, data);
-    console.log("Updated user data:", user);
 
     const values = [
         user.username, user.email, user.country, user.city,
@@ -335,15 +333,8 @@ async function changeUserData(req, res) {
         user_id
     ];
 
-    // Log query and values for debugging
-    console.log("Executing query:", changeUserDataQuery);
-    console.log("With values:", values);
-
     try {
         const [result] = await connection.query(changeUserDataQuery, values);
-
-        // Log the result for debugging
-        console.log("Query result:", result);
 
         if (result.affectedRows === 0) {
             return notFoundErrorResponse(res, `No user found with ID ${user_id}`);

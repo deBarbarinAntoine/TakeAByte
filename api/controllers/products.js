@@ -278,7 +278,7 @@ exports.updateProductData = (req, res) => {
         }
 
     }catch(err){
-        console.log(err)
+        console.error(err)
         console.error(`Error updating product with ID ${product_id}:`, err);
         res.status(400).json({ message: 'No valid fields provided for update' });
     }

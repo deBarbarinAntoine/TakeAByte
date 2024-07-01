@@ -30,7 +30,7 @@ exports.createNewOrder = async (req, res) => {
 
         res.status(201).json({message: 'Order created successfully', order_id});
     } catch (error) {
-        console.log(error)
+        console.error(error)
         serverErrorResponse(res, "Failed to create order", error);
     }
 };
@@ -75,7 +75,7 @@ exports.getUserOrdersData = async (req, res) => {
 
         res.status(200).json(combinedResults);
     } catch (err) {
-        console.log(err);
+        console.error(err);
         return serverErrorResponse(res, "Failed to get user order");
     }
 };

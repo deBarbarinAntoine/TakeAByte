@@ -11,9 +11,9 @@ exports.likeProduct = async (req, res) => {
             res.status(200).json({message: 'Product liked successfully'}))
     } catch (err) {
         if (err.errno === 1062){
-            console.log('already liked this product')
+            console.error('already liked this product')
         }
-        console.log(err)
+        console.error(err)
     }
 }
 
