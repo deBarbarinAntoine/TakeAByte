@@ -276,7 +276,6 @@
             // Make an AJAX call to get the favorite status
             axios.get(`/api/favStatus/${productId}`)
                 .then(response => {
-                    console.log(response.data)
                     if (response.data.isFavorite) {
                         favoriteButton.querySelector('.favorite-icon').classList.add('favorite');
                     } else {
