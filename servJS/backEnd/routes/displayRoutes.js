@@ -812,15 +812,18 @@ router.get('/paymentOk', isAuthenticated, async (req, res) => {
     const cartCookie = req.cookies.cart;
     const token = process.env.WEB_TOKEN;
     const userToken = req.cookies.token;
-    let userId = null;
-    try {
-        userId = await getUserIdFromToken(userToken);
-        if (!userId) {
-            return res.status(404).send('User not found');
+    let userId = 0;
+
+    if (userToken) {
+        try {
+            userId = await getUserIdFromToken(userToken);
+            if (!userId) {
+                return res.status(404).send('User not found');
+            }
+        } catch (err) {
+            console.error('Error fetching user info:', err);
+            return res.status(500).send('Internal Server Error');
         }
-    } catch (err) {
-        console.error('Error fetching user info:', err);
-        return res.status(500).send('Internal Server Error');
     }
 
     const createOrderUrl = `http://localhost:3001/v1/orders/${userId.user_id}`;
@@ -830,20 +833,20 @@ router.get('/paymentOk', isAuthenticated, async (req, res) => {
     // Aggregate quantities and prices
     if (cartCookie) {
         cartCookie.forEach(item => {
-            const {itemId, quantity, itemPrice} = item;
+            const { itemId, quantity, itemPrice } = item;
             if (cartItemsMap.has(itemId)) {
                 const existingItem = cartItemsMap.get(itemId);
                 existingItem.quantity += quantity;
                 existingItem.totalPrice += quantity * itemPrice;
             } else {
-                cartItemsMap.set(itemId, {itemId, quantity, totalPrice: quantity * itemPrice});
+                cartItemsMap.set(itemId, { itemId, quantity, totalPrice: quantity * itemPrice });
             }
         });
     }
 
     const cartItemsArray = Array.from(cartItemsMap.values());
 
-    function getImagePaths(allImg) {
+    const getImagePaths = (allImg) => {
         const imagePaths = allImg.data.map(img => img.image_path);
         while (imagePaths.length < 3) {
             imagePaths.push("/static/img/image-not-found.webp");
@@ -851,89 +854,92 @@ router.get('/paymentOk', isAuthenticated, async (req, res) => {
         return imagePaths;
     }
 
-    async function fetchProductDetails(productId) {
+    const fetchProductDetails = async (productId) => {
         const product = await getProductById(productId);
         if (!product) throw new Error(`Failed to get item ${productId}`);
 
         const getImagesUrl = `http://localhost:3001/v1/images/product/${productId}`;
-        const allImg = await axios.get(getImagesUrl, {headers: {Authorization: `Bearer ${token}`}});
+        const allImg = await axios.get(getImagesUrl, { headers: { Authorization: `Bearer ${token}` } });
         product.img = allImg.data[0].image_path;
 
         if (product.type_id) {
             const typeUrl = `http://localhost:3001/v1/types/${product.type_id}`;
-            const typeResponse = await axios.get(typeUrl, {headers: {Authorization: `Bearer ${token}`}});
+            const typeResponse = await axios.get(typeUrl, { headers: { Authorization: `Bearer ${token}` } });
             product.type = typeResponse.data[0].name;
         }
 
         if (product.brand_id) {
             const brandUrl = `http://localhost:3001/v1/brands/${product.brand_id}`;
-            const brandResponse = await axios.get(brandUrl, {headers: {Authorization: `Bearer ${token}`}});
+            const brandResponse = await axios.get(brandUrl, { headers: { Authorization: `Bearer ${token}` } });
             product.brand = brandResponse.data[0].name;
         }
 
         const imagePaths = getImagePaths(allImg);
         const miscellaneous = Object.keys(product)
-            .filter(key => product[key] && !['created_at', 'updated_at', 'type_id', 'product_id', 'brand_id', 'image', 'description', 'price', 'sales', 'name'].includes(key))
+            .filter(key => product[key] && ![
+                'created_at', 'updated_at', 'type_id', 'product_id', 'brand_id', 'image',
+                'description', 'price', 'sales', 'name'
+            ].includes(key))
             .map(key => ({
                 name: key.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
                 content: key === 'quantity_stocked' ? (product[key] ? `Only ${product[key]} left. Order now!` : 'Not available') : product[key]
             }));
 
-        return {product, imagePaths, miscellaneous};
+        return { product, imagePaths, miscellaneous };
     }
 
-    async function processCartItems(cartItems) {
-        const resultArray = [];
-        for (const cartItem of cartItems) {
+    const processCartItems = async (cartItems) => {
+        const promises = cartItems.map(async (cartItem) => {
             try {
                 const productDetails = await fetchProductDetails(cartItem.itemId);
-                resultArray.push({
+                return {
                     ...productDetails,
                     quantityOrdered: cartItem.quantity,
-                });
+                };
             } catch (error) {
                 console.error(error.message);
             }
-        }
-        return resultArray;
+        });
+
+        return Promise.all(promises);
     }
 
-    function calculateSubtotal(cartItems) {
+    const calculateSubtotal = (cartItems) => {
         return cartItems.reduce((subtotal, item) => subtotal + item.totalPrice, 0);
     }
 
     const formattedItems = cartItemsArray.map(item => ({
-
         product_id: item.itemId,
         quantity: item.quantity,
-        price : item.totalPrice
+        price: item.totalPrice
     }));
+
     try {
-        const response = await axios.post(createOrderUrl, {items: formattedItems}, {headers: {Authorization: `Bearer ${userToken}`}});
+        const response = await axios.post(createOrderUrl, { items: formattedItems }, { headers: { Authorization: `Bearer ${userToken}` } });
         orderId = response.data.order_id;
     } catch (error) {
         console.error('Error creating order:', error.message);
         return res.status(500).send('Internal Server Error');
     }
 
-    for (const item of formattedItems) {
-        const productId = item.product_id;
-        const reduceStockUrl = `http://localhost:3001/v1/products/${productId}`;
-
-        try {
-            const response = await axios.put(reduceStockUrl, {
-                quantity_stocked: item.quantity
-            }, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                }
-            });
-        } catch (err) {
-            console.error(`Failed to reduce stock for product ${productId}`, err);
-        }
+    try {
+        await Promise.all(formattedItems.map(async (item) => {
+            const productId = item.product_id;
+            const reduceStockUrl = `http://localhost:3001/v1/products/${productId}`;
+            try {
+                await axios.put(reduceStockUrl, { quantity_stocked: item.quantity }, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+            } catch (err) {
+                console.error(`Failed to reduce stock for product ${productId}`, err);
+            }
+        }));
+    } catch (err) {
+        console.error('Error reducing stock for items:', err.message);
     }
-
 
     try {
         const resultArray = await processCartItems(cartItemsArray);
@@ -945,7 +951,7 @@ router.get('/paymentOk', isAuthenticated, async (req, res) => {
             slogan: "Your Trusted Tech Partner",
             categories: typeList,
             templateData: {
-                client: {orderId},
+                client: { orderId },
                 page: 'payment-confirmed',
                 order: {
                     products: resultArray,
@@ -955,7 +961,7 @@ router.get('/paymentOk', isAuthenticated, async (req, res) => {
             }
         };
         res.clearCookie('cart');
-        res.render('base', {data});
+        res.render('base', { data });
     } catch (error) {
         console.error('Error processing cart items:', error.message);
         res.status(500).send('Internal Server Error');
