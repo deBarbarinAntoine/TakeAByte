@@ -312,7 +312,6 @@ async function getProductByTypeId(id){
         });
 
         if (response.data && response.data.length > 0) {
-            console.log(response.data)
              return response.data;
 
         } else {

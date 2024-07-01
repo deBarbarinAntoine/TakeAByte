@@ -1397,30 +1397,30 @@ router.get('/register', isAuthenticated, async (req, res) => {
 
 router.get('/category/:type_id', isAuthenticated, async (req, res) => {
     const type_id = req.params.type_id;
-    const {brand, price_max, category} = req.query; // Destructure the filters from query parameters
-    let type_name;
-    let product_list;
-    let brand_list;
+    const { brand, price_max, category } = req.query;
 
     try {
-        type_name = await getTypeNameById(type_id);
-        product_list = await getProductByTypeId(type_id);
+        const type_name = await getTypeNameById(type_id);
+        let product_list = await getProductByTypeId(type_id);
         for (const product of product_list) {
             const token = process.env.WEB_TOKEN;
-            const saleUrl = `http://localhost:3001/v1/sales/product/${product.id}`
-            const saleDetails =  await axios.get(saleUrl,{
+            const saleUrl = `http://localhost:3001/v1/sales/product/${product.id}`;
+            const saleDetails = await axios.get(saleUrl, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
-            if (saleDetails.data.sales[0].length > 0){
-                product.price = product.price - (product.price * saleDetails.data.sales[0][0].reduction_percentage / 100)
-                product.sales = saleDetails.data.sales[0][0].reduction_percentage
-            }else{
-                product.sales = "0"
+
+            const sale = saleDetails.data.sales[0]?.[0];
+            if (sale) {
+                product.price -= product.price * sale.reduction_percentage / 100;
+                product.sales = sale.reduction_percentage;
+            } else {
+                product.sales = "0";
             }
-            }
-        // Filter the product list based on the query parameters
+        }
+
+        // Apply filters based on query parameters
         if (brand) {
             const brandsFilter = brand.split(',');
             product_list = product_list.filter(product => brandsFilter.includes(product.brand));
@@ -1433,44 +1433,38 @@ router.get('/category/:type_id', isAuthenticated, async (req, res) => {
             product_list = product_list.filter(product => categoriesFilter.includes(product.category));
         }
 
-        const brandIds = product_list.map(product => product.brand);
-        brand_list = await getBrandByIds(brandIds);
+        const brandIds = [...new Set(product_list.map(product => product.brand))];
+        const brand_list = await getBrandByIds(brandIds);
+        const type_list = await getAllType();
 
-    } catch (err) {
-        if (err === "ReferenceError: id is not defined") {
-            console.error(err)
-        } else {
-            console.error('Error in router handler:', err);
-            return res.status(500).send('Internal Server Error');
-        }
-    }
-
-    const type_list = await getAllType();
-    const data = {
-        title: "Home - TakeAByte",
-        isAuthenticated: req.isAuthenticated,
-        template: "category",
-        categories: type_list,
-        templateData: {
-            "navData": [
-                {
-                    "link": `/category/${type_id}`,
-                    "className": " current",
-                    "title": type_name
+        const data = {
+            title: "Home - TakeAByte",
+            isAuthenticated: req.isAuthenticated,
+            template: "category",
+            categories: type_list,
+            templateData: {
+                navData: [
+                    {
+                        link: `/category/${type_id}`,
+                        className: "current",
+                        title: type_name
+                    }
+                ],
+                category: {
+                    products: product_list
+                },
+                filters: {
+                    categories: null,
+                    brands: brand_list
                 }
-            ],
-            "category": {
-                "products": product_list
             },
-            "filters": {
-                "categories": null,
-                "brands": brand_list
-            }
-        },
-        slogan: "Your Trusted Tech Partner"
-    };
-
-    res.render('base', {data: data});
+            slogan: "Your Trusted Tech Partner"
+        };
+        res.render('base', { data });
+    } catch (err) {
+        console.error('Error in router handler:', err);
+        res.status(500).send('Internal Server Error');
+    }
 });
 
 router.get('/search', isAuthenticated, async (req, res) => {
