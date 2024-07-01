@@ -15,7 +15,7 @@ const {
     getUserInfoById,
     getUserIdFromToken,
     updateUserData,
-    updateUserPassword
+    updateUserPassword, getUserTokenFromId
 } = require("../controllers/userController");
 const {getUserFavByUserId} = require("../controllers/favController");
 const {getUserOrdersByUserId} = require("../controllers/orderController");
@@ -811,8 +811,8 @@ router.post('/checkout', isAuthenticated, async (req, res) => {
 router.get('/paymentOk', isAuthenticated, async (req, res) => {
     const cartCookie = req.cookies.cart;
     const token = process.env.WEB_TOKEN;
-    const userToken = req.cookies.token;
-    let userId = 0;
+    let userToken = req.cookies.token;
+    let userId = { user_id : 0 };
 
     if (userToken) {
         try {
@@ -823,6 +823,13 @@ router.get('/paymentOk', isAuthenticated, async (req, res) => {
         } catch (err) {
             console.error('Error fetching user info:', err);
             return res.status(500).send('Internal Server Error');
+        }
+    }else{
+        try{
+            const anonUserToken = await getUserTokenFromId(userId,token)
+            userToken = anonUserToken.selectedToken
+        }catch (e) {
+            console.error(e)
         }
     }
 

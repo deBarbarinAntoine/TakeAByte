@@ -136,6 +136,27 @@ async function getTokenFromUserId(userId) {
     }
 }
 
+async function getThisTokenFromUserId(req, res) {
+    try {
+        const userId = parseInt(req.params.id, 10);  // Ensure `id` is treated as a number
+        if (isNaN(userId)) {
+            return res.status(400).json({ error: 'Invalid user ID' });
+        }
+
+        const token = await connection.query(getTokenFromUserIdQuery, userId);
+        if (token) {
+            const selectedToken = token[0][0].token
+            res.status(200).json({ selectedToken });
+        } else {
+            res.status(404).json({ error: 'Token not found for the given user ID' });
+        }
+    } catch (error) {
+        console.error('Error fetching user token:', error);
+        res.status(500).json({ error: 'Database error' });
+    }
+}
+
+
 async function getUserIdFromUserToken(req, res) {
     const token = req.params.token;
 
@@ -158,4 +179,4 @@ async function getUserIdFromUserToken(req, res) {
     }
 }
 
-module.exports = { Token, getToken, getUserIdFromToken, checkIfMod,getTokenFromUserId ,getUserIdFromUserToken};
+module.exports = { Token, getToken, getUserIdFromToken, checkIfMod,getTokenFromUserId ,getUserIdFromUserToken,getThisTokenFromUserId};

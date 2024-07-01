@@ -84,6 +84,26 @@ async function updateUserPassword(user_id, password, newPassword, confirmPasswor
     }
 }
 
+async function getUserTokenFromId(user_id,token){
+    const url = `http://localhost:3001/v1/token/getUserToken/${user_id.user_id}`;
+    try {
+        const response = await axios.get(url, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+
+        if (response.data) {
+            return response.data
+        } else {
+            console.error("No data found userId with given token");
+            return null;
+        }
+    } catch (err) {
+        console.error(`Error fetching all brand:`, err);
+        return null;
+    }
+}
 
 
-module.exports = {getUserIdFromToken, getUserInfoById, updateUserData,updateUserPassword}
+module.exports = {getUserIdFromToken, getUserInfoById, updateUserData,updateUserPassword,getUserTokenFromId}

@@ -34,8 +34,8 @@ async function authenticate(req, res, next) {
         }
 
         const userId = await getUserIdFromToken(bearer); // Fetch the user ID from the database
-        if (!userId) {
-            unauthorizedErrorResponse(res, new Error('User not found'));
+        if (userId == null) {
+            unauthorizedErrorResponse(res, new Error('User not found in validation'));
             return;
         }
 
