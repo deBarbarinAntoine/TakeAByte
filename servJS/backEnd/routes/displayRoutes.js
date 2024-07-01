@@ -200,7 +200,7 @@ router.get('/product/:productId', isAuthenticated, async (req, res) => {
         if (matchingType) {
             type_id = matchingType.type_id;
         } else {
-            console.log('Type not found');
+            console.error('Type not found');
         }
         let saleData
         try {
@@ -211,7 +211,7 @@ router.get('/product/:productId', isAuthenticated, async (req, res) => {
                 }
             });
         } catch (err) {
-            console.log("error retrieving sales data:", err)
+            console.error("error retrieving sales data:", err)
         }
         const data = {
             title: "Products - TakeAByte",
@@ -401,7 +401,7 @@ router.get('/cart', isAuthenticated, async (req, res) => {
                         // Optionally, send a response indicating success
                         res.send('Cart updated successfully');
                     } else {
-                        console.log(`Item with itemId ${productId} not found in the cart.`);
+                        console.error(`Item with itemId ${productId} not found in the cart.`);
                     }
                     // If no, push item_Quantity instead of cartItem.quantity
                     resultArray.push({
@@ -412,7 +412,7 @@ router.get('/cart', isAuthenticated, async (req, res) => {
                     });
                 }
             } catch (err) {
-                console.log("Failed to get item quantity available", err);
+                console.error("Failed to get item quantity available", err);
             }
         }
 
@@ -696,7 +696,7 @@ router.delete('/cartDelete', isAuthenticated, (req, res) => {
         res.send({ status: 'success' });
     } else {
         // If item with itemIdToDelete is not found in cart
-        console.log('Item not found in cart');
+        console.error('Item not found in cart');
     }
 });
 
@@ -929,7 +929,6 @@ router.get('/paymentOk', isAuthenticated, async (req, res) => {
                     'Content-Type': 'application/json'
                 }
             });
-            console.log(`Successfully reduced stock for product ${productId}`, response.data);
         } catch (err) {
             console.error(`Failed to reduce stock for product ${productId}`, err);
         }
@@ -1019,7 +1018,6 @@ router.get('/order/shipping/:encodedData', isAuthenticated, async (req, res) => 
     // Decode the encoded data from the URL path
     const decodedData = Buffer.from(req.params.encodedData, 'base64').toString('latin1');
     const {lon, lat, email, name, lastname, street, optional, city, zip, region, country} = JSON.parse(decodedData);
-console.log(JSON.parse(decodedData))
     let postData;
 
     try {
@@ -1440,7 +1438,7 @@ router.get('/category/:type_id', isAuthenticated, async (req, res) => {
 
     } catch (err) {
         if (err === "ReferenceError: id is not defined") {
-            console.log(err)
+            console.error(err)
         } else {
             console.error('Error in router handler:', err);
             return res.status(500).send('Internal Server Error');
@@ -1578,7 +1576,7 @@ router.get('/user', requireAuth, async (req, res) => {
     try{
         userOrders = await getUserOrdersByUserId(userId)
     }catch(err){
-        console.log('error getting user orders',err)
+        console.error('error getting user orders',err)
     }
     try {
         const type_list = await getAllType();
@@ -1698,7 +1696,7 @@ router.get('/purchase/:order_id', async (req,res) =>{
 
     } catch (err) {
         // Handle errors
-        console.log('Error getting user orders', err);
+        console.error('Error getting user orders', err);
     }
     const type_list = await getAllType();
     const data = {
