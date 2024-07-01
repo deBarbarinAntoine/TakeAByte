@@ -5,7 +5,7 @@ const { getAddressSuggestions } = require('../controllers/addressController');
 const { getCloseDeliveryPoint } = require('../controllers/deliveryPointController');
 const { toggleFavoriteItem, toggleCartItem } = require('../controllers/itemController');
 const {checkUserLogs, logoutUser, registerUser} = require("../controllers/authController");
-const {requireAuth} = require ("../middleware/auth")
+const {requireAuth, isAuth} = require ("../middleware/auth")
 
 // Define a route to get address suggestions
 router.get('/getAddress/:address', getAddressSuggestions);
@@ -28,7 +28,7 @@ router.get('/logoutUser', requireAuth,logoutUser)
 // Route to register user
 router.post('/registerUser', registerUser)
 
-router.get('/favStatus/:product_id', requireAuth, async (req, res) => {
+router.get('/favStatus/:product_id', isAuth, async (req, res) => {
     const fav = req.cookies.fav;
     const { product_id } = req.params;
     let isFavorite = false

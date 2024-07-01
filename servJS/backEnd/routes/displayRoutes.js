@@ -1752,7 +1752,47 @@ router.get('/purchase/:order_id', async (req,res) =>{
 })
 
 router.get('/localData', async (req, res) => {
+    let userInfo = null;
+    let userFav = null;
+    let userOrders = null;
+console.log(req.cookies)
 
+    // try {
+    //     userFav = await getUserFavByUserId(userId)
+    //     if (!userFav) {
+    //         return res.status(404).send('No fav found for this user')
+    //     }
+    // } catch (err) {
+    //     console.error(err, "failed to get user fav")
+    // }
+    //
+    // try{
+    //     userOrders = await getUserOrdersByUserId(userId)
+    // }catch(err){
+    //     console.error('error getting user orders',err)
+    // }
+    try {
+        const type_list = await getAllType();
+        const data = {
+            title: "Home - TakeAByte",
+            isAuthenticated: req.isAuthenticated,
+            template: "dashboard",
+            templateData: {
+                user: userInfo[0],
+                favorites: {
+                    products: userFav
+                },
+                purchases :userOrders
+            },
+            slogan: "Your Trusted Tech Partner",
+            categories: type_list
+        };
+
+        res.render('base', {data: data});
+    } catch (err) {
+        console.error('Error fetching types:', err);
+        return res.status(500).send('Internal Server Error');
+    }
 
 
 

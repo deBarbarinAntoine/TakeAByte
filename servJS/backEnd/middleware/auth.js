@@ -13,5 +13,11 @@ const requireAuth = (req, res, next) => {
     req.isAuthenticated = !!token
     next();
 };
+const isAuth = (req, res, next) => {
+    const token = req.cookies.token;
+    req.isAuthenticated = !!token
+    next();
+};
 
-module.exports = {requireAuth,isAuthenticated}
+
+module.exports = {requireAuth,isAuthenticated,isAuth}
