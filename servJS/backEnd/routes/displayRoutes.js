@@ -1693,57 +1693,106 @@ router.post('/user/:user_id/update/password', async (req, res) => {
 router.get('/purchase/:order_id', async (req, res) => {
     const {order_id} = req.params;
     const userToken = req.cookies.token
-    const userId = await getUserIdFromToken(userToken)
     let userOrders
     let productsInfo = [];
     let index;
-    try {
-        // Assuming getUserOrdersByUserId and getProductById are asynchronous functions returning promises
+    if (userToken){
+        try {
+            const userId = await getUserIdFromToken(userToken)
+            // Fetch user orders by user ID
+            userOrders = await getUserOrdersByUserId(userId);
 
-        // Fetch user orders by user ID
-        userOrders = await getUserOrdersByUserId(userId);
+            // Check if userOrders array is empty or undefined
+            if (!userOrders || userOrders.length === 0) {
+                return res.status(404).send('No order found for this user');
+            }
+            index = userOrders.findIndex(order => order.order_id === parseInt(order_id, 10));
+            // Iterate over details of the first order (userOrders[0].details[0])
+            for (const product of userOrders[index].details[0]) {
 
-        // Check if userOrders array is empty or undefined
-        if (!userOrders || userOrders.length === 0) {
-            return res.status(404).send('No order found for this user');
+                // Fetch product information using product_id
+                const productInfo = await getProductById(product.product_id);
+
+                productInfo.quantity_brought = product.quantity;
+                productInfo.price_when_bought = product.price_when_bought;
+                // Append productInfo to productsInfo array
+
+                productsInfo.push(productInfo);
+            }
+
+        } catch (err) {
+            // Handle errors
+            console.error('Error getting user orders', err);
         }
-        index = userOrders.findIndex(order => order.order_id === parseInt(order_id, 10));
-        // Iterate over details of the first order (userOrders[0].details[0])
-        for (const product of userOrders[index].details[0]) {
-
-            // Fetch product information using product_id
-            const productInfo = await getProductById(product.product_id);
-
-            productInfo.quantity_brought = product.quantity;
-            productInfo.price_when_bought = product.price_when_bought;
-            // Append productInfo to productsInfo array
-
-            productsInfo.push(productInfo);
-        }
-
-    } catch (err) {
-        // Handle errors
-        console.error('Error getting user orders', err);
-    }
-    const type_list = await getAllType();
-    const data = {
-        title: "Home - TakeAByte",
-        isAuthenticated: req.isAuthenticated,
-        template: "purchase",
-        templateData: {
-            purchase: {
-                id: userOrders[index].order_id,
-                status: userOrders[index].status,
-                expectedDate: "expected-delivery-date",
-                products: productsInfo,
-                subtotal: userOrders[index].full_price,
-                shippingFee: 0
+        const type_list = await getAllType();
+        const data = {
+            title: "Home - TakeAByte",
+            isAuthenticated: req.isAuthenticated,
+            template: "purchase",
+            templateData: {
+                purchase: {
+                    id: userOrders[index].order_id,
+                    status: userOrders[index].status,
+                    expectedDate: "expected-delivery-date",
+                    products: productsInfo,
+                    subtotal: userOrders[index].full_price,
+                    shippingFee: 0
+                },
             },
-        },
-        slogan: "Your Trusted Tech Partner",
-        categories: type_list
-    };
-    res.render('base', {data: data});
+            slogan: "Your Trusted Tech Partner",
+            categories: type_list
+        };
+        res.render('base', {data: data});
+    }else{
+        let response
+        try {
+                const url = `http://localhost:3001/v1/orders/${order_id}`;
+                const token = process.env.WEB_TOKEN;
+                response = await axios.get(url, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                if (response.data) {
+                    // productsInfo.push(response.data)
+                } else {
+                    console.error("No order found with given id");
+                }
+            for (const product of response.data.detail) {
+                // Fetch product information using product_id
+                const productInfo = await getProductById(product.product_id);
+
+                productInfo.quantity_brought = product.quantity;
+                productInfo.price_when_bought = product.price_when_bought;
+                // Append productInfo to productsInfo array
+
+                productsInfo.push(productInfo);
+            }
+        } catch (err) {
+            console.error(`Error fetching user fev ids:`, err);
+        }
+        const type_list = await getAllType();
+        const data = {
+            title: "Home - TakeAByte",
+            isAuthenticated: req.isAuthenticated,
+            template: "purchase",
+            templateData: {
+                purchase: {
+                    id: order_id,
+                    status:  response.data.order.status,
+                    expectedDate: "expected-delivery-date",
+                    products: productsInfo,
+                    subtotal: response.data.order.full_price,
+                    shippingFee: 0
+                },
+            },
+            slogan: "Your Trusted Tech Partner",
+            categories: type_list
+        };
+        res.render('base', {data: data});
+    }
+
+
 })
 
 router.get('/localData', async (req, res) => {
