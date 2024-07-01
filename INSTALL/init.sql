@@ -33,4 +33,10 @@ INSERT INTO users (
     username, email, password_hash, name, lastname, province, country, city, zip_code, street_name, street_number, address_complements, is_mod
 ) VALUES ( 'user_zero', 'user_zero@example.com', 'hashed_password', 'First', 'Last', 'Province', 'CNY', 'City', '12345', 'Street', 123, 'Apt 1', 0
          );
-UPDATE `users` SET `user_id` = '0' WHERE `users`.`username` = 'user_zero'
+UPDATE `users` SET `user_id` = '0' WHERE `users`.`username` = 'user_zero';
+
+-- Generate a random token of 86 characters
+SET @AnonToken = "L0h+ZElHfOVT1rUrVV4zL3bB73D3LqtkB9HzP4mH3IBWg7Gn0b4fYcS7vPBA63AR0sR3rK8ZZY+0JfHXpL8R8z";
+-- Insert the token into the tokens table
+INSERT INTO tokens (user_id, end_date, token)
+VALUES (0, DATE_ADD(NOW(), INTERVAL 10 YEAR), @AnonToken);

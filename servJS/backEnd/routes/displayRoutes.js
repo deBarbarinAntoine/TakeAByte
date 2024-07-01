@@ -917,6 +917,14 @@ router.get('/paymentOk', isAuthenticated, async (req, res) => {
     try {
         const response = await axios.post(createOrderUrl, { items: formattedItems }, { headers: { Authorization: `Bearer ${userToken}` } });
         orderId = response.data.order_id;
+
+        // Set the order_number cookie
+        res.cookie('order_number', orderId, {
+            httpOnly: true, // Ensure that the cookie is sent only over HTTP(S)
+            secure: process.env.NODE_ENV === 'production', // Set to true if HTTPS is enabled
+            maxAge: 31 * 24 * 60 * 60 * 1000, // Cookie expiration time (24 hours)
+        });
+
     } catch (error) {
         console.error('Error creating order:', error.message);
         return res.status(500).send('Internal Server Error');
@@ -968,6 +976,7 @@ router.get('/paymentOk', isAuthenticated, async (req, res) => {
     }
 });
 
+module.exports = router;
 router.get('/contact-us', isAuthenticated, async (req, res) => {
     const type_list = await getAllType();
     const data = {
@@ -1717,6 +1726,23 @@ router.get('/purchase/:order_id', async (req,res) =>{
     };
     res.render('base', {data: data});
 })
+
+router.get('/localData', async (req, res) => {
+
+
+
+
+    const type_list = await getAllType();
+    const data = {
+        title: "local data",
+        isAuthenticated: req.isAuthenticated,
+        template: "localUser",
+        templateData: {},
+        categories: type_list,
+        slogan: "Your Trusted Tech Partner"
+    }
+    res.render('base', {data: data});
+});
 
 router.get('*', async (req, res) => {
     const type_list = await getAllType();
