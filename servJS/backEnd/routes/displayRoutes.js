@@ -1601,7 +1601,6 @@ router.get('/user', requireAuth, async (req, res) => {
         return res.status(500).send('Internal Server Error');
     }
 });
-// Define a route for the 404 page
 
 router.post('/update-cart', (req, res) => {
     const {itemId, quantity} = req.body;
