@@ -22,9 +22,6 @@
                         <%#       User purchase (order)                                    %>
                         <%#################################################################%>
                             <% data.purchases.forEach((purchase) => { %>
-                                <div>
-                                    <pre><%= console.log((purchase.details[0][0]));%></pre>
-                                </div>
                                 <div class="purchase relative">
                                     <a href="/purchase/<%= purchase.order_id %>" class="purchase-link abs"></a>
                                     <div class="purchase-date"><%= purchase.date_ordered_at %></div>

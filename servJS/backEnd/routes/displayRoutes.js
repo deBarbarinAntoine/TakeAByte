@@ -166,9 +166,9 @@ router.get('/product/:productId', isAuthenticated, async (req, res) => {
             } catch (err) {
 
             }
-        }else if (userFav){
+        } else if (userFav) {
             const userFavArray = JSON.parse(userFav);
-            const likedProductIds = userFavArray.map(item=>item.productId);
+            const likedProductIds = userFavArray.map(item => item.productId);
             isFav = likedProductIds.includes(productId)
         }
 
@@ -230,7 +230,7 @@ router.get('/product/:productId', isAuthenticated, async (req, res) => {
                     }
                 ],
                 "product": {
-                    "isFavorite" : isFav,
+                    "isFavorite": isFav,
                     "id": productId,
                     "images": imagePaths,
                     "name": product[0].name,
@@ -241,10 +241,10 @@ router.get('/product/:productId', isAuthenticated, async (req, res) => {
                     ],
                     "brand": product.brand,
                     "miscellaneous": miscellaneous,
-                    "promotion": saleData.data.sales[0].length > 0 ?{
+                    "promotion": saleData.data.sales[0].length > 0 ? {
                         "reduction": saleData.data.sales[0][0].reduction_percentage,
                         "end_at": saleData.data.sales[0][0].end_date
-                    }: {
+                    } : {
                         "reduction": 0,
                         "end_at": "none",
                     }
@@ -625,7 +625,7 @@ router.get('/order/address', isAuthenticated, async (req, res) => {
         } catch (err) {
             console.error("problem getting userid or userdata", err)
         }
-    }else{
+    } else {
         const type_list = await getAllType();
         const data = {
             title: "Home - TakeAByte",
@@ -690,10 +690,10 @@ router.delete('/cartDelete', isAuthenticated, (req, res) => {
 
         // Set cookie with updated cart and expiry time
         const oneWeekInMilliseconds = 7 * 24 * 60 * 60 * 1000; // 7 days * 24 hours * 60 minutes * 60 seconds * 1000 milliseconds
-        res.cookie('cart', cart, { maxAge: oneWeekInMilliseconds, httpOnly: true });
+        res.cookie('cart', cart, {maxAge: oneWeekInMilliseconds, httpOnly: true});
 
         // Respond with success status
-        res.send({ status: 'success' });
+        res.send({status: 'success'});
     } else {
         // If item with itemIdToDelete is not found in cart
         console.error('Item not found in cart');
@@ -812,7 +812,7 @@ router.get('/paymentOk', isAuthenticated, async (req, res) => {
     const cartCookie = req.cookies.cart;
     const token = process.env.WEB_TOKEN;
     let userToken = req.cookies.token;
-    let userId = { user_id : 0 };
+    let userId = {user_id: 0};
 
     if (userToken) {
         try {
@@ -824,11 +824,11 @@ router.get('/paymentOk', isAuthenticated, async (req, res) => {
             console.error('Error fetching user info:', err);
             return res.status(500).send('Internal Server Error');
         }
-    }else{
-        try{
-            const anonUserToken = await getUserTokenFromId(userId,token)
+    } else {
+        try {
+            const anonUserToken = await getUserTokenFromId(userId, token)
             userToken = anonUserToken.selectedToken
-        }catch (e) {
+        } catch (e) {
             console.error(e)
         }
     }
@@ -840,13 +840,13 @@ router.get('/paymentOk', isAuthenticated, async (req, res) => {
     // Aggregate quantities and prices
     if (cartCookie) {
         cartCookie.forEach(item => {
-            const { itemId, quantity, itemPrice } = item;
+            const {itemId, quantity, itemPrice} = item;
             if (cartItemsMap.has(itemId)) {
                 const existingItem = cartItemsMap.get(itemId);
                 existingItem.quantity += quantity;
                 existingItem.totalPrice += quantity * itemPrice;
             } else {
-                cartItemsMap.set(itemId, { itemId, quantity, totalPrice: quantity * itemPrice });
+                cartItemsMap.set(itemId, {itemId, quantity, totalPrice: quantity * itemPrice});
             }
         });
     }
@@ -866,18 +866,18 @@ router.get('/paymentOk', isAuthenticated, async (req, res) => {
         if (!product) throw new Error(`Failed to get item ${productId}`);
 
         const getImagesUrl = `http://localhost:3001/v1/images/product/${productId}`;
-        const allImg = await axios.get(getImagesUrl, { headers: { Authorization: `Bearer ${token}` } });
+        const allImg = await axios.get(getImagesUrl, {headers: {Authorization: `Bearer ${token}`}});
         product.img = allImg.data[0].image_path;
 
         if (product.type_id) {
             const typeUrl = `http://localhost:3001/v1/types/${product.type_id}`;
-            const typeResponse = await axios.get(typeUrl, { headers: { Authorization: `Bearer ${token}` } });
+            const typeResponse = await axios.get(typeUrl, {headers: {Authorization: `Bearer ${token}`}});
             product.type = typeResponse.data[0].name;
         }
 
         if (product.brand_id) {
             const brandUrl = `http://localhost:3001/v1/brands/${product.brand_id}`;
-            const brandResponse = await axios.get(brandUrl, { headers: { Authorization: `Bearer ${token}` } });
+            const brandResponse = await axios.get(brandUrl, {headers: {Authorization: `Bearer ${token}`}});
             product.brand = brandResponse.data[0].name;
         }
 
@@ -892,7 +892,7 @@ router.get('/paymentOk', isAuthenticated, async (req, res) => {
                 content: key === 'quantity_stocked' ? (product[key] ? `Only ${product[key]} left. Order now!` : 'Not available') : product[key]
             }));
 
-        return { product, imagePaths, miscellaneous };
+        return {product, imagePaths, miscellaneous};
     }
 
     const processCartItems = async (cartItems) => {
@@ -922,32 +922,27 @@ router.get('/paymentOk', isAuthenticated, async (req, res) => {
     }));
 
     try {
-        const response = await axios.post(createOrderUrl, { items: formattedItems }, { headers: { Authorization: `Bearer ${userToken}` } });
+        const response = await axios.post(createOrderUrl, {items: formattedItems}, {headers: {Authorization: `Bearer ${userToken}`}});
         orderId = response.data.order_id;
+        const cookieName = 'order_number';
+        const maxAge = 31 * 24 * 60 * 60 * 1000; // Cookie expiration time (31 days)
 
-        async function generateUniqueCookieName(baseName, res) {
-            let suffix = 1;
-            let cookieName = baseName;
+// Get the existing cookie value
+        const existingCookie = req.cookies[cookieName] || '';
 
-            // Check if cookie name exists
-            while (res.getHeader('Set-Cookie') && res.getHeader('Set-Cookie').some(cookie => cookie.startsWith(`${cookieName}=`))) {
-                cookieName = `${baseName}_${suffix}`;
-                suffix++;
-            }
+// Parse existing cookie value into an array of IDs
+        let orderIds = existingCookie ? existingCookie.split(',') : [];
 
-            return cookieName;
+// Add the new order ID to the array if it's not already present
+        if (!orderIds.includes(orderId)) {
+            orderIds.push(orderId);
         }
 
-        const baseCookieName = 'order_number';
-
-        // Generate a unique cookie name
-        const uniqueCookieName = await generateUniqueCookieName(baseCookieName, res);
-
-        // Set the unique cookie
-        res.cookie(uniqueCookieName, orderId, {
+// Update the cookie with the new list of order IDs
+        res.cookie(cookieName, orderIds.join(','), {
             httpOnly: true, // Ensure that the cookie is sent only over HTTP(S)
             secure: process.env.NODE_ENV === 'production', // Set to true if HTTPS is enabled
-            maxAge: 31 * 24 * 60 * 60 * 1000, // Cookie expiration time (31 days)
+            maxAge: maxAge, // Reset the cookie expiration time (31 days)
         });
     } catch (error) {
         console.error('Error creating order:', error.message);
@@ -959,7 +954,7 @@ router.get('/paymentOk', isAuthenticated, async (req, res) => {
             const productId = item.product_id;
             const reduceStockUrl = `http://localhost:3001/v1/products/${productId}`;
             try {
-                await axios.put(reduceStockUrl, { quantity_stocked: item.quantity }, {
+                await axios.put(reduceStockUrl, {quantity_stocked: item.quantity}, {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json'
@@ -983,7 +978,7 @@ router.get('/paymentOk', isAuthenticated, async (req, res) => {
             slogan: "Your Trusted Tech Partner",
             categories: typeList,
             templateData: {
-                client: { orderId },
+                client: {orderId},
                 page: 'payment-confirmed',
                 order: {
                     products: resultArray,
@@ -993,7 +988,7 @@ router.get('/paymentOk', isAuthenticated, async (req, res) => {
             }
         };
         res.clearCookie('cart');
-        res.render('base', { data });
+        res.render('base', {data});
     } catch (error) {
         console.error('Error processing cart items:', error.message);
         res.status(500).send('Internal Server Error');
@@ -1436,7 +1431,7 @@ router.get('/register', isAuthenticated, async (req, res) => {
 
 router.get('/category/:type_id', isAuthenticated, async (req, res) => {
     const type_id = req.params.type_id;
-    const { brand, price_max, category } = req.query;
+    const {brand, price_max, category} = req.query;
 
     try {
         const type_name = await getTypeNameById(type_id);
@@ -1499,7 +1494,7 @@ router.get('/category/:type_id', isAuthenticated, async (req, res) => {
             },
             slogan: "Your Trusted Tech Partner"
         };
-        res.render('base', { data });
+        res.render('base', {data});
     } catch (err) {
         console.error('Error in router handler:', err);
         res.status(500).send('Internal Server Error');
@@ -1519,38 +1514,38 @@ router.get('/search', isAuthenticated, async (req, res) => {
 
     }
     if (searchData !== null && searchData !== undefined) {
-    for (const product of searchData) {
-        const token = process.env.WEB_TOKEN;
-        const saleUrl = `http://localhost:3001/v1/sales/product/${product.id}`
-        const saleDetails =  await axios.get(saleUrl,{
-            headers: {
-                Authorization: `Bearer ${token}`
+        for (const product of searchData) {
+            const token = process.env.WEB_TOKEN;
+            const saleUrl = `http://localhost:3001/v1/sales/product/${product.id}`
+            const saleDetails = await axios.get(saleUrl, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            if (saleDetails.data.sales[0].length > 0) {
+                product.price = product.price - (product.price * saleDetails.data.sales[0][0].reduction_percentage / 100)
+                product.sales = saleDetails.data.sales[0][0].reduction_percentage
+            } else {
+                product.sales = "0"
             }
-        });
-        if (saleDetails.data.sales[0].length > 0){
-            product.price = product.price - (product.price * saleDetails.data.sales[0][0].reduction_percentage / 100)
-            product.sales = saleDetails.data.sales[0][0].reduction_percentage
-        }else{
-            product.sales = "0"
         }
-    }
-    if (brand) {
-        const brandsFilter = brand.split(',');
-        searchData = searchData.filter(product => brandsFilter.includes(product.brand));
-    }
-    if (price_max) {
-        searchData = searchData.filter(product => product.price <= parseFloat(price_max));
-    }
-    if (category) {
-        const categoriesFilter = category.split(',');
-        searchData = searchData.filter(product => categoriesFilter.includes(product.category));
-    }
-    const brandIds = Array.isArray(searchData)
-        ? searchData.map(product => product.brand)
-        : [];
+        if (brand) {
+            const brandsFilter = brand.split(',');
+            searchData = searchData.filter(product => brandsFilter.includes(product.brand));
+        }
+        if (price_max) {
+            searchData = searchData.filter(product => product.price <= parseFloat(price_max));
+        }
+        if (category) {
+            const categoriesFilter = category.split(',');
+            searchData = searchData.filter(product => categoriesFilter.includes(product.category));
+        }
+        const brandIds = Array.isArray(searchData)
+            ? searchData.map(product => product.brand)
+            : [];
 
-    brand_list = await getBrandByIds(brandIds);
-    }else {
+        brand_list = await getBrandByIds(brandIds);
+    } else {
         searchData = "No data found for the searched product"
     }
     const data = {
@@ -1606,10 +1601,10 @@ router.get('/user', requireAuth, async (req, res) => {
         console.error(err, "failed to get user fav")
     }
 
-    try{
+    try {
         userOrders = await getUserOrdersByUserId(userId)
-    }catch(err){
-        console.error('error getting user orders',err)
+    } catch (err) {
+        console.error('error getting user orders', err)
     }
     try {
         const type_list = await getAllType();
@@ -1622,7 +1617,7 @@ router.get('/user', requireAuth, async (req, res) => {
                 favorites: {
                     products: userFav
                 },
-                purchases :userOrders
+                purchases: userOrders
             },
             slogan: "Your Trusted Tech Partner",
             categories: type_list
@@ -1695,7 +1690,7 @@ router.post('/user/:user_id/update/password', async (req, res) => {
     }
 });
 
-router.get('/purchase/:order_id', async (req,res) =>{
+router.get('/purchase/:order_id', async (req, res) => {
     const {order_id} = req.params;
     const userToken = req.cookies.token
     const userId = await getUserIdFromToken(userToken)
@@ -1736,14 +1731,14 @@ router.get('/purchase/:order_id', async (req,res) =>{
         isAuthenticated: req.isAuthenticated,
         template: "purchase",
         templateData: {
-                purchase: {
-                    id: userOrders[index].order_id,
-                    status: userOrders[index].status,
-                    expectedDate: "expected-delivery-date",
-                    products: productsInfo,
-                    subtotal:userOrders[index].full_price,
-                    shippingFee: 0
-                },
+            purchase: {
+                id: userOrders[index].order_id,
+                status: userOrders[index].status,
+                expectedDate: "expected-delivery-date",
+                products: productsInfo,
+                subtotal: userOrders[index].full_price,
+                shippingFee: 0
+            },
         },
         slogan: "Your Trusted Tech Partner",
         categories: type_list
@@ -1752,37 +1747,71 @@ router.get('/purchase/:order_id', async (req,res) =>{
 })
 
 router.get('/localData', async (req, res) => {
-    let userInfo = null;
-    let userFav = null;
-    let userOrders = null;
-console.log(req.cookies)
+    const favCookie = req.cookies.fav;
+    const orderNumberCookie = req.cookies.order_number
+// Parse the JSON string into a JavaScript array of objects
+    let array_of_orders = [];
+    if (orderNumberCookie) {
 
-    // try {
-    //     userFav = await getUserFavByUserId(userId)
-    //     if (!userFav) {
-    //         return res.status(404).send('No fav found for this user')
-    //     }
-    // } catch (err) {
-    //     console.error(err, "failed to get user fav")
-    // }
-    //
-    // try{
-    //     userOrders = await getUserOrdersByUserId(userId)
-    // }catch(err){
-    //     console.error('error getting user orders',err)
-    // }
+       const orderNumberArray = orderNumberCookie.split(',').map(Number);
+        try {
+            for (const order_id of orderNumberArray) {
+                const url = `http://localhost:3001/v1/orders/${order_id}`;
+                const token = process.env.WEB_TOKEN;
+                const response = await axios.get(url, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                if (response.data) {
+                    array_of_orders.push(response.data)
+                } else {
+                    console.error("No order found with given id");
+                }
+            }
+        } catch (err) {
+            console.error(`Error fetching user fev ids:`, err);
+        }
+    }
+
+    let array_of_products = [];
+// Map over the array to extract the productId values and convert them to numbers
+    if (favCookie){
+        const favArray = JSON.parse(favCookie);
+        const array_of_products_id = favArray.map(item => Number(item.productId));
+        try{
+            for (const product_id of array_of_products_id) {
+                try {
+                    const url = `http://localhost:3001/v1/products/${product_id}`;
+                    const token = process.env.WEB_TOKEN;
+
+                    // Make GET request using axios
+                    const response = await axios.get(url, {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    });
+                    array_of_products.push(response.data[0]);
+                } catch (error) {
+                    console.error(`Error fetching product ${product_id}:`, error.message);
+                }
+            }
+        }catch (err){
+            console.error(`Error fetching user fav products:`, err);
+        }
+    }
+
     try {
         const type_list = await getAllType();
         const data = {
             title: "Home - TakeAByte",
             isAuthenticated: req.isAuthenticated,
-            template: "dashboard",
+            template: "offlineDashboard",
             templateData: {
-                user: userInfo[0],
                 favorites: {
-                    products: userFav
+                    products: array_of_products
                 },
-                purchases :userOrders
+                purchases: array_of_orders
             },
             slogan: "Your Trusted Tech Partner",
             categories: type_list
@@ -1793,19 +1822,6 @@ console.log(req.cookies)
         console.error('Error fetching types:', err);
         return res.status(500).send('Internal Server Error');
     }
-
-
-
-    const type_list = await getAllType();
-    const data = {
-        title: "local data",
-        isAuthenticated: req.isAuthenticated,
-        template: "localUser",
-        templateData: {},
-        categories: type_list,
-        slogan: "Your Trusted Tech Partner"
-    }
-    res.render('base', {data: data});
 });
 
 router.get('*', async (req, res) => {

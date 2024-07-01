@@ -1,0 +1,137 @@
+
+<% if (!!data.purchases && data.purchases.length > 0) { %>
+
+    <%######################################################################################%>
+    <%#       List of orders (purchases)                                                    %>
+    <%######################################################################################%>
+    <div class="main-column padding-top3">
+        <div class="purchase-list-title">Your orders:</div>
+        <div class="user-purchase-list-ctn">
+                <div class="user-purchase-list">
+                    <div class="list-header">
+                        <span class="label-1">Order date</span>
+                        <span class="label-2">Status</span>
+                        <span class="label-3">Delivery date</span>
+                        <span class="label-4">Product quantity</span>
+                        <span class="label-5">Total</span>
+                    </div>
+                    <div class="separator"></div>
+                    <div class="list">
+
+                        <%#################################################################%>
+                        <%#       User purchase (order)                                    %>
+                        <%#################################################################%>
+                            <% data.purchases.forEach((purchase) => { %>
+                                <div>
+                                    <pre><% console.log(purchase); %></pre>
+                                </div>
+                                <div class="purchase relative">
+                                    <a href="/purchase/<%= purchase.order.order_id %>" class="purchase-link abs"></a>
+                                    <div class="purchase-date"><%= purchase.order.date_ordered_at %></div>
+                                    <div class="purchase-status"><%= purchase.order.status %></div>
+                                    <div class="purchase-delivery-date"><%= purchase.order.deliveryDate %></div>
+                                    <div class=" purchase-items-quantity"><%= purchase.detail.length %></div>
+                                    <div class="purchase-total-price"><%= purchase.order.full_price %>€</div>
+                                </div>
+                            <% }); %>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+    <div class="main translateY7 padding-bottom9 space-around">
+<% } else { %>
+    <div class="main padding-top3 padding-bottom9 space-around">
+<% } %>
+
+    <%######################################################################################%>
+    <%#       User favorites                                                                %>
+    <%######################################################################################%>
+    <div class="user-favorites-ctn">
+        <div class="carousel-title">Your favorites:</div>
+
+        <%######################################################################################%>
+        <%#       Favorites carousel                                                            %>
+        <%######################################################################################%>
+        <%# check if there are favorites %>
+        <% if (data.favorites.products.length > 0) { %>
+            <div class="user-favorites-carousel-ctn swiper">
+                <div class="favorites-carousel swiper-wrapper">
+
+                    <%######################################################################################%>
+                    <%#       Product-Card Template                                                         %>
+                    <%######################################################################################%>
+                    <% data.favorites.products.forEach(function (product) { %>
+                        <% if (!!product.product_id && (!product.id || product.id === 0)) product.id = product.product_id; %>
+                        <% product.isDashboard = true; %>
+                        <%- include('../partials/product-card', {product: product}); %>
+                    <% }); %>
+
+                </div>
+                <div class="carousel-nav">
+                    <div class="previous"></div>
+                    <div class="next"></div>
+                </div>
+            </div>
+        <% } else { %>
+            <div class="alert">You don't have any favorite yet :(</div>
+        <% } %>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+    // Select all elements with class '.purchase'
+    const purchaseElements = document.querySelectorAll('.purchase');
+
+    // Iterate through each purchase element
+    purchaseElements.forEach(purchaseElement => {
+        // Find the purchase date element within the current purchase element
+        const purchaseDateElement = purchaseElement.querySelector('.purchase-date');
+
+        // Ensure purchase date element exists
+        if (purchaseDateElement) {
+            // Get the date string from the element's text content
+            const dateString = purchaseDateElement.textContent.trim();
+
+            // Convert the date string to a Date object
+            const date = new Date(dateString);
+
+            // // Calculate a random delivery date between 3 to 5 days after the order date
+            // const minDaysToAdd = 3;
+            // const maxDaysToAdd = 5;
+            // const randomDaysToAdd = Math.floor(Math.random() * (maxDaysToAdd - minDaysToAdd + 1)) + minDaysToAdd;
+
+            // Clone the ordered date and add the random days
+            const deliveryDate = new Date(date);
+            deliveryDate.setDate(date.getDate() + 5);
+
+            // Format the delivery date as a string (e.g., "MM/DD/YYYY")
+            const formattedDeliveryDate = deliveryDate.toLocaleDateString('fr-FR', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit'
+            });
+
+            // Options for formatting the date
+            const options = {
+                year: 'numeric',
+                month: '2-digit',
+                day: 'numeric',
+            };
+
+            // Format the date using toLocaleDateString
+            const formattedDate = date.toLocaleDateString('fr-FR', options);
+
+            // Update the element's text content with the formatted date
+            purchaseDateElement.textContent = `${formattedDate}`;
+            // Find the delivery date element within the current purchase element
+            const deliveryDateElement = purchaseElement.querySelector('.purchase-delivery-date');
+
+            // Ensure delivery date element exists
+            if (deliveryDateElement) {
+                // Update the delivery date element's text content with the formatted delivery date
+                deliveryDateElement.textContent = formattedDeliveryDate;
+            }
+        }
+    });
+</script>

@@ -40,11 +40,15 @@ exports.getOrderData = async (req, res) => {
     const {order_id} = req.params;
     try {
         const results = await connection.query(getOrderDataQuery, [order_id])
-
         if (results.length === 0) {
             return notFoundErrorResponse(res, "no order data");
         }
-        res.status(200).json(results[0]);
+        const order = await connection.query(getOrderDetailsQuery, [results[0][0].order_id]);
+        const combinedData = {
+            order : results[0][0],
+            detail :order[0]
+        }
+        res.status(200).json(combinedData);
     } catch (err) {
         return serverErrorResponse(res, "Failed to get order data");
     }
