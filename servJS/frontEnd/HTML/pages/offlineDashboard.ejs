@@ -77,6 +77,50 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
+    <%# create swiper carousel for favorites %>
+    favoriteCarousel = new Swiper('.user-favorites-carousel-ctn.swiper', {
+        spaceBetween: 20,
+        loop: true,
+        navigation: {
+            nextEl: '.next',
+            prevEl: '.previous'
+        },
+        autoplay: {
+            delay: 8_000, // 8 seconds tempo for autoplay
+            enabled: true,
+            pauseOnMouseEnter: true,
+        },
+        effect: 'pagination',
+        mousewheel: {
+            enabled: true,
+            releaseOnEdges: true,
+        },
+        keyboard: {
+            enabled: true,
+            onlyInViewport: true,
+        },
+        breakpoints: {
+            // 0px <= window width < 768px (phones)
+            0: {
+                slidesPerView: 2,
+                spaceBetween: 10,
+            },
+            // 768px <= window width < 1024px (tablets)
+            768: {
+                slidesPerView: 3,
+                spaceBetween: 15
+            },
+            // 1024px <= window width (desktop)
+            1024: {
+                slidesPerView: 4,
+                spaceBetween: 25,
+                grid: {
+                    rows: 2
+                },
+            },
+        }
+    });
+
     // Select all elements with class '.purchase'
     const purchaseElements = document.querySelectorAll('.purchase');
 
