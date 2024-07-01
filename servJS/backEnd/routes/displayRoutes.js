@@ -925,13 +925,30 @@ router.get('/paymentOk', isAuthenticated, async (req, res) => {
         const response = await axios.post(createOrderUrl, { items: formattedItems }, { headers: { Authorization: `Bearer ${userToken}` } });
         orderId = response.data.order_id;
 
-        // Set the order_number cookie
-        res.cookie('order_number', orderId, {
+        async function generateUniqueCookieName(baseName, res) {
+            let suffix = 1;
+            let cookieName = baseName;
+
+            // Check if cookie name exists
+            while (res.getHeader('Set-Cookie') && res.getHeader('Set-Cookie').some(cookie => cookie.startsWith(`${cookieName}=`))) {
+                cookieName = `${baseName}_${suffix}`;
+                suffix++;
+            }
+
+            return cookieName;
+        }
+
+        const baseCookieName = 'order_number';
+
+        // Generate a unique cookie name
+        const uniqueCookieName = await generateUniqueCookieName(baseCookieName, res);
+
+        // Set the unique cookie
+        res.cookie(uniqueCookieName, orderId, {
             httpOnly: true, // Ensure that the cookie is sent only over HTTP(S)
             secure: process.env.NODE_ENV === 'production', // Set to true if HTTPS is enabled
-            maxAge: 31 * 24 * 60 * 60 * 1000, // Cookie expiration time (24 hours)
+            maxAge: 31 * 24 * 60 * 60 * 1000, // Cookie expiration time (31 days)
         });
-
     } catch (error) {
         console.error('Error creating order:', error.message);
         return res.status(500).send('Internal Server Error');
