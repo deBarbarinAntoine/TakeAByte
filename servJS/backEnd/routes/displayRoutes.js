@@ -591,42 +591,73 @@ router.get('/order/address', isAuthenticated, async (req, res) => {
         try {
             const userId = await getUserIdFromToken(userToken)
             userData = await getUserInfoById(userId.user_id, token)
-
+            const type_list = await getAllType();
+            const data = {
+                title: "Home - TakeAByte",
+                isAuthenticated: req.isAuthenticated,
+                template: 'order',
+                slogan: "Your Trusted Tech Partner",
+                categories: type_list,
+                templateData: {
+                    client: {
+                        email: userData[0].email,
+                        name: userData[0].name,
+                        lastName: userData[0].lastName,
+                        address: {
+                            street: userData[0].street_name,
+                            complement: userData[0].address_complements,
+                            city: userData[0].city,
+                            zip: userData[0].zip_code,
+                            province: userData[0].province,
+                            country: userData[0].country
+                        },
+                        shippingMethod: "Standard Shipping - FREE"
+                    },
+                    page: 'address',
+                    order: {
+                        products: resultArray,
+                        subtotal: calculateSubtotal(cartItemsArray), // Subtotal of the cart
+                        shippingCost: "FREE for a limited time"
+                    }
+                }
+            };
+            res.render('base', {data: data});
         } catch (err) {
             console.error("problem getting userid or userdata", err)
         }
-    }
-    const type_list = await getAllType();
-    const data = {
-        title: "Home - TakeAByte",
-        isAuthenticated: req.isAuthenticated,
-        template: 'order',
-        slogan: "Your Trusted Tech Partner",
-        categories: type_list,
-        templateData: {
-            client: {
-                email: userData[0].email,
-                name: userData[0].name,
-                lastName: userData[0].lastName,
-                address: {
-                    street: userData[0].street_name,
-                    complement: userData[0].address_complements,
-                    city: userData[0].city,
-                    zip: userData[0].zip_code,
-                    province: userData[0].province,
-                    country: userData[0].country
+    }else{
+        const type_list = await getAllType();
+        const data = {
+            title: "Home - TakeAByte",
+            isAuthenticated: req.isAuthenticated,
+            template: 'order',
+            slogan: "Your Trusted Tech Partner",
+            categories: type_list,
+            templateData: {
+                client: {
+                    email: "",
+                    name: "",
+                    lastName: "",
+                    address: {
+                        street: "",
+                        complement: "",
+                        city: "",
+                        zip: "",
+                        province: "",
+                        country: ""
+                    },
+                    shippingMethod: "Standard Shipping - FREE"
                 },
-                shippingMethod: "Standard Shipping - FREE"
-            },
-            page: 'address',
-            order: {
-                products: resultArray,
-                subtotal: calculateSubtotal(cartItemsArray), // Subtotal of the cart
-                shippingCost: "FREE for a limited time"
+                page: 'address',
+                order: {
+                    products: resultArray,
+                    subtotal: calculateSubtotal(cartItemsArray), // Subtotal of the cart
+                    shippingCost: "FREE for a limited time"
+                }
             }
-        }
-    };
-    res.render('base', {data: data});
+        };
+        res.render('base', {data: data});
+    }
 });
 
 router.post('/cartAdd', isAuthenticated, (req, res) => {
@@ -988,7 +1019,7 @@ router.get('/order/shipping/:encodedData', isAuthenticated, async (req, res) => 
     // Decode the encoded data from the URL path
     const decodedData = Buffer.from(req.params.encodedData, 'base64').toString('latin1');
     const {lon, lat, email, name, lastname, street, optional, city, zip, region, country} = JSON.parse(decodedData);
-
+console.log(JSON.parse(decodedData))
     let postData;
 
     try {

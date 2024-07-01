@@ -8,7 +8,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const countryInput = document.getElementById('address-country');
     const zipcodeInput = document.getElementById('address-zip');
     let debounceTimeout;
-
+    let clickedAddressLon
+    let clickedAddressLat
     // Event listener for input changes in the address field
     addressInput.addEventListener('input', function () {
         clearTimeout(debounceTimeout);
@@ -70,6 +71,64 @@ document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('click', function (event) {
         if (!addressInput.contains(event.target) && !suggestionsContainer.contains(event.target)) {
             suggestionsContainer.style.display = 'none';
+        }
+    });
+
+    const form = document.querySelector('.order-form');
+
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const email = document.getElementById('contact-email').value;
+        const name = document.getElementById('address-name').value;
+        const lastname = document.getElementById('address-lastname').value;
+        const street = document.getElementById('address-street').value;
+        const optional = document.getElementById('address-optional').value;
+        const city = document.getElementById('address-city').value;
+        const zip = document.getElementById('address-zip').value;
+        const region = document.getElementById('address-region').value;
+        const country = document.getElementById('address-country').value;
+        const lon = clickedAddressLon
+        const lat = clickedAddressLat
+        // Create an object with the form data
+        const formData = {
+            email,
+            name,
+            lastname,
+            street,
+            optional,
+            city,
+            zip,
+            region,
+            country,
+            lon,
+            lat
+        };
+
+        // Convert the object to a JSON string
+        const jsonData = JSON.stringify(formData);
+
+        // Convert JSON string to Latin1 manually
+        let latin1String = '';
+        for (let i = 0; i < jsonData.length; i++) {
+            latin1String += String.fromCharCode(jsonData.charCodeAt(i) & 0xFF);
+        }
+
+        // Encode the Latin1 string to base64
+        const encodedData = btoa(latin1String);
+
+        try {
+            // Send the encoded data to the server
+            const response = await axios.get(`/order/shipping/${encodedData}`);
+
+            if (response.status === 200) {
+                // Redirect or update the UI as needed
+                window.location.href = response.request.responseURL;
+            } else {
+                console.error('Error:', response.status, response.statusText);
+            }
+        } catch (error) {
+            console.error('Error:', error);
         }
     });
 });
