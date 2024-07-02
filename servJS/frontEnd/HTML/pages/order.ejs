@@ -75,7 +75,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const amount = `<%= data.order.subtotal %>`;
-        const form = document.querySelector('.order-form');
+        const form = document.getElementById('paymentForm');
         const modal = document.getElementById('errorModal');
         const popup = document.querySelector('.popup-msg');
         const modalContent = document.querySelector('.modal-content');
