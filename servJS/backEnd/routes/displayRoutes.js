@@ -722,6 +722,7 @@ router.post('/favAdd', isAuthenticated, async (req, res) => {
     res.cookie('fav', JSON.stringify(fav), {maxAge: oneWeekInMilliseconds, httpOnly: true}); // Set cookie expiry time
     res.send({status: 'success'});
 
+if (token){
     try {
         if (productIndex === -1) {
             await addToLikes(productId, token);
@@ -731,6 +732,8 @@ router.post('/favAdd', isAuthenticated, async (req, res) => {
     } catch (error) {
         console.error("Error updating likes:", error);
     }
+}
+
 });
 
 router.post('/checkout', isAuthenticated, async (req, res) => {
